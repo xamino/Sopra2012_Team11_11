@@ -1,4 +1,4 @@
-package database;
+package database.account;
 
 public class Account {
 
