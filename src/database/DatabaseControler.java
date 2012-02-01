@@ -1,5 +1,5 @@
 package database;
 
-public class DatabaseControler {
+public class DatabaseController {
 
 }
