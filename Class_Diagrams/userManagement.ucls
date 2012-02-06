@@ -2,7 +2,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" corner="BOTTOM_RIGHT" language="java" name="userManagement.Provider" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/Provider.java" binary="false">    
-    <position height="66" width="248" x="222" y="175"/>    
+    <position height="66" width="248" x="43" y="553"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -10,7 +10,7 @@
   </class>  
   <class id="2" corner="BOTTOM_RIGHT" language="java" name="userManagement.LoggedInUsers" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/LoggedInUsers.java" binary="false">    
-    <position height="66" width="128" x="41" y="37"/>    
+    <position height="146" width="248" x="290" y="37"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -18,7 +18,7 @@
   </class>  
   <class id="3" corner="BOTTOM_RIGHT" language="java" name="userManagement.UserFactory" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/UserFactory.java" binary="false">    
-    <position height="82" width="262" x="209" y="37"/>    
+    <position height="82" width="262" x="578" y="37"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -26,7 +26,7 @@
   </class>  
   <class id="4" corner="BOTTOM_RIGHT" language="java" name="userManagement.SessionHandler" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/SessionHandler.java" binary="false">    
-    <position height="98" width="252" x="511" y="37"/>    
+    <position height="98" width="252" x="880" y="37"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -34,51 +34,59 @@
   </class>  
   <class id="5" corner="BOTTOM_RIGHT" language="java" name="userManagement.Applicant" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/Applicant.java" binary="false">    
-    <position height="66" width="253" x="510" y="175"/>    
+    <position height="66" width="253" x="331" y="553"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" corner="BOTTOM_RIGHT" language="java" name="userManagement.Clerk" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Clerk.java" binary="false">    
-    <position height="66" width="231" x="803" y="175"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <class id="7" corner="BOTTOM_RIGHT" language="java" name="userManagement.Admin" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Admin.java" binary="false">    
-    <position height="66" width="237" x="1074" y="175"/>    
-    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <class id="8" corner="BOTTOM_RIGHT" language="java" name="userManagement.User" project="hiwi_program" 
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="userManagement.User" project="hiwi_program" 
     file="/hiwi_program/src/userManagement/User.java" binary="false">    
-    <position height="66" width="95" x="803" y="37"/>    
+    <position height="290" width="228" x="331" y="223"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="7" corner="BOTTOM_RIGHT" language="java" name="userManagement.Clerk" project="hiwi_program" 
+    file="/hiwi_program/src/userManagement/Clerk.java" binary="false">    
+    <position height="66" width="231" x="624" y="553"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="userManagement.Admin" project="hiwi_program" 
+    file="/hiwi_program/src/userManagement/Admin.java" binary="false">    
+    <position height="66" width="237" x="895" y="553"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <generalization id="9">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="8"/>  
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
   <generalization id="10">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="8"/>  
+    <end type="TARGET" refId="6"/>  
   </generalization>  
-  <generalization id="11">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="8"/>  
+  <association id="11">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="12" name="users"/>      
+      <multiplicity id="13" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="14">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
-  <generalization id="12">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
   <classifier-display autosize="true" package="true" initial-value="false" signature="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
