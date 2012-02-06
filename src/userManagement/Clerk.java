@@ -1,5 +1,5 @@
 package userManagement;
 
-public class Anbieter {
+public class Clerk {
 
 }

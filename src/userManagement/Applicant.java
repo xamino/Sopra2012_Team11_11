@@ -1,5 +1,5 @@
 package userManagement;
 
-public class Bewerber {
+public class Applicant {
 
 }

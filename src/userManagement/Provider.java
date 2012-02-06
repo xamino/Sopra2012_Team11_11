@@ -1,5 +1,5 @@
 package userManagement;
 
-public class Verwalter {
+public class Provider {
 
 }
