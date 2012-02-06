@@ -1,5 +1,8 @@
 package database.account;
 
-public class AccountController {
+import database.DatabaseController;
 
+public class AccountController {
+	public DatabaseController dbc;
+	public AccountData accData;
 }

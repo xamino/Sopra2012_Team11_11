@@ -1,5 +1,9 @@
 package database.account;
 
-public class AccountData {
+import java.util.Vector;
 
+
+
+public class AccountData {
+	Vector<Account> accs;
 }
