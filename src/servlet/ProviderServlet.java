@@ -12,14 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Das <code>Provider</code> Servlet behandelt alle Aktionen von
- * angemeldeten Anbietern / Mitgliedern (Provider).
+ * Das <code>Provider</code> Servlet behandelt alle Aktionen von angemeldeten
+ * Anbietern / Mitgliedern (Provider).
  */
 
 @WebServlet("/Provider/*")
 public class ProviderServlet extends HttpServlet {
+	/**
+	 * Standard serialVersionUID.
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Konstruktor.
+	 */
 	public ProviderServlet() {
 		super();
 	}
