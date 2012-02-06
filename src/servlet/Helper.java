@@ -4,7 +4,7 @@
 package servlet;
 
 /**
- *
+ * Hilfsklasse fuer Statische Variablen und Methoden der Servlets.
  */
 public final class Helper {
 	/**
