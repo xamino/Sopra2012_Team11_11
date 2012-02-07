@@ -17,7 +17,7 @@ public class SessionHandler implements HttpSessionListener{
 		
 	}
 	/**
-	 * Kuemmert sich darum User mit abgelaufenen Sessions abzumelden. Wenn eine Session zerstoert wird (abgelaufen oder ungueltig gemacht), 
+	 * Kuemmert sich um die User mit abgelaufenen Sessions um diese dan abzumelden. Wenn eine Session zerstoert wird (abgelaufen oder ungueltig gemacht), 
 	 * wird der User aus der Liste der eingeloggten User entfernt.
 	 * 
 	 */

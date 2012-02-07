@@ -78,7 +78,7 @@ public abstract class User {
 	private HttpSession session;
 
 	/**
-	 * Gibt den Realamen zurueck
+	 * Gibt den Realnamen zurueck
 	 * 
 	 * @return Realname
 	 */

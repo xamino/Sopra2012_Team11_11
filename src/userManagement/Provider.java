@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 public class Provider extends User {
 
 	/**
-	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers klasse aufgenommen.
+	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers-Klasse aufgenommen.
 	 * 
 	 * @param benutzername Benutzername im System
 	 * @param email	E-Mail Adresse

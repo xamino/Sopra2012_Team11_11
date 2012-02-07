@@ -15,7 +15,7 @@ public class UserFactory {
 	 *  [1 - Anbieter]
 	 *  [2 - Verwalter]
 	 *  [3 - Bewerber]
-	 * @param acc Account des Benutzers der zu erzeugenden Userinstanz
+	 * @param acc Account des Benutzers der zu erzeugenden User-Instanz
 	 * @param session HttpSession mit der der Benutzer verknuepft werden soll
 	 * @return User-Instanz entsprechend dem Accounttyp (Admin,Anbieter,Bewerber oder Verwalter)
 	 */
