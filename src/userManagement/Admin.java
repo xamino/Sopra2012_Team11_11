@@ -13,12 +13,12 @@ public class Admin extends User {
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers klasse aufgenommen.
 	 * 
-	 * @param benutzername Benutzername im System
+	 * @param username Benutzername im System
 	 * @param email	E-Mail Adresse
 	 * @param name	Realer Name
 	 * @param session Session des Benutzers
 	 */
-	public Admin(String benutzername, String email, String name, HttpSession session) {
+	public Admin(String username, String email, String name, HttpSession session) {
 		
 		
 	}

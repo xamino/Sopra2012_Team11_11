@@ -53,7 +53,7 @@ public abstract class User {
 	/**
 	 * Konstruktor
 	 * 
-	 * @param benutzername
+	 * @param username
 	 *            Benutzername im System
 	 * @param email
 	 *            E-Mail Adresse
@@ -62,9 +62,9 @@ public abstract class User {
 	 * @param session
 	 *            Session des Benutzers
 	 */
-	public User(String benutzername, String email, String name,
+	public User(String username, String email, String name,
 			HttpSession session) {
-		uData = new UserData(benutzername, email, name, session);
+		uData = new UserData(username, email, name, session);
 	}
 
 	/**
