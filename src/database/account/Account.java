@@ -30,6 +30,10 @@ public class Account {
 	 * 
 	 */
 	private String	Name;
+	/**
+	 * Institutszugehoerigkeit (nur relevant für Anbieter und Verwalter)
+	 */
+	private int institute;
 	
 	/**
 	 * Konstruktor
@@ -45,13 +49,29 @@ public class Account {
 	 * @param name Realer Name des Accountinhabers.
 	 */
 	public Account(String benutzername, String passworthash, int accounttyp,
-			String email, String name) {
+			String email, String name, int institute) {
 		super();
 		this.benutzername = benutzername;
 		this.passworthash = passworthash;
 		this.accounttyp = accounttyp;
 		this.email = email;
 		Name = name;
+		this.institute=institute;
+	}
+	/**
+	 * Gibt die Institut ID zurueck
+	 * @return Institut ID
+	 */
+	public int getInstitute() {
+		return institute;
+	}
+	
+	/**
+	 * Setzt die InstitutID auf den gewuenschten Wert
+	 * @param institute gewuenschte InstitutID
+	 */
+	public void setInstitute(int institute) {
+		this.institute = institute;
 	}
 	/**
 	 * Gibt den Benutzernamen zurueck.
