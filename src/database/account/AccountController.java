@@ -1,74 +1,102 @@
+/**
+ * @author Patryk Boczon 
+ * @author Oemer Sahin
+ **/
 package database.account;
+
 /**
  * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten
  */
+import java.util.Vector;
+
 import database.DatabaseController;
 
+/**
+ * Der Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
+ * 
+ */
+
 public class AccountController {
+	
+	/**
+	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
+	 */
+	private AccountController(){
+		
+	}
+	
+	/**
+	 * Diese Methode gibt den Namen eines Instituts bei uebergebener Id.
+	 * @param id
+	 * Id ist der Primaerschluessel in der Institute-DB.
+	 * @return
+	 * Zurueckgegeben wird der Name des Institutes.
+	 */
+	public String getInstituteById(int id){
+		return null;
+	}
+	
+	/**
+	 * Diese Instanz
+	 */
 	public DatabaseController dbc;
-	
-	public void createAccount(Account account){
-		
+
+	/**
+	 * Diese Methode erstellt einen neuen Account mit übergebenem Account Parameter.
+	 * 
+	 * @param account
+	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt. 
+	 */
+	public void createAccount(Account account) {
+
 	}
-	
-	public Account getInstance(){
+
+	/**
+	 * Diese Methode gibt falls vorhanden die Instanz des Account-Objekts zurueck. Andernfalls wird eine Instanz angelegt.
+	 * @return
+	 */
+	public Account getInstance() {
 		return null;
-		
+
 	}
-	
-	public void deleteAccount(Account account){
-		
+	/**
+	 * Diese Methode loescht den gewuenschten Account mit uebergebenem Account-Objekt.
+	 * @param account
+	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 */
+	public void deleteAccount(Account account) {
+
 	}
-	
-	public void setEmail(Account account, String email){
-		
+	/**
+	 * Diese Methode nimmt Aenderungen an einem Account-Objekt vor. Dabei werden die geaenderten Attribute vom uebergebenem Parameter uebernommen.
+	 * @param account
+	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 */
+	public void updateAccount(Account account) {
+
 	}
-	
-	public void setPassword(Account account, String password){
-		
-	}
-	
-	public void setRealname(Account account, String realname){
-		
-	}
-	
-	public void setInstitute(Account account, int institute){
-		
-	}
-	
-	public String getAccountype(String username){
+
+	/**
+	 * Diese Methode selektiert alle Accounts mit uebergebenem Accounttyp.
+	 * @param accounttype
+	 * Es gibt drei unterschiedliche Accounttypen, um zwischen den unterschieldichen Benutzeransichten und Benutzerrechten der Accounttypen zu differenzieren.
+	 * @return
+	 * Es wird ein Vector zurueckgegeben der alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Accounttyp.
+	 */
+	public Vector<Account> getAccountsByAccounttype(int accounttype) {
 		return null;
-		
+
 	}
-	
-	public String getEmail(String username){
+
+	/**
+	 * Diese Methode selektiert alle Accounts mit uebergebenem Institut.
+	 * @param institute
+	 * @return
+	 * Es wird ein Vector zurueckgegeben der alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
+	 */
+	public Vector<Account> getAccountsByInstitute(int institute) {
 		return null;
-		
+
 	}
-	
-	public int getInstitute(String username){
-		return 0;
-		
-	}
-	
-	public String getPassword(String username){
-		return null;
-		
-	}
-	
-	public String getRealname(String username){
-		return null;
-		
-	}
-	
-	public int getAllbyAccounttype(int accounttype){
-		return 0;
-		
-	}
-	
-	public int getAllbyInstitute(int institute){
-		return 0;
-		
-	}
-	
+
 }
