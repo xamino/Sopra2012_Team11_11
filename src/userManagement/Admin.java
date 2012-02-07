@@ -1,11 +1,15 @@
 package userManagement;
 
 import javax.servlet.http.HttpSession;
+
+
 /**
  *Verwaltet alle Aufgaben und Daten eines Admins.
  */
 public class Admin extends User {
 
+	
+	
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers klasse aufgenommen.
 	 * 

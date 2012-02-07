@@ -1,11 +1,14 @@
 package userManagement;
 
 import javax.servlet.http.HttpSession;
+
+
 /**
  *Verwaltet alle Aufgaben und Daten eines Bewerbers. 
  */
 public class Applicant extends User {
 
+	
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers klasse aufgenommen.
 	 * 

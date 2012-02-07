@@ -1,11 +1,34 @@
 package userManagement;
 
 import javax.servlet.http.HttpSession;
+
+import database.account.AccountController;
+import database.application.ApplicationController;
+import database.document.DocumentController;
+import database.offer.OfferController;
 /**
  * Vorlage fuer Admin,Anbieter,Verwalter und Bewerber.
  */
 public abstract class User {
 
+	
+	/**
+	 * AccountController fuer Datenbankzugriff auf accountbezogene Daten.
+	 */
+	public AccountController acccon;
+	/**
+	 * ApplicationController fuer Datenbanzugriff auf bewerbungsbezogene Daten.
+	 */
+	public ApplicationController appcon;
+	/**
+	 * DocumentController fuer Datenbankzugriff auf unterlagenbezogene Daten.
+	 */
+	public DocumentController doccon;
+	/**
+	 * OfferController fuer den Datenbankzugriff auf angebotsbezogene Daten.
+	 */
+	public OfferController offcon;
+	
 	/**
 	 * empty standard Constructor
 	 */
