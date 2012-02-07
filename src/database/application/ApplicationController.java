@@ -1,5 +1,7 @@
 package database.application;
 
-public class ApplicationController {
+import database.DatabaseController;
 
+public class ApplicationController {
+	public DatabaseController dbc;
 }

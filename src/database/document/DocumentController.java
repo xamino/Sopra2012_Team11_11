@@ -1,5 +1,7 @@
 package database.document;
 
-public class DocumentController {
+import database.DatabaseController;
 
+public class DocumentController {
+	public DatabaseController dbc;
 }

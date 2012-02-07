@@ -1,10 +1,14 @@
 package login;
 
+import database.DatabaseController;
+
 
 /**
  * Hilfsklasse fuer den Loginvorgang des Systems.
  */
 public abstract class LoginController {
+	public DatabaseController dbc;
+	
 
 	/**
 	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob

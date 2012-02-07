@@ -1,5 +1,7 @@
 package database.offer;
 
-public class OfferController {
+import database.DatabaseController;
 
+public class OfferController {
+	public DatabaseController dbc;
 }
