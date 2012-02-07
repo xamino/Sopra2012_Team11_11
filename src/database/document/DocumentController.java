@@ -9,6 +9,8 @@ package database.document;
 import java.util.Vector;
 
 import database.DatabaseController;
+import database.account.Account;
+import database.offer.Offer;
 
 public class DocumentController {
 	public DatabaseController dbc;
@@ -27,6 +29,11 @@ public class DocumentController {
 	}
 	
 	public Vector<Document> getDocumentsByOffer(int aid){
+		return null;
+		
+	}
+	
+	public Vector<Document> getDocumentsByUserAndOffer(Account account, Offer offer){
 		return null;
 		
 	}
