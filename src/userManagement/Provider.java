@@ -9,12 +9,12 @@ public class Provider extends User {
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers-Klasse aufgenommen.
 	 * 
-	 * @param benutzername Benutzername im System
+	 * @param username Benutzername im System
 	 * @param email	E-Mail Adresse
 	 * @param name	Realer Name
 	 * @param session Session des Benutzers
 	 */
-	public Provider(String benutzername, String email, String name, HttpSession session) {
+	public Provider(String username, String email, String name, HttpSession session) {
 
 	}
 	//hier werden im fertigen projekt beziehungen zu anderen klassen modelliert
