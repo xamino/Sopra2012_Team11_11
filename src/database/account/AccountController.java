@@ -53,7 +53,7 @@ public class AccountController {
 
 	/**
 	 * Diese Methode gibt falls vorhanden die Instanz des Account-Objekts zurueck. Andernfalls wird eine Instanz angelegt.
-	 * @return
+	 * @return TODO!
 	 */
 	public Account getInstance() {
 		return null;
