@@ -42,7 +42,7 @@ public class AccountController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt einen neuen Account mit übergebenem Account Parameter.
+	 * Diese Methode erstellt einen neuen Account mit uebergebenem Account Parameter.
 	 * 
 	 * @param account
 	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt. 
@@ -53,7 +53,7 @@ public class AccountController {
 
 	/**
 	 * Diese Methode gibt falls vorhanden die Instanz des Account-Objekts zurueck. Andernfalls wird eine Instanz angelegt.
-	 * @return
+	 * @return TODO!
 	 */
 	public Account getInstance() {
 		return null;
