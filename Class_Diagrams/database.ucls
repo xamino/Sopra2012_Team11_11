@@ -2,7 +2,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" corner="BOTTOM_RIGHT" language="java" name="database.account.Account" project="hiwi_program" 
     file="/hiwi_program/src/database/account/Account.java" binary="false">    
-    <position height="306" width="228" x="42" y="37"/>    
+    <position height="354" width="244" x="41" y="37"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -10,7 +10,7 @@
   </class>  
   <class id="2" corner="BOTTOM_RIGHT" language="java" name="database.DatabaseController" project="hiwi_program" 
     file="/hiwi_program/src/database/DatabaseController.java" binary="false">    
-    <position height="66" width="155" x="304" y="383"/>    
+    <position height="66" width="155" x="325" y="431"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -18,7 +18,7 @@
   </class>  
   <class id="3" corner="BOTTOM_RIGHT" language="java" name="database.account.AccountController" project="hiwi_program" 
     file="/hiwi_program/src/database/account/AccountController.java" binary="false">    
-    <position height="66" width="149" x="310" y="37"/>    
+    <position height="178" width="288" x="325" y="37"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
