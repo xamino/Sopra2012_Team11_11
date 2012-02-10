@@ -34,7 +34,7 @@ public class DocumentController {
 	}
 		
 	/**
-	 * Diese Methode erstellt ein Unterlagen-Objekt (Document-Objekt) in der Datenbank. Mit
+	 * Diese Methode erstellt eine Unterlage in der Datenbank. Mit
 	 * ubergebenem Unterlagen-Objekt (Document-Objekt).
 	 * @param document
 	 * Parameter "document" ist ein Document-Objekt mit allen
@@ -45,7 +45,7 @@ public class DocumentController {
 	}
 	
 	/**
-	 * Diese Methode loescht ein Unterlagen-Objekt (Document-Objekt) aus der Datenbank.
+	 * Diese Methode loescht eine Unterlage aus der Datenbank.
 	 * @param document
 	 * Parameter "document" ist ein Document-Objekt mit allen
 	 *            dazugehoerigen Attributen.
@@ -66,11 +66,11 @@ public class DocumentController {
 	
 	/**
 	 * Diese Methode sammelt alle Unterlagen zu einem bestimmten Jobangebot aus
-	 * der Datenbank und speichert diese in einem Vektor.
+	 * der Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param aid
 	 *            Parameter "aid" (Angebots-Id) ist die Id des Jobangebots.
-	 * @return Es wird ein Vektor mit allen Unterlagen zu einem bestimmten
+	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Document> getDocumentsByOffer(int aid){
@@ -79,24 +79,25 @@ public class DocumentController {
 	}
 	
 	/**
-	 * Diese Methode sammelt alle Unterlagen von einem bestimmten Account zu einem bestimmten Jobangebot.
+	 * Diese Methode sammelt alle noetigen Unterlagen von einem Bewerber zu einem Jobangebot.
 	 * @param account
 	 * 	Parameter "account" ist ein Account-Objekt mit allen Account-Attributen.
 	 * @param offer
 	 * 	Parameter "offer" ist ein Offer-Objekt mit allen Offer-Attributen.
 	 * @return
-	 * Es wird ein Vektor mit allen Unterlagen von einem bestimmten Account zu einem bestimmten Jobangebot aus der Datenbank zurueckgegeben.
+	 * Es wird ein Vector mit allen Unterlagen von einem bestimmten Account zu einem bestimmten Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Document> getDocumentsByUserAndOffer(Account account, Offer offer){
+		//Account oder Application Instanz?
 		return null;
 		
 	}
 	
 	/**
 	 * Diese Methode sammelt alle Unterlagen aus der Datenbank und speichert
-	 * diese in einem Vektor.
+	 * diese in einem Vector.
 	 * 
-	 * @return Es wird ein Vektor mit allen vorhanden Unterlagen aus der
+	 * @return Es wird ein Vector mit allen vorhanden Unterlagen aus der
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Document> getAllDocuments(){
@@ -108,8 +109,8 @@ public class DocumentController {
 	/**
 	 * Diese Methode prueft ob ein DocumentController-Objekt existiert. Falls
 	 * nicht wird eine neue DocumentController-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "doccontr" abgespeichert. Dies dient um zu
-	 * gewaehrleisten, dass nur eine Instanz von DocumentController
+	 * und in dem Klassenattribut "doccontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von DocumentController
 	 * existiert.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.

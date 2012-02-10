@@ -25,7 +25,7 @@ public class OfferController {
 	/**
 	 * Klassenattribut "offcontr" beinhaltet eine OfferController-Instanz, falls
 	 * keine vorhanden war und mit der Methode getInstance angelegt wird. Dies
-	 * dient um zu gewaehrleisten, dass nur eine Instanz von OfferController
+	 * dient zur Gewaehrleistung, dass nur eine Instanz von OfferController
 	 * existiert.
 	 */
 	private static OfferController offcontr;
@@ -37,24 +37,24 @@ public class OfferController {
 	private DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt eine neue Jobangebots-Instanz mit uebergebenem
+	 * Diese Methode erstellt ein neues Jobangebot in der Datenbank mit Daten aus dem uebergebenen
 	 * Offer-Objekt.
 	 * 
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen
-	 *            dazugehoerigen Attributen.
+	 *            noetigen Attributen.
 	 */
 	public void createOffer(Offer offer) {
 
 	}
 
 	/**
-	 * Diese Methode loescht eine Jobangebots-Instanz mit uebergebenem
-	 * Offer-Objekt.
+	 * Diese Methode loescht ein Jobangebot aus der Datenbank, welches mit den Daten des uebergebenem
+	 * Offer-Objekts uebereinstimmt.
 	 * 
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen
-	 *            dazugehoerigen Attributen. Uebergebene Instanz wird komplett
+	 *            noetigen Attributen. Uebergebene Instanz wird komplett
 	 *            vom System entfernt.
 	 */
 	public void deleteOffer(Offer offer) {
@@ -75,9 +75,9 @@ public class OfferController {
 
 	/**
 	 * Diese Methode sammelt alle Jobangebote aus der Datenbank und speichert
-	 * diese in einem Vektor.
+	 * diese in einem Vector.
 	 * 
-	 * @return Es wird ein Vektor mit allen vorhanden Jobangeboten aus der
+	 * @return Es wird ein Vector mit allen vorhanden Jobangeboten aus der
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Offer> getAllOffers() {
@@ -87,28 +87,26 @@ public class OfferController {
 
 	/**
 	 * Diese Methode sammelt alle ueberprueften Jobangebote aus der Datenbank
-	 * und speichert diese in einem Vektor.
+	 * und speichert diese in einem Vector.
 	 * 
-	 * @param checked
-	 *            Parameter "checked" ist von Typ boolean und gibt an, ob ein
-	 *            Jobangebot schon ueberprueft wurde.
+	 * @param offer
+	 *            Parameter "offer" ist ein Offer-Objekt mit allen
+	 *            dazugehoerigen Attributen. (enthaelt boolean "checked" Variable,
+	 *            die angibt, ob ein Jobangebot schon ueberprueft wurde)
 	 * @return Alle Jobangebote in der Datenbank, die dem Wert von "checked"
-	 *         entsprechen werden in Form eines Vektors zurueckgegeben.
+	 *         entsprechen werden in Form eines Vectors zurueckgegeben.
 	 */
-	public Vector<Offer> getOffersByCheck(boolean checked) { // nochmal pruefen,
-																// ob diese
-																// Methodenbeschreibung
-																// stimmt!
+	public Vector<Offer> getOffersByCheck(Offer offer) {
 		return null;
 
 	}
 
 	/**
 	 * Diese Methode sammelt alle Jobangebote mit freien Stellen aus der
-	 * Datenbank und speichert diese in einem Vektor.
+	 * Datenbank und speichert diese in einem Vector.
 	 * 
-	 * @return Es wird ein Vektor mit allen noch freien Jobangeboten aus der
-	 *         Datenbank zurueckgegeben.
+	 * @return Es wird ein Vector mit allen noch freien Jobangeboten aus der
+	 *         Datenbank zurueckgegeben. Frei entspricht freie plaetze (slots) >= 1.
 	 */
 	public Vector<Offer> getOffersWithFreeSlots() {
 		return null;
@@ -116,16 +114,16 @@ public class OfferController {
 	}
 
 	/**
-	 * Diese Methode sammelt alle Jobangebote einer bestimmten Bewerbung aus der
-	 * Datenbank und speichert diese in einem Vektor.
+	 * Diese Methode sammelt alle Jobangebote, fuer die Sich ein Bewerber beworben hat, aus der
+	 * Datenbank und speichert diese in einem Vector.
 	 * 
-	 * @param application
-	 *            Parameter "application" ist eine Application-Objekt
-	 *            (Bewerbungs-Objekt).
-	 * @return Es wird ein Vektor mit allen Jobangeboten einer bestimmten
-	 *         Bewerbung aus der Datenbank zurueckgegeben.
+	 * @param applications
+	 *            Parameter "applications" ist ein Vector aus Application-Objekten
+	 *            (Bewerbungen) von einem Bewerber
+	 * @return Es wird ein Vector mit allen Jobangeboten zurueckgegeben, auf die sich
+	 *         ein Bewerber beworben hat.
 	 */
-	public Vector<Offer> getOffersByApplication(Application application) {
+	public Vector<Offer> getOffersByApplicatiot(Vector<Application> applications) {
 		return null;
 
 	}
@@ -133,8 +131,8 @@ public class OfferController {
 	/**
 	 * Diese Methode prueft ob ein OfferController-Objekt existiert. Falls nicht
 	 * wird eine neue OfferController-Instanz angelegt, zurueckgegeben und in
-	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient um zu
-	 * gewaehrleisten, dass nur eine Instanz von OfferController existiert.
+	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von OfferController existiert.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.
 	 */

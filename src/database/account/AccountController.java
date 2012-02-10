@@ -22,7 +22,7 @@ public class AccountController {
 	/**
 	 * Klassenattribut "acccontr" beinhaltet eine AccountController-Instanz, falls
 	 * keine vorhanden war und mit der Methode getInstance angelegt wird. Dies
-	 * dient um zu gewaehrleisten, dass nur eine Instanz von AccountController
+	 * dient zur Gewaehrleistung, dass nur eine Instanz von AccountController
 	 * existiert.
 	 */
 	private static AccountController acccontr;
@@ -51,10 +51,10 @@ public class AccountController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt einen neuen Account mit uebergebenem Account Parameter im Account-Objekt selber.
+	 * Diese Methode erstellt einen neuen Account mit uebergebener Account Instanz als Parameter.
 	 * 
 	 * @param account
-	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt. 
+	 * Parameter "account" ist ein Account-Objekt, welches alle noetigen Attribute enthaelt. 
 	 */
 	public void createAccount(Account account) {
 
@@ -63,8 +63,8 @@ public class AccountController {
 	/**
 	 * Diese Methode prueft ob ein AccountController-Objekt existiert. Falls
 	 * nicht wird eine neue AccountController-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "acccontr" abgespeichert. Dies dient um zu
-	 * gewaehrleisten, dass nur eine Instanz von AccountController
+	 * und in dem Klassenattribut "acccontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von AccountController
 	 * existiert.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.
@@ -79,7 +79,7 @@ public class AccountController {
 	/**
 	 * Diese Methode loescht den gewuenschten Account mit uebergebenem Account-Objekt.
 	 * @param account
-	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 * Parameter "account" ist ein Account-Objekt, welches alle noetigen Attribute enthaelt.
 	 */
 	public void deleteAccount(Account account) {
 
@@ -88,7 +88,7 @@ public class AccountController {
 	/**
 	 * Diese Methode nimmt Aenderungen an einem Account-Objekt vor. Dabei werden die geaenderten Attribute vom uebergebenem Parameter uebernommen.
 	 * @param account
-	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 * Parameter "account" ist ein Account-Objekt, welches alle noetigen Attribute enthaelt.
 	 */
 	public void updateAccount(Account account) {
 
@@ -99,7 +99,7 @@ public class AccountController {
 	 * @param accounttype
 	 * Es gibt drei unterschiedliche Accounttypen, um zwischen den unterschieldichen Benutzeransichten und Benutzerrechten der Accounttypen zu differenzieren.
 	 * @return
-	 * Es wird ein Vektor zurueckgegeben der alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Accounttyp.
+	 * Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Accounttyp.
 	 */
 	public Vector<Account> getAccountsByAccounttype(int accounttype) {
 		return null;
@@ -108,11 +108,12 @@ public class AccountController {
 
 	/**
 	 * Diese Methode selektiert alle Accounts mit uebergebenem Institut.
-	 * @param institute
+	 * @param id
+	 * Id ist der Primaerschluessel in der Institute-DB.
 	 * @return
-	 * Es wird ein Vektor zurueckgegeben der alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
+	 * Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
-	public Vector<Account> getAccountsByInstitute(int institute) {
+	public Vector<Account> getAccountsByInstitute(int id) {
 		return null;
 
 	}

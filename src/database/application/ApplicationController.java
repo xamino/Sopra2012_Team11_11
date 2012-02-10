@@ -25,7 +25,7 @@ public class ApplicationController {
 	/**
 	 * Klassenattribut "appcontr" beinhaltet eine ApplicationController-Instanz,
 	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
-	 * Dies dient um zu gewaehrleisten, dass nur eine Instanz von
+	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
 	 * ApplicationController existiert.
 	 */
 	private static ApplicationController appcontr;
@@ -36,7 +36,7 @@ public class ApplicationController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt ein Bewerbungsobjekt in der Datenbank. Mit
+	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit
 	 * ubergebenem Bewerbungsobjekt.
 	 * 
 	 * @param application
@@ -48,7 +48,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Diese Methode loescht ein Bewerbungsobjekt aus der Datenbank. Mit
+	 * Diese Methode loescht eine Bewerbung aus der Datenbank. Mit
 	 * ubergebenem Bewerbungsobjekt.
 	 * 
 	 * @param application
@@ -73,9 +73,9 @@ public class ApplicationController {
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen aus der Datenbank und speichert
-	 * diese in einem Vektor.
+	 * diese in einem Vector.
 	 * 
-	 * @return Es wird ein Vektor mit allen vorhanden Bewerbungen in der
+	 * @return Es wird ein Vector mit allen vorhanden Bewerbungen in der
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getAllApplications() {
@@ -85,13 +85,13 @@ public class ApplicationController {
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen eines bestimmten Bewerbers aus der
-	 * Datenbank und speichert diese in einem Vektor.
+	 * Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param username
 	 *            Parameter "username" gibt den Namen dese Bewerbers an, dessen
 	 *            Bewerbungen angezeigt werden sollen.
 	 * @return Alle Bewerbungen zu einem Bewerber aus der Datenbank in Form
-	 *         eines Vektors werden zurueckgegeben.
+	 *         eines Vectors werden zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByApplicant(String username) {
 		return null;
@@ -100,11 +100,11 @@ public class ApplicationController {
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen zu einem bestimmten Jobangebot aus
-	 * der Datenbank und speichert diese in einem Vektor.
+	 * der Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param aid
 	 *            Parameter "aid" (Angebots-Id) ist die Id des Jobangebots.
-	 * @return Es wird ein Vektor mit allen Bewerbungen zu einem bestimmten
+	 * @return Es wird ein Vector mit allen Bewerbungen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByOffer(int aid) {
@@ -115,8 +115,8 @@ public class ApplicationController {
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
 	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "appcontr" abgespeichert. Dies dient um zu
-	 * gewaehrleisten, dass nur eine Instanz von ApplicationController
+	 * und in dem Klassenattribut "appcontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von ApplicationController
 	 * existiert.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.
