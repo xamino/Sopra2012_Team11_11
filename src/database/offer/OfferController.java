@@ -16,19 +16,19 @@ import database.application.Application;
 public class OfferController {
 
 	/**
-	 * Konstruktor fuer OfferController-Instanz.
+	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
 
 	}
 
 	/**
-	 * Klassenattribut "offcon" beinhaltet eine OfferController-Instanz, falls
+	 * Klassenattribut "offcontr" beinhaltet eine OfferController-Instanz, falls
 	 * keine vorhanden war und mit der Methode getInstance angelegt wird. Dies
 	 * dient um zu gewaehrleisten, dass nur eine Instanz von OfferController
 	 * existiert.
 	 */
-	private static OfferController offcon;
+	private static OfferController offcontr;
 
 	/**
 	 * Attribut dbc ist eine DatabaseController Instanz und wird fuer den
@@ -77,7 +77,7 @@ public class OfferController {
 	 * Diese Methode sammelt alle Jobangebote aus der Datenbank und speichert
 	 * diese in einem Vektor.
 	 * 
-	 * @return Es wird ein Vektor mit allen vorhanden Jobangeboten in der
+	 * @return Es wird ein Vektor mit allen vorhanden Jobangeboten aus der
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Offer> getAllOffers() {
@@ -107,7 +107,7 @@ public class OfferController {
 	 * Diese Methode sammelt alle Jobangebote mit freien Stellen aus der
 	 * Datenbank und speichert diese in einem Vektor.
 	 * 
-	 * @return Es wird ein Vektor mit allen noch freien Jobangeboten in der
+	 * @return Es wird ein Vektor mit allen noch freien Jobangeboten aus der
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Offer> getOffersWithFreeSlots() {
@@ -123,7 +123,7 @@ public class OfferController {
 	 *            Parameter "application" ist eine Application-Objekt
 	 *            (Bewerbungs-Objekt).
 	 * @return Es wird ein Vektor mit allen Jobangeboten einer bestimmten
-	 *         Bewerbung in der Datenbank zurueckgegeben.
+	 *         Bewerbung aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Offer> getOffersByApplication(Application application) {
 		return null;
@@ -132,16 +132,16 @@ public class OfferController {
 
 	/**
 	 * Diese Methode prueft ob ein OfferController-Objekt existiert. Falls nicht
-	 * wird eine neue Offer-Instanz angelegt, zurueckgegeben und in dem
-	 * Klassenattribut "offcon" abgespeichert. Dies dient um zu gewaehrleisten,
-	 * dass nur eine Instanz von OfferController existiert.
+	 * wird eine neue OfferController-Instanz angelegt, zurueckgegeben und in
+	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient um zu
+	 * gewaehrleisten, dass nur eine Instanz von OfferController existiert.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.
 	 */
 	public static OfferController getInstance() {
-		if (offcon == null)
-			offcon = new OfferController();
-		return offcon;
+		if (offcontr == null)
+			offcontr = new OfferController();
+		return offcontr;
 
 	}
 
