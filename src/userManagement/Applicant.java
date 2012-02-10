@@ -2,6 +2,8 @@ package userManagement;
 
 import javax.servlet.http.HttpSession;
 
+import database.account.Account;
+
 
 /**
  *Verwaltet alle Aufgaben und Daten eines Bewerbers. 
@@ -20,6 +22,22 @@ public class Applicant extends User {
 	public Applicant(String username, String email, String name, HttpSession session) {
 		
 	}
-	//hier werden im fertigen projekt beziehungen zu anderen klassen modelliert
-
+	/**
+	 * Editiert den eigenen Account. Der Benutzername ist dabei nicht aenderbar und identifiziert den zu aendernden Account in der Datenbank
+	 * @param acc geaenderter Account
+	 */
+	public void editAccount(Account acc){
+		
+	}
+	/**
+	 * Bewerben auf ein Angebot
+	 * @param applicationID ID des Angebots
+	 */
+	public void apply(int offerID){
+		
+	}
+	
+	public void deleteApplication(int applicationID){
+		
+	}
 }

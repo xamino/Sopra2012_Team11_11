@@ -122,4 +122,66 @@ public class DocumentController {
 
 	}
 	
+	/**
+	 * Diese Methode erstellt ein Applikationsunterlagen-Objekt (ApplicationDocument-Objekt) in der Datenbank. Mit
+	 * uebergebenem Applikationsunterlagen-Objekt (ApplicationDocument-Objekt).
+	 * @param document
+	 * Parameter "document" ist ein AppDocument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void createApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode loescht ein Applikationsunterlagen-Objekt (AppDocument-Objekt) aus der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Applikationsdokument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void deleteApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode aendert die Attribute einer ApplikationsUnterlage beziehungsweise aktualisiert diese in der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Applikationsdokument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void updateApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode erstellt ein Angebotsunterlagen-Objekt (OfferDocument-Objekt) in der Datenbank. Mit
+	 * ubergebenem Angebotsunterlagen-Objekt (OfferDocument-Objekt).
+	 * @param document
+	 * Parameter "document" ist ein Angebotsdokument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void createOfferDocument(OfferDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode loescht ein Angebotunterlagen-Objekt (OfferDocument-Objekt) aus der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein AngebotDokument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void deleteOfferDocument(OfferDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode aendert die Attribute einer Angebotsunterlage beziehungsweise aktualisiert diese in der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Angebotsdokument-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void updateOfferDocument(OfferDocument document){
+		
+	}
+	
 }

@@ -111,6 +111,14 @@ public class ApplicationController {
 		return null;
 
 	}
+	/**
+	 * Gibt alle Bewerbungen die von einem Verwalter abgeschlossen wurden zurück
+	 * @param clerkname Name des Verwalters
+	 * @return Es wird ein Vektor mit Bewerbungen zurueckgegeben
+	 */
+	public Vector<Application> getApprovedApplicationsByClerk(String clerkname){
+		return null;
+	}
 
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
