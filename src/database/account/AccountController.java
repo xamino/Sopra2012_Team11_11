@@ -45,7 +45,7 @@ public class AccountController {
 	 * Diese Methode erstellt einen neuen Account mit uebergebenem Account Parameter.
 	 * 
 	 * @param account
-	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt. 
+	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt. 
 	 */
 	public void createAccount(Account account) {
 
@@ -62,7 +62,7 @@ public class AccountController {
 	/**
 	 * Diese Methode loescht den gewuenschten Account mit uebergebenem Account-Objekt.
 	 * @param account
-	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
 	 */
 	public void deleteAccount(Account account) {
 
@@ -70,7 +70,7 @@ public class AccountController {
 	/**
 	 * Diese Methode nimmt Aenderungen an einem Account-Objekt vor. Dabei werden die geaenderten Attribute vom uebergebenem Parameter uebernommen.
 	 * @param account
-	 * Parameter ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
+	 * Parameter "account" ist ein Account-Objekt, der alle noetigen Attribute enthaelt.
 	 */
 	public void updateAccount(Account account) {
 
