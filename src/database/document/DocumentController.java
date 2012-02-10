@@ -120,5 +120,67 @@ public class DocumentController {
 		return doccontr;
 
 	}
+	//------------------ Ab hier Javadoc Kommentare abaendern! ----------------------------
+	/**
+	 * Diese Methode erstellt ein Unterlagen-Objekt (Document-Objekt) in der Datenbank. Mit
+	 * ubergebenem Unterlagen-Objekt (Document-Objekt).
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void createApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode loescht ein Unterlagen-Objekt (Document-Objekt) aus der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void deleteApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode aendert die Attribute einer Unterlage bzw. aktualisiert diese in der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void updateApplicationDocument(AppDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode erstellt ein Unterlagen-Objekt (Document-Objekt) in der Datenbank. Mit
+	 * ubergebenem Unterlagen-Objekt (Document-Objekt).
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void createOfferDocument(OfferDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode loescht ein Unterlagen-Objekt (Document-Objekt) aus der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void deleteOfferDocument(OfferDocument document){
+		
+	}
+	
+	/**
+	 * Diese Methode aendert die Attribute einer Unterlage bzw. aktualisiert diese in der Datenbank.
+	 * @param document
+	 * Parameter "document" ist ein Document-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 */
+	public void updateOfferDocument(OfferDocument document){
+		
+	}
 	
 }
