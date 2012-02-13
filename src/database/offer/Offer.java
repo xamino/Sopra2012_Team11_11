@@ -1,4 +1,5 @@
 package database.offer;
+
 /**
  * Datenklasse fuer die Angebote.
  */

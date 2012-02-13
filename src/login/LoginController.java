@@ -2,17 +2,15 @@ package login;
 
 import database.DatabaseController;
 
-
 /**
  * Hilfsklasse fuer den Loginvorgang des Systems.
  */
 public abstract class LoginController {
 	public DatabaseController dbc;
-	
 
 	/**
-	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob
-	 * die Parameter einem Account entsprechen. 
+	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob die Parameter einem
+	 * Account entsprechen.
 	 * 
 	 * @param username
 	 *            Benutzername eines Accounts.

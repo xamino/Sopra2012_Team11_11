@@ -5,6 +5,7 @@ import userManagement.UserData;
 /**
  * Klasse zur erstellung von Exceldateien mit den getaetigten Einstellungen
  * eines Verwalters.
+ * 
  * @author Manuel Guentzel
  * 
  */

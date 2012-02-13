@@ -102,6 +102,7 @@ public class Clerk extends User {
 
 	/**
 	 * Export fuer die Excel-File
+	 * 
 	 * @return
 	 */
 

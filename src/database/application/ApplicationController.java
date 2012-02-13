@@ -30,7 +30,7 @@ public class ApplicationController {
 		return appcontr;
 
 	}
-	
+
 	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
@@ -52,8 +52,8 @@ public class ApplicationController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit
-	 * ubergebenem Bewerbungsobjekt.
+	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
+	 * Bewerbungsobjekt.
 	 * 
 	 * @param application
 	 *            Parameter "application" ist ein Application-Objekt mit allen
@@ -64,8 +64,8 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Diese Methode loescht eine Bewerbung aus der Datenbank. Mit
-	 * ubergebenem Bewerbungsobjekt.
+	 * Diese Methode loescht eine Bewerbung aus der Datenbank. Mit ubergebenem
+	 * Bewerbungsobjekt.
 	 * 
 	 * @param application
 	 *            Parameter "application" ist ein Application-Objekt mit allen
@@ -127,15 +127,17 @@ public class ApplicationController {
 		return null;
 
 	}
+
 	/**
-	 * Gibt alle Bewerbungen die von einem Verwalter abgeschlossen wurden zurueck.
-	 * @param clerkname Name des Verwalters.
+	 * Gibt alle Bewerbungen die von einem Verwalter abgeschlossen wurden
+	 * zurueck.
+	 * 
+	 * @param clerkname
+	 *            Name des Verwalters.
 	 * @return Es wird ein Vektor mit Bewerbungen zurueckgegeben.
 	 */
-	public Vector<Application> getApprovedApplicationsByClerk(String clerkname){
+	public Vector<Application> getApprovedApplicationsByClerk(String clerkname) {
 		return null;
 	}
-
-	
 
 }

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Das <code>Admin</code> Servlet behandelt alle Aktionen von
- * angemeldeten Administratoren.
+ * Das <code>Admin</code> Servlet behandelt alle Aktionen von angemeldeten
+ * Administratoren.
  */
 
 @WebServlet("/Admin/*")
