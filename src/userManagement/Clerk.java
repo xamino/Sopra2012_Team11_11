@@ -27,4 +27,67 @@ public class Clerk extends User {
 	public void editAccount(Account acc){
 		
 	}
+	
+	/**
+	 * TODO!
+	 */
+	public void editApplication(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void rejectOffer(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void updateOffer(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void addAppDoc(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void addDoc(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void delDoc(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void acceptApplication(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void deleteAppDoc(){
+		
+	}
+	
+	/**
+	 * TODO!
+	 */
+	public void updateStatus(){
+		
+	}
 }
