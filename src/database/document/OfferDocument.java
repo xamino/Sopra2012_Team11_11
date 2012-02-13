@@ -1,7 +1,7 @@
 package database.document;
 
 /**
- * Klasse fuer Standarddokumente für Angebote
+ * Klasse fuer Standarddokumente für Angebote.
  * @author Guentzel
  *
  */

@@ -88,6 +88,14 @@ public class Clerk extends User {
 	 * TODO!
 	 */
 	public void updateStatus(){
-		
+	
+	}
+
+	 /** 
+	 * @return
+	 */
+	
+	public String doExport(){
+		return null;
 	}
 }

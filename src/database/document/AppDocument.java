@@ -1,6 +1,6 @@
 package database.document;
 /**
- * Klasse fuer Bewerbungsdokumente
+ * Klasse fuer Bewerbungsdokumente.
  * @author Guentzel
  *
  */

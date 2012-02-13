@@ -6,7 +6,7 @@
 package database.application;
 
 /**
- * Verwaltet alle Datenbankzugriffe auf Bewerbungs-bezogene Daten
+ * Verwaltet alle Datenbankzugriffe auf Bewerbungs-bezogene Daten.
  */
 import java.util.Vector;
 
@@ -128,9 +128,9 @@ public class ApplicationController {
 
 	}
 	/**
-	 * Gibt alle Bewerbungen die von einem Verwalter abgeschlossen wurden zurück
-	 * @param clerkname Name des Verwalters
-	 * @return Es wird ein Vektor mit Bewerbungen zurueckgegeben
+	 * Gibt alle Bewerbungen die von einem Verwalter abgeschlossen wurden zurueck.
+	 * @param clerkname Name des Verwalters.
+	 * @return Es wird ein Vektor mit Bewerbungen zurueckgegeben.
 	 */
 	public Vector<Application> getApprovedApplicationsByClerk(String clerkname){
 		return null;

@@ -5,7 +5,7 @@
 
 package database.document;
 /**
- * Verwaltet alle Datenbankzugriffe auf Unterlagen-bezogene Daten
+ * Verwaltet alle Datenbankzugriffe auf Unterlagen-bezogene Daten.
  */
 import java.util.Vector;
 
@@ -101,7 +101,8 @@ public class DocumentController {
 	 * @param offer
 	 * 	Parameter "offer" ist ein Offer-Objekt mit allen Offer-Attributen.
 	 * @return
-	 * Es wird ein Vector mit allen Unterlagen von einem bestimmten Account zu einem bestimmten Jobangebot aus der Datenbank zurueckgegeben.
+	 * Es wird ein Vector mit allen Unterlagen von einem bestimmten 
+	 * Account zu einem bestimmten Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Document> getDocumentsByUserAndOffer(Account account, Offer offer){
 		//Account oder Application Instanz?
@@ -123,8 +124,8 @@ public class DocumentController {
 	
 	
 	/**
-	 * Diese Methode erstellt ein Applikationsunterlagen-Objekt (ApplicationDocument-Objekt) in der Datenbank. Mit
-	 * uebergebenem Applikationsunterlagen-Objekt (ApplicationDocument-Objekt).
+	 * Diese Methode erstellt ein Applikationsunterlagen-Objekt (ApplicationDocument-Objekt) in der Datenbank. 
+	 * Mit uebergebenem Applikationsunterlagen-Objekt (ApplicationDocument-Objekt).
 	 * @param document
 	 * Parameter "document" ist ein AppDocument-Objekt mit allen
 	 *            dazugehoerigen Attributen.
@@ -154,8 +155,8 @@ public class DocumentController {
 	}
 	
 	/**
-	 * Diese Methode erstellt ein Angebotsunterlagen-Objekt (OfferDocument-Objekt) in der Datenbank. Mit
-	 * ubergebenem Angebotsunterlagen-Objekt (OfferDocument-Objekt).
+	 * Diese Methode erstellt ein Angebotsunterlagen-Objekt (OfferDocument-Objekt) in der Datenbank. 
+	 * Mit ubergebenem Angebotsunterlagen-Objekt (OfferDocument-Objekt).
 	 * @param document
 	 * Parameter "document" ist ein Angebotsdokument-Objekt mit allen
 	 *            dazugehoerigen Attributen.
