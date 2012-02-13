@@ -10,7 +10,6 @@ import userManagement.UserData;
  */
 public abstract class ExcelExport {
 	/**
-<<<<<<< HEAD
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
 	 * Verwalters und gibt den Link dazu zurueck. Dem uebergebenen
 	 * UserData-Objekt werden der Benutzername und die Session entnommen um
