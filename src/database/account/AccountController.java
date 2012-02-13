@@ -117,5 +117,30 @@ public class AccountController {
 		return null;
 
 	}
+	
+	/**
+	 * Die Methode gibt den Namen des Stellvertreters zurueck. 
+	 * Wen kein Name vorhanden ist, wird ein <code>NULL</code> zurueck 
+	 * gegeben. 
+	 * 
+	 * @param name
+	 * 				Name des Stellvertreters
+	 * @return
+	 * 				Gibt den Namen des Stellvertreters zurueck.
+	 */		  		
+	public String getRepresentative(String name){
+		
+		return null;
+	}
+	/**
+	 * Die Methode setzt einen Stellvertreter fuer den Account.
+	 * 
+	 * @param name
+	 * 				Der Name des Stellvertreters
+	 */
+	
+	public void setRepresentative(String name){
+		
+	}
 
 }
