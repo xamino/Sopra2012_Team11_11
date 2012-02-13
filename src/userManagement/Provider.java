@@ -26,4 +26,29 @@ public class Provider extends User {
 	public void editAccount(Account acc){
 		
 	}
+	
+	/**
+	 * TODO
+	 */
+	public void acceptApplicants(){
+		
+	}
+	
+	/**
+	 * TODO
+	 */
+	public void deleteOffer(){
+		
+	}
+	
+	/**
+	 * TODO
+	 */
+	public void createOffer(){
+		
+	}
+	
+	
+	
+	
 }
