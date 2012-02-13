@@ -56,7 +56,7 @@ public class Document {
 	/**
 	 * Setzt die id des Dokuments.
 	 * 
-	 * @param id
+	 * @param uid
 	 *            Gewuenschter id fuer das Dokument.
 	 */
 	public void setUid(int uid) {
