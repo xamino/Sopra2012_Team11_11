@@ -1,6 +1,7 @@
 /**
  * @author Manuel Guentzel
  * @author Oemer Sahin
+ * @author Patryk Boczon
  */
 package database.account;
 
@@ -8,21 +9,21 @@ package database.account;
  * Datenklasse fuer Accounts.
  */
 public class Account {
-
+	
 	/**
 	 * Der Benutzername des Benutzers.
 	 */
-	private String benutzername;
+	private String username;
 	/**
 	 * Passworthash des Benutzerpassworts (je nach Verwendung auch Passwort im
 	 * Klartext!).
 	 */
-	private String passworthash;
+	private String passwordhash;
 	/**
 	 * Der Berechtigungstyp des Accounts. 0 - Admin 1 - Anbieter 2 - Verwalter 3
 	 * - Bewerber
 	 */
-	private int accounttyp;
+	private int accounttype;
 	/**
 	 * Email Adresse des Benutzers.
 	 */
@@ -42,11 +43,11 @@ public class Account {
 	/**
 	 * Konstruktor
 	 * 
-	 * @param benutzername
+	 * @param username
 	 *            Benutzername im System.
-	 * @param passworthash
+	 * @param passwordhash
 	 *            Passwort (Je nach verwendung Klartext oder schon Hash).
-	 * @param accounttyp
+	 * @param accounttype
 	 *            Accounttyp: 0: Admin 1: Anbieter 2: Verwalter 3: Bewerber.
 	 * @param email
 	 *            E-Mail adresse.
@@ -56,9 +57,9 @@ public class Account {
 	public Account(String benutzername, String passworthash, int accounttyp,
 			String email, String name, int institute, String representative) {
 		super();
-		this.benutzername = benutzername;
-		this.passworthash = passworthash;
-		this.accounttyp = accounttyp;
+		this.username = benutzername;
+		this.passwordhash = passworthash;
+		this.accounttype = accounttyp;
 		this.email = email;
 		this.name = name;
 		this.institute = institute;
@@ -89,18 +90,18 @@ public class Account {
 	 * 
 	 * @return Benutzername des Accountinhabers.
 	 */
-	public String getBenutzername() {
-		return benutzername;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
 	 * Setzt den Benutzernamen.
 	 * 
-	 * @param benutzername
+	 * @param username
 	 *            Gewuenschter Benutzername.
 	 */
-	public void setBenutzername(String benutzername) {
-		this.benutzername = benutzername;
+	public void setUsername(String benutzername) {
+		this.username = benutzername;
 	}
 
 	/**
@@ -108,18 +109,18 @@ public class Account {
 	 * 
 	 * @return Passworthash des Passworts des Accountinhabers.
 	 */
-	public String getPassworthash() {
-		return passworthash;
+	public String getPasswordhash() {
+		return passwordhash;
 	}
 
 	/**
 	 * Setzt den Passworthash.
 	 * 
-	 * @param passworthash
+	 * @param passwordhash
 	 *            Gewuenschter Passworthash.
 	 */
-	public void setPassworthash(String passworthash) {
-		this.passworthash = passworthash;
+	public void setPasswordhash(String passworthash) {
+		this.passwordhash = passworthash;
 	}
 
 	/**
@@ -127,18 +128,18 @@ public class Account {
 	 * 
 	 * @return Accounttyp des Accountinhabers.
 	 */
-	public int getAccounttyp() {
-		return accounttyp;
+	public int getAccounttype() {
+		return accounttype;
 	}
 
 	/**
 	 * Setzt den Accounttyp.
 	 * 
-	 * @param accounttyp
+	 * @param accounttype
 	 *            Gewuenschter Accounttyp.
 	 */
-	public void setAccounttyp(int accounttyp) {
-		this.accounttyp = accounttyp;
+	public void setAccounttype(int accounttyp) {
+		this.accounttype = accounttyp;
 	}
 
 	/**
