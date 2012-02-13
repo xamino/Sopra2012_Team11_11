@@ -60,8 +60,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Loescht einen loescht ein Dokument aus der Datenbank. TODO: Welche Art
-	 * von Dokument?
+	 * Loescht einen loescht ein Administrator Dokument aus der Datenbank.
 	 * 
 	 * @param doc
 	 *            zu löschendes Dokument.
@@ -71,7 +70,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Fuegt ein Dokument hinzu. TODO: Welche Art von Dokument?
+	 * Fuegt ein Administrator Dokument hinzu.
 	 * 
 	 * @param doc
 	 */
@@ -80,7 +79,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * editiert ein Dokument. TODO: Welche Art von Dokument?
+	 * Editiert ein Administrator Dokument.
 	 * 
 	 * @param doc
 	 *            geaendertes Dokument

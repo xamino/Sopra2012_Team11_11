@@ -3,6 +3,7 @@ database.account
 database.application
 database.document
 database.offer
+file
 login
 servlet
 userManagement

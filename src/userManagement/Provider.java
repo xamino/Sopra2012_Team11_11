@@ -39,21 +39,21 @@ public class Provider extends User {
 	}
 
 	/**
-	 * TODO
+	 * Methode zur Annahme von Bewerbern auf ein Angebot.
 	 */
 	public void acceptApplicants() {
 
 	}
 
 	/**
-	 * TODO
+	 * Loescht ein Angebot aus dem System.
 	 */
 	public void deleteOffer() {
 
 	}
 
 	/**
-	 * TODO
+	 * Erstellt ein neues, noch zu pruefendes Angebot im System. 
 	 */
 	public void createOffer() {
 

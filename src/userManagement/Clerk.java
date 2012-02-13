@@ -105,7 +105,7 @@ public class Clerk extends User {
 	/**
 	 * Export fuer die Excel-File
 	 * 
-	 * @return
+	 * @return Die URL zu den Download des Excel-Files.
 	 */
 
 	public String doExport() {

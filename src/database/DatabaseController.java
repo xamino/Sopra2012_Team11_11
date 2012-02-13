@@ -6,35 +6,35 @@ package database;
  */
 public class DatabaseController {
 	/**
-	 * TODO!
+	 * Methode welche ein SQL "update" Statement ausführt.
 	 */
 	public void update() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode welche ein SQL "delete" Statement ausführt.
 	 */
 	public void delete() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode welche ein SQL "insert" Statement ausführt.
 	 */
 	public void insert() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode welche ein SQL "select" Statement ausführt.
 	 */
 	public void select() {
 
 	}
 
 	/**
-	 * TODO! Auch die Bennenung darf noch verbessert werden... :D
+	 * Methode welche ein SQL "insert on not null update" Statement ausführt.
 	 */
 	public void insertOnNullElseUpdate() {
 

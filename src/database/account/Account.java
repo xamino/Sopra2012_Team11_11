@@ -9,13 +9,13 @@ package database.account;
  * Datenklasse fuer Accounts.
  */
 public class Account {
-	
+
 	/**
 	 * Der Benutzername des Benutzers.
 	 */
 	private String username;
 	/**
-	 * Passworthash des Benutzerpassworts 
+	 * Passworthash des Benutzerpassworts
 	 */
 	private String passwordhash;
 	/**
@@ -182,7 +182,7 @@ public class Account {
 	/**
 	 * Gibt den Stellvertreternamen zurueck.
 	 * 
-	 * @return
+	 * @return Der Stellvertretername.
 	 */
 	public String getRepresentative() {
 		return representative;
