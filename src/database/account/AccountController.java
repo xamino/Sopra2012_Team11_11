@@ -26,7 +26,23 @@ public class AccountController {
 	 * existiert.
 	 */
 	private static AccountController acccontr;
-		
+	
+	/**
+	 * Diese Methode prueft ob ein AccountController-Objekt existiert. Falls
+	 * nicht wird eine neue AccountController-Instanz angelegt, zurueckgegeben
+	 * und in dem Klassenattribut "acccontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von AccountController
+	 * existiert.
+	 * 
+	 * @return Es wird die Instanz zurueckgegeben.
+	 */
+	public static AccountController getInstance() {
+		if (acccontr == null)
+			acccontr = new AccountController();
+		return acccontr;
+
+	}
+	
 	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
@@ -60,21 +76,6 @@ public class AccountController {
 
 	}
 	
-	/**
-	 * Diese Methode prueft ob ein AccountController-Objekt existiert. Falls
-	 * nicht wird eine neue AccountController-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "acccontr" abgespeichert. Dies dient zur
-	 * Gewaehrleistung, dass nur eine Instanz von AccountController
-	 * existiert.
-	 * 
-	 * @return Es wird die Instanz zurueckgegeben.
-	 */
-	public static AccountController getInstance() {
-		if (acccontr == null)
-			acccontr = new AccountController();
-		return acccontr;
-
-	}
 	
 	/**
 	 * Diese Methode loescht den gewuenschten Account mit uebergebenem Account-Objekt.
