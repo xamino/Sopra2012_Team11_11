@@ -1,6 +1,7 @@
 /**
  * @author Manuel Guentzel
  * @author Oemer Sahin
+ * @author Patryk Boczon
  */
 package database.account;
 
@@ -8,7 +9,7 @@ package database.account;
  * Datenklasse fuer Accounts.
  */
 public class Account {
-
+	
 	/**
 	 * Der Benutzername des Benutzers.
 	 */
