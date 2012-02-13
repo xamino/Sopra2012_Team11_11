@@ -1,7 +1,8 @@
 package database;
 
 /**
- * Verbindung zur Datenbank mit allen modifikations Befehlen.
+ * Verbindung zur Datenbank mit allen Modifikationsbefehlen. 
+ * 
  */
 public class DatabaseController {
 	/**
