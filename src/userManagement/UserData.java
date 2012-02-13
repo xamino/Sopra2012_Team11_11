@@ -4,18 +4,20 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Datenklasse für die Daten eines Benutzers.
+ * 
  * @author Guentzel
- *
+ * 
  */
 public class UserData {
 
-	public UserData(String benutzername,String email,String name,HttpSession session){
+	public UserData(String benutzername, String email, String name,
+			HttpSession session) {
 		this.benutzername = benutzername;
 		this.email = email;
 		this.name = name;
 		this.session = session;
 	}
-	
+
 	private String name;
 	/**
 	 * Benutzername des Benutzers
