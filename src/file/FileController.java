@@ -9,7 +9,7 @@ import java.io.File;
  */
 
 
-public class FileController {
+public abstract class FileController {
 	
 	private static void deleteFilesBySession (String sessionId){
 		
