@@ -16,6 +16,21 @@ import database.application.Application;
 public class OfferController {
 
 	/**
+	 * Diese Methode prueft ob ein OfferController-Objekt existiert. Falls nicht
+	 * wird eine neue OfferController-Instanz angelegt, zurueckgegeben und in
+	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von OfferController existiert.
+	 * 
+	 * @return Es wird die Instanz zurueckgegeben.
+	 */
+	public static OfferController getInstance() {
+		if (offcontr == null)
+			offcontr = new OfferController();
+		return offcontr;
+
+	}
+	
+	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
@@ -128,19 +143,6 @@ public class OfferController {
 
 	}
 
-	/**
-	 * Diese Methode prueft ob ein OfferController-Objekt existiert. Falls nicht
-	 * wird eine neue OfferController-Instanz angelegt, zurueckgegeben und in
-	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient zur
-	 * Gewaehrleistung, dass nur eine Instanz von OfferController existiert.
-	 * 
-	 * @return Es wird die Instanz zurueckgegeben.
-	 */
-	public static OfferController getInstance() {
-		if (offcontr == null)
-			offcontr = new OfferController();
-		return offcontr;
-
-	}
+	
 
 }
