@@ -5,12 +5,12 @@ import userManagement.UserData;
 /**
  * Klasse zur erstellung von Exceldateien mit den getaetigten Einstellungen
  * eines Verwalters.
- * 
  * @author Manuel Guentzel
  * 
  */
 public abstract class ExcelExport {
 	/**
+<<<<<<< HEAD
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
 	 * Verwalters und gibt den Link dazu zurueck. Dem uebergebenen
 	 * UserData-Objekt werden der Benutzername und die Session entnommen um
