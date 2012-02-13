@@ -194,7 +194,7 @@
   </class>  
   <class id="25" corner="BOTTOM_RIGHT" language="java" name="database.account.Account" project="hiwi_program" 
     file="/hiwi_program/src/database/account/Account.java" binary="false">    
-    <position height="-1" width="-1" x="1956" y="230"/>    
+    <position height="-1" width="-1" x="1900" y="922"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -202,7 +202,7 @@
   </class>  
   <class id="26" corner="BOTTOM_RIGHT" language="java" name="database.application.Application" project="hiwi_program" 
     file="/hiwi_program/src/database/application/Application.java" binary="false">    
-    <position height="-1" width="-1" x="1953" y="597"/>    
+    <position height="-1" width="-1" x="2198" y="874"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -210,7 +210,7 @@
   </class>  
   <class id="27" corner="BOTTOM_RIGHT" language="java" name="database.document.Document" project="hiwi_program" 
     file="/hiwi_program/src/database/document/Document.java" binary="false">    
-    <position height="-1" width="-1" x="2199" y="133"/>    
+    <position height="-1" width="-1" x="1845" y="1234"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -218,7 +218,7 @@
   </class>  
   <class id="28" corner="BOTTOM_RIGHT" language="java" name="database.document.OfferDocument" project="hiwi_program" 
     file="/hiwi_program/src/database/document/OfferDocument.java" binary="false">    
-    <position height="-1" width="-1" x="2191" y="340"/>    
+    <position height="-1" width="-1" x="2026" y="1219"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
@@ -226,144 +226,152 @@
   </class>  
   <class id="29" corner="BOTTOM_RIGHT" language="java" name="database.document.AppDocument" project="hiwi_program" 
     file="/hiwi_program/src/database/document/AppDocument.java" binary="false">    
-    <position height="-1" width="-1" x="2225" y="571"/>    
+    <position height="-1" width="-1" x="2228" y="1169"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <association id="30">    
+  <class id="30" corner="BOTTOM_RIGHT" language="java" name="database.offer.Offer" project="hiwi_program" 
+    file="/hiwi_program/src/database/offer/Offer.java" binary="false">    
+    <position height="-1" width="-1" x="1988" y="355"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association id="31">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="31" name="appcon"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+      <attribute id="32" name="appcon"/>      
+      <multiplicity id="33" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="33">    
+  <association id="34">    
     <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="34" name="dbc"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
+      <attribute id="35" name="dbc"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="36">    
+  <association id="37">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="37" name="dbc"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+      <attribute id="38" name="dbc"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="39">    
+  <generalization id="40">    
     <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="10"/>  
   </generalization>  
-  <association id="40">    
+  <association id="41">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="41" name="uData"/>      
-      <multiplicity id="42" minimum="0" maximum="1"/>    
+      <attribute id="42" name="uData"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="24" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="43">    
+  <association id="44">    
     <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="44" name="acccontr"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
+      <attribute id="45" name="acccontr"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="46">    
+  <association id="47">    
     <end type="SOURCE" refId="23" navigable="false">      
-      <attribute id="47" name="users"/>      
-      <multiplicity id="48" minimum="0" maximum="2147483647"/>    
+      <attribute id="48" name="users"/>      
+      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="49">    
+  <association id="50">    
     <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="50" name="dbc"/>      
-      <multiplicity id="51" minimum="0" maximum="1"/>    
+      <attribute id="51" name="dbc"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="52">    
+  <generalization id="53">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="10"/>  
   </generalization>  
-  <generalization id="53">    
+  <generalization id="54">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="10"/>  
   </generalization>  
-  <association id="54">    
+  <association id="55">    
     <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="55" name="doccontr"/>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
+      <attribute id="56" name="doccontr"/>      
+      <multiplicity id="57" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="57">    
+  <association id="58">    
     <end type="SOURCE" refId="21" navigable="false">      
-      <attribute id="58" name="dbc"/>      
-      <multiplicity id="59" minimum="0" maximum="1"/>    
+      <attribute id="59" name="dbc"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="60">    
+  <association id="61">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="61" name="acccon"/>      
-      <multiplicity id="62" minimum="0" maximum="1"/>    
+      <attribute id="62" name="acccon"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="21" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="63">    
+  <association id="64">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="64" name="offcon"/>      
-      <multiplicity id="65" minimum="0" maximum="1"/>    
+      <attribute id="65" name="offcon"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="66">    
+  <generalization id="67">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="10"/>  
   </generalization>  
-  <association id="67">    
+  <association id="68">    
     <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="68" name="doccon"/>      
-      <multiplicity id="69" minimum="0" maximum="1"/>    
+      <attribute id="69" name="doccon"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="18" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="70">    
+  <association id="71">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="71" name="offcontr"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
+      <attribute id="72" name="offcontr"/>      
+      <multiplicity id="73" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="73">    
+  <association id="74">    
     <end type="SOURCE" refId="22" navigable="false">      
-      <attribute id="74" name="dbc"/>      
-      <multiplicity id="75" minimum="0" maximum="1"/>    
+      <attribute id="75" name="dbc"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="17" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="76">    
+  <association id="77">    
     <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="77" name="appcontr"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
+      <attribute id="78" name="appcontr"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="20" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
