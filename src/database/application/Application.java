@@ -33,7 +33,20 @@ public class Application {
 	private boolean chosen;
 	
 	
-
+	/**
+	 * Konstruktor
+	 * 
+	 * @param username
+	 * 		Der Benutzername des Bewerbers.
+	 * @param aid
+	 * 		Die id der Bewerbung.
+	 * @param status
+	 * 		Der Status der Bewerbung.
+	 * @param clerk
+	 * 		Der zustaendige Sachbearbeiter der Bewerbung.
+	 * @param chosen
+	 * 		Parameter speichert akzeptiert (true) oder abgelehnt (false).
+	 */
 	public Application(String username, int aid, boolean status, String clerk,
 			boolean chosen) {
 		super();
@@ -54,6 +67,12 @@ public class Application {
 		return username;
 	}
 
+	/**
+	 * Setzt den Benutzernamen.
+	 * 
+	 * @param benutzername
+	 *            Gewuenschter Benutzername.
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -67,6 +86,12 @@ public class Application {
 		return aid;
 	}
 
+	/**
+	 * Setzt die Bewerbungsid.
+	 * 
+	 * @param aid
+	 *            Gewuenschte Bewerbungsid.
+	 */
 	public void setAid(int aid) {
 		this.aid = aid;
 	}
@@ -80,6 +105,12 @@ public class Application {
 		return status;
 	}
 
+	/**
+	 * Setzt den Bewerbungsstatus.
+	 * 
+	 * @param status
+	 *            Gewuenschter Bewerbungsstatus.
+	 */
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -93,6 +124,12 @@ public class Application {
 		return clerk;
 	}
 
+	/**
+	 * Setzt den Sachbearbeiter fuer diese Bewerbung.
+	 * 
+	 * @param clerk
+	 *            Gewuenschte Sachbearbeiter.
+	 */
 	public void setClerk(String clerk) {
 		this.clerk = clerk;
 	}
@@ -106,6 +143,12 @@ public class Application {
 		return chosen;
 	}
 
+	/**
+	 * Setzt den Bewerbungsstatus (angenommen oder abgelehnt).
+	 * 
+	 * @param chosen
+	 *            Gewuenschter Bewerbungsstatus (angenommen oder abgelehnt).
+	 */
 	public void setChosen(boolean chosen) {
 		this.chosen = chosen;
 	}
