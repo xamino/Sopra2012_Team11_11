@@ -10,6 +10,8 @@ package database.document;
  */
 import java.util.Vector;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import database.DatabaseController;
 import database.account.Account;
 import database.application.ApplicationController;
@@ -60,7 +62,7 @@ public class DocumentController {
 	public void createDocument(Document document) {
 
 	}
-
+	
 	/**
 	 * Diese Methode loescht eine Unterlage aus der Datenbank.
 	 * 
@@ -96,6 +98,19 @@ public class DocumentController {
 	public Vector<Document> getDocumentsByOffer(int aid) {
 		return null;
 
+	}
+	
+	/**
+	 * Diese Methode sammelt alle Bewerber-Unterlagen zu einem bestimmten Jobangebot aus
+	 * der Datenbank und speichert diese in einem Vector.
+	 * 
+	 * @param aid
+	 *            Parameter "aid" (Angebots-Id) ist die Id des Jobangebots.
+	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
+	 *         Jobangebot aus der Datenbank zurueckgegeben.
+	 */
+	public Vector<AppDocument> getAppDocumentByOffer(int ai){
+		return null;
 	}
 
 	/**
@@ -140,7 +155,7 @@ public class DocumentController {
 	 *            Parameter "document" ist ein AppDocument-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void createApplicationDocument(AppDocument document) {
+	public void createAppDocument(AppDocument document) {
 
 	}
 
@@ -152,7 +167,7 @@ public class DocumentController {
 	 *            Parameter "document" ist ein Applikationsdokument-Objekt mit
 	 *            allen dazugehoerigen Attributen.
 	 */
-	public void deleteApplicationDocument(AppDocument document) {
+	public void deleteAppDocument(AppDocument document) {
 
 	}
 
@@ -164,7 +179,7 @@ public class DocumentController {
 	 *            Parameter "document" ist ein Applikationsdokument-Objekt mit
 	 *            allen dazugehoerigen Attributen.
 	 */
-	public void updateApplicationDocument(AppDocument document) {
+	public void updateAppDocument(AppDocument document) {
 
 	}
 
