@@ -1,3 +1,11 @@
+/**
+ *@author Tamino Hartmann
+ *@author Patryk Boczon
+ *@author Manuel Guentzel
+ *@author Laura Irlinger
+ *@author Oemer Sahin
+ *@author Anatoli Brill
+ */
 package userManagement;
 
 import javax.servlet.http.HttpSession;
@@ -36,7 +44,10 @@ public class Applicant extends User {
 	public void apply(int offerID){
 		
 	}
-	
+	/**
+	 * 
+	 * @param applicationID
+	 */
 	public void deleteApplication(int applicationID){
 		
 	}
