@@ -38,63 +38,65 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum bearbeiten von Bewerbungen.
 	 */
 	public void editApplication() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum ablehnen eines Angebots.
 	 */
 	public void rejectOffer() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum aktualiesieren eines Angebots.
 	 */
 	public void updateOffer() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
+	 * Bewerber einzeln Dokumente hinzugefuegt werden.
 	 */
 	public void addAppDoc() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum hinzufuegen von Dokumenten.
 	 */
 	public void addDoc() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum entfernen von Dokumenten.
 	 */
 	public void delDoc() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum annehmen eines Bewerbers.
 	 */
 	public void acceptApplication() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
+	 * einzeln Dokumente entfernt werden.
 	 */
 	public void deleteAppDoc() {
 
 	}
 
 	/**
-	 * TODO!
+	 * Methode zum aktualisieren des Berwerbungs-Status.
 	 */
 	public void updateStatus() {
 

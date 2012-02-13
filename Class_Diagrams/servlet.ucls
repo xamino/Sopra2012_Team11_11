@@ -1,48 +1,56 @@
 <class-diagram version="1.0.6" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" corner="BOTTOM_RIGHT" language="java" name="servlet.AdminServlet" project="hiwi_program" 
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="servlet.Helper" project="hiwi_program" 
+    file="/hiwi_program/src/servlet/Helper.java" binary="false">    
+    <position height="-1" width="-1" x="106" y="66"/>    
+    <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="servlet.AdminServlet" project="hiwi_program" 
     file="/hiwi_program/src/servlet/AdminServlet.java" binary="false">    
-    <position height="98" width="315" x="41" y="37"/>    
+    <position height="-1" width="-1" x="184" y="178"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="2" corner="BOTTOM_RIGHT" language="java" name="servlet.Servlet" project="hiwi_program" 
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="servlet.Servlet" project="hiwi_program" 
     file="/hiwi_program/src/servlet/Servlet.java" binary="false">    
-    <position height="-1" width="-1" x="198" y="191"/>    
+    <position height="-1" width="-1" x="184" y="285"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="3" corner="BOTTOM_RIGHT" language="java" name="servlet.ApplicantServlet" project="hiwi_program" 
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="servlet.ApplicantServlet" project="hiwi_program" 
     file="/hiwi_program/src/servlet/ApplicantServlet.java" binary="false">    
-    <position height="-1" width="-1" x="198" y="295"/>    
+    <position height="-1" width="-1" x="184" y="396"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="4" corner="BOTTOM_RIGHT" language="java" name="servlet.Secure" project="hiwi_program" 
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="servlet.Secure" project="hiwi_program" 
     file="/hiwi_program/src/servlet/Secure.java" binary="false">    
-    <position height="-1" width="-1" x="198" y="611"/>    
+    <position height="-1" width="-1" x="185" y="507"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="5" corner="BOTTOM_RIGHT" language="java" name="servlet.ProviderServlet" project="hiwi_program" 
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="servlet.ProviderServlet" project="hiwi_program" 
     file="/hiwi_program/src/servlet/ProviderServlet.java" binary="false">    
-    <position height="-1" width="-1" x="197" y="401"/>    
+    <position height="-1" width="-1" x="184" y="733"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" corner="BOTTOM_RIGHT" language="java" name="servlet.ClerkServlet" project="hiwi_program" 
+  <class id="7" corner="BOTTOM_RIGHT" language="java" name="servlet.ClerkServlet" project="hiwi_program" 
     file="/hiwi_program/src/servlet/ClerkServlet.java" binary="false">    
-    <position height="-1" width="-1" x="198" y="506"/>    
+    <position height="-1" width="-1" x="185" y="620"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
