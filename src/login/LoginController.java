@@ -34,9 +34,9 @@ public abstract class LoginController {
 	 * 
 	 * @param s
 	 *            Passwort-String eines Accounts.
-	 * @return Verschluesselter Hash-Wert als String
+	 * @return Verschluesselter Hash-Wert als String.
 	 */
-	public static String hash(String s) { // gibt md5 hash eines strings zurück
+	public static String hash(String s) { // gibt md5 hash eines strings zurueck
 
 		return "";
 	}

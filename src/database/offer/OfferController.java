@@ -6,7 +6,7 @@
 package database.offer;
 
 /**
- * Verwaltet alle Datenbankzugriffe auf Angebots-bezogene Daten
+ * Verwaltet alle Datenbankzugriffe auf Angebots-bezogene Daten.
  */
 import java.util.Vector;
 

@@ -33,7 +33,7 @@ public class Account {
 	 */
 	private String name;
 	/**
-	 * Institutszugehoerigkeit (nur relevant fuer Anbieter und Verwalter)
+	 * Institutszugehoerigkeit (nur relevant fuer Anbieter und Verwalter).
 	 */
 	private int institute;
 
@@ -47,7 +47,7 @@ public class Account {
 	 * @param passworthash
 	 *            Passwort (Je nach verwendung Klartext oder schon Hash).
 	 * @param accounttyp
-	 *            Accounttyp: 0: Admin 1: Anbieter 2: Verwalter 3: Bewerber
+	 *            Accounttyp: 0: Admin 1: Anbieter 2: Verwalter 3: Bewerber.
 	 * @param email
 	 *            E-Mail adresse.
 	 * @param name
@@ -66,7 +66,7 @@ public class Account {
 	}
 
 	/**
-	 * Gibt die Institut ID zurueck
+	 * Gibt die Institut ID zurueck.
 	 * 
 	 * @return Institut ID
 	 */
@@ -75,10 +75,10 @@ public class Account {
 	}
 
 	/**
-	 * Setzt die InstitutID auf den gewuenschten Wert
+	 * Setzt die InstitutID auf den gewuenschten Wert.
 	 * 
 	 * @param institute
-	 *            gewuenschte InstitutID
+	 *            gewuenschte InstitutID.
 	 */
 	public void setInstitute(int institute) {
 		this.institute = institute;
@@ -132,10 +132,10 @@ public class Account {
 	}
 
 	/**
-	 * Setzt den Accounttyp
+	 * Setzt den Accounttyp.
 	 * 
 	 * @param accounttyp
-	 *            Gewuenschter Accounttyp
+	 *            Gewuenschter Accounttyp.
 	 */
 	public void setAccounttyp(int accounttyp) {
 		this.accounttyp = accounttyp;

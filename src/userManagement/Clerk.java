@@ -27,4 +27,13 @@ public class Clerk extends User {
 	public void editAccount(Account acc){
 		
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	
+	public String doExport(){
+		return null;
+	}
 }

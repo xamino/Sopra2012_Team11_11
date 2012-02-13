@@ -5,7 +5,7 @@
 package database.account;
 
 /**
- * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten
+ * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten.
  */
 import java.util.Vector;
 
@@ -22,7 +22,7 @@ public class AccountController {
 	/**
 	 * Klassenattribut "acccontr" beinhaltet eine AccountController-Instanz, falls
 	 * keine vorhanden war und mit der Methode getInstance angelegt wird. Dies
-	 * dient zur Gewaehrleistung, dass nur eine Instanz von AccountController
+	 * dient zur Gewaehrleistung, dass nur eine Instanz von AccountController.
 	 * existiert.
 	 */
 	private static AccountController acccontr;
@@ -87,7 +87,8 @@ public class AccountController {
 	}
 	
 	/**
-	 * Diese Methode nimmt Aenderungen an einem Account-Objekt vor. Dabei werden die geaenderten Attribute vom uebergebenem Parameter uebernommen.
+	 * Diese Methode nimmt Aenderungen an einem Account-Objekt vor. 
+	 * Dabei werden die geaenderten Attribute vom uebergebenem Parameter uebernommen.
 	 * @param account
 	 * Parameter "account" ist ein Account-Objekt, welches alle noetigen Attribute enthaelt.
 	 */
@@ -98,7 +99,8 @@ public class AccountController {
 	/**
 	 * Diese Methode selektiert alle Accounts mit uebergebenem Accounttyp.
 	 * @param accounttype
-	 * Es gibt drei unterschiedliche Accounttypen, um zwischen den unterschieldichen Benutzeransichten und Benutzerrechten der Accounttypen zu differenzieren.
+	 * Es gibt drei unterschiedliche Accounttypen, 
+	 * um zwischen den unterschieldichen Benutzeransichten und Benutzerrechten der Accounttypen zu differenzieren.
 	 * @return
 	 * Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Accounttyp.
 	 */
@@ -112,7 +114,8 @@ public class AccountController {
 	 * @param id
 	 * Id ist der Primaerschluessel in der Institute-DB.
 	 * @return
-	 * Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
+	 * Es wird ein Vector zurueckgegeben, 
+	 * welcher alle Account-Objekte enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
 	public Vector<Account> getAccountsByInstitute(int id) {
 		return null;
@@ -125,7 +128,7 @@ public class AccountController {
 	 * gegeben. 
 	 * 
 	 * @param name
-	 * 				Name des Stellvertreters
+	 * 				Name des Stellvertreters.
 	 * @return
 	 * 				Gibt den Namen des Stellvertreters zurueck.
 	 */		  		
@@ -137,7 +140,7 @@ public class AccountController {
 	 * Die Methode setzt einen Stellvertreter fuer den Account.
 	 * 
 	 * @param name
-	 * 				Der Name des Stellvertreters
+	 * 				Der Name des Stellvertreters.
 	 */
 	
 	public void setRepresentative(String name){
