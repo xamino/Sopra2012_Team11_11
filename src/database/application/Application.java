@@ -20,7 +20,7 @@ public class Application {
 	/**
 	 * Der Status der Bewerbung.
 	 */
-	private boolean status;
+	private boolean finished;
 	
 	/**
 	 * Der zustaendige Sachbearbeiter der Bewerbung.
@@ -52,7 +52,7 @@ public class Application {
 		super();
 		this.username = username;
 		this.aid = aid;
-		this.status = status;
+		this.finished = status;
 		this.clerk = clerk;
 		this.chosen = chosen;
 	}
@@ -97,12 +97,12 @@ public class Application {
 	}
 
 	/**
-	 * Gibt den Status (geprueft oder ungeprueft) der Bewerbung zurueck.
+	 * Gibt den zurueck ob die Bewerbung abgeschlossen ist.
 	 * 
-	 * @return true falls geprueft, false falls ungeprueft.
+	 * @return true falls abgeschlossen, false falls noch laufend.
 	 */
-	public boolean isStatus() {
-		return status;
+	public boolean isFinished() {
+		return finished;
 	}
 
 	/**
@@ -111,8 +111,8 @@ public class Application {
 	 * @param status
 	 *            Gewuenschter Bewerbungsstatus.
 	 */
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setFinished(boolean status) {
+		this.finished = status;
 	}
 
 	/**
