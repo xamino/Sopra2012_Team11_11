@@ -66,7 +66,14 @@ public abstract class User {
 			HttpSession session) {
 		uData = new UserData(username, email, name, session);
 	}
-
+	/**
+	 * Invalidiert die Session des Benutzers
+	 */
+	public void invalidate(){
+		
+	}
+	
+	
 	/**
 	 * Standard toString()
 	 * 
