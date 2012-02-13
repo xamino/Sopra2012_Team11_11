@@ -27,6 +27,22 @@ public class DocumentController {
 	private static DocumentController doccontr;
 	
 	/**
+	 * Diese Methode prueft ob ein DocumentController-Objekt existiert. Falls
+	 * nicht wird eine neue DocumentController-Instanz angelegt, zurueckgegeben
+	 * und in dem Klassenattribut "doccontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von DocumentController
+	 * existiert.
+	 * 
+	 * @return Es wird die Instanz zurueckgegeben.
+	 */
+	public static DocumentController getInstance() {
+		if (doccontr == null)
+			doccontr = new DocumentController();
+		return doccontr;
+
+	}
+	
+	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private DocumentController(){
@@ -105,22 +121,6 @@ public class DocumentController {
 		
 	}
 	
-		
-	/**
-	 * Diese Methode prueft ob ein DocumentController-Objekt existiert. Falls
-	 * nicht wird eine neue DocumentController-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "doccontr" abgespeichert. Dies dient zur
-	 * Gewaehrleistung, dass nur eine Instanz von DocumentController
-	 * existiert.
-	 * 
-	 * @return Es wird die Instanz zurueckgegeben.
-	 */
-	public static DocumentController getInstance() {
-		if (doccontr == null)
-			doccontr = new DocumentController();
-		return doccontr;
-
-	}
 	
 	/**
 	 * Diese Methode erstellt ein Applikationsunterlagen-Objekt (ApplicationDocument-Objekt) in der Datenbank. Mit

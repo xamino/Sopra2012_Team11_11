@@ -16,6 +16,22 @@ import database.offer.OfferController;
 public class ApplicationController {
 
 	/**
+	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
+	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
+	 * und in dem Klassenattribut "appcontr" abgespeichert. Dies dient zur
+	 * Gewaehrleistung, dass nur eine Instanz von ApplicationController
+	 * existiert.
+	 * 
+	 * @return Es wird die Instanz zurueckgegeben.
+	 */
+	public static ApplicationController getInstance() {
+		if (appcontr == null)
+			appcontr = new ApplicationController();
+		return appcontr;
+
+	}
+	
+	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private ApplicationController() {
@@ -120,20 +136,6 @@ public class ApplicationController {
 		return null;
 	}
 
-	/**
-	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
-	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "appcontr" abgespeichert. Dies dient zur
-	 * Gewaehrleistung, dass nur eine Instanz von ApplicationController
-	 * existiert.
-	 * 
-	 * @return Es wird die Instanz zurueckgegeben.
-	 */
-	public static ApplicationController getInstance() {
-		if (appcontr == null)
-			appcontr = new ApplicationController();
-		return appcontr;
-
-	}
+	
 
 }
