@@ -15,8 +15,7 @@ public class Account {
 	 */
 	private String username;
 	/**
-	 * Passworthash des Benutzerpassworts (je nach Verwendung auch Passwort im
-	 * Klartext!).
+	 * Passworthash des Benutzerpassworts 
 	 */
 	private String passwordhash;
 	/**
@@ -100,8 +99,8 @@ public class Account {
 	 * @param username
 	 *            Gewuenschter Benutzername.
 	 */
-	public void setUsername(String benutzername) {
-		this.username = benutzername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**
@@ -119,8 +118,8 @@ public class Account {
 	 * @param passwordhash
 	 *            Gewuenschter Passworthash.
 	 */
-	public void setPasswordhash(String passworthash) {
-		this.passwordhash = passworthash;
+	public void setPasswordhash(String passwordhash) {
+		this.passwordhash = passwordhash;
 	}
 
 	/**
@@ -138,8 +137,8 @@ public class Account {
 	 * @param accounttype
 	 *            Gewuenschter Accounttyp.
 	 */
-	public void setAccounttype(int accounttyp) {
-		this.accounttype = accounttyp;
+	public void setAccounttype(int accounttype) {
+		this.accounttype = accounttype;
 	}
 
 	/**
