@@ -49,14 +49,14 @@ public class Admin extends User {
 		
 	}
 	/**
-	 * Loescht einen loescht ein Dokument aus der Datenbank
+	 * Loescht einen loescht ein Dokument aus der Datenbank. TODO: Welche Art von Dokument?
 	 * @param doc zu löschendes Dokument
 	 */
 	public void deleteDoc(Document doc){
 		
 	}
 	/**
-	 * fuegt ein Dokument hinzu
+	 * Fuegt ein Dokument hinzu. TODO: Welche Art von Dokument?
 	 * @param doc
 	 */
 	public void addDoc(Document doc){
@@ -64,7 +64,7 @@ public class Admin extends User {
 	}
 	
 	/**
-	 * editiert ein Dokument
+	 * editiert ein Dokument. TODO: Welche Art von Dokument?
 	 * @param doc geaendertes Dokument
 	 */
 	public void editDoc(Document doc){
