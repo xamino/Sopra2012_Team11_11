@@ -21,20 +21,18 @@ public class OfferController {
 	 * dem Klassenattribut "offcontr" abgespeichert. Dies dient zur
 	 * Gewaehrleistung, dass nur eine Instanz von OfferController existiert.
 	 * 
-	 * @return Es wird die Instanz zurueckgegeben.
+	 * @return Es wird eine Instanz zurueckgegeben.
 	 */
 	public static OfferController getInstance() {
 		if (offcontr == null)
 			offcontr = new OfferController();
 		return offcontr;
-
 	}
 
 	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
-
 	}
 
 	/**
@@ -60,7 +58,6 @@ public class OfferController {
 	 *            Attributen.
 	 */
 	public void createOffer(Offer offer) {
-
 	}
 
 	/**
@@ -73,19 +70,17 @@ public class OfferController {
 	 *            entfernt.
 	 */
 	public void deleteOffer(Offer offer) {
-
 	}
 
 	/**
-	 * Diese Methode aendert die Attribute eines Jobangebots bzw. aktualisiert
-	 * diese in der Datenbank.
+	 * Diese Methode aendert die Attribute eines Jobangebots beziehungsweise
+	 * aktualisiert diese in der Datenbank.
 	 * 
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
 	public void updateOffer(Offer offer) {
-
 	}
 
 	/**
@@ -97,7 +92,6 @@ public class OfferController {
 	 */
 	public Vector<Offer> getAllOffers() {
 		return null;
-
 	}
 
 	/**
@@ -114,7 +108,6 @@ public class OfferController {
 	 */
 	public Vector<Offer> getOffersByCheck(Offer offer) {
 		return null;
-
 	}
 
 	/**
@@ -127,7 +120,6 @@ public class OfferController {
 	 */
 	public Vector<Offer> getOffersWithFreeSlots() {
 		return null;
-
 	}
 
 	/**
@@ -142,7 +134,5 @@ public class OfferController {
 	 */
 	public Vector<Offer> getOffersByApplicatiot(Vector<Application> applications) {
 		return null;
-
 	}
-
 }
