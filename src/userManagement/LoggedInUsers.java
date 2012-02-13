@@ -37,7 +37,6 @@ public abstract class LoggedInUsers {
 	 */
 	static void addUser(User u) {
 
-
 	}
 
 	/**
@@ -63,7 +62,7 @@ public abstract class LoggedInUsers {
 	 *         <code>Null</code>
 	 **/
 	public static User getUserBySession(HttpSession session) {
-	
+
 		return null;
 	}
 

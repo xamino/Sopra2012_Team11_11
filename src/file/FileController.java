@@ -12,6 +12,10 @@ import java.io.File;
 
 public abstract class FileController {
 
+	private static void deleteFilesBySession(String sessionId) {
+
+	}
+
 	/**
 	 * Diese Methode entfernt alle erstellten Dateien die zum Download zur
 	 * Verfuegung gestellt wurden.

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Das <code>Applicant</code> Servlet behandelt alle Aktionen von
- * angemeldeten Bewerbern (Applicants).
+ * Das <code>Applicant</code> Servlet behandelt alle Aktionen von angemeldeten
+ * Bewerbern (Applicants).
  */
 
 @WebServlet("/Applicant/*")

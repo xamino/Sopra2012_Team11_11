@@ -2,17 +2,15 @@ package login;
 
 import database.DatabaseController;
 
-
 /**
  * Hilfsklasse fuer den Loginvorgang des Systems.
  */
 public abstract class LoginController {
 	public DatabaseController dbc;
-	
 
 	/**
-	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob
-	 * die Parameter einem Account entsprechen. 
+	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob die Parameter einem
+	 * Account entsprechen.
 	 * 
 	 * @param username
 	 *            Benutzername eines Accounts.
@@ -34,9 +32,9 @@ public abstract class LoginController {
 	 * 
 	 * @param s
 	 *            Passwort-String eines Accounts.
-	 * @return Verschluesselter Hash-Wert als String
+	 * @return Verschluesselter Hash-Wert als String.
 	 */
-	public static String hash(String s) { // gibt md5 hash eines strings zurück
+	public static String hash(String s) { // gibt md5 hash eines strings zurueck
 
 		return "";
 	}
