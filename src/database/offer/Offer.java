@@ -1,3 +1,8 @@
+/**
+ * @author Manuel Guentzel
+ * @author Tamino Hartmann
+ */
+
 package database.offer;
 
 /**

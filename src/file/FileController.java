@@ -12,9 +12,6 @@ import java.io.File;
 
 public abstract class FileController {
 
-	private static void deleteFilesBySession(String sessionId) {
-
-	}
 
 	/**
 	 * Diese Methode entfernt alle erstellten Dateien die zum Download zur
@@ -25,7 +22,7 @@ public abstract class FileController {
 	 *            Download-Dateien. Dabei besteht die sessionId aus einem Teil
 	 *            des Session-Namens und einem zufaellig generierten Teil.
 	 */
-	private static void deleteAllFilesBySession(String sessionId) {
+	public static void deleteAllFilesBySession(String sessionId) {
 
 	}
 
@@ -42,7 +39,7 @@ public abstract class FileController {
 	 *            Donwload verfuegbar sein soll.
 	 * @return Zurueckgegeben wird der Pfad des erstellten Download-Datei.
 	 */
-	private static String createFile(String sessionId, File file) {
+	public static String createFile(String sessionId, File file) {
 		return null;
 
 	}
