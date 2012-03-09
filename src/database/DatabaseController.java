@@ -82,7 +82,8 @@ public class DatabaseController {
 			System.out.println("Database: Connection successful.");
 		} catch (Exception e) {
 			System.out
-					.println("Database: Error while connecting to database: please check if DB is runnung and if logindata is correct (~/.sopraconf)");
+					.println("Database: Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
+			System.exit(-1);
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
