@@ -86,8 +86,18 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "update" Statement ausfuehrt.
 	 */
-	synchronized public void update() {
-
+	synchronized public boolean update(String table, String[] columns,
+			Object[] values, String where) {
+		String update = "UPDATE " + table + " SET "
+				+ commanator(columns, values) + " WHERE " + where;
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(update);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("[DatabaseController] Error: " + update);
+		}
+		return false;
 	}
 
 	/**
@@ -106,19 +116,25 @@ public class DatabaseController {
 
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
-	 * @param select Welche spalten ausgewaehlt werden sollen
-	 * @param from Aus welchen Tabellen ausgewaehlt wird
-	 * @param where Die zu erfuellende Bedingung
+	 * 
+	 * @param select
+	 *            Welche spalten ausgewaehlt werden sollen
+	 * @param from
+	 *            Aus welchen Tabellen ausgewaehlt wird
+	 * @param where
+	 *            Die zu erfuellende Bedingung
 	 * @return ResultSet der Anfrage
 	 */
-	synchronized public ResultSet select(String[] select, String[] from, String where) {
-		String sel = "SELECT "+commanator(select)+" FROM "+ commanator(from) + " WHERE "+where;
+	synchronized public ResultSet select(String[] select, String[] from,
+			String where) {
+		String sel = "SELECT " + commanator(select) + " FROM "
+				+ commanator(from) + " WHERE " + where;
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(sel);
 			return rs;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] Error: "+sel);
+			System.out.println("[DatabaseController] Error: " + sel);
 		}
 		return null;
 	}
@@ -209,16 +225,47 @@ public class DatabaseController {
 
 		}
 	}
+
 	/**
 	 * Hilfsmethode zum Konkatenieren von Strings mit Kommasetzung.
-	 * @param stringz zu konkatenierende Strings
+	 * 
+	 * @param stringz
+	 *            zu konkatenierende Strings
 	 * @return Konkatenierter String
 	 */
-	private String commanator(String[] stringz){
-		String ret="";
-		for(int i=0; i<stringz.length;i++){
-			ret+=stringz[i];
-			if(i!=(stringz.length-1))ret+=", ";
+	private String commanator(String[] stringz) {
+		String ret = "";
+		for (int i = 0; i < stringz.length; i++) {
+			ret += stringz[i];
+			if (i != (stringz.length - 1))
+				ret += ", ";
+		}
+		return ret;
+	}
+
+	/**
+	 * Hilfsmethode zum konkatenieren von zwei String arrays fuer update
+	 * statements. Ergibt in etwa einen String der Form
+	 * "name[0]=value[0], name...".
+	 * 
+	 * @param name
+	 *            Namen der Spalten.
+	 * @param value
+	 *            Werte, welche die Spalten bekommen sollen.
+	 * @return String mit zusammengesetzten Inhalt.
+	 */
+	private String commanator(String[] name, Object[] value) {
+		String ret = "";
+		if (name.length != value.length)
+			return "ERROR IN COMMANATOR!";
+		for (int i = 0; i < name.length; i++) {
+			ret += name[i] + "=";
+			if (value[i] instanceof String)
+				ret += "'" + value[i] + "'";
+			else
+				ret += value[i];
+			if (i != (name.length - 1))
+				ret += ", ";
 		}
 		return ret;
 	}
