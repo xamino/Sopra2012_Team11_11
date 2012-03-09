@@ -57,8 +57,9 @@ public class Applicant extends User {
 	}
 
 	/**
-	 * 
+	 * Diese Methode entfernt ein bestimmtes Bewerbungs-Objekt von der Datenbank.
 	 * @param applicationID
+	 * Parameter "applicant" ist eindeutiger Identifizierer des Bewerbungs-Objekts.
 	 */
 	public void deleteApplication(int applicationID){
 
