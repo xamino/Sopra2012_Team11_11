@@ -10,8 +10,6 @@ package database.document;
  */
 import java.util.Vector;
 
-import com.sun.xml.internal.bind.v2.TODO;
-
 import database.DatabaseController;
 import database.account.Account;
 import database.offer.Offer;

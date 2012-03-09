@@ -150,7 +150,16 @@ public class DatabaseController {
 	 * Methode welche ein SQL "insert on not null update" Statement ausfuehrt.
 	 */
 	synchronized public void insertOnNullElseUpdate() {
-
+		String update = "INSERT " + table + " SET "
+				+ commanator(columns, values) + " WHERE " + where;
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(update);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("[DatabaseController] Error: " + update);
+		}
+		return false;
 	}
 
 	/**
