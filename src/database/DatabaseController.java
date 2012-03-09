@@ -258,11 +258,11 @@ public class DatabaseController {
 					if (!buf.ready())
 						break;
 					String conf = buf.readLine();
-					if(!conf.toLowerCase().equals("password")&&!conf.toLowerCase().equals("user")&&!conf.toLowerCase().equals("database")&&!conf.toLowerCase().equals("port")){
-						String[] confarr = conf.split("=");
+					String[] confarr = conf.split("=");
+					if(confarr[0].trim().equalsIgnoreCase("password")||confarr[0].trim().equalsIgnoreCase("user")||confarr[0].trim().equalsIgnoreCase("database")||confarr[0].trim().equalsIgnoreCase("port")){
 						field = getClass().getDeclaredField(confarr[0].trim());
 						field.set(this, confarr[1].trim());
-					}else System.out.println("[DatabaseController] Error in ConfigFile!");			
+					}else System.out.println("[DatabaseController] Error in ConfigFile on: "+conf);			
 				}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
