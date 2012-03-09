@@ -92,6 +92,8 @@ public class DatabaseController {
 
 	/**
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
+	 * @param table Tabelle von der geloescht werden soll
+	 * @param where	Where Bedingung
 	 */
 	synchronized public void delete(String table, String where) {
 		String del = "DELETE FROM "+table+" WHERE "+where;
