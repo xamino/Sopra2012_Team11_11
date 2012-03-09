@@ -66,7 +66,7 @@ public class DatabaseController {
 	 */
 	private DatabaseController() {
 		try {
-			System.out.println("Database: Connecting to Database");
+			System.out.println("[Database] Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			getLoginInfo();
 			if (password != null)
@@ -78,10 +78,10 @@ public class DatabaseController {
 						+ port + "/" + database + "?user=" + user);
 			st = con.createStatement();
 
-			System.out.println("Database: Connection successful.");
+			System.out.println("[Database] Connection successful.");
 		} catch (Exception e) {
 			System.out
-					.println("Database: Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
+					.println("[Database] Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
@@ -260,8 +260,8 @@ public class DatabaseController {
 					String conf = buf.readLine();
 					String[] confarr = conf.split("=");
 					field = getClass().getDeclaredField(confarr[0].trim());
-					field.set(new String(), confarr[1].trim());
-				}
+					field.set(this, confarr[1].trim());
+									}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
 				database = "sopra";
