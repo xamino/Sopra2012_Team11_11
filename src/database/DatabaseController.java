@@ -93,8 +93,13 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
 	 */
-	synchronized public void delete() {
-
+	synchronized public void delete(String table, String where) {
+		String del = "DELETE FROM "+table+" WHERE "+where;
+		try {
+			st.executeUpdate(del);
+		} catch (SQLException e) {
+			System.out.println("[DatabaseController] Deletion failed!");
+		}
 	}
 
 	/**
