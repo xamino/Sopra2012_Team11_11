@@ -70,20 +70,18 @@ public class DatabaseController {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			getLoginInfo();
 			if (password != null)
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost:"+port+"/"+database+"?user="
-								+ user + "&password=" + password);
+				con = DriverManager.getConnection("jdbc:mysql://localhost:"
+						+ port + "/" + database + "?user=" + user
+						+ "&password=" + password);
 			else
-				con = DriverManager
-						.getConnection("jdbc:mysql://localhost:"+port+"/"
-								+ database + "?user=" + user);
+				con = DriverManager.getConnection("jdbc:mysql://localhost:"
+						+ port + "/" + database + "?user=" + user);
 			st = con.createStatement();
 
 			System.out.println("Database: Connection successful.");
 		} catch (Exception e) {
 			System.out
 					.println("Database: Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
-			System.exit(-1);
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
@@ -116,11 +114,11 @@ public class DatabaseController {
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
 	 * 
 	 * @param table
-
+	 * 
 	 *            Tabelle von der geloescht werden soll
 	 * @param where
 	 *            Where Bedingung
-	 * @return boolean ob die Aktion fehlerfrei geklappt hat 
+	 * @return boolean ob die Aktion fehlerfrei geklappt hat
 	 */
 	synchronized public boolean delete(String table, String where) {
 
@@ -216,7 +214,8 @@ public class DatabaseController {
 		try {
 			f.createNewFile(); // dann neue erstellen
 		} catch (IOException e) {
-			System.out.println("[Database] createLoginInfo():f.createNewFile()");
+			System.out
+					.println("[Database] createLoginInfo():f.createNewFile()");
 			e.printStackTrace();
 		}
 		try {
@@ -270,7 +269,9 @@ public class DatabaseController {
 				port = "3306";
 				password = null;
 			}
-			System.out.println("[Database] Try Login: user="+user+" password="+password+" database="+database+" port="+port);
+			System.out.println("[Database] Try Login: user=" + user
+					+ " password=" + password + " database=" + database
+					+ " port=" + port);
 		} catch (Exception e) {
 			System.out.print("[Database] getLoginInfo()");
 			e.printStackTrace();
