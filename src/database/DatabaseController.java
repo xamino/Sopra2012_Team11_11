@@ -106,6 +106,10 @@ public class DatabaseController {
 
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
+	 * @param select Welche spalten ausgewaehlt werden sollen
+	 * @param from Aus welchen Tabellen ausgewaehlt wird
+	 * @param where Die zu erfuellende Bedingung
+	 * @return ResultSet der Anfrage
 	 */
 	synchronized public ResultSet select(String[] select, String[] from, String where) {
 		String sel = "SELECT "+commanator(select)+" FROM "+ commanator(from) + " WHERE "+where;
