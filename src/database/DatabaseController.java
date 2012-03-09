@@ -102,11 +102,14 @@ public class DatabaseController {
 
 	/**
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
-	 * @param table Tabelle von der geloescht werden soll
-	 * @param where	Where Bedingung
+	 * 
+	 * @param table
+	 *            Tabelle von der geloescht werden soll
+	 * @param where
+	 *            Where Bedingung
 	 */
 	synchronized public void delete(String table, String where) {
-		String del = "DELETE FROM "+table+" WHERE "+where;
+		String del = "DELETE FROM " + table + " WHERE " + where;
 		try {
 			st.executeUpdate(del);
 		} catch (SQLException e) {
@@ -149,9 +152,11 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "insert on not null update" Statement ausfuehrt.
 	 */
-	synchronized public void insertOnNullElseUpdate() {
-		String update = "INSERT " + table + " SET "
-				+ commanator(columns, values) + " WHERE " + where;
+	synchronized public boolean insertOnNullElseUpdate(String table,
+			String[] columns, Object[] values, String where) {
+		String update = "INSERT INTO " + table + " VALUES ("
+				+ commanator(values) + ") ON DUPLICATE KEY UPDATE " + table
+				+ " SET " + commanator(columns, values) + " WHERE " + where;
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(update);
@@ -254,6 +259,27 @@ public class DatabaseController {
 		for (int i = 0; i < stringz.length; i++) {
 			ret += stringz[i];
 			if (i != (stringz.length - 1))
+				ret += ", ";
+		}
+		return ret;
+	}
+
+	/**
+	 * Hilfsmethode zum Konkatenieren von Objekten mit Kommasetzung. Dabei
+	 * werden Strings mit einfachen Anfuehrungszeichen eingeklammert.
+	 * 
+	 * @param objects
+	 *            Zu konkatenierende objekte.
+	 * @return Konkatenierter String
+	 */
+	private String commanator(Object[] objects) {
+		String ret = "";
+		for (int i = 0; i < objects.length; i++) {
+			if (objects[i] instanceof String)
+				ret += "'" + objects[i] + "'";
+			else
+				ret += objects[i];
+			if (i != (objects.length - 1))
 				ret += ", ";
 		}
 		return ret;
