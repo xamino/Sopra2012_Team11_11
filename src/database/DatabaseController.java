@@ -258,10 +258,12 @@ public class DatabaseController {
 					if (!buf.ready())
 						break;
 					String conf = buf.readLine();
-					String[] confarr = conf.split("=");
-					field = getClass().getDeclaredField(confarr[0].trim());
-					field.set(this, confarr[1].trim());
-									}
+					if(!conf.toLowerCase().equals("password")&&!conf.toLowerCase().equals("user")&&!conf.toLowerCase().equals("database")&&!conf.toLowerCase().equals("port")){
+						String[] confarr = conf.split("=");
+						field = getClass().getDeclaredField(confarr[0].trim());
+						field.set(this, confarr[1].trim());
+					}else System.out.println("[DatabaseController] Error in ConfigFile!");			
+				}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
 				database = "sopra";
