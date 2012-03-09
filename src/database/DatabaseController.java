@@ -155,7 +155,8 @@ public class DatabaseController {
 	 * 
 	 * @param select
 	 * @param from
-	 * @param where TODO: Can be null!
+	 * @param where
+	 *            TODO: Can be null!
 	 * @return
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
@@ -258,8 +259,16 @@ public class DatabaseController {
 						break;
 					String conf = buf.readLine();
 					String[] confarr = conf.split("=");
-					field = getClass().getDeclaredField(confarr[0].trim());
-					field.set(this, confarr[1].trim());
+					if (confarr[0].trim().equalsIgnoreCase("password")
+							|| confarr[0].trim().equalsIgnoreCase("user")
+							|| confarr[0].trim().equalsIgnoreCase("database")
+							|| confarr[0].trim().equalsIgnoreCase("port")) {
+						field = getClass().getDeclaredField(confarr[0].trim());
+						field.set(this, confarr[1].trim());
+					} else
+						System.out
+								.println("[DatabaseController] Error in ConfigFile on: "
+										+ conf);
 				}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
