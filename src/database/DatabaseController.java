@@ -5,38 +5,62 @@ package database;
  * 
  */
 public class DatabaseController {
+
+	/**
+	 * Variable for storing the instance of the class.
+	 */
+	private static DatabaseController instance;
+
+	/**
+	 * Method for getting a valid reference of this object.
+	 * @return Instance of DatabaseController.
+	 */
+	public static DatabaseController getInstance() {
+		if (instance == null)
+			instance = new DatabaseController();
+		return instance;
+	}
+
+	/**
+	 * Private constructor for DatabaseController for implementing the singleton
+	 * instance. Use getInstance() to get a reference to an object of this type.
+	 */
+	private DatabaseController() {
+
+	}
+
 	/**
 	 * Methode welche ein SQL "update" Statement ausführt.
 	 */
-	public void update() {
+	synchronized public void update() {
 
 	}
 
 	/**
 	 * Methode welche ein SQL "delete" Statement ausführt.
 	 */
-	public void delete() {
+	synchronized public void delete() {
 
 	}
 
 	/**
 	 * Methode welche ein SQL "insert" Statement ausführt.
 	 */
-	public void insert() {
+	synchronized public void insert() {
 
 	}
 
 	/**
 	 * Methode welche ein SQL "select" Statement ausführt.
 	 */
-	public void select() {
+	synchronized public void select() {
 
 	}
 
 	/**
 	 * Methode welche ein SQL "insert on not null update" Statement ausführt.
 	 */
-	public void insertOnNullElseUpdate() {
+	synchronized public void insertOnNullElseUpdate() {
 
 	}
 }
