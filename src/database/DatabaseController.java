@@ -85,6 +85,12 @@ public class DatabaseController {
 
 	/**
 	 * Methode welche ein SQL "update" Statement ausfuehrt.
+	 * 
+	 * @param table
+	 * @param columns
+	 * @param values
+	 * @param where
+	 * @return
 	 */
 	synchronized public boolean update(String table, String[] columns,
 			Object[] values, String where) {
@@ -95,45 +101,55 @@ public class DatabaseController {
 			rs = st.executeQuery(update);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] Error: " + update);
+			System.out.println("[DatabaseController] UPDATE error! " + update);
+			return false;
 		}
-		return false;
 	}
 
 	/**
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
 	 * 
 	 * @param table
-	 *            Tabelle von der geloescht werden soll
 	 * @param where
-	 *            Where Bedingung
+	 * @return
 	 */
-	synchronized public void delete(String table, String where) {
+	synchronized public boolean delete(String table, String where) {
 		String del = "DELETE FROM " + table + " WHERE " + where;
 		try {
 			st.executeUpdate(del);
+			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] Deletion failed!");
+			System.out.println("[DatabaseController] DELETE error! " + del);
+			return false;
 		}
 	}
 
 	/**
 	 * Methode welche ein SQL "insert" Statement ausfuehrt.
+	 * 
+	 * @param table
+	 * @param values
+	 * @return
 	 */
-	synchronized public void insert() {
-
+	synchronized public boolean insert(String table, Object[] values) {
+		String insert = "INSERT INTO " + table + " VALUES ("
+				+ commanator(values) + ")";
+		try {
+			st.executeUpdate(insert);
+			return true;
+		} catch (SQLException e) {
+			System.out.println("[DatabaseController] INSERT error!" + insert);
+			return false;
+		}
 	}
 
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
 	 * 
 	 * @param select
-	 *            Welche spalten ausgewaehlt werden sollen
 	 * @param from
-	 *            Aus welchen Tabellen ausgewaehlt wird
 	 * @param where
-	 *            Die zu erfuellende Bedingung
-	 * @return ResultSet der Anfrage
+	 * @return
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
 			String where) {
@@ -144,13 +160,19 @@ public class DatabaseController {
 			rs = st.executeQuery(sel);
 			return rs;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] Error: " + sel);
+			System.out.println("[DatabaseController] SELECT error!" + sel);
 		}
 		return null;
 	}
 
 	/**
 	 * Methode welche ein SQL "insert on not null update" Statement ausfuehrt.
+	 * 
+	 * @param table
+	 * @param columns
+	 * @param values
+	 * @param where
+	 * @return
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
 			String[] columns, Object[] values, String where) {
@@ -162,7 +184,9 @@ public class DatabaseController {
 			rs = st.executeQuery(update);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] Error: " + update);
+			System.out
+					.println("[DatabaseController] INSERTONNULLUPDATE error! "
+							+ update);
 		}
 		return false;
 	}
