@@ -100,9 +100,8 @@ public class DatabaseController {
 			Object[] values, String where) {
 		String update = "UPDATE " + table + " SET "
 				+ commanator(columns, values) + " WHERE " + where;
-		ResultSet rs;
 		try {
-			rs = st.executeQuery(update);
+			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
 			System.out.println("[DatabaseController] UPDATE error! " + update);
@@ -156,13 +155,15 @@ public class DatabaseController {
 	 * 
 	 * @param select
 	 * @param from
-	 * @param where
+	 * @param where TODO: Can be null!
 	 * @return
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
 			String where) {
 		String sel = "SELECT " + commanator(select) + " FROM "
-				+ commanator(from) + " WHERE " + where;
+				+ commanator(from);
+		if (where != null)
+			sel += " WHERE " + where;
 		ResultSet rs;
 		try {
 			rs = st.executeQuery(sel);
@@ -179,17 +180,15 @@ public class DatabaseController {
 	 * @param table
 	 * @param columns
 	 * @param values
-	 * @param where
 	 * @return
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
-			String[] columns, Object[] values, String where) {
+			String[] columns, Object[] values) {
 		String update = "INSERT INTO " + table + " VALUES ("
-				+ commanator(values) + ") ON DUPLICATE KEY UPDATE " + table
-				+ " SET " + commanator(columns, values) + " WHERE " + where;
-		ResultSet rs;
+				+ commanator(values) + ") ON DUPLICATE KEY UPDATE "
+				+ commanator(columns, values);
 		try {
-			rs = st.executeQuery(update);
+			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
 			System.out
@@ -261,7 +260,7 @@ public class DatabaseController {
 					String[] confarr = conf.split("=");
 					field = getClass().getDeclaredField(confarr[0].trim());
 					field.set(this, confarr[1].trim());
-									}
+				}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
 				database = "sopra";

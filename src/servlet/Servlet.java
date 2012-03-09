@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.DatabaseController;
-
 @WebServlet("/Servlet/*")
 public class Servlet extends HttpServlet {
 
@@ -20,7 +18,6 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		super();
-		DatabaseController.getInstance();
 	}
 
 	protected void doGet(HttpServletRequest request,
