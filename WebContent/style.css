@@ -103,7 +103,8 @@ h3{
 }
 
 .form{
-	float:left;
+	padding-right:10px;
+	float:right;
 	width:50%;
 	text-align:right;
 	line-height: 1.5em;
