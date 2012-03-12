@@ -57,6 +57,7 @@
 				<input type="submit" value="Anmelden"/>
 			</p>
 		</form>
+		<div id="error_login" class="hiddenerror"></div>
 	</div>
 <hr>
 	<div class="nav">
