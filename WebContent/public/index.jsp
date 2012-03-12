@@ -14,7 +14,6 @@
 <body>
 
 <a id="banner" href="index.html"><h1>Hiwi-Börse</h1></a>
-<hr>
 
 <div id="left">	
 <div class="rightborder">
