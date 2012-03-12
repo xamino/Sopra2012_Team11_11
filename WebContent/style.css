@@ -31,7 +31,7 @@ h3{
 #left{
 	float:left;
 	width:75%;
-	height: 24em;		/* bei Veränderungen auch .rightborder verändern*/
+	height: 24em;		/* bei Verï¿½nderungen auch .rightborder verï¿½ndern*/
 }
 
 #right{
@@ -51,7 +51,7 @@ h3{
 #banner{
 	display:block;
 	background:rgb(137, 162, 179);				/* logo-blau */
-	background-image: url('logo_uni.jpg');
+	background-image: url('logo_uni.png');
 	background-repeat:no-repeat;
 	background-position:right;
 	width:100%;
