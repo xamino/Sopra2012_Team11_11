@@ -4,6 +4,7 @@ database.application
 database.document
 database.offer
 file
+logger
 login
 servlet
 userManagement

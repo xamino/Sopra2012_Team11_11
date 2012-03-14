@@ -3,6 +3,8 @@
  */
 package servlet;
 
+import logger.Log;
+
 /**
  * Hilfsklasse fuer Statische Variablen und Methoden der Servlets.
  */
@@ -27,4 +29,9 @@ public final class Helper {
 	 * Pfad zum Index direkt.
 	 */
 	public static final String D_INDEX = "/hiwi/index.jsp";
+
+	/**
+	 * All servlets within the servlet package should use this instance of Log.
+	 */
+	public static final Log log = Log.getInstance();
 }
