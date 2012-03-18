@@ -13,7 +13,7 @@
 
 <body>
 
-<a id="banner" href="index.html"><h1>Hiwi-Börse</h1></a>
+<h1><a id="banner" href="index.html">Hiwi-Börse</a></h1>
 
 <div id="left">	
 <div class="rightborder">
@@ -38,14 +38,14 @@
 		<h3>Anmeldung</h3>
 		<form name="anmeldung">
 			<span>
-				<label for="nutzername">Benutzername<label/>
+				<label for="nutzername">Benutzername</label>
 			</span>
 			<div class="form">
 				<input type="text" name="nutzername" size="20" maxlength="100" />
 			</div>
 			<br>
 			<span>
-				<label for="passwort">Passwort<label/>
+				<label for="passwort">Passwort</label>
 			</span>
 			<div class="form">
 				<input type="text" name="passwort" size="20" maxlength="100" />
