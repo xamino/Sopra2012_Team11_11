@@ -1,3 +1,7 @@
+/*
+TODO: print version!
+*/
+
 * {
 	margin: 0px;
 	padding: 0px;
@@ -35,7 +39,7 @@ h3 {
 	color: red;
 }
 
-/* Ersetzt durch border-left in  
+/* Ersetzt durch border-left in #right
 .rightborder { 
  	border-right: 2px solid black; 
  	height: 24em;
@@ -77,11 +81,10 @@ h3 {
 
 /*Informationsbereich oben links*/
 
-/*
-.upleft{
+/* TODO: Brauchen wir die upleft & downleft Trennung? */
+/*.upleft{
 	height: 12em;
-}
-*/
+}*/
 .text {
 	margin: 1em auto;
 	padding-left: 1em;
@@ -111,7 +114,8 @@ h3 {
 .commentform {
 	float: left;
 	width: 100%;
-	height: 12em;
+	padding-bottom: 1em; /* Ersetzt feste height – bessere dynamik */
+	border-bottom: 1px solid black; /* Ersetzt hr */
 }
 
 .form {

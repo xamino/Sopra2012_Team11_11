@@ -40,7 +40,6 @@
 			</form>
 			<div id="error_login" class="hiddenerror"></div>
 		</div>
-		<hr>
 		<div class="nav">
 			<h3>Navigation</h3>
 		</div>
