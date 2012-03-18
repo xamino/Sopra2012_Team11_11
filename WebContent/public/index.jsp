@@ -45,12 +45,12 @@
 		</div>
 	</div>
 	<div id="left">
-		<div class="upleft">
+		<div class="textblock">
 			<h2>Datenschutzerklärungen</h2>
 			<div class="text">Erläuterungstext ...</div>
 		</div>
 		<hr>
-		<div class="downleft">
+		<div class="textblock">
 			<div class="text">Hier steht Kram!!</div>
 		</div>
 	</div>

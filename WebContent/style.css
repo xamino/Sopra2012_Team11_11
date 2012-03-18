@@ -79,23 +79,21 @@ h3 {
 
 /*links*/
 
-/*Informationsbereich oben links*/
-
-/* TODO: Brauchen wir die upleft & downleft Trennung? */
+/* TODO: Brauchen wir die upleft & downleft Trennung? Ersetzt durch .textblock (Tamino)*/
 /*.upleft{
 	height: 12em;
 }*/
+.textblock {
+	height: 10em;
+	padding-bottom: 1em;
+}
+
 .text {
 	margin: 1em auto;
 	padding-left: 1em;
 	width: 90%;
 	background: lightgray;
 	height: 7em;
-}
-
-/*Hauptbereich der Seite unten links*/
-.downleft {
-	height: 10em;
 }
 
 /* Redundant mit .text{...}, wurde also entfernt (Tamino)
