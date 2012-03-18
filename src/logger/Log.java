@@ -76,8 +76,7 @@ public class Log {
 	 */
 	synchronized public void write(String caller, String message) {
 		// Create log string:
-		String output = "[" + getTimePassed() + ":" + caller.toUpperCase()
-				+ "] " + message;
+		String output = "[" + getTimePassed() + ":" + caller + "] " + message;
 		// Switch according to the setting:
 		switch (store) {
 		// Write only to file:
