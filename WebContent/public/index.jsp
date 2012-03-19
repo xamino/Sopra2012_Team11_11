@@ -13,11 +13,12 @@
 </head>
 
 <body>
-
-	<h1>
-		<a id="banner" href="index.html">Hiwi-Börse</a>
-	</h1>
-	<div id="right">
+	<div class="header">
+		<h1>
+			<a class="banner" href="index.html">Hiwi-Börse</a>
+		</h1>
+	</div>
+	<div class="right">
 		<div class="commentform">
 			<h3>Anmeldung</h3>
 			<form name="anmeldung">
@@ -44,7 +45,7 @@
 			<h3>Navigation</h3>
 		</div>
 	</div>
-	<div id="left">
+	<div class="content">
 		<div class="textblock">
 			<h2>Datenschutzerklärungen</h2>
 			<div class="text">Erläuterungstext ...</div>
@@ -57,7 +58,7 @@
 
 	<div class="clear"></div>
 
-	<div id="footer"></div>
+	<div class="footer"></div>
 
 </body>
 
