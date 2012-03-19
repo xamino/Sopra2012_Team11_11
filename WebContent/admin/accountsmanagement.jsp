@@ -14,12 +14,13 @@
 </head>
 
 <body>
+	<div class="header">
+		<h1>
+			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+		</h1>
+	</div>
 
-	<h1>
-		<a id="banner" href="index.html">Hiwi-Börse</a>
-	</h1>
-
-	<div id="right">
+	<div class="right">
 		<div class="commentform">
 			<h3>Abmeldung</h3>
 			<form name="abmeldung">
@@ -44,7 +45,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="left">
+	<div class="content">
 		<div class="textblock">
 			<h2>Accounts verwalten</h2>
 			<div class="text">Erläuterungstext...</div>
@@ -57,7 +58,7 @@
 
 	<div class="clear"></div>
 
-	<div id="footer"></div>
+	<div class="footer"></div>
 
 </body>
 </html>
