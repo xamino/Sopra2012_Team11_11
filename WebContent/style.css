@@ -17,7 +17,7 @@ body {
 }
 
 h2 {
-	margin: 0.25em;
+	padding: 0.25em;
 	font-size: 1.5em;
 }
 
@@ -31,7 +31,7 @@ h3 {
 table {
 	border-collapse: collapse;
 	border-style: hidden;
-	width: auto;
+	margin: 0.5em;
 }
 
 table td,table th {
@@ -73,8 +73,9 @@ div.right {
 }
 
 div.content {
-	width: 75%;
-	margin-right: 25%;
+	width: auto;
+	height: 600px;
+	overflow: auto;
 }
 
 /*Klasse zum clearn nach float*/
@@ -106,16 +107,14 @@ div.content {
 	height: 12em;
 }*/
 .textblock {
-	height: 10em;
-	padding-bottom: 1em;
+	padding: 0.25em;
+	/* background: lightgray; */
 }
 
 .text {
-	margin: 1em auto;
-	padding-left: 1em;
-	width: 90%;
-	background: lightgray;
-	height: 7em;
+	padding: 0.5em;
+	padding-bottom: 0.25em;
+	padding-top: 0.25em;
 }
 
 /* Redundant mit .text{...}, wurde also entfernt (Tamino)
@@ -157,15 +156,13 @@ div.content {
 	text-align: center;
 }
 
+/* Fuer alle Listen, welche als Forms dargestellt werden */
+form.listform {
+	padding: 0.5em;
+	/* background: lime; */
+}
+
 /*Navigationsbereich unten rechts*/
 .nav {
 	clear: both;
-}
-
-/* Fuer alle Listen, welche als Forms dargestellt werden */
-form.listform {
-	margin: 1em auto;
-	padding: 0.5em;
-	width: 90%;
-	background: lightgray;
 }
