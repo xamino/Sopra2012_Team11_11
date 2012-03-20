@@ -28,7 +28,6 @@
 					<input type="button" value="Abmelden" name="logout" />
 				</p>
 			</form>
-			<div id="error_login" class="hiddenerror"></div>
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>

@@ -21,6 +21,9 @@ import logger.Log;
 
 @WebServlet("/Admin/*")
 public class AdminServlet extends HttpServlet {
+	/**
+	 * Standard serialVersionUID.
+	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Variable zum speicher der Log Instanz.
@@ -38,7 +41,7 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
-		// log.write("admin_servlet", "Received request: " + path);
+		log.write("AdminServlet", "Received request: " + path);
 		// TODO: implement authenticity check – is user valid & logged in?
 		// log.write("admin_servlet", "Checked authentication.");
 		// Switch action on path:
