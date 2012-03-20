@@ -41,7 +41,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="content"></div>
+	<div class="content">
+		<div class="textblock">
+			<h2>Willkommen in ihrer persönlichen Zentrale</h2>
+			<div class="text">
+				Erläuterungstext ...<br>TODO: Fill with sensible information.
+			</div>
+		</div>
+		<hr>
+		<div class="textblock">
+			<table class="hidden">
+				<tr>
+					<td>Ungeprüfte Angebote:</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td>Offene Bewerbungen:</td>
+					<td>42</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
 </body>

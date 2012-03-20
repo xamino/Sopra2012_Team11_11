@@ -42,7 +42,53 @@
 			</div>
 		</div>
 	</div>
-	<div class="content"></div>
+	<div class="content">
+		<div class="textblock">
+			<h2>Angebote verwalten</h2>
+			<div class="text">
+				Erläuterungstext ...<br>TODO:
+			</div>
+		</div>
+		<hr>
+		<div class="textblock">
+			<form class="listform">
+				<div class="textblock">
+					<input type="button" value="Angebot prüfen" />
+				</div>
+				<hr>
+				<table>
+					<tr>
+						<th></th>
+						<th>Name des Zuständigen</th>
+						<th>Fach</th>
+						<th>Plätze</th>
+						<th>Stunden pro Woche</th>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Prof. Doc. Gott</td>
+						<td>Lebesphilosophie</td>
+						<td>20</td>
+						<td>8</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Prof. Langweile</td>
+						<td>Physik für Einsteiger</td>
+						<td>10</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Prof. Ungeprüft</td>
+						<td>Programmierung von Systemen</td>
+						<td>15</td>
+						<td>6</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
 </body>

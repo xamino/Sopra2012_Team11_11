@@ -42,7 +42,53 @@
 			</div>
 		</div>
 	</div>
-	<div class="content"></div>
+	<div class="content">
+		<div class="textblock">
+			<h2>Bewerbungen verwalten</h2>
+			<div class="text">
+				Erläuterungstext ...<br>TODO:
+			</div>
+		</div>
+		<hr>
+		<div class="textblock">
+			<form class="listform">
+				<div class="textblock">
+					<input type="button" value="Bewerbung bearbeiten" />
+				</div>
+				<hr>
+				<table>
+					<tr>
+						<th></th>
+						<th>Name des Bewerbers</th>
+						<th>Bewibt sich für</th>
+						<th>Fachsemester</th>
+						<th>Abschluss</th>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Issac Newton</td>
+						<td>Physik Tutorium</td>
+						<td>5</td>
+						<td>Bachlor</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Hans Martin</td>
+						<td>World of Warcraft Tutorium</td>
+						<td>2</td>
+						<td>Bachlor</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="select" /></td>
+						<td>Hubschraub Bär</td>
+						<td>Maschienenbau Tutorium</td>
+						<td>1</td>
+						<td>Master</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
 </body>
