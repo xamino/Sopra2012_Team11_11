@@ -48,11 +48,54 @@
 	<div class="content">
 		<div class="textblock">
 			<h2>Accounts verwalten</h2>
-			<div class="text">Erläuterungstext...</div>
+			<div class="text">
+				Erläuterungstext...<br>TODO: Implement the selection so that
+				the js saves which entry was clicked, then let the buttons react
+				accordingly. Maybe add shortcuts à la doubleclick and key support
+				(like del for löschen)? Remember to sort!
+			</div>
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="text">TODO: Accountlist with buttons.</div>
+			<div class="textblock">
+				<input type="button" value="Account hinzufügen" /> <input
+					type="button" value="Account ändern" /> <input
+					style="float: right;" type="button" value="Account löschen" />
+			</div>
+			<hr>
+			<table class="sized">
+				<tr>
+					<th>Benutzer Name</th>
+					<th>Name</th>
+					<th>Emailaddresse</th>
+					<th>Account Typ</th>
+				</tr>
+				<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+				<tr id="Xamino" onclick="">
+					<td>Xamino</td>
+					<td>Tamino Hartmann</td>
+					<td>tamino.hartmann@uni-ulm.de</td>
+					<td>Bewerber</td>
+				</tr>
+				<tr id="pete" onclick="">
+					<td>pete</td>
+					<td>Peter Maier</td>
+					<td>peter.maier@uni-ulm.de</td>
+					<td>Administrator</td>
+				</tr>
+				<tr id="Captain_Jack" onclick="">
+					<td>Captain_Jack</td>
+					<td>Jack Sparrow</td>
+					<td>captain.jack@black.pearl.int</td>
+					<td>Anbieter</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 

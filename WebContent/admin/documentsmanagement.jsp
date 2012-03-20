@@ -42,21 +42,19 @@
 	<div class="content">
 		<div class="textblock">
 			<h2>Unterlagen Verwalten</h2>
-			<div class="text">Erläuterungstext ... und zwar ganz viel.
-				Erläuterungstext ... und zwar ganz viel. Erläuterungstext ... und
-				zwar ganz viel. Erläuterungstext ... und zwar ganz viel.
-				Erläuterungstext ... und zwar ganz viel. Erläuterungstext ... und
-				zwar ganz viel. Erläuterungstext ... und zwar ganz viel.
-				Erläuterungstext ... und zwar ganz viel. Erläuterungstext ... und
-				zwar ganz viel.</div>
+			<div class="text">
+				Erläuterungstext...<br>TODO: Format tabel to look better.
+			</div>
 		</div>
 		<hr>
 		<div class="textblock">
 			<form class="listform">
+				<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
 				<div class="textblock">
-					<input type="button" value="Markierte Einträge löschen" /> <input
-						type="button" value="Eintrag ändern" /> <input type="button"
-						value="Eintrag hinzufügen" />
+					<input type="button" value="Eintrag hinzufügen" /> <input
+						align="left" type="button" value="Eintrag ändern" /> <input
+						style="float: right;" type="button"
+						value="Markierte Einträge löschen" />
 				</div>
 				<hr>
 				<table>

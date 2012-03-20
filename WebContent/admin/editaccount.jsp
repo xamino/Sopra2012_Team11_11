@@ -47,18 +47,53 @@
 	<div class="content">
 		<div class="textblock">
 			<h2>Daten ändern</h2>
-			<div class="text">Erläuterungstext ...</div>
+			<div class="text">
+				Erläuterungstext ...<br>TODO: Implement that "Institut" and
+				"Stellvertreter" are only active when legal.
+			</div>
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="text">TODO: Content with form and buttons</div>
+			<form class="listform">
+				<div class="textblock">
+					<input type="button" value="Änderungen übernehmen" /> <input
+						type="button" value="Änderungen verwerfen" /> <input
+						style="float: right;" type="button" value="Account löschen" />
+				</div>
+				<hr>
+				<table class="sized">
+					<tr>
+						<td>Name:</td>
+						<td><input type="text" value="Max Mustermann" size="40" /></td>
+					</tr>
+					<!-- TODO: username has a max size – use it here too -->
+					<tr>
+						<td>Benutzername:</td>
+						<td><input type="text" value="max_the_great" /></td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td><input type="text" value="max.mustermann@uni-ulm.de"
+							size="40" /></td>
+					</tr>
+					<tr>
+						<td>Accounttyp:</td>
+						<td><input type="text" value="Bewerber" /></td>
+					</tr>
+					<tr>
+						<td>Institut:</td>
+						<td><input type="text" value="Student" /></td>
+					</tr>
+					<tr>
+						<td>Stellvertreter:</td>
+						<td><input type="text" value="null" /></td>
+					</tr>
+				</table>
+			</form>
 		</div>
 	</div>
-
 	<div class="clear"></div>
-
 	<div class="footer"></div>
-
 </body>
 
 </html>

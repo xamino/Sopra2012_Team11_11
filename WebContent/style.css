@@ -36,7 +36,17 @@ table {
 
 table td,table th {
 	border: 1px solid black;
-	padding: 0.25em;
+	padding: 0.5em;
+}
+
+/* Fuer Tabellen mit mindestgroesse der spalten (wie in admin/accountsmanagement) */
+table.sized td,table.sized th {
+	width: 200px;
+}
+
+table.hidden td, table.hidden th{
+	border: 0px solid black;
+	padding: 0.5em;
 }
 
 /*fuer Fehlermeldungen*/
