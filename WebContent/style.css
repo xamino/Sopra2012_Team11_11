@@ -44,7 +44,7 @@ table.sized td,table.sized th {
 	width: 200px;
 }
 
-table.hidden td, table.hidden th{
+table.hidden td,table.hidden th {
 	border: 0px solid black;
 	padding: 0.5em;
 }
@@ -86,6 +86,12 @@ div.content {
 	width: auto;
 	height: 600px;
 	overflow: auto;
+}
+
+div.bordered_float {
+	float: right;
+	border: 1px solid gray;
+	padding: 1em;
 }
 
 /*Klasse zum clearn nach float*/

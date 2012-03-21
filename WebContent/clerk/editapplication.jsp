@@ -44,7 +44,81 @@
 			</div>
 		</div>
 	</div>
-	<div class="content"></div>
+	<div class="content">
+		<div class="textblock">
+			<h2>Bewerbung bearbeiten</h2>
+			<div class="text">
+				Erläuterungstext ...<br>TODO: Error divs
+			</div>
+		</div>
+		<hr>
+		<div class="textblock">
+			<div style="float: right;">
+				<table class="hidden">
+					<tr>
+						<td>Name:</td>
+						<td>Hans Marting</td>
+					</tr>
+					<tr>
+						<td>Bewirbt sich für:</td>
+						<td>World of Warcraft Tutorium</td>
+					</tr>
+					<tr>
+						<td>Fachsemester:</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>Abschluss:</td>
+						<td>Bachlor</td>
+					</tr>
+				</table>
+				<br>
+				<input type="button" value="Bewerbungsabschluss" />
+			</div>
+			<form class="listform">
+				<table class="">
+					<tr>
+						<th></th>
+						<th>Dokumente</th>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Normvertrag</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Superheldenbescheinigung</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Arbeitserlaubnis</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Leistungsnachweis</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Levelbescheinigung</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Internetslang für Fortgeschrittene Nachweis</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Lohnsteuerkarte</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td>Passbild</td>
+					</tr>
+				</table>
+				<input type="button" value="Dokument hinzufügen" /> <input
+					type="button" value="Dokument löschen" />
+			</form>
+		</div>
+	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
 </body>
