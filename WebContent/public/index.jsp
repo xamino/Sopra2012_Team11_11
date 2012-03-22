@@ -43,6 +43,17 @@
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
+			<ul>
+				<li >
+					→ Startseite
+				</li>
+				<li >
+					<a href="register.jsp" title="Hier geht es zum Registrieren">Registrieren</a>
+				</li>
+				<li >
+					<a href="help.jsp" title="Hier finden Sie die Hilfe">Hilfe</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 	<div class="content">
