@@ -4,11 +4,18 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
 /**
  * Verwaltet alle eingelogten User.
  */
 public abstract class LoggedInUsers {
 
+	/**
+	 * Statische Variable für den Logger
+	 */
+	private static Log log = Log.getInstance();
+	
 	/**
 	 * Vector mit den eingelogten Usern des Systems.
 	 */
@@ -36,6 +43,42 @@ public abstract class LoggedInUsers {
 	 * 
 	 */
 	static void addUser(User u) {
+		User tempuserbyname = getUserByUsername(u.getUserData().getUsername());
+		User tempuserbysession = getUserBySession(u.getUserData().getSession());
+		if (tempuserbyname == null && tempuserbysession == null) {
+			users.add(u);
+			log.write("UserManagement" , u.getUserData().getUsername()
+					+ " has logged in.");
+			log.write("UserManagement",
+					LoggedInUsers.getUsers().size()
+					+ " users are currently logged in.");
+
+		} else {
+			if (tempuserbysession != null) {
+				removeUserBySession(u.getUserData().getSession());
+				if (tempuserbyname == null) {
+					users.add(u);
+					log.write("UserManagement" , u.getUserData().getUsername()
+							+ " has logged in.");
+					log.write("UserManagement",
+							LoggedInUsers.getUsers().size()
+							+ " users are currently logged in.");
+				}
+
+			}
+			if (tempuserbyname != null) {
+				HttpSession tempsession = tempuserbyname.getUserData().getSession();
+				tempuserbyname.getUserData().setSession(u.getUserData().getSession());
+				tempsession.setAttribute("userName", null);
+				tempsession.invalidate();
+				log.write("UserManagement" , u.getUserData().getUsername()
+						+ " displaced.");
+				log.write("UserManagement",
+						LoggedInUsers.getUsers().size()
+						+ " users are currently logged in.");
+			}
+
+		}
 
 	}
 
@@ -49,7 +92,9 @@ public abstract class LoggedInUsers {
 	 * @see User
 	 */
 	public static User getUserByUsername(String username) {
-
+		for (int i = 0; i < users.size(); i++)
+			if (users.get(i).getUserData().getUsername().equals(username))
+				return users.get(i);
 		return null;
 	}
 
@@ -62,7 +107,11 @@ public abstract class LoggedInUsers {
 	 *         <code>Null</code>
 	 **/
 	public static User getUserBySession(HttpSession session) {
-
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getUserData().getSession() == session) {
+				return users.get(i);
+			}
+		}
 		return null;
 	}
 
@@ -76,6 +125,23 @@ public abstract class LoggedInUsers {
 	 * 
 	 */
 	static void removeUserBySession(HttpSession session) {
-
+		// userName==null keine aktion
+		if (session.getAttribute("userName") == null)
+			return;
+		for (int i = 0; i < users.size(); i++) {
+			// Debug for MANU!
+			// System.out.println("DEBUG: " + users.get(i).getSession() + " :: "
+			// + user.getSession());
+			if (users.get(i).getUserData().getSession() == session) {
+				String name = users.get(i).getUserData().getUsername();
+				users.remove(i);
+				log.write("UserManagement" , name
+						+ " has logged out.");
+				log.write("UserManagement",
+						LoggedInUsers.getUsers().size()
+						+ " users are currently logged in.");
+				break;
+			}
+		}
 	}
 }

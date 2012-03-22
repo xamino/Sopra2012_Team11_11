@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
  */
 public class UserData {
 
-	public UserData(String benutzername, String email, String name,
+	public UserData(String username, String email, String name,
 			HttpSession session) {
-		this.benutzername = benutzername;
+		this.username = username;
 		this.email = email;
 		this.name = name;
 		this.session = session;
@@ -22,7 +22,7 @@ public class UserData {
 	/**
 	 * Benutzername des Benutzers
 	 */
-	private String benutzername;
+	private String username;
 	/**
 	 * E-Mail Adresse des Benutzers
 	 */
@@ -56,18 +56,18 @@ public class UserData {
 	 * 
 	 * @return Benutzername
 	 */
-	public String getBenutzername() {
-		return benutzername;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
 	 * Setzt den Benutzernamen
 	 * 
-	 * @param benutzername
+	 * @param username
 	 *            Gewuenschter Benutzername
 	 */
-	public void setBenutzername(String benutzername) {
-		this.benutzername = benutzername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**

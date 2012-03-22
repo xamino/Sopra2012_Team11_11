@@ -2,6 +2,8 @@ package userManagement;
 
 import javax.servlet.http.HttpSession;
 
+
+
 import database.account.AccountController;
 import database.application.ApplicationController;
 import database.document.DocumentController;
@@ -78,7 +80,7 @@ public abstract class User {
 	 * Invalidiert die Session des Benutzers
 	 */
 	public void invalidate() {
-
+			uData.getSession().invalidate();
 	}
 
 	/**
@@ -88,7 +90,19 @@ public abstract class User {
 	 */
 	@Override
 	public String toString() {
-		return "";
+		String type = "";
+		if (this instanceof Admin)
+			type = "Admin";
+		else if (this instanceof Provider)
+			type = "Provider";
+		else if (this instanceof Clerk)
+			type = "Clerk";
+		else if (this instanceof Applicant)
+			type = "Applicant";
+
+		return "User [Type=" + type + " Name=" + uData.getName() + ", Username="
+				+ uData.getUsername() + ", Email=" + uData.getEmail() + ", SessionID="
+				+ uData.getSession().getId() + "]";
 	}
 
 }

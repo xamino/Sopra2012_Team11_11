@@ -3,6 +3,7 @@ package userManagement;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+
 /**
  * Verwaltet das Ablaufen von Sessions
  * 
@@ -27,7 +28,7 @@ public class SessionHandler implements HttpSessionListener {
 	 */
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-
+		LoggedInUsers.removeUserBySession(se.getSession());	
 	}
 
 }

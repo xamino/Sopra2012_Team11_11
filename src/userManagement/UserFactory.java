@@ -2,6 +2,8 @@ package userManagement;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
 import database.account.Account;
 
 /**
@@ -21,6 +23,15 @@ public class UserFactory {
 	 *         oder Verwalter)
 	 */
 	public static User getUserInstance(Account acc, HttpSession session) {
-		return null;
+		int type = acc.getAccounttype();
+		if(type==0){
+			return new Admin(acc.getUsername(),acc.getEmail(),acc.getName(),session);
+		}else if(type==1){
+			return new Provider(acc.getUsername(),acc.getEmail(),acc.getName(),session);
+		}else if(type==2){
+			return new Clerk(acc.getUsername(),acc.getEmail(),acc.getName(),session);
+		}else if(type==3){
+			return new Applicant(acc.getUsername(),acc.getEmail(),acc.getName(),session);
+		}else return null;
 	}
 }
