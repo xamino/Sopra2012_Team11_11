@@ -1,12 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C/DTD HTML 4.01 Transitional/EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../style.css" />
+<script type="text/javascript" src="script.js"></script>
+<title>Hilfe | Hiwi Job Börse</title>
 </head>
+
 <body>
+	<div class="header">
+		<h1>
+			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+		</h1>
+	</div>
+	<div class="right">
+		<div class="commentform">
+			<h3>Anmeldung</h3>
+			<form name="anmeldung">
+				<span> <label for="nutzername">Benutzername</label>
+				</span>
+				<div class="form">
+					<input type="text" name="nutzername" size="20" maxlength="100" />
+				</div>
+				<br> <span> <label for="passwort">Passwort</label>
+				</span>
+				<div class="form">
+					<input type="text" name="passwort" size="20" maxlength="100" />
+				</div>
+				<div class="clear"></div>
+				<br>
+				<p>
+					<input type="reset" value="Zurücksetzen" /> <input type="submit"
+						value="Anmelden" />
+				</p>
+			</form>
+			<a href="register.jsp" title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <br>
+			<a href="" title="neues Passwort">Passwort vergessen?</a>					<!--  Funktion fehlt -->
+			<div id="error_login" class="hiddenerror"></div>
+		</div>
+		<div class="nav">
+			<h3>Navigation</h3>
+			<ul>
+				<li >
+					<a href="index.jsp" title="Hier gelangen Sie auf unsere Startseite">Startseite</a>
+				</li>
+				<li >
+					<a href="register.jsp" title="Hier geht es zum Registrieren">Registrieren</a>
+				</li>
+				<li>
+				→ Hilfe
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="textblock">
+			<h2>Hilfe</h2>
+			<div class="text">Erläuterungstext ...</div>
+		</div>
+		<hr>
+		<div class="textblock">
+			<div class="text">Hier steht Kram!!</div>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	<div class="footer"></div>
 
 </body>
+
 </html>

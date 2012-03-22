@@ -39,6 +39,8 @@
 						value="Anmelden" />
 				</p>
 			</form>
+			<a href="register.jsp" title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <br>
+			<a href="" title="neues Passwort">Passwort vergessen?</a>					<!--  Funktion fehlt -->
 			<div id="error_login" class="hiddenerror"></div>
 		</div>
 		<div class="nav">
@@ -58,7 +60,7 @@
 	</div>
 	<div class="content">
 		<div class="textblock">
-			<h2>Datenschutzerklärungen</h2>
+			<h2>Willkommen auf der Hiwi-Börse</h2>
 			<div class="text">Erläuterungstext ...</div>
 		</div>
 		<hr>
