@@ -9,7 +9,6 @@
 <script type="text/javascript" src="script.js"></script>
 <title>Angebote Verwalten | Hiwi Job Börse</title>
 </head>
-
 <body>
 	<div class="header">
 		<h1>
@@ -46,14 +45,15 @@
 		<div class="textblock">
 			<h2>Angebote verwalten</h2>
 			<div class="text">
-				Erläuterungstext ...<br>TODO:
+				Erläuterungstext ...<br>TODO: Checkoffer button MUST transfer
+				data to editoffer.jsp!
 			</div>
 		</div>
 		<hr>
 		<div class="textblock">
 			<form class="listform">
 				<div class="textblock">
-					<input type="button" value="Angebot prüfen" />
+					<input type="button" value="Angebot prüfen" onclick="window.location='editoffer.jsp'"/>
 				</div>
 				<hr>
 				<table>

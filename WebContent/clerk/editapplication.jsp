@@ -9,7 +9,6 @@
 <script type="text/javascript" src="script.js"></script>
 <title>Bewerbung Bearbeiten | Hiwi Job Börse</title>
 </head>
-
 <body>
 	<div class="header">
 		<h1>
@@ -72,8 +71,7 @@
 						<td>Bachlor</td>
 					</tr>
 				</table>
-				<br>
-				<input type="button" value="Bewerbungsabschluss" />
+				<br> <input type="button" value="Bewerbungsabschluss" />
 			</div>
 			<form class="listform">
 				<table class="">
@@ -114,12 +112,47 @@
 						<td>Passbild</td>
 					</tr>
 				</table>
-				<input type="button" value="Dokument hinzufügen" /> <input
-					type="button" value="Dokument löschen" />
+				<input type="button" value="Dokument hinzufügen"
+					onclick="togglePopup('document_add',true);" /> <input type="button"
+					value="Dokument löschen"
+					onclick="togglePopup('document_del',true);" />
 			</form>
 		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Here are the popups -->
+	<!-- Document add popup -->
+	<div id="document_add" class="popup_hidden">
+		<form>
+			<h3>Dokument hinzufügen</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>Link:<br> <input
+					type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_add', false);" />
+			</div>
+		</form>
+	</div>
+	<!-- Document del popup -->
+	<div id="document_del" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie die ausgewählten<br>Dokumente wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>

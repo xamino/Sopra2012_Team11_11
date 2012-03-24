@@ -46,14 +46,16 @@
 		<div class="textblock">
 			<h2>Bewerbungen verwalten</h2>
 			<div class="text">
-				Erläuterungstext ...<br>TODO:
+				Erläuterungstext ...<br>TODO: Button that leads to
+				editapplication view MUST transfer data!
 			</div>
 		</div>
 		<hr>
 		<div class="textblock">
 			<form class="listform">
 				<div class="textblock">
-					<input type="button" value="Bewerbung bearbeiten" />
+					<input type="button" value="Bewerbung bearbeiten"
+						onclick="window.location='editapplication.jsp'" />
 				</div>
 				<hr>
 				<table>

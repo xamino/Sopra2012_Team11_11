@@ -54,7 +54,7 @@
 			<form class="listform">
 				<div class="textblock">
 					<input type="button" value="Änderungen übernehmen" /> <input
-						type="button" value="Änderungen verwerfen" />
+						type="button" value="Änderungen verwerfen" onclick="window.location='userindex.jsp'"/>
 					<!-- Shouldn't there be a delete option here too? 
 						<input style="float: right;" type="button" value="Account löschen" />
 					-->

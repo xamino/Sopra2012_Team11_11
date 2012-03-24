@@ -74,8 +74,9 @@
 						<td>Sonderbescheid</td>
 					</tr>
 				</table>
-				<input type="button" value="Dokument hinzufügen" /> <input
-					type="button" value="Dokument löschen" />
+				<input type="button" value="Dokument hinzufügen"
+					onclick="togglePopup('document_add',true);" /> <input
+					type="button" value="Dokument löschen" onclick="togglePopup('document_del',true);"/>
 			</div>
 			<table class="hidden">
 				<tr>
@@ -100,9 +101,9 @@
 				</tr>
 				<tr>
 					<td>Anbieternotiz:</td>
-					<td style="background-color: lightgray;">Hallo!<br> <br>Wie besprochen, hier das Angebot.
-						Ich hoffe, diesmal stimmt alles. :D<br> <br>Grüße,<br>Hr.
-						Gott
+					<td style="background-color: lightgray;">Hallo!<br> <br>Wie
+						besprochen, hier das Angebot. Ich hoffe, diesmal stimmt alles. :D<br>
+						<br>Grüße,<br>Hr. Gott
 					</td>
 				</tr>
 			</table>
@@ -118,5 +119,37 @@
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Here are the popups -->
+	<!-- Document add popup -->
+	<div id="document_add" class="popup_hidden">
+		<form>
+			<h3>Dokument hinzufügen</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_add', false);" />
+			</div>
+		</form>
+	</div>
+	<!-- Document del popup -->
+	<div id="document_del" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie das ausgewählte<br>Dokument wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>
