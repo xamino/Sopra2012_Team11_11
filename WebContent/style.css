@@ -50,14 +50,14 @@ table.hidden td,table.hidden th {
 }
 
 /*fuer Fehlermeldungen*/
-.hiddenerror {
-	visibility: visible;
+div.hiddenerror {
+	visibility: hidden;
 	font-size: small;
 	color: red;
 }
 
-.visibleerror {
-	visibility: hidden;
+div.visibleerror {
+	visibility: visible;
 	font-size: small;
 	color: red;
 }
@@ -82,9 +82,14 @@ div.right {
 	border-left: 2px solid black;
 }
 
-div.content {
-	width: auto;								/* !!!! funktioniert in vielen Browsern ned (zB ältere IE) wieder auf dynamisches width ändern!!! außerdem setzen unterschiedliche Browser folgende width evtl anders um!! daher war .rightborder so eingebaut!!!! (Laura) */
-	height: 600px;								
+/* !!!! funktioniert in vielen Browsern ned (zB ï¿½ltere IE) wieder auf dynamisches 
+width ï¿½ndern!!! auï¿½erdem setzen unterschiedliche Browser folgende width evtl anders um!!
+daher war .rightborder so eingebaut!!!! (Laura)
+
+Klappt aber so prime mit Chrome, Opera, und Firefox â€“ aushandeln via Email. (Tamino)
+*/
+div.content { /* width: auto; */
+	height: 600px;
 	overflow: auto;
 }
 
@@ -172,8 +177,8 @@ div.bordered_float {
 	text-align: center;
 }
 
-.commentform a {			/* Fragen vom Rand weg verschieben */
-	padding-left:10px;
+.commentform a { /* Fragen vom Rand weg verschieben */
+	padding-left: 10px;
 }
 
 /* Fuer alle Listen, welche als Forms dargestellt werden */
@@ -187,30 +192,29 @@ form.listform {
 	clear: both;
 }
 
-.nav ul{
+.nav ul {
 	padding-left: 10px;
-	text-decoration:none;
-	list-style:none;
+	text-decoration: none;
+	list-style: none;
 }
 
-.nav span{				/* falls es ein Unterpunkt gibt */
+.nav span { /* falls es ein Unterpunkt gibt */
 	padding-left: 20px;
 }
 
-/* Pseudoklassen für die Navigation */
-.nav a, .nav a:link, .nav a:visited {
-	color:black;
-	text-decoration:none;
+/* Pseudoklassen fï¿½r die Navigation */
+.nav a,.nav a:link,.nav a:visited {
+	color: black;
+	text-decoration: none;
 	font-size: 1em;
 }
 
-.nav a:hover, .nav a:active, .nav a:focus {
+.nav a:hover,.nav a:active,.nav a:focus {
 	font-size: 1.25em;
-	text-decoration:none;
+	text-decoration: none;
 }
 
 /* Registrierung */
-
 .register {
 	float: left;
 	width: 100%;
@@ -218,16 +222,15 @@ form.listform {
 	border-bottom: 1px solid black; /* Ersetzt hr */
 }
 
-.breite{
+.breite {
 	width: 27em;
 }
 
-.abstand{
-	width:22.75em;
+.abstand {
+	width: 22.75em;
 }
 
-.regform {
-	/*margin-left:0.625em;*/
+.regform { /*margin-left:0.625em;*/
 	float: left;
 	width: 11.75em;
 	text-align: right;
@@ -255,9 +258,8 @@ form.listform {
 
 /* Bewerber */
 
-/* Daten ändern */
-
-.breiteAendern{
+/* Daten ï¿½ndern */
+.breiteAendern {
 	width: 24.75em;
 }
 
@@ -274,13 +276,32 @@ form.listform {
 }
 
 /* Bewerber-Desktop */
-
-.angemeldet{
+.angemeldet {
 	padding: 10px;
 }
 
 /* status.jsp */
+.float {
+	float: left;
+}
 
-.float{
-	float:left;
+/* Popup styles hier */
+div.popup_visible,div.popup_hidden {
+	position: absolute;
+	left: 25%;
+	top: 30%;
+	min-width: 15%;
+	padding: 0.5em;
+	background-color: white;
+	border: 1px double black;
+	border-radius: 10px;
+	box-shadow: 5px 5px 10px #777777;
+}
+
+div.popup_visible {
+	display: block;
+}
+
+div.popup_hidden {
+	display: none;
 }

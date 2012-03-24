@@ -159,5 +159,56 @@
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Here are the popups -->
+	<!-- Document add popup -->
+	<div class="popup_hidden">
+		<form>
+
+			<h3>Dokument hinzufügen</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>Link:<br> <input
+					type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" />
+			</div>
+		</form>
+	</div>
+	<!-- Document edit popup -->
+	<div class="popup_hidden">
+		<form>
+			<h3>Dokument modifizieren</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>Link:<br> <input
+					type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" />
+			</div>
+		</form>
+	</div>
+	<!-- Confirmation popup -->
+	<div class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie die ausgewählten<br>Dokumente wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>
