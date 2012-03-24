@@ -35,8 +35,8 @@
 				<div class="clear"></div>
 				<br>
 				<p>
-					<input type="reset" value="Zurücksetzen" /> <input type="submit"
-						value="Anmelden" />
+					<input type="reset" value="Zurücksetzen" /> 
+					<input type="submit" value="Anmelden" />
 				</p>
 			</form>
 			<a href="register.jsp" title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <br>

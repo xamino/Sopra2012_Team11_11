@@ -83,8 +83,8 @@ div.right {
 }
 
 div.content {
-	width: auto;
-	height: 600px;
+	width: auto;								/* !!!! funktioniert in vielen Browsern ned (zB ‰ltere IE) wieder auf dynamisches width ‰ndern!!! auﬂerdem setzen unterschiedliche Browser folgende width evtl anders um!! daher war .rightborder so eingebaut!!!! (Laura) */
+	height: 600px;								
 	overflow: auto;
 }
 
@@ -219,30 +219,68 @@ form.listform {
 }
 
 .breite{
-	width: 25em;
+	width: 27em;
 }
 
 .abstand{
-	padding-left:10px;
+	width:22.75em;
 }
 
 .regform {
-	margin-left:10px;
+	/*margin-left:0.625em;*/
 	float: left;
-	width: 50%;
+	width: 11.75em;
+	text-align: right;
+	line-height: 1.5em;
+}
+
+.select {
+	float: left;
+	width: 6em;
 	text-align: right;
 	line-height: 1.5em;
 }
 
 .register span {
-	padding-left: 10px;
 	text-align: left;
-	width: 40%;
+	width: 11em;
 	float: left;
 	line-height: 1.5em;
 }
 
 .register p {
 	text-align: center;
-width: 25em;
+	width: 26.375em;
+}
+
+/* Bewerber */
+
+/* Daten ‰ndern */
+
+.breiteAendern{
+	width: 24.75em;
+}
+
+.aendern span {
+	text-align: left;
+	width: 13em;
+	float: left;
+	line-height: 1.5em;
+}
+
+.aendern p {
+	text-align: center;
+	width: 24.75em;
+}
+
+/* Bewerber-Desktop */
+
+.angemeldet{
+	padding: 10px;
+}
+
+/* status.jsp */
+
+.float{
+	float:left;
 }

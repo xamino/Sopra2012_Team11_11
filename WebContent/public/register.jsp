@@ -70,51 +70,66 @@
 				<div class="register">
 				<form name="registrierung">
 					<div class="breite">
-					<span> <label for="anrede">Anrede</label>
+					<span> 
+						<label for="anrede">Anrede</label>
 					</span>
-					<div class="regform">
-						<input type="text" name="nutzername" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="name">Name</label>
+					<div class="select">
+						<select name="anrede" size="1">
+	      					<option>Frau</option>
+	      					<option>Mann</option>
+	    				</select>
+    				</div> <br> 
+    				<span> 
+    					<label for="name">Name</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="name" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="vorname">Vorname</label>
+					</div> <br>
+					<span> 
+						<label for="vorname">Vorname</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="vorname" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="birth">Geburtsdatum</label>
+					</div> <br>
+					<span> 
+						<label for="birth">Geburtsdatum</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="birth" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="martnr">Matrikelnummer</label>
+					</div> <br>
+					<span> 
+						<label for="martnr">Matrikelnummer</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="matnr" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="email">E-Mail</label>
+					</div> <br>
+					<span> 
+						<label for="email">E-Mail</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="email" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="passwort">Passwort</label>
+					</div> <br>
+					<span> 
+						<label for="nutzername">Benutzername</label>
+					</span>
+					<div class="regform">
+						<input type="text" name="nutzername" size="20" maxlength="100" />
+					</div> <br>
+					<span> 
+						<label for="passwort">Passwort</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="passwort" size="20" maxlength="100" />
-					</div>
-					<br> <span> <label for="passwortwdh">Passwort wiederholen</label>
+					</div> <br>
+					<span> 
+						<label for="passwortwdh">Passwort wiederholen</label>
 					</span>
 					<div class="regform">
 						<input type="text" name="passwortwdh" size="20" maxlength="100" />
-					</div>
-					<br>
+					</div> <br>
 					</div>
 					<div class="clear"></div>
-					<span class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> Ich akzeptiere die <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a></span><br>
-					<br>
+					<div class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> Ich akzeptiere die <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a></div><br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
 						<input type="submit" value="Registrieren" />
