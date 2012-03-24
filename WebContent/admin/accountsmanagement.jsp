@@ -15,7 +15,6 @@
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
-
 	<div class="right">
 		<div class="commentform">
 			<h3>Abmeldung</h3>
@@ -53,9 +52,12 @@
 		<hr>
 		<div class="textblock">
 			<div class="textblock">
-				<input type="button" value="Account hinzufügen" /> <input
-					type="button" value="Account ändern" /> <input
-					style="float: right;" type="button" value="Account löschen" />
+				<input type="button" value="Account hinzufügen"
+					onclick="window.location='editaccount.jsp'" /> <input
+					type="button" value="Account ändern"
+					onclick="window.location='editaccount.jsp'" /> <input
+					style="float: right;" type="button" value="Account löschen"
+					onclick="togglePopup('account_del', true);" />
 			</div>
 			<hr>
 			<table class="sized">
@@ -93,10 +95,23 @@
 			</table>
 		</div>
 	</div>
-
 	<div class="clear"></div>
-
 	<div class="footer"></div>
-
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="account_del" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie den ausgewählten<br>Account wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('account_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>

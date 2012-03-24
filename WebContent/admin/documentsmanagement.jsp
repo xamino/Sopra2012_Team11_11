@@ -50,10 +50,13 @@
 			<form class="listform">
 				<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
 				<div class="textblock">
-					<input type="button" value="Eintrag hinzufügen" /> <input
-						align="left" type="button" value="Eintrag ändern" /> <input
+					<input type="button" value="Eintrag hinzufügen"
+						onclick="togglePopup('document_add', true);" /> <input
+						align="left" type="button" value="Eintrag ändern"
+						onclick="togglePopup('document_edit', true);" /> <input
 						style="float: right;" type="button"
-						value="Markierte Einträge löschen" />
+						value="Markierte Einträge löschen"
+						onclick="togglePopup('document_del', true);" />
 				</div>
 				<hr>
 				<table>
@@ -161,9 +164,8 @@
 	<div class="footer"></div>
 	<!-- Here are the popups -->
 	<!-- Document add popup -->
-	<div class="popup_hidden">
+	<div id="document_add" class="popup_hidden">
 		<form>
-
 			<h3>Dokument hinzufügen</h3>
 			<hr>
 			<div class="textblock">
@@ -174,12 +176,12 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Speicher" /> <input type="button"
-					value="Abbrechen" />
+					value="Abbrechen" onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
 	</div>
 	<!-- Document edit popup -->
-	<div class="popup_hidden">
+	<div id="document_edit" class="popup_hidden">
 		<form>
 			<h3>Dokument modifizieren</h3>
 			<hr>
@@ -191,12 +193,12 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Speicher" /> <input type="button"
-					value="Abbrechen" />
+					value="Abbrechen" onclick="togglePopup('document_edit', false);" />
 			</div>
 		</form>
 	</div>
 	<!-- Confirmation popup -->
-	<div class="popup_hidden">
+	<div id="document_del" class="popup_hidden">
 		<form>
 			<h3>Bestätigung</h3>
 			<hr>
@@ -206,7 +208,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Löschen" /> <input type="button"
-					value="Abbrechen" />
+					value="Abbrechen" onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>
 	</div>

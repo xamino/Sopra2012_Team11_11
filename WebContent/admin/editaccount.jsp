@@ -56,8 +56,10 @@
 			<form class="listform">
 				<div class="textblock">
 					<input type="button" value="Änderungen übernehmen" /> <input
-						type="button" value="Änderungen verwerfen" /> <input
-						style="float: right;" type="button" value="Account löschen" />
+						type="button" value="Änderungen verwerfen"
+						onclick="window.location='accountsmanagement.jsp'" /> <input
+						style="float: right;" type="button" value="Account löschen"
+						onclick="togglePopup('account_del',true);" />
 				</div>
 				<hr>
 				<table class="sized">
@@ -93,6 +95,22 @@
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="account_del" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie den Account<br>wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('account_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 
 </html>
