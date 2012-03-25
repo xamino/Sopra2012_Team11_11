@@ -28,7 +28,7 @@
 			<h3>Navigation</h3>
 			<ul>
 				<li >
-					→ Bewerber-Desktop
+					→ Desktop
 				</li>
 				<li >
 					<a href="accountmanagement.jsp" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>

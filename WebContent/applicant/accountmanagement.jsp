@@ -28,7 +28,7 @@
 			<h3>Navigation</h3>
 			<ul>
 				<li >
-					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Bewerber-Desktop</a>
+					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Desktop</a>
 				</li>
 				<li >
 					→ Accountverwaltung
@@ -80,7 +80,7 @@
 					</div> <br>
 					</div>
 					<div class="clear"></div>
-					<div class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> Ich akzeptiere die <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a></div><br>
+					<div class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a> widerrufen</div><br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
 						<input type="submit" value="Ändern" />

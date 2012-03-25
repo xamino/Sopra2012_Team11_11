@@ -28,7 +28,7 @@
 			<h3>Navigation</h3>
 			<ul>
 				<li >
-					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Bewerber-Desktop</a>
+					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Desktop</a>
 				</li>
 				<li >
 					<a href="accountmanagement.jsp" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>

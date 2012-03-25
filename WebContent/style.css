@@ -1,30 +1,3 @@
-/*
-
-TODO: print version!
-
-*/
-
-
-/* !!!Achtung folgende Änderungen!!!!
-
-1. die höhe skaliert nun automatisch mit!!! (kein Änderungen für dich)
-2. der zweite Textblock auf der linken Seite (haupttext) heißt jetzt auch wieder haupttext --> muss für automatische Höhe so sein. sonst kann es sein, dass die nav länger ist als der text! (in deim Code abändern)
-3. .rightborder ist wieder eingebaut! also nach content einen div mit class="rightborder" einfügen der sich ganz am ende wieder schließt!!
---> genauer:    <div class="content">
-					<div class="rightborder">
-						<div class="textblock>
-							...
-						</div>
-					</div>
-				</div>
-hoff es ist verständlich =)
-4. width ist jetzt nicht mehr auto sondern mit % (keine änderungen für dich)
-5. dein min-height:600px hab ich in raus genommen bei .right, da es jetzt automtisch gehen müsste wenn du die oberen punkte ausführst =), falls nicht sag mir nochmal bescheid
-und wenn du angaben machst kein px sondern in dem fall zb 600px --> 37.5em --> dynamisch (überprüfungen für dich ^^)
-
-*/
-
-
 * {
 	margin: 0px;
 	padding: 0px;
@@ -84,7 +57,6 @@ div.visibleerror {
 	color: red;
 }
 
-/* Ersetzt durch border-left in #right    --> siehe oben*/
 .rightborder { 
  	border-right: 2px solid black; 	
  	overflow: hidden;  			/* unbedingt stehen lassen, ermöglicht automatische höhe =) */
@@ -102,19 +74,10 @@ div.right {
 	width: 25%;
 	/*min-height: 600px; --> kein px angaben bei dynamischen Layout!  */
 	margin: 0px;
-	/*border-left: 2px solid black;*/
 }
 
-/* !!!! funktioniert in vielen Browsern ned (zB ï¿½ltere IE) wieder auf dynamisches 
-width ï¿½ndern!!! auï¿½erdem setzen unterschiedliche Browser folgende width evtl anders um!!
-daher war .rightborder so eingebaut!!!! (Laura)
-
-Klappt aber so prime mit Chrome, Opera, und Firefox â€“ aushandeln via Email. (Tamino)
---> siehe Mail (Laura)
-*/
-div.content { /* width: auto; */
-	/*border-right: 2% solid balck;*/
-	overflow: auto; 				/* nicht schon wieder auto!!! des löst jeder Browser wie er will und dann ham ma unterschiedliche Darstellungen!!!! (Laura) */
+div.content { 
+	/*overflow: auto; 				/* nicht schon wieder auto!!! des löst jeder Browser wie er will und dann ham ma unterschiedliche Darstellungen!!!! (Laura) */
 	width: 75%;
 }
 
@@ -147,12 +110,6 @@ div.bordered_float {
 	font-size: 2em;
 }
 
-/*links*/
-
-/* TODO: Brauchen wir die upleft & downleft Trennung? Ersetzt durch .textblock (Tamino)*/
-/*.upleft{
-	height: 12em;
-}*/
 .textblock {
 	padding: 0.25em;
 	/* background: lightgray; */
@@ -164,7 +121,6 @@ div.bordered_float {
 	padding-top: 0.25em;
 }
 
-/* Redundant mit .text{...}, wurde also entfernt (Tamino)*/
 .haupttext{
 	padding: 0.5em;
 	padding-bottom: 0.25em;
@@ -178,7 +134,7 @@ div.bordered_float {
 .commentform {
 	float: left;
 	width: 100%;
-	padding-bottom: 1em; /* Ersetzt feste height â€“ bessere dynamik */
+	padding-bottom: 1em;
 	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> müss ma nochmal schaun am mi, is ja jetzt ned so wichtig ^^ */
 }
 
@@ -254,7 +210,7 @@ form.listform {
 	width: 22.75em;
 }
 
-.regform { /*margin-left:0.625em;*/
+.regform {
 	float: left;
 	width: 11.75em;
 	text-align: right;
@@ -282,7 +238,7 @@ form.listform {
 
 /* Bewerber */
 
-/* Daten ï¿½ndern */
+/* Daten aendern */
 .breiteAendern {
 	width: 24.75em;
 }
@@ -307,6 +263,20 @@ form.listform {
 /* status.jsp */
 .float {
 	float: left;
+}
+
+/* provider creatoffer  */
+
+.float2 {
+	float: left;
+	padding-right: 0.625em;
+	line-height: 1.5em;
+}
+
+.regform2{
+	float:left;
+	padding-right: 3.3em;
+	line-height: 1.5em;
 }
 
 /* Popup styles hier */
