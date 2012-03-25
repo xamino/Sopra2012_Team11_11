@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import logger.Log;
+
 /**
  * Verbindung zur Datenbank mit allen Modifikationsbefehlen.
  * 
@@ -23,6 +25,11 @@ public class DatabaseController {
 	 * Variable for storing the instance of the class.
 	 */
 	private static DatabaseController instance;
+	
+	/**
+	 * Variable welche auf den Logger zeigt.
+	 */
+	private Log log;
 
 	/**
 	 * Verbingung zur Datenbank
@@ -65,6 +72,9 @@ public class DatabaseController {
 	 * instance. Use getInstance() to get a reference to an object of this type.
 	 */
 	private DatabaseController() {
+		// Get & and save logger:
+		this.log = Log.getInstance();
+		// Connect to database:
 		try {
 			System.out.println("[Database] Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -78,10 +88,9 @@ public class DatabaseController {
 						+ port + "/" + database + "?user=" + user);
 			st = con.createStatement();
 
-			System.out.println("[Database] Connection successful.");
+			log.write("DatabaseController", "Connection successful.");
 		} catch (Exception e) {
-			System.out
-					.println("[Database] Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
+			log.write("DatabaseController", "Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
@@ -104,7 +113,7 @@ public class DatabaseController {
 			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] UPDATE error! " + update);
+			log.write("DatabaseController", "UPDATE error! <"+update+">");
 			return false;
 		}
 	}
@@ -126,7 +135,7 @@ public class DatabaseController {
 			st.executeUpdate(del);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] DELETE error! " + del);
+			log.write("DatabaseController", "DELETE error! <"+del+">");
 			return false;
 		}
 	}
@@ -136,7 +145,7 @@ public class DatabaseController {
 	 * 
 	 * @param table
 	 * @param values
-	 * @return
+	 * @return Boolean welcher angibt, ob INSERT erfolgreich war.
 	 */
 	synchronized public boolean insert(String table, Object[] values) {
 		String insert = "INSERT INTO " + table + " VALUES ("
@@ -145,7 +154,7 @@ public class DatabaseController {
 			st.executeUpdate(insert);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] INSERT error!" + insert);
+			log.write("DatabaseController", "INSERT error! <"+insert+">");
 			return false;
 		}
 	}
@@ -170,7 +179,7 @@ public class DatabaseController {
 			rs = st.executeQuery(sel);
 			return rs;
 		} catch (SQLException e) {
-			System.out.println("[DatabaseController] SELECT error!" + sel);
+			log.write("DatabaseController", "SELECT error! <"+sel+">");
 		}
 		return null;
 	}
@@ -192,9 +201,7 @@ public class DatabaseController {
 			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
-			System.out
-					.println("[DatabaseController] INSERTONNULLUPDATE error! "
-							+ update);
+			log.write("DatabaseController", "INSERTONNULLUPDATE error! <"+update+">");
 		}
 		return false;
 	}
@@ -230,8 +237,7 @@ public class DatabaseController {
 			System.out.println("[Database] createLoginInfo():BufferedWriter");
 			e.printStackTrace();
 		}
-		System.out.println("[Database] New loginfile created!");
-
+		log.write("DatabaseController", "New loginfile created.");
 	}
 
 	/**
@@ -266,9 +272,7 @@ public class DatabaseController {
 						field = getClass().getDeclaredField(confarr[0].trim());
 						field.set(this, confarr[1].trim());
 					} else
-						System.out
-								.println("[DatabaseController] Error in ConfigFile on: "
-										+ conf);
+						log.write("DatabaseController", "Error in ConfigFile on: " + conf);
 				}
 			} else { // falls noch nicht existent
 				createLoginInfo(); // config datei erstellen
@@ -277,7 +281,7 @@ public class DatabaseController {
 				port = "3306";
 				password = null;
 			}
-			System.out.println("[Database] Try Login: user=" + user
+			log.write("Database", "Try Login: user=" + user
 					+ " password=" + password + " database=" + database
 					+ " port=" + port);
 		} catch (Exception e) {
