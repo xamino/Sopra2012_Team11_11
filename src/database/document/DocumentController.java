@@ -8,6 +8,8 @@ package database.document;
 /**
  * Verwaltet alle Datenbankzugriffe auf Unterlagen-bezogene Daten.
  */
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
@@ -56,7 +58,8 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void createDocument(Document document) {
-
+		
+		dbc.insert("Unterlagen",new Object[]{document.getUid(),document.getName(),document.getDescription()});
 	}
 	
 	/**
@@ -67,7 +70,12 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void deleteDocument(Document document) {
-
+		/*Beim Loeschen einer Unterlage muss diese nicht nur in "Unterlagen", sondern auch in "Standardunterlagen"
+		 * und "Bewerbungsunterlagen" geloescht werden, da diese nicht mehr existiert.
+		 */
+		dbc.delete("Berwerbungsunterlagen", "UID="+document.getUid());
+		dbc.delete("Standardunterlagen", "UID="+document.getUid());
+		dbc.delete("Unterlagen", "UID="+document.getUid());
 	}
 
 	/**
@@ -79,7 +87,13 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void updateDocument(Document document) {
-
+		/* !!! Eine abgeaenderte Unterlage benoetigt neue Parameter. Wo werden diese uebergeben?
+		 * Parameter erweitern?:
+		 *  public void updateDocument(Document document, String name, String description){
+		 *  dbc.update("Unterlagen", new String[] {"Name","Beschreibung"}, new Object[]{document.setName(name),document.setDescription(description)}, "UID="+document.getUid());
+		 *	Oder Uebergabe eines komplett neuen Unterlagen-(/Document-) Objekts?
+		 */
+		dbc.update("Unterlagen", new String[] {"Name","Beschreibung"}, new Object[]{document.getName(),document.getDescription()}, "UID="+document.getUid());
 	}
 
 	/**
@@ -93,7 +107,29 @@ public class DocumentController {
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Document> getDocumentsByOffer(int aid) {
-		return null;
+		
+		//Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots bei gegebener Angebots-ID
+		Vector<Document> docVect= new Vector<Document>();
+		ResultSet rs = dbc.select(new String[]{"UID"}, new String[]{"Standardunterlagen"}, "AID="+aid);
+		
+		try {
+			while(rs.next())
+			{
+				docVect.add((Document)rs.getObject(1)); // !!! Wie aus einem ResultSet ein Document-Objekt machen?  !!!
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to cast from ResultSet to Document-Object.");
+			e.printStackTrace();
+		}
+        try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to close the ResultSet.");
+			e.printStackTrace();
+		}// noetig?
+		return docVect;
 	}
 	
 	/**
@@ -106,7 +142,31 @@ public class DocumentController {
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<AppDocument> getAppDocumentByOffer(int ai){
-		return null;
+		
+		//Vector fuer die Rueckgabe der Bewerbungsunterlagen eines bestimmten Angebots bei gegebener Angebots-ID
+		Vector<AppDocument> appDocVect= new Vector<AppDocument>();
+		ResultSet rs = dbc.select(new String[]{"UID"}, new String[]{"Bewerbungsunterlagen"}, "AID="+ai);
+		
+		try {
+			while(rs.next())
+			{
+				appDocVect.add((AppDocument)rs.getObject(1)); // !!! Wie aus einem ResultSet ein Document-Objekt machen?  !!!
+			        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to cast from ResultSet to Document-Object.");
+			e.printStackTrace();
+		}
+		
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to close the ResultSet.");
+			e.printStackTrace();
+		} // noetig?
+		return appDocVect;
+		
 	}
 
 	/**
@@ -123,10 +183,31 @@ public class DocumentController {
 	 *         Account zu einem bestimmten Jobangebot aus der Datenbank
 	 *         zurueckgegeben.
 	 */
-	public Vector<Document> getDocumentsByUserAndOffer(Account account,
-			Offer offer) {
+	public Vector<Document> getDocumentsByUserAndOffer(Account account, Offer offer) {
 		// Account oder Application Instanz?
-		return null;
+		
+		//Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots und Accounts bei gegebenem Account und Angebot
+		Vector<Document> userOffDocVect= new Vector<Document>();
+		ResultSet rs = dbc.select(new String[]{"UID"}, new String[]{"Bewerbungsunterlagen"}, "Benutzername="+account+" AND AID="+offer.getAid());
+		
+		try {
+			while(rs.next())
+			{
+				userOffDocVect.add((Document)rs.getObject(1)); // !!! Wie aus einem ResultSet ein Document-Objekt machen?  !!!
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to cast from ResultSet to Document-Object.");
+			e.printStackTrace();
+		}
+        try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to close the ResultSet.");
+			e.printStackTrace();
+		}// noetig?
+		return userOffDocVect;
 	}
 
 	/**
@@ -135,9 +216,32 @@ public class DocumentController {
 	 * 
 	 * @return Es wird ein Vector mit allen vorhanden Unterlagen aus der
 	 *         Datenbank zurueckgegeben.
+	 * @throws SQLException 
 	 */
 	public Vector<Document> getAllDocuments() {
-		return null;
+
+		//Vector fuer die Rueckgabe aller vorhandenen Unterlagen 
+		Vector<Document> allDocVect= new Vector<Document>();
+		ResultSet rs = dbc.select(new String[]{"*"}, new String[]{"Unterlagen"}, "");
+		
+		try {
+			while(rs.next())
+			{
+				allDocVect.add((Document) rs.getObject(1)); // !!! Wie aus einem ResultSet ein Document-Objekt machen?  !!!
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to cast from ResultSet to Document-Object.");
+			e.printStackTrace();
+		}
+        try {
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("There was an error while trying to close the ResultSet.");
+			e.printStackTrace();
+		}// noetig?
+		return allDocVect;
 	}
 
 	/**
@@ -150,8 +254,7 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void createAppDocument(AppDocument document) {
-
-
+		dbc.insert("Bewerbungsunterlagen",new Object[]{document.getUsername(),document.getoID(),document.getdID(), document.getPresent()});
 	}
 
 	/**
@@ -164,7 +267,7 @@ public class DocumentController {
 	 *            Attributen.
 	 */
 	public void deleteAppDocument(AppDocument document) {
-
+		dbc.delete("Bewerbungsunterlagen", "Benutzername="+document.getUsername()+" AND AID="+document.getoID()+" AND UID="+document.getdID());
 	}
 
 	/**
@@ -177,7 +280,8 @@ public class DocumentController {
 	 *            Attributen.
 	 */
 	public void updateAppDocument(AppDocument document) {
-
+			dbc.update("Bewerbungsunterlagen", new String[]{"Benutzername","AID", "UID", "Status"}, new String[]{document.getUsername(),String.valueOf(document.getoID()),String.valueOf(document.getdID()),
+						String.valueOf(document.getPresent())}, "");
 	}
 
 	/**
@@ -190,7 +294,7 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void createOfferDocument(OfferDocument document) {
-
+		dbc.insert("Standardunterlagen",new Object[]{document.getOfferID(),document.getDocumentid()});
 	}
 
 	/**
@@ -202,7 +306,7 @@ public class DocumentController {
 	 *            mit allen dazugehoerigen Attributen.
 	 */
 	public void deleteOfferDocument(OfferDocument document) {
-
+		dbc.delete("Standardunterlagen", "AID="+document.getOfferID()+" AND UID="+document.getDocumentid());
 	}
 
 	/**
@@ -214,11 +318,13 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void updateOfferDocument(OfferDocument document) {
+		dbc.update("Standardunterlagen", new String[]{"AID","UID"}, new Object[]{document.getOfferID(),document.getDocumentid()}, "AID="+document.getOfferID()+" AND UID="+document.getDocumentid());
 	}
 
 	/**
-	 * Diese Methode dient dazu, 
+	 * Diese Methode dient dazu, den Status der eingesehenen Bewerbungsunterlagen anzugeben?
 	 */
 	public void updateStatus() {
+		
 	}
 }
