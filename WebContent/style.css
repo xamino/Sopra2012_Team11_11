@@ -59,7 +59,7 @@ div.visibleerror {
 
 .rightborder { 
  	border-right: 2px solid black; 	
- 	overflow: hidden;  			/* unbedingt stehen lassen, ermöglicht automatische höhe =) */
+ 	overflow: hidden;  			/* unbedingt stehen lassen, ermï¿½glicht automatische hï¿½he =) */
 }
  
 div.header, div.footer {
@@ -76,8 +76,9 @@ div.right {
 	margin: 0px;
 }
 
-div.content { 
-	/*overflow: auto; 				/* nicht schon wieder auto!!! des löst jeder Browser wie er will und dann ham ma unterschiedliche Darstellungen!!!! (Laura) */
+div.content { /* width: auto; */
+	/*border-right: 2% solid balck;*/
+	/*overflow: auto; 				/* kein auto!!! des lï¿½st jeder Browser wie er will und dann ham ma unterschiedliche Darstellungen!!!! (Laura) */
 	width: 75%;
 }
 
@@ -125,7 +126,7 @@ div.bordered_float {
 	padding: 0.5em;
 	padding-bottom: 0.25em;
 	padding-top: 0.25em;
-	min-height: 12em;			/*--> dass die nav und anmeldung nicht länger ist als die textseite --> evtl noch änderungen möglich*/
+	min-height: 12em;			/*--> dass die nav und anmeldung nicht lï¿½nger ist als die textseite --> evtl noch ï¿½nderungen mï¿½glich*/
 }
 
 /*rechts*/
@@ -199,7 +200,7 @@ form.listform {
 	float: left;
 	width: 100%;
 	padding-bottom: 1em; /* Ersetzt feste height â€“ bessere dynamik */
-	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> müss ma dann nochmal schaun am mi i ja jetzt ned so wichtig ^^ */
+	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> mï¿½ss ma dann nochmal schaun am mi i ja jetzt ned so wichtig ^^ */
 }
 
 .breite {
@@ -281,7 +282,7 @@ form.listform {
 
 /* Popup styles hier */
 div.popup_visible,div.popup_hidden {
-	position: absolute;
+	position: fixed;
 	left: 25%;
 	top: 30%;
 	min-width: 15%;
