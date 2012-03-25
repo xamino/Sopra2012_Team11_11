@@ -58,6 +58,7 @@
 		</div>
 	</div>
 	<div class="content">
+	<div class="rightborder">
 		<div class="textblock">
 			<h2>Registrierung</h2>
 			<div class="text">
@@ -66,7 +67,7 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="text">
+			<div class="haupttext">
 				<div class="register">
 				<form name="registrierung">
 					<div class="breite">
@@ -137,6 +138,7 @@
 				</form>
 			</div>
 			</div>
+		</div>
 		</div>
 	</div>
 

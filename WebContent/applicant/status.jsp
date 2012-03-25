@@ -40,6 +40,7 @@
 		</div>
 	</div>
 	<div class="content">
+	<div class="rightborder">
 		<div class="textblock">
 			<h2>Bewerbungen</h2>
 			<div class="text">
@@ -48,7 +49,7 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="text">
+			<div class="haupttext">
 				<div class="float">
 				<form method="post" action="mailto:email@email.com">
 					<input type="submit" value="Verwalter kontaktieren" />
@@ -65,6 +66,7 @@
 				</form>
 				</div>
 			</div>
+		</div>
 		</div>
 	</div>
 
