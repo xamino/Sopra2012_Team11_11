@@ -39,29 +39,31 @@
 		</div>
 	</div>
 	<div class="content">
-		<div class="textblock">
-			<h2>Willkommen in ihrer persönlichen Zentrale</h2>
-			<div class="text">
-				Erläuterungstext ...<br>TODO: Fill with what we really can
-				show. Consider live update?
+		<div class="rightborder">
+			<div class="haupttext">
+				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
+				<div class="text">
+					Erläuterungstext ...<br>TODO: Fill with what we really can
+					show. Consider live update?
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<table class="hidden">
-				<tr>
-					<td>Angemeldete Benutzer:</td>
-					<td>42</td>
-				</tr>
-				<tr>
-					<td>Registrierte Benutzer:</td>
-					<td>3142</td>
-				</tr>
-				<tr>
-					<td>RAM (in MB):</td>
-					<td>254</td>
-				</tr>
-			</table>
+			<hr>
+			<div class="textblock">
+				<table class="hidden">
+					<tr>
+						<td>Angemeldete Benutzer:</td>
+						<td>42</td>
+					</tr>
+					<tr>
+						<td>Registrierte Benutzer:</td>
+						<td>3142</td>
+					</tr>
+					<tr>
+						<td>RAM (in MB):</td>
+						<td>254</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

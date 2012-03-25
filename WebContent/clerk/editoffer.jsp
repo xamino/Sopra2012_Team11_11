@@ -45,75 +45,78 @@
 		</div>
 	</div>
 	<div class="content">
-		<div class="textblock">
-			<h2>Angebot bearbeiten</h2>
-			<div class="text">
-				Erläuterungstext ...<br>TODO: Form implementation is lacking –
-				do we even need forms? Maybe everything can be done with javascript,
-				as we have to check for validity anyway. Implmenent mouseover
-				highlight for table list on right side. Error divs.
+		<div class="rightborder">
+			<div class="haupttext">
+				<h2>Angebot bearbeiten</h2>
+				<div class="text">
+					Erläuterungstext ...<br>TODO: Form implementation is lacking –
+					do we even need forms? Maybe everything can be done with
+					javascript, as we have to check for validity anyway. Implmenent
+					mouseover highlight for table list on right side. Error divs.
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<div class="bordered_float">
-				<table class="">
-					<tr>
-						<th>Benötigte Dokumente:</th>
-					</tr>
-					<tr>
-						<td>Bewerbung</td>
-					</tr>
-					<tr>
-						<td>Normvertrag</td>
-					</tr>
-					<tr>
-						<td>Glaubensbescheinigung</td>
-					</tr>
-					<tr>
-						<td>Sonderbescheid</td>
-					</tr>
-				</table>
-				<input type="button" value="Dokument hinzufügen"
-					onclick="togglePopup('document_add',true);" /> <input
-					type="button" value="Dokument löschen" onclick="togglePopup('document_del',true);"/>
-			</div>
-			<table class="hidden">
-				<tr>
-					<td>Name des Veranstalters:</td>
-					<td>Prof. Doc. Gott</td>
-				</tr>
-				<tr>
-					<td>Titel der Stelle:</td>
-					<td>Tutorium Lebensphilosophie</td>
-				</tr>
-				<tr>
-					<td>Plätze:</td>
-					<td>20</td>
-				</tr>
-				<tr>
-					<td>Stunden die Woche:</td>
-					<td><input type="text" /> std.</td>
-				</tr>
-				<tr>
-					<td>Lohn:</td>
-					<td><input type="text" />€</td>
-				</tr>
-				<tr>
-					<td>Anbieternotiz:</td>
-					<td style="background-color: lightgray;">Hallo!<br> <br>Wie
-						besprochen, hier das Angebot. Ich hoffe, diesmal stimmt alles. :D<br>
-						<br>Grüße,<br>Hr. Gott
-					</td>
-				</tr>
-			</table>
 			<hr>
 			<div class="textblock">
-				<div style="float: right;">
-					<input type="button" value="Mail an Anbieter" />
+				<div class="bordered_float">
+					<table class="">
+						<tr>
+							<th>Benötigte Dokumente:</th>
+						</tr>
+						<tr>
+							<td>Bewerbung</td>
+						</tr>
+						<tr>
+							<td>Normvertrag</td>
+						</tr>
+						<tr>
+							<td>Glaubensbescheinigung</td>
+						</tr>
+						<tr>
+							<td>Sonderbescheid</td>
+						</tr>
+					</table>
+					<input type="button" value="Dokument hinzufügen"
+						onclick="togglePopup('document_add',true);" /> <input
+						type="button" value="Dokument löschen"
+						onclick="togglePopup('document_del',true);" />
 				</div>
-				<input type="button" value="Angebot bestätigen" /> <input
-					type="button" value="Angebot ablehnen" />
+				<table class="hidden">
+					<tr>
+						<td>Name des Veranstalters:</td>
+						<td>Prof. Doc. Gott</td>
+					</tr>
+					<tr>
+						<td>Titel der Stelle:</td>
+						<td>Tutorium Lebensphilosophie</td>
+					</tr>
+					<tr>
+						<td>Plätze:</td>
+						<td>20</td>
+					</tr>
+					<tr>
+						<td>Stunden die Woche:</td>
+						<td><input type="text" /> std.</td>
+					</tr>
+					<tr>
+						<td>Lohn:</td>
+						<td><input type="text" />€</td>
+					</tr>
+					<tr>
+						<td>Anbieternotiz:</td>
+						<td style="background-color: lightgray;">Hallo!<br> <br>Wie
+							besprochen, hier das Angebot. Ich hoffe, diesmal stimmt alles. :D<br>
+							<br>Grüße,<br>Hr. Gott
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<div class="textblock">
+					<div style="float: right;">
+						<input type="button" value="Mail an Anbieter" />
+					</div>
+					<input type="button" value="Angebot bestätigen" /> <input
+						type="button" value="Angebot ablehnen" />
+				</div>
 			</div>
 		</div>
 	</div>
