@@ -76,7 +76,7 @@ public class DatabaseController {
 		this.log = Log.getInstance();
 		// Connect to database:
 		try {
-			System.out.println("[Database] Connecting to Database");
+			log.write("Database", "Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			getLoginInfo();
 			if (password != null)
@@ -99,11 +99,11 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "update" Statement ausfuehrt.
 	 * 
-	 * @param table
-	 * @param columns
-	 * @param values
-	 * @param where
-	 * @return
+	 * @param table Name der Tabelle.
+	 * @param columns Name der Spalten welche aktualisiert werden sollen.
+	 * @param values Daten, welche in die entsprechenden Spalten gefühlt werden sollen.
+	 * @param where Bedingung für die Aktualisierung.
+	 * @return <code>True</code> wenn erfolgreich, sonst <code>false</code>.
 	 */
 	synchronized public boolean update(String table, String[] columns,
 			Object[] values, String where) {
@@ -123,10 +123,10 @@ public class DatabaseController {
 	 * 
 	 * @param table
 	 * 
-	 *            Tabelle von der geloescht werden soll
+	 *            Tabelle von der geloescht werden soll.
 	 * @param where
-	 *            Where Bedingung
-	 * @return boolean ob die Aktion fehlerfrei geklappt hat
+	 *            Where Bedingung.
+	 * @return boolean Ob die Aktion fehlerfrei geklappt hat.
 	 */
 	synchronized public boolean delete(String table, String where) {
 
@@ -143,8 +143,8 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "insert" Statement ausfuehrt.
 	 * 
-	 * @param table
-	 * @param values
+	 * @param table Name der Tabelle.
+	 * @param values Einzufügende Werte.
 	 * @return Boolean welcher angibt, ob INSERT erfolgreich war.
 	 */
 	synchronized public boolean insert(String table, Object[] values) {
@@ -162,11 +162,10 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
 	 * 
-	 * @param select
-	 * @param from
-	 * @param where
-	 *            TODO: Can be null!
-	 * @return
+	 * @param select Welche Werte ausgewählt werden sollen.
+	 * @param from Namen der Tabellen.
+	 * @param where Zusätzliche Bedingung. Wird keine benötigt kann <code>null</code> gesetzt werden.
+	 * @return Gibt ein <code>ResultSet</code> mit den Antworddaten zurück.
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
 			String where) {
@@ -187,10 +186,10 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "insert on not null update" Statement ausfuehrt.
 	 * 
-	 * @param table
-	 * @param columns
-	 * @param values
-	 * @return
+	 * @param table Name der Tabelle.
+	 * @param columns Namen der Spalten.
+	 * @param values Ensprechende Werte welche eingefügt oder aktualiesiert werden sollen.
+	 * @return <code>True</code> wenn erfolgreich, ansonsten <code>false</code>.
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
 			String[] columns, Object[] values) {
@@ -295,8 +294,8 @@ public class DatabaseController {
 	 * Hilfsmethode zum Konkatenieren von Strings mit Kommasetzung.
 	 * 
 	 * @param stringz
-	 *            zu konkatenierende Strings
-	 * @return Konkatenierter String
+	 *            Zu konkatenierende Strings.
+	 * @return Konkatenierter String.
 	 */
 	private String commanator(String[] stringz) {
 		String ret = "";
@@ -314,7 +313,7 @@ public class DatabaseController {
 	 * 
 	 * @param objects
 	 *            Zu konkatenierende objekte.
-	 * @return Konkatenierter String
+	 * @return Konkatenierter String.
 	 */
 	private String commanator(Object[] objects) {
 		String ret = "";
