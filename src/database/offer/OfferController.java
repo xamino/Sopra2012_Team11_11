@@ -58,6 +58,21 @@ public class OfferController {
 	 *            Attributen.
 	 */
 	public void createOffer(Offer offer) {
+		dbc.insert("Angebote",new Object[] {
+				offer.getAid(),
+				offer.getAuthor(), 
+				offer.getName(), 
+				offer.getNote(),
+				offer.isChecked(),
+				offer.getSlots(),
+				offer.getHoursperweek(),
+				offer.getDescription(),
+				offer.getStartdate(),
+				offer.getEnddate(),
+				offer.getWage(),
+				offer.getInstitute(),
+				offer.getModificationdate()
+				});
 	}
 
 	/**
