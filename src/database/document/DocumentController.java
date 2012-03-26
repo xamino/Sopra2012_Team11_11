@@ -141,11 +141,11 @@ public class DocumentController {
 	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
-	public Vector<AppDocument> getAppDocumentByOffer(int ai){
+	public Vector<AppDocument> getAppDocumentByOffer(int aid){
 		
 		//Vector fuer die Rueckgabe der Bewerbungsunterlagen eines bestimmten Angebots bei gegebener Angebots-ID
 		Vector<AppDocument> appDocVect= new Vector<AppDocument>();
-		ResultSet rs = dbc.select(new String[]{"UID"}, new String[]{"Bewerbungsunterlagen"}, "AID="+ai);
+		ResultSet rs = dbc.select(new String[]{"UID"}, new String[]{"Bewerbungsunterlagen"}, "AID="+aid);
 		
 		try {
 			while(rs.next())

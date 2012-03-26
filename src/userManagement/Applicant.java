@@ -49,7 +49,7 @@ public class Applicant extends User {
 	/**
 	 * Bewerben auf ein Angebot
 	 * 
-	 * @param applicationID
+	 * @param offerID
 	 *            ID des Angebots
 	 */
 	public void apply(int offerID) {

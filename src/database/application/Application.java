@@ -70,7 +70,7 @@ public class Application {
 	/**
 	 * Setzt den Benutzernamen.
 	 * 
-	 * @param benutzername
+	 * @param username
 	 *            Gewuenschter Benutzername.
 	 */
 	public void setUsername(String username) {
