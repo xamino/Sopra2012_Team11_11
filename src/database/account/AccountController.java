@@ -7,6 +7,8 @@ package database.account;
 /**
  * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten.
  */
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
@@ -75,6 +77,15 @@ public class AccountController {
 	 */
 	public void createAccount(Account account) {
 
+		Object[] values = {account.getUsername(),account.
+				getPasswordhash(),
+				account.getAccounttype(),
+				account.getEmail(),
+				account.getName(),
+				account.getInstitute(),
+				account.getRepresentative()};
+		
+		dbc.insert("accounts", values);
 	}
 
 	/**
@@ -87,6 +98,9 @@ public class AccountController {
 	 */
 	public void deleteAccount(Account account) {
 
+		String where = "benutzername = '"+ account.getUsername()+"'";
+		
+		dbc.delete("accounts", where);
 	}
 
 	/**
@@ -99,6 +113,20 @@ public class AccountController {
 	 */
 	public void updateAccount(Account account) {
 
+		String where = "benutzername = '"+ account.getUsername()+"'";
+		
+		Object[] values = {account.getPasswordhash(),
+				account.getAccounttype(),
+				account.getEmail(),
+				account.getName(),
+				account.getInstitute(),
+				account.getRepresentative()};
+		
+		String[] columns = {"passworthash","accounttyp","email",
+				"name","institut","stellvertreter"};
+
+		
+		dbc.update("accounts", columns, values, where);
 	}
 
 	/**
@@ -113,7 +141,31 @@ public class AccountController {
 	 *         Accounttyp.
 	 */
 	public Vector<Account> getAccountsByAccounttype(int accounttype) {
-		return null;
+		
+		Vector<Account> accountvec = new Vector<Account>(30,10);
+		
+		String[] select = {"*"};
+		String[] from = {"accounts"};
+		String where = "accounttyp = "+accounttype;
+		
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				Account currentacc;
+				currentacc = new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+
+				accountvec.add(currentacc);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return accountvec;
 
 	}
 
@@ -126,7 +178,31 @@ public class AccountController {
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
 	public Vector<Account> getAccountsByInstitute(int id) {
-		return null;
+		
+		Vector<Account> accountvec = new Vector<Account>(30,10);
+		
+		String[] select = {"*"};
+		String[] from = {"accounts"};
+		String where = "institut = "+id;
+		
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				Account currentacc;
+				currentacc = new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+
+				accountvec.add(currentacc);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return accountvec;
 
 	}
 
