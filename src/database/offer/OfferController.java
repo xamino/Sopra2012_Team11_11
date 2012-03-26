@@ -60,6 +60,7 @@ public class OfferController {
 	 *            Attributen.
 	 */
 	public void createOffer(Offer offer) {
+
 		
 		Object[] values = {offer.getAid(), offer.getAuthor(), offer.getName(), offer.getNote(),
 				offer.isChecked(), offer.getSlots(), offer.getHoursperweek(), offer.getDescription(),
