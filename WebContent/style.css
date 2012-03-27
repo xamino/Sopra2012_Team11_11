@@ -45,24 +45,32 @@ table.hidden td,table.hidden th {
 }
 
 /*fuer Fehlermeldungen*/
-div.hiddenerror {
-	visibility: hidden;
+div.hiddenerror,div.visibleerror {
 	font-size: small;
 	color: red;
+	padding: 0.25em;
+}
+
+div.hiddenerror {
+	visibility: hidden;
 }
 
 div.visibleerror {
 	visibility: visible;
-	font-size: small;
-	color: red;
 }
 
-.rightborder { 
- 	border-right: 2px solid black; 	
- 	overflow: hidden;  			/* unbedingt stehen lassen, ermï¿½glicht automatische hï¿½he =) */
+/* Kleine Links als Hints (zB "Passwort vergessen?") */
+a.hintlink {
+	font-size: small;
 }
- 
-div.header, div.footer {
+
+.rightborder {
+	border-right: 2px solid black;
+	overflow: hidden;
+	/* unbedingt stehen lassen, ermï¿½glicht automatische hï¿½he =) */
+}
+
+div.header,div.footer {
 	background-color: rgb(137, 162, 179);
 	clear: left;
 	width: 100%;
@@ -91,7 +99,7 @@ div.bordered_float {
 /*Klasse zum clearn nach float*/
 .clear {
 	clear: both;
-	height:0px;
+	height: 0px;
 }
 
 /*Banner mit Bild*/
@@ -122,11 +130,12 @@ div.bordered_float {
 	padding-top: 0.25em;
 }
 
-.haupttext{
+.haupttext {
 	padding: 0.5em;
 	padding-bottom: 0.25em;
 	padding-top: 0.25em;
-	min-height: 12em;			/*--> dass die nav und anmeldung nicht lï¿½nger ist als die textseite --> evtl noch ï¿½nderungen mï¿½glich*/
+	min-height: 12em;
+	/*--> dass die nav und anmeldung nicht lï¿½nger ist als die textseite --> evtl noch ï¿½nderungen mï¿½glich*/
 }
 
 /*rechts*/
@@ -136,7 +145,7 @@ div.bordered_float {
 	float: left;
 	width: 100%;
 	padding-bottom: 1em;
-	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> müss ma nochmal schaun am mi, is ja jetzt ned so wichtig ^^ */
+	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> mï¿½ss ma nochmal schaun am mi, is ja jetzt ned so wichtig ^^ */
 }
 
 .form {
@@ -267,15 +276,14 @@ form.listform {
 }
 
 /* provider creatoffer  */
-
 .float2 {
 	float: left;
 	padding-right: 0.625em;
 	line-height: 1.5em;
 }
 
-.regform2{
-	float:left;
+.regform2 {
+	float: left;
 	padding-right: 3.3em;
 	line-height: 1.5em;
 }
