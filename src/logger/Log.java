@@ -75,8 +75,14 @@ public class Log {
 	 *            The message to show in the log.
 	 */
 	synchronized public void write(String caller, String message) {
+		String time = getTimePassed() + "";
+		if (getTimePassed() > 1000) {
+			time = time.substring(0, time.length() - 3) + "."
+					+ time.substring(time.length() - 3, time.length()) + "s";
+		} else
+			time += "ms";
 		// Create log string:
-		String output = "[" + getTimePassed() + ":" + caller + "] " + message;
+		String output = "[" + time + ":" + caller + "] " + message;
 		// Switch according to the setting:
 		switch (store) {
 		// Write only to file:
