@@ -28,10 +28,13 @@
 				<br> <span> <label for="userPassword">Passwort</label>
 				</span>
 				<div class="form">
-					<input type="password" name="userPassword" size="20" maxlength="100" />
+					<input type="password" name="userPassword" size="20"
+						maxlength="100" />
 				</div>
 				<div class="clear"></div>
-				<div id="error_login" class="hiddenerror"></div>
+				<div class="text">
+					<div id="error_login" class="hiddenerror"></div>
+				</div>
 				<p>
 					<!-- return false on submit so that the form doesn't reload the form – this is handled
 					by the javascript function accordingly. -->

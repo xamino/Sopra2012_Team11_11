@@ -42,13 +42,14 @@ table.sized td,table.sized th {
 table.hidden td,table.hidden th {
 	border: 0px solid black;
 	padding: 0.5em;
+	/* background-color: gray; */
 }
 
 /*fuer Fehlermeldungen*/
 div.hiddenerror,div.visibleerror {
 	font-size: small;
 	color: red;
-	padding: 0.25em;
+	/* background-color: red; */
 }
 
 div.hiddenerror {

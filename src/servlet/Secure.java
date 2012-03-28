@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import logger.Log;
-import login.LoginController;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die
@@ -54,11 +53,26 @@ public class Secure extends HttpServlet {
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
 					+ userPassword + ">");
-			
+
 		}
 		// If register is asked:
 		else if (path.equals("/js/doRegister")) {
-			log.write("Secure", "Register requested.");
+			// First get parameters:
+			String realName = request.getParameter("realName");
+			String email = request.getParameter("email");
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("userPassword");
+			// Check for null or empty (against hacks& errors)
+			if (realName.isEmpty() || email.isEmpty() || userName.isEmpty()
+					|| password.isEmpty()) {
+				System.out.println("Secure: data for register invalid!");
+				response.setContentType("text/plain");
+				response.getWriter().write("false");
+				return;
+			}
+			log.write("Secure", "Register: " + realName + ", " + email + " as "
+					+ userName + " with " + password + " as password.");
+			response.getWriter().write("true");
 		}
 		// If unknown path:
 		else {
