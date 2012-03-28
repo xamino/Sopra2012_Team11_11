@@ -27,17 +27,13 @@
 			<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
 			<h3>Navigation</h3>
-			<ul>
-				<li >
-					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Desktop</a>
-				</li>
-				<li>
-				<span>→ Angebot ändern</span>
-				</li>
-				<li >
-					<a href="accountmanagement.jsp" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
-				</li>
-			</ul>
+				<div class="text">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_PROVIDER_USERINDEX %>" title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Angebot ändern <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+				</div>
 		</div>
 	</div>
 	<div class="content">
