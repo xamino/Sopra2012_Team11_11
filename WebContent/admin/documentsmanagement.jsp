@@ -32,7 +32,7 @@
 			<h3>Navigation</h3>
 			<div class="text">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_USERINDEX%>">Zentrale</a><br> &rarr;
+					href="<%=Helper.D_ADMIN_USERINDEX%>">Startseite</a><br> &rarr;
 				Unterlagenverwaltung<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
 			</div>
