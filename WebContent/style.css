@@ -80,6 +80,7 @@ div.header,div.footer {
 div.right {
 	float: right;
 	width: 25%;
+	min-width: 22em;
 	/*min-height: 600px; --> kein px angaben bei dynamischen Layout!  */
 	margin: 0px;
 }
