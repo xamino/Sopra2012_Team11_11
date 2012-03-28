@@ -66,7 +66,39 @@ public final class Helper {
 	 * Pfad zu /hiwi/clerk/applicationmanagement.jsp.
 	 */
 	public static final String D_CLERK_APPLICATIONMANAGEMENT = "/hiwi/clerk/applicationmanagement.jsp";
-
+	/**
+	 * Pfad zu /hiwi/applicant/userindex.jsp.
+	 */
+	public static final String D_APPLICANT_USERINDEX = "/hiwi/applicant/userindex.jsp";
+	/**
+	 * Pfad zu /hiwi/applicant/status.jsp.
+	 */
+	public static final String D_APPLICANT_STATUS = "/hiwi/applicant/status.jsp";
+	/**
+	 * Pfad zu /hiwi/applicant/accountmanagement.jsp.
+	 */
+	public static final String D_APPLICANT_ACCOUNTMANAGEMENT = "/hiwi/applicant/accountmanagement.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/accountmanagement.jsp.
+	 */
+	public static final String D_PROVIDER_ACCOUNTMANAGEMENT = "/hiwi/provider/accountmanagement.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/applicantlist.jsp.
+	 */
+	public static final String D_PROVIDER_APPLICANTLIST = "/hiwi/provider/applicantlist.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/createoffer.jsp.
+	 */
+	public static final String D_PROVIDER_CREATEOFFER = "/hiwi/provider/createoffer.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/editoffer.jsp.
+	 */
+	public static final String D_PROVIDER_EDITOFFER = "/hiwi/provider/editoffer.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/userindex.jsp.
+	 */
+	public static final String D_PROVIDER_USERINDEX = "/hiwi/provider/userindex.jsp";
+	
 	/**
 	 * All servlets within the servlet package should use this instance of Log.
 	 */

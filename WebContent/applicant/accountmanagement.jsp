@@ -1,3 +1,4 @@
+<%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -20,23 +21,19 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind angemeldet als: <br>
+			Sie sind als Bewerber angemeldet. <br>
 			<input type="submit" value="Logout" />
 		</div>				
 			<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
 			<h3>Navigation</h3>
-			<ul>
-				<li >
-					<a href="userindex.jsp" title="Hier geht es zur Ihrem Desktop">Desktop</a>
-				</li>
-				<li >
-					→ Accountverwaltung
-				</li>
-				<li >
-					<a href="status.jsp" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
-				</li>
-			</ul>
+			<div class="text">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_USERINDEX %>" title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
+				&rarr; Accountverwaltung <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_STATUS %>" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
+			</div>
 		</div>
 	</div>
 	<div class="content">

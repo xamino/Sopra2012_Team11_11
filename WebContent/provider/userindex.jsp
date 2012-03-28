@@ -1,3 +1,4 @@
+<%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -20,7 +21,7 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind angemeldet als: <br>
+			Sie sind als Anbieter angemeldet. <br>
 			<input type="submit" value="Logout" />
 		</div>				
 			<div id="error_login" class="hiddenerror"></div>
