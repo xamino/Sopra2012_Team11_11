@@ -1,3 +1,4 @@
+<%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -9,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
-<title>Desktop | Hiwi Job Börse</title>
+<title>Startseite | Hiwi Job Börse</title>
 </head>
 
 <body>
@@ -26,23 +27,19 @@
 			<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
 			<h3>Navigation</h3>
-			<ul>
-				<li >
-					→ Desktop
-				</li>
-				<li >
-					<a href="accountmanagement.jsp" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
-				</li>
-				<li >
-					<a href="status.jsp" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
-				</li>
-			</ul>
+				<div class="text">
+					&rarr; Startseite <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_APPLICANT_STATUS %>" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
+				</div>
 		</div>
 	</div>
 	<div class="content">
 	<div class="rightborder">
 		<div class="textblock">
-			<h2>Desktop</h2>
+			<h2>Startseite</h2>
 			<div class="text">Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene Stellen.</div>
 		</div>
 		<hr>

@@ -62,7 +62,20 @@ public final class Helper {
 	 * Pfad zu /hiwi/clerk/applicationmanagement.jsp.
 	 */
 	public static final String D_CLERK_APPLICATIONMANAGEMENT = "/hiwi/clerk/applicationmanagement.jsp";
-
+	/**
+	 * Pfad zu /hiwi/applicant/userindex.jsp.
+	 */
+	public static final String D_APPLICANT_USERINDEX = "/hiwi/applicant/userindex.jsp";
+	/**
+	 * Pfad zu /hiwi/applicant/status.jsp.
+	 */
+	public static final String D_APPLICANT_STATUS = "/hiwi/applicant/status.jsp";
+	/**
+	 * Pfad zu /hiwi/applicant/accountmanagement.jsp.
+	 */
+	public static final String D_APPLICANT_ACCOUNTMANAGEMENT = "/hiwi/applicant/accountmanagement.jsp";
+	
+	
 	/**
 	 * All servlets within the servlet package should use this instance of Log.
 	 */
