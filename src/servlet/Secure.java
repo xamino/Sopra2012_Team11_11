@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import logger.Log;
+import login.LoginController;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die
@@ -53,6 +54,7 @@ public class Secure extends HttpServlet {
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
 					+ userPassword + ">");
+			
 		}
 		// If register is asked:
 		else if (path.equals("/js/doRegister")) {

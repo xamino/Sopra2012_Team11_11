@@ -33,7 +33,7 @@
 			<h3>Navigation</h3>
 			<div class="text">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_USERINDEX%>">Zentrale</a><br>
+					href="<%=Helper.D_CLERK_USERINDEX%>">Startseite</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/hiwi/Clerk/js/doExcelExport">ExcelExport</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
@@ -134,7 +134,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" /> <input type="button"
+				<input type="button" value="Speichern" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
