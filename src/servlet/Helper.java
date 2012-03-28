@@ -79,6 +79,10 @@ public final class Helper {
 	 */
 	public static final String D_APPLICANT_USERINDEX = "/hiwi/applicant/userindex.jsp";
 	/**
+	 * Pfad zu /hiwi/applicant/help.jsp.
+	 */
+	public static final String D_APPLICANT_HELP = "/hiwi/applicant/help.jsp";
+	/**
 	 * Pfad zu /hiwi/applicant/status.jsp.
 	 */
 	public static final String D_APPLICANT_STATUS = "/hiwi/applicant/status.jsp";
