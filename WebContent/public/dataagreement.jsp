@@ -28,10 +28,13 @@
 				<br> <span> <label for="userPassword">Passwort</label>
 				</span>
 				<div class="form">
-					<input type="password" name="userPassword" size="20" maxlength="100" />
+					<input type="password" name="userPassword" size="20"
+						maxlength="100" />
 				</div>
 				<div class="clear"></div>
-				<div id="error_login" class="hiddenerror"></div>
+				<div class="text">
+					<div id="error_login" class="hiddenerror"></div>
+				</div>
 				<p>
 					<!-- return false on submit so that the form doesn't reload the form – this is handled
 					by the javascript function accordingly. -->
@@ -47,32 +50,27 @@
 		<div class="nav">
 			<h3>Navigation</h3>
 			<ul>
-				<li >
-					<a href="index.jsp" title="Hier gelangen Sie auf unsere Startseite">Startseite</a>
-				</li>
-				<li >
-					<a href="register.jsp" title="Hier geht es zum Registrieren">Registrieren</a>
-				</li>
-				<li>
-				<span>→ Datenschutzbestimmungen</span>
-				</li>
-				<li >
-					<a href="help.jsp" title="Hier finden Sie die Hilfe">Hilfe</a>
+				<li><a href="index.jsp"
+					title="Hier gelangen Sie auf unsere Startseite">Startseite</a></li>
+				<li><a href="register.jsp"
+					title="Hier geht es zum Registrieren">Registrieren</a></li>
+				<li><span>→ Datenschutzbestimmungen</span></li>
+				<li><a href="help.jsp" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 	<div class="content">
-	<div class="rightborder">
-		<div class="textblock">
-			<h2>Datenschutzerklärungen</h2>
-			<div class="text">Erläuterungstext ...</div>
+		<div class="rightborder">
+			<div class="textblock">
+				<h2>Datenschutzerklärungen</h2>
+				<div class="text">Erläuterungstext ...</div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<div class="haupttext">Hier steht Kram!!</div>
+			</div>
 		</div>
-		<hr>
-		<div class="textblock">
-			<div class="haupttext">Hier steht Kram!!</div>
-		</div>
-	</div>
 	</div>
 
 	<div class="clear"></div>
