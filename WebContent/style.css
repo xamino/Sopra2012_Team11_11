@@ -149,6 +149,10 @@ div.bordered_float {
 	/*border-bottom: 1px solid black; /* Ersetzt hr --> funzt so nicht, darstellungsfehler bei mir!! --> m�ss ma nochmal schaun am mi, is ja jetzt ned so wichtig ^^ */
 }
 
+input {
+      font-family: sans-serif;                
+  }
+
 .form {
 	padding-right: 10px;
 	float: right;
