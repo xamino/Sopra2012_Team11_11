@@ -51,13 +51,13 @@
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
-			<ul>
-				<li><a href="index.jsp"
-					title="Hier gelangen Sie auf unsere Startseite">Startseite</a></li>
-				<li>→Registrieren</li>
-				<li><a href="help.jsp" title="Hier finden Sie die Hilfe">Hilfe</a>
-				</li>
-			</ul>
+				<div class="text">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="<%=Helper.D_INDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+					&rarr; Registrieren <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="<%=Helper.D_PUBLIC_HELP %>" title="Hier finden Sie die Hilfe">Hilfe</a>
+				</div>
 		</div>
 	</div>
 	<div class="content">

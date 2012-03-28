@@ -35,6 +35,14 @@ public final class Helper {
 	 */
 	public static final String D_PUBLIC_DATAAGREEMENT = "/hiwi/public/dataagreement.jsp";
 	/**
+	 * Pfad zu /hiwi/public/help.jsp.
+	 */
+	public static final String D_PUBLIC_HELP = "/hiwi/public/help.jsp";
+	/**
+	 * Pfad zu /hiwi/public/register.jsp.
+	 */
+	public static final String D_PUBLIC_REGISTER = "/hiwi/public/register.jsp";
+	/**
 	 * Pfad zu /admin/accountsmanagement.jsp.
 	 */
 	public static final String D_ADMIN_ACCOUNTSMANAGEMENT = "/hiwi/admin/accountsmanagement.jsp";

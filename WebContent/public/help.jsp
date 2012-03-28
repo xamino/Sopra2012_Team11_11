@@ -1,3 +1,4 @@
+<%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C/DTD HTML 4.01 Transitional/EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -49,13 +50,13 @@
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
-			<ul>
-				<li><a href="index.jsp"
-					title="Hier gelangen Sie auf unsere Startseite">Startseite</a></li>
-				<li><a href="register.jsp"
-					title="Hier geht es zum Registrieren">Registrieren</a></li>
-				<li>→ Hilfe</li>
-			</ul>
+				<div class="text">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="<%=Helper.D_INDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="<%=Helper.D_PUBLIC_REGISTER %>" title="Hier geht es zum Registrieren">Registrieren</a><br>
+					&rarr; Hilfe
+				</div>
 		</div>
 	</div>
 	<div class="content">
