@@ -43,14 +43,16 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Fill with sensible information.
+					Erläuterungstext ...<br>TODO: Fill with sensible information.<br>
+					Hilfe finden Sie <a	href="<%=Helper.D_CLERK_HELP %>" title="Hilfe"> hier</a>.
 				</div>
 			</div>
 			<hr>
 			<div class="textblock">
+			<div class="haupttext">
 				<table class="hidden">
 					<tr>
 						<td>Ungeprüfte Angebote:</td>
@@ -61,6 +63,7 @@
 						<td>42</td>
 					</tr>
 				</table>
+			</div>
 			</div>
 		</div>
 	</div>

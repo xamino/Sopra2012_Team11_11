@@ -59,6 +59,10 @@ public final class Helper {
 	 */
 	public static final String D_ADMIN_USERINDEX = "/hiwi/admin/userindex.jsp";
 	/**
+	 * Pfad zu /hiwi/admin/help.jsp.
+	 */
+	public static final String D_ADMIN_HELP = "/hiwi/admin/help.jsp";
+	/**
 	 * Pfad zu /hiwi/clerk/userindex.jsp.
 	 */
 	public static final String D_CLERK_USERINDEX = "/hiwi/clerk/userindex.jsp";
@@ -74,6 +78,10 @@ public final class Helper {
 	 * Pfad zu /hiwi/clerk/applicationmanagement.jsp.
 	 */
 	public static final String D_CLERK_APPLICATIONMANAGEMENT = "/hiwi/clerk/applicationmanagement.jsp";
+	/**
+	 * Pfad zu /hiwi/clerk/help.jsp.
+	 */
+	public static final String D_CLERK_HELP = "/hiwi/clerk/help.jsp";
 	/**
 	 * Pfad zu /hiwi/applicant/userindex.jsp.
 	 */
@@ -110,6 +118,10 @@ public final class Helper {
 	 * Pfad zu /hiwi/provider/userindex.jsp.
 	 */
 	public static final String D_PROVIDER_USERINDEX = "/hiwi/provider/userindex.jsp";
+	/**
+	 * Pfad zu /hiwi/provider/help.jsp.
+	 */
+	public static final String D_PROVIDER_HELP = "/hiwi/provider/help.jsp";
 	
 	/**
 	 * All servlets within the servlet package should use this instance of Log.

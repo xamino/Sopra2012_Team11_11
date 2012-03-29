@@ -19,19 +19,23 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind als Bewerber angemeldet. <br>
+			Sie sind als Sachbearbeiter angemeldet. <br>
 			<input type="submit" value="Logout" />
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
 				<div class="text">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="<%=Helper.D_APPLICANT_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a 
+					href="<%=Helper.D_CLERK_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
+					href="/hiwi/Clerk/js/doExcelExport">ExcelExport</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_STATUS %>" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
+					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_CLERK_OFFERMANAGEMENT%>">Angebotsverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a>
 				</div>
 		</div>
 	</div>
