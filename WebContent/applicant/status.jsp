@@ -47,7 +47,7 @@
 		<hr>
 		<div class="textblock">
 			<div class="haupttext">
-				<h4>Berwebung für: WOW-TUT</h4>
+				<h4>Bewerbung für: WOW-TUT</h4>
 				<form class="listform">
 					<table>
 						<tr>

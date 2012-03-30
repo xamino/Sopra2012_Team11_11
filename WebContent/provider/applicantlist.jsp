@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
-<title>Angebot erstellen | Hiwi Job Börse</title>
+<title>Bewerberliste | Hiwi Job Börse</title>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
 	<div class="content">
 	<div class="rightborder">
 		<div class="textblock">
-			<h2>Angebot erstellen</h2>
+			<h2>Bewerberliste</h2>
 			<div class="text">
 			Hier sehen Sie Ihre Bewerber.
 			</div>

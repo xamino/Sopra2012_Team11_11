@@ -63,7 +63,7 @@
 					<tr id="mhhh" onclick="">
 						<td>01.01.2001</td>
 						<td>La le lu Tut</td>
-						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerbung ansehen" /></div><div class="clear"></div></td>
+						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerbung ansehen" onclick="window.location='status.jsp'" /></div><div class="clear"></div></td>
 					</tr>
 				</table>
 				<hr>
