@@ -41,12 +41,36 @@
 		<div class="textblock">
 			<h2>Angebot erstellen</h2>
 			<div class="text">
-			Hier können Sie ein neues Angebot erstellen.
+			Hier sehen Sie Ihre Bewerber.
 			</div>
 		</div>
 		<hr>
 				<div class="textblock">
-			<div class="haupttext">Hier steht Kram!!</div>
+			<div class="haupttext">
+			<h4>Bewerbungen für: WOW-TUT</h4>
+				<table class="sized">
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Fachsemester</th>
+						<th>Abschluss</th>
+					</tr>
+					<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+					<tr id="lalelu" onclick="">
+						<td><input type="checkbox" /></td>
+						<td>Herrrrrmann</td>
+						<td>100</td>
+						<td>nix</td>
+					</tr>
+				</table>
+				<input type="submit" value="Ausgewählte annehmen" />
+			</div>
 		</div>
 </div>
 </div>

@@ -41,7 +41,7 @@
 		<div class="textblock">
 			<h2>Angebot erstellen</h2>
 			<div class="text">
-			Hier können Sie ein neues Angebot erstellen.
+			Hier können Sie das Angebot bearbeiten.
 			</div>
 		</div>
 		<hr>
@@ -56,22 +56,9 @@
 						<input type="text" name="titel" size="57" maxlength="100" />
 					</div>
 					<div class="clear"></div>
-					<div class="float2"> 
-						<label for="std">Std/Monat  </label>
-					</div>
-					<div class="float2">
-						<input type="text" name="std" size="20" maxlength="100" />
-					</div>
-					<div class="float2"> 
-						<label for="stellen">  Stellen  </label>
-					</div>
-					<div class="float2">
-						<input type="text" name="stellen" size="20" maxlength="100" />
-					</div> <br>
 					<div class="clear"></div>
 					<br>
 					<textarea name="beschreibung" cols="50" rows="10">Beschreibung</textarea> <br> <br>
-					<textarea name="notiz" cols="50" rows="10">Anbieternotiz</textarea> <br> <br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
 						<input type="submit" value="Angebot ändern" />

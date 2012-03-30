@@ -43,7 +43,30 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="haupttext">Hier steht Kram!!</div>
+			<div class="haupttext">
+				<table class="sized">
+					<tr>
+						<th>Meine Stellenangebote:</th>
+						<th>Bewerber/Stelle</th>
+						<th>Ändern</th>
+						<th>Widerrufen</th>
+					</tr>
+					<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+					<tr id="manohman" onclick="">
+						<td>TUT xy</td>
+						<td>14/10<br><input type="submit" value="Bewerberauswahl" /></td>
+						<td><br><input type="submit" value="Angebot ändern" /> </td>
+						<td><br><input type="submit" value="Angebot zurückziehen" /> </td>
+					</tr>
+				</table><br>
+				<input type="submit" value="Neues Angebot erstellen" />
+			</div>
 		</div>
 	</div>
 	</div>
