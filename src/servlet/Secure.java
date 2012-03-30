@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import database.account.Account;
 import database.account.AccountController;
 
+import user.User;
 import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
 
@@ -132,8 +133,8 @@ public class Secure extends HttpServlet {
 		}
 		// If logout is asked:
 		else if (path.equals("/js/doLogout")) {
-			// Hier kann redirect verwendet werden weil das nicht über
-			// javascript läuft:
+			HttpSession session = request.getSession();
+			LoggedInUsers.getUserBySession(session).invalidate();
 			response.sendRedirect(Helper.D_INDEX);
 		}
 		// If unknown path:
