@@ -46,7 +46,7 @@ public class DocumentController {
 	 * wird ueber <code>getInstance()</code> aufgerufen.
 	 */
 	private DocumentController() {
-
+		logger.Log.getInstance().write("DocumentController", "Instance created.");
 	}
 
 	/**
