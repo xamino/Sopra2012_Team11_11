@@ -50,7 +50,8 @@ public class Secure extends HttpServlet {
 
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
-	 * @param userPassword 
+	 * 
+	 * @param userPassword
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -80,10 +81,14 @@ public class Secure extends HttpServlet {
 				UserFactory.getUserInstance(acc, session);
 				int type = acc.getAccounttype();
 				response.setContentType("text/plain");
-				if(type ==0)response.getWriter().write(Helper.D_ADMIN_USERINDEX);
-				if(type==1)response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
-				if(type==2)response.getWriter().write(Helper.D_CLERK_USERINDEX);
-				if(type==3)response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
+				if (type == 0)
+					response.getWriter().write(Helper.D_ADMIN_USERINDEX);
+				if (type == 1)
+					response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+				if (type == 2)
+					response.getWriter().write(Helper.D_CLERK_USERINDEX);
+				if (type == 3)
+					response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
 			}
 
 		}
@@ -104,10 +109,12 @@ public class Secure extends HttpServlet {
 			}
 			log.write("Secure", "Register: " + realName + ", " + email + " as "
 					+ userName + " with " + password + " as password.");
-			
-			Account acc = AccountController.getInstance().getAccountByUsername(userName);
-			if(acc ==null){
-				acc = new Account(userName,password,3,email,realName,0,null);
+
+			Account acc = AccountController.getInstance().getAccountByUsername(
+					userName);
+			if (acc == null) {
+				acc = new Account(userName, password, 3, email, realName, 0,
+						null);
 				AccountController.getInstance().createAccount(acc);
 				log.write("Secure", "Registration successful.");
 				response.setContentType("text/plain");
@@ -116,12 +123,18 @@ public class Secure extends HttpServlet {
 				session.setMaxInactiveInterval(15 * 60);
 				UserFactory.getUserInstance(acc, session);
 				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
-			}else
-			{
+			} else {
 				response.setContentType("text/plain");
 				response.getWriter().write("used");
-				log.write("Secure", "Registration failed! Username already used!");
+				log.write("Secure",
+						"Registration failed! Username already used!");
 			}
+		}
+		// If logout is asked:
+		else if (path.equals("/js/doLogout")) {
+			// Hier kann redirect verwendet werden weil das nicht über
+			// javascript läuft:
+			response.sendRedirect(Helper.D_INDEX);
 		}
 		// If unknown path:
 		else {

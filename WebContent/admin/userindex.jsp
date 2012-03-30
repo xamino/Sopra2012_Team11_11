@@ -24,7 +24,8 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" />
+					<input type="button" value="Abmelden" name="logout"
+						onclick="window.location='/hiwi/Secure/js/doLogout'" />
 				</p>
 			</form>
 		</div>
@@ -44,28 +45,28 @@
 				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: Fill with what we really can
-					show. Consider live update? <br>
-					Hilfe finden Sie <a	href="<%=Helper.D_ADMIN_HELP %>" title="Hilfe"> hier</a>.
+					show. Consider live update? <br> Hilfe finden Sie <a
+						href="<%=Helper.D_ADMIN_HELP%>" title="Hilfe"> hier</a>.
 				</div>
 			</div>
 			<hr>
 			<div class="textblock">
-			<div class="haupttext">
-				<table class="hidden">
-					<tr>
-						<td>Angemeldete Benutzer:</td>
-						<td>42</td>
-					</tr>
-					<tr>
-						<td>Registrierte Benutzer:</td>
-						<td>3142</td>
-					</tr>
-					<tr>
-						<td>RAM (in MB):</td>
-						<td>254</td>
-					</tr>
-				</table>
-			</div>
+				<div class="haupttext">
+					<table class="hidden">
+						<tr>
+							<td>Angemeldete Benutzer:</td>
+							<td>42</td>
+						</tr>
+						<tr>
+							<td>Registrierte Benutzer:</td>
+							<td>3142</td>
+						</tr>
+						<tr>
+							<td>RAM (in MB):</td>
+							<td>254</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
