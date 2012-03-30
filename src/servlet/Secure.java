@@ -81,7 +81,7 @@ public class Secure extends HttpServlet {
 				session.setMaxInactiveInterval(15 * 60);
 				UserFactory.getUserInstance(acc, session);
 				int type = acc.getAccounttype();
-				response.setContentType("text/plain");
+				response.setContentType("text/url");
 				if (type == 0)
 					response.getWriter().write(Helper.D_ADMIN_USERINDEX);
 				if (type == 1)
@@ -118,11 +118,12 @@ public class Secure extends HttpServlet {
 						null);
 				AccountController.getInstance().createAccount(acc);
 				log.write("Secure", "Registration successful.");
-				response.setContentType("text/plain");
 				HttpSession session = request.getSession();
 				session.setAttribute("userName", new String(userName));
 				session.setMaxInactiveInterval(15 * 60);
 				UserFactory.getUserInstance(acc, session);
+				// Write url to response:
+				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
 			} else {
 				response.setContentType("text/plain");

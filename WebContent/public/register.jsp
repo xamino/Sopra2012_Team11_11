@@ -133,7 +133,8 @@
 						<br> <input type="submit" value="Registrieren"
 							onclick="checkRegister(registerForm); return false;" /><input
 							type="button" value="Abbrechen"
-							style="position: relative; left: 20%" onclick="gotoIndex()" />
+							style="position: relative; left: 20%" onclick="gotoIndex()" /><br><div
+							id="error_emptyfields" class="hiddenerror"></div>
 					</form>
 				</div>
 			</div>

@@ -46,6 +46,13 @@ function toggleWarning(id, flag, text) {
 }
 
 /**
+ * Given a xmlhttp object, it will return the MIME type set.
+ */
+function getMIME(responseobject) {
+	return responseobject.getResponseHeader("Content-Type").split(";")[0];
+}
+
+/**
  * This function checks that all the fields required for login are filled and
  * sends the data to the server. On correct login it redirects to the userindex
  * via the Secure servlet.
@@ -84,11 +91,18 @@ function checkLogin(form) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			// Check what the server sent:
 			// alert(xmlhttp.responseText);
-			if (xmlhttp.responseText == "false") {
-				// alert("Invalid!");
-				// Inform user that login was invalid:
-				toggleWarning("error_login", true, "Login ungültig!");
-			} else {
+			// Get the MIME type:
+			var mimeType = getMIME(xmlhttp);
+			// Check what mime it is:
+			// alert(mimeType);
+			// Switch according to mime type:
+			if (mimeType == "text/plain") {
+				if (xmlhttp.responseText == "false") {
+					// alert("Invalid!");
+					// Inform user that login was invalid:
+					toggleWarning("error_login", true, "Login ungültig!");
+				}
+			} else if (mimeType == "text/url") {
 				window.location = xmlhttp.responseText;
 			}
 		}
@@ -201,12 +215,23 @@ function checkRegister(form) {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			// Check what the server sent:
 			// alert(xmlhttp.responseText);
-			if (xmlhttp.responseText == "false") {
-				// alert("Invalid!");
-				// Only error that can pop up at this stage (except for hacks):
-				toggleWarning("error_alreadyUsed", true,
-						"Dieser Benutzername ist bereits vergeben.\nBitte geben sie einen neuen ein.");
-			} else {
+			// Get the MIME type:
+			var mimeType = getMIME(xmlhttp);
+			// Check what mime it is:
+			// alert(mimeType);
+			// Switch according to mime type:
+			if (mimeType == "text/plain") {
+				if (xmlhttp.responseText == "false") {
+					// alert("Invalid!");
+					// Only error that can pop up at this stage (except for
+					// hacks):
+					toggleWarning("error_emptyfields", true,
+							"Nicht alle Felder wurden übertragen.Bitte füllen sie alles aus!");
+				} else if (xmlhttp.responseText == "used") {
+					toggleWarning("error_alreadyUsed", true,
+							"Benutzername ist bereits vergeben. Bitte nehmen sie einen anderen!");
+				}
+			} else if (mimeType == "text/url") {
 				window.location = xmlhttp.responseText;
 			}
 		}
