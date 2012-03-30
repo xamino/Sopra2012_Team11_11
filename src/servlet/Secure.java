@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.account.Account;
 import database.account.AccountController;
@@ -73,7 +74,11 @@ public class Secure extends HttpServlet {
 			}
 			else{
 				log.write("Secure", "Login successful");
-				UserFactory.getUserInstance(acc, request.getSession());
+				HttpSession session = request.getSession();
+				session.setAttribute("userName", new String(userName));
+				session.setMaxInactiveInterval(15*60);
+				UserFactory.getUserInstance(acc, session);
+				response.sendRedirect(Helper.D_ADMIN_USERINDEX);
 			}
 			
 		}
