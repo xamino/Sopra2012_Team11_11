@@ -1,6 +1,7 @@
 /**
  * @author Patryk Boczon
  * @author Oemer Sahin
+ * @author Manuel Güntzel
  */
 
 package database.application;
@@ -38,6 +39,7 @@ public class ApplicationController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private ApplicationController() {
+		dbc=DatabaseController.getInstance();
 		logger.Log.getInstance().write("ApplicationController", "Instance created.");
 	}
 

@@ -61,11 +61,18 @@ public class Secure extends HttpServlet {
 			log.write("Secure", "Checking login: <" + userName + ">:<"
 					+ userPassword + ">");
 			Account acc = AccountController.getInstance().getAccountByUsername(userName);
-			if(acc==null||!(userPassword.equals(acc.getPasswordhash()))){
+			if(acc==null){
 				response.setContentType("text/plain");
 				response.getWriter().write("false");
+				log.write("Secure", "Login failed: Wrong username or password");
+			}
+			else if(!(userPassword.equals(acc.getPasswordhash()))){
+				response.setContentType("text/plain");
+				response.getWriter().write("false");
+				log.write("Secure", "Login failed: Wrong username or password");
 			}
 			else{
+				log.write("Secure", "Login successful");
 				UserFactory.getUserInstance(acc, request.getSession());
 			}
 			

@@ -49,6 +49,7 @@ public class AccountController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private AccountController() {
+		dbc=DatabaseController.getInstance();
 		logger.Log.getInstance().write("AccountController", "Instance created.");
 	}
 
@@ -136,7 +137,7 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht existent <code>null</code>.
 	 */
 	public Account getAccountByUsername(String username){
-		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"accounts"}, "username='"+username+"'");
+		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"accounts"}, "benutzername='"+username+"'");
 		try {
 			if(rs.next())return new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
 			else return null;

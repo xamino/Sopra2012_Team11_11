@@ -1,6 +1,7 @@
 /**
  * @author Patryk Boczon
  * @author Oemer Sahin
+ * @author Manuel Güntzel
  */
 
 package database.offer;
@@ -35,6 +36,7 @@ public class OfferController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
+		dbc=DatabaseController.getInstance();
 		logger.Log.getInstance().write("OfferController", "Instance created.");
 	}
 

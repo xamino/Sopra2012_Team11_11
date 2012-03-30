@@ -1,6 +1,7 @@
 /**
  * @author Patryk Boczon
  * @author Oemer Sahin
+ * @author Manuel Güntzel
  */
 
 package database.document;
@@ -46,6 +47,7 @@ public class DocumentController {
 	 * wird ueber <code>getInstance()</code> aufgerufen.
 	 */
 	private DocumentController() {
+		dbc=DatabaseController.getInstance();
 		logger.Log.getInstance().write("DocumentController", "Instance created.");
 	}
 
