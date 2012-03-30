@@ -61,26 +61,29 @@ public class Secure extends HttpServlet {
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
 					+ userPassword + ">");
-			Account acc = AccountController.getInstance().getAccountByUsername(userName);
-			if(acc==null){
+			Account acc = AccountController.getInstance().getAccountByUsername(
+					userName);
+			if (acc == null) {
 				response.setContentType("text/plain");
 				response.getWriter().write("false");
 				log.write("Secure", "Login failed: Wrong username or password");
-			}
-			else if(!(userPassword.equals(acc.getPasswordhash()))){
+			} else if (!(userPassword.equals(acc.getPasswordhash()))) {
 				response.setContentType("text/plain");
 				response.getWriter().write("false");
 				log.write("Secure", "Login failed: Wrong username or password");
-			}
-			else{
+			} else {
 				log.write("Secure", "Login successful");
 				HttpSession session = request.getSession();
 				session.setAttribute("userName", new String(userName));
-				session.setMaxInactiveInterval(15*60);
+				session.setMaxInactiveInterval(15 * 60);
 				UserFactory.getUserInstance(acc, session);
-				response.sendRedirect(Helper.D_ADMIN_USERINDEX);
+				// Muss so gemacht werden da auf client seite von javascript
+				// abgefangen wird:
+				response.setContentType("text/plain");
+				// Hier halt entsprechend dem accounttyp:
+				response.getWriter().write(Helper.D_ADMIN_USERINDEX);
 			}
-			
+
 		}
 		// If register is asked:
 		else if (path.equals("/js/doRegister")) {

@@ -4,7 +4,6 @@
  */
 
 // This script requires the md5.js file! (Needs to be imported on the webpages that use this file.)
-
 /**
  * Get XMLHttpRequest object for all important browsers.
  * 
@@ -51,7 +50,8 @@ function toggleWarning(id, flag, text) {
  * sends the data to the server. On correct login it redirects to the userindex
  * via the Secure servlet.
  * 
- * @param form The form to read.
+ * @param form
+ *            The form to read.
  */
 function checkLogin(form) {
 	// Check that a form was given (shouldn't happen):
@@ -66,8 +66,7 @@ function checkLogin(form) {
 	if (userName == "" || userName == null || userPassword == ""
 			|| userPassword == null) {
 		// alert("Empty!");
-		toggleWarning("error_login", true,
-				"Bitte füllen sie alle Felder aus!");
+		toggleWarning("error_login", true, "Bitte füllen sie alle Felder aus!");
 		return;
 	}
 	// Debug input:
@@ -84,12 +83,13 @@ function checkLogin(form) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			// Check what the server sent:
+			// alert(xmlhttp.responseText);
 			if (xmlhttp.responseText == "false") {
 				// alert("Invalid!");
 				// Inform user that login was invalid:
 				toggleWarning("error_login", true, "Login ungültig!");
-			} else if (xmlhttp.responseText == "true") {
-				alert("Valid!\nTODO: Implement redirect server-side!");
+			} else {
+				window.location = xmlhttp.responseText;
 			}
 		}
 	};
@@ -193,10 +193,9 @@ function checkRegister(form) {
 	// MD5 hash the password:
 	password_1 = b64_md5(password_1);
 	// Send register data:
-	xmlhttp
-			.open("GET", "/hiwi/Secure/js/doRegister?realName=" + realName + "&email="
-					+ email_1 + "&userName=" + userName + "&userPassword="
-					+ password_1);
+	xmlhttp.open("GET", "/hiwi/Secure/js/doRegister?realName=" + realName
+			+ "&email=" + email_1 + "&userName=" + userName + "&userPassword="
+			+ password_1);
 	// When status changes do:
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
