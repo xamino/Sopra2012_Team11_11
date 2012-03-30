@@ -32,7 +32,8 @@ public class Applicant extends User {
 	 */
 	public Applicant(String username, String email, String name,
 			HttpSession session) {
-
+		super(username,email,name,session);
+		userManagement.LoggedInUsers.addUser(this);
 	}
 
 	/**

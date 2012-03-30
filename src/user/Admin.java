@@ -24,7 +24,8 @@ public class Admin extends User {
 	 *            Session des Benutzers.
 	 */
 	public Admin(String username, String email, String name, HttpSession session) {
-
+		super(username,email,name,session);
+		userManagement.LoggedInUsers.addUser(this);
 	}
 
 	/**

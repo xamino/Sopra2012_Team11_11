@@ -1,6 +1,7 @@
 /**
  * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Manuel Güntzel
  */
 package servlet;
 
@@ -11,6 +12,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.account.Account;
+import database.account.AccountController;
+
+import userManagement.LoggedInUsers;
+import userManagement.UserFactory;
 
 import logger.Log;
 
@@ -53,7 +60,15 @@ public class Secure extends HttpServlet {
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
 					+ userPassword + ">");
-
+			Account acc = AccountController.getInstance().getAccountByUsername(userName);
+			if(acc==null||!(userPassword.equals(acc.getPasswordhash()))){
+				response.setContentType("text/plain");
+				response.getWriter().write("false");
+			}
+			else{
+				UserFactory.getUserInstance(acc, request.getSession());
+			}
+			
 		}
 		// If register is asked:
 		else if (path.equals("/js/doRegister")) {

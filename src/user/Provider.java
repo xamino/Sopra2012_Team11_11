@@ -2,6 +2,7 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+
 import database.account.Account;
 
 /**
@@ -24,6 +25,8 @@ public class Provider extends User {
 	 */
 	public Provider(String username, String email, String name,
 			HttpSession session) {
+		super(username,email,name,session);
+		userManagement.LoggedInUsers.addUser(this);
 
 	}
 

@@ -44,7 +44,7 @@ public abstract class LoggedInUsers {
 	 * 
 	 * 
 	 */
-	static void addUser(User u) {
+	static public void addUser(User u) {
 		User tempuserbyname = getUserByUsername(u.getUserData().getUsername());
 		User tempuserbysession = getUserBySession(u.getUserData().getSession());
 		if (tempuserbyname == null && tempuserbysession == null) {

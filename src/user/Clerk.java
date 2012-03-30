@@ -23,7 +23,8 @@ public class Clerk extends User {
 	 *            Session des Benutzers
 	 */
 	public Clerk(String username, String email, String name, HttpSession session) {
-
+		super(username,email,name,session);
+		userManagement.LoggedInUsers.addUser(this);
 	}
 
 	/**
