@@ -46,7 +46,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Angebot bearbeiten</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: Form implementation is lacking –
@@ -57,6 +57,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
+			<div class="haupttext">
 				<div class="bordered_float">
 					<table class="">
 						<tr>
@@ -110,13 +111,12 @@
 					</tr>
 				</table>
 				<hr>
-				<div class="textblock">
 					<div style="float: right;">
 						<input type="button" value="Mail an Anbieter" />
 					</div>
 					<input type="button" value="Angebot bestätigen" /> <input
 						type="button" value="Angebot ablehnen" />
-				</div>
+			</div>
 			</div>
 		</div>
 	</div>

@@ -45,7 +45,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Daten ändern</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: Implement that "Institut" and

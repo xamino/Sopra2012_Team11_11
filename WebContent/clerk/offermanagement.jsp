@@ -43,7 +43,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Angebote verwalten</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: Checkoffer button MUST transfer
@@ -52,11 +52,10 @@
 			</div>
 			<hr>
 			<div class="textblock">
+			<div class="haupttext">
 				<form class="listform">
-					<div class="textblock">
 						<input type="button" value="Angebot prüfen"
 							onclick="window.location='editoffer.jsp'" />
-					</div>
 					<hr>
 					<table>
 						<tr>
@@ -89,6 +88,7 @@
 						</tr>
 					</table>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

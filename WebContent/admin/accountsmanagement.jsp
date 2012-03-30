@@ -41,7 +41,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Accounts verwalten</h2>
 				<div class="text">
 					Erläuterungstext...<br>TODO: Implement the selection so that
@@ -51,7 +51,7 @@
 				</div>
 			</div>
 			<hr>
-			<div class="textblock">
+			<div class="haupttext">
 				<div class="textblock">
 					<input type="button" value="Account hinzufügen"
 						onclick="window.location='editaccount.jsp'" /> <input
@@ -59,7 +59,6 @@
 						onclick="window.location='editaccount.jsp'" /> <input
 						style="float: right;" type="button" value="Account löschen"
 						onclick="togglePopup('account_del', true);" />
-				</div>
 				<hr>
 				<table class="sized">
 					<tr>
@@ -94,6 +93,7 @@
 						<td>Anbieter</td>
 					</tr>
 				</table>
+				</div>
 			</div>
 		</div>
 	</div>
