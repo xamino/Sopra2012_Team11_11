@@ -200,13 +200,14 @@ function checkRegister(form) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			// Check what the server sent:
+			// alert(xmlhttp.responseText);
 			if (xmlhttp.responseText == "false") {
 				// alert("Invalid!");
 				// Only error that can pop up at this stage (except for hacks):
 				toggleWarning("error_alreadyUsed", true,
 						"Dieser Benutzername ist bereits vergeben.\nBitte geben sie einen neuen ein.");
-			} else if (xmlhttp.responseText == "true") {
-				alert("Register valid! TODO: implement!");
+			} else {
+				window.location = xmlhttp.responseText;
 			}
 		}
 	};
