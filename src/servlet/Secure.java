@@ -134,7 +134,10 @@ public class Secure extends HttpServlet {
 		// If logout is asked:
 		else if (path.equals("/js/doLogout")) {
 			HttpSession session = request.getSession();
-			LoggedInUsers.getUserBySession(session).invalidate();
+			User user = LoggedInUsers.getUserBySession(session);
+			// Abfrage da evtl user gar nicht eingeloggt wurde:
+			if (user != null)
+				user.invalidate();
 			response.sendRedirect(Helper.D_INDEX);
 		}
 		// If unknown path:
