@@ -50,6 +50,7 @@ public class Secure extends HttpServlet {
 
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
+	 * @param userPassword 
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -77,11 +78,12 @@ public class Secure extends HttpServlet {
 				session.setAttribute("userName", new String(userName));
 				session.setMaxInactiveInterval(15 * 60);
 				UserFactory.getUserInstance(acc, session);
-				// Muss so gemacht werden da auf client seite von javascript
-				// abgefangen wird:
+				int type = acc.getAccounttype();
 				response.setContentType("text/plain");
-				// Hier halt entsprechend dem accounttyp:
-				response.getWriter().write(Helper.D_ADMIN_USERINDEX);
+				if(type ==0)response.getWriter().write(Helper.D_ADMIN_USERINDEX);
+				if(type==1)response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+				if(type==2)response.getWriter().write(Helper.D_CLERK_USERINDEX);
+				if(type==3)response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
 			}
 
 		}
@@ -102,13 +104,24 @@ public class Secure extends HttpServlet {
 			}
 			log.write("Secure", "Register: " + realName + ", " + email + " as "
 					+ userName + " with " + password + " as password.");
-			// TODO: The response will be written accordingly to what we need.
-			// That means that if the register was successful, write the URL to
-			// redirect to into the packet. Otherwise write false into it. If
-			// sending an URL the MIME type should be set accordingly
-			// ("text/url").
-			response.setContentType("text/plain");
-			response.getWriter().write("true");
+			
+			Account acc = AccountController.getInstance().getAccountByUsername(userName);
+			if(acc ==null){
+				acc = new Account(userName,password,3,email,realName,0,null);
+				AccountController.getInstance().createAccount(acc);
+				log.write("Secure", "Registration successful.");
+				response.setContentType("text/plain");
+				HttpSession session = request.getSession();
+				session.setAttribute("userName", new String(userName));
+				session.setMaxInactiveInterval(15 * 60);
+				UserFactory.getUserInstance(acc, session);
+				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
+			}else
+			{
+				response.setContentType("text/plain");
+				response.getWriter().write("used");
+				log.write("Secure", "Registration failed! Username already used!");
+			}
 		}
 		// If unknown path:
 		else {
