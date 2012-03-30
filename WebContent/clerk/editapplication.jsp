@@ -24,7 +24,7 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" />
+					<input type="button" value="Abmelden" name="logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
 				</p>
 			</form>
 		</div>

@@ -22,7 +22,7 @@
 	<div class="right">
 		<div class="angemeldet">
 			Sie sind als Bewerber angemeldet. <br>
-			<input type="submit" value="Logout" />
+			<input type="submit" value="Logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
 		</div>				
 			<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
