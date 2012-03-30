@@ -1,6 +1,6 @@
 package file;
 
-import userManagement.UserData;
+import user.UserData;
 
 /**
  * Klasse zur erstellung von Exceldateien mit den getaetigten Einstellungen

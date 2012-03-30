@@ -2,6 +2,12 @@ package userManagement;
 
 import javax.servlet.http.HttpSession;
 
+import user.Admin;
+import user.Applicant;
+import user.Clerk;
+import user.Provider;
+import user.User;
+
 import logger.Log;
 
 import database.account.Account;

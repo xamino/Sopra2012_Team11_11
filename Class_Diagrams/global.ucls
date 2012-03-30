@@ -72,40 +72,40 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="10" corner="BOTTOM_RIGHT" language="java" name="userManagement.User" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/User.java" binary="false">    
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="user.User" project="hiwi_program" 
+    file="/hiwi_program/src/user/User.java" binary="false">    
     <position height="-1" width="-1" x="937" y="522"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="11" corner="BOTTOM_RIGHT" language="java" name="userManagement.Provider" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Provider.java" binary="false">    
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="user.Provider" project="hiwi_program" 
+    file="/hiwi_program/src/user/Provider.java" binary="false">    
     <position height="-1" width="-1" x="632" y="310"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="12" corner="BOTTOM_RIGHT" language="java" name="userManagement.Applicant" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Applicant.java" binary="false">    
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="user.Applicant" project="hiwi_program" 
+    file="/hiwi_program/src/user/Applicant.java" binary="false">    
     <position height="-1" width="-1" x="1245" y="582"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="13" corner="BOTTOM_RIGHT" language="java" name="userManagement.Clerk" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Clerk.java" binary="false">    
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="user.Clerk" project="hiwi_program" 
+    file="/hiwi_program/src/user/Clerk.java" binary="false">    
     <position height="-1" width="-1" x="623" y="515"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="14" corner="BOTTOM_RIGHT" language="java" name="userManagement.Admin" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/Admin.java" binary="false">    
+  <class id="14" corner="BOTTOM_RIGHT" language="java" name="user.Admin" project="hiwi_program" 
+    file="/hiwi_program/src/user/Admin.java" binary="false">    
     <position height="-1" width="-1" x="1236" y="421"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -184,8 +184,8 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="24" corner="BOTTOM_RIGHT" language="java" name="userManagement.UserData" project="hiwi_program" 
-    file="/hiwi_program/src/userManagement/UserData.java" binary="false">    
+  <class id="24" corner="BOTTOM_RIGHT" language="java" name="user.UserData" project="hiwi_program" 
+    file="/hiwi_program/src/user/UserData.java" binary="false">    
     <position height="-1" width="-1" x="1246" y="155"/>    
     <display autosize="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      

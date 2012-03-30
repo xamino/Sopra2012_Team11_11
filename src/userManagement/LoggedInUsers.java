@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import user.User;
+
 import logger.Log;
 
 /**
@@ -51,7 +53,7 @@ public abstract class LoggedInUsers {
 					+ " has logged in.");
 			log.write("UserManagement",
 					LoggedInUsers.getUsers().size()
-					+ " users are currently logged in.");
+					+ " user are currently logged in.");
 
 		} else {
 			if (tempuserbysession != null) {
@@ -62,7 +64,7 @@ public abstract class LoggedInUsers {
 							+ " has logged in.");
 					log.write("UserManagement",
 							LoggedInUsers.getUsers().size()
-							+ " users are currently logged in.");
+							+ " user are currently logged in.");
 				}
 
 			}
@@ -75,7 +77,7 @@ public abstract class LoggedInUsers {
 						+ " displaced.");
 				log.write("UserManagement",
 						LoggedInUsers.getUsers().size()
-						+ " users are currently logged in.");
+						+ " user are currently logged in.");
 			}
 
 		}
@@ -130,7 +132,7 @@ public abstract class LoggedInUsers {
 			return;
 		for (int i = 0; i < users.size(); i++) {
 			// Debug for MANU!
-			// System.out.println("DEBUG: " + users.get(i).getSession() + " :: "
+			// System.out.println("DEBUG: " + user.get(i).getSession() + " :: "
 			// + user.getSession());
 			if (users.get(i).getUserData().getSession() == session) {
 				String name = users.get(i).getUserData().getUsername();
@@ -139,7 +141,7 @@ public abstract class LoggedInUsers {
 						+ " has logged out.");
 				log.write("UserManagement",
 						LoggedInUsers.getUsers().size()
-						+ " users are currently logged in.");
+						+ " user are currently logged in.");
 				break;
 			}
 		}
