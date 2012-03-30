@@ -1,12 +1,17 @@
 package login;
 
-import database.DatabaseController;
+
+import database.account.Account;
+import database.account.AccountController;
 
 /**
  * Hilfsklasse fuer den Loginvorgang des Systems.
  */
 public abstract class LoginController {
-	public DatabaseController dbc;
+	/**
+	 * Controller der Accountspezifischen Datenbankanfragen
+	 */
+	public static AccountController accCon = AccountController.getInstance();
 
 	/**
 	 * Ueberprueft vor dem einlogen mit gegebenen Daten, ob die Parameter einem
@@ -20,23 +25,11 @@ public abstract class LoginController {
 	 *         korrektsind , sonst <code>False</code>.
 	 */
 	public static boolean loginCheck(String username, String password) {
-
-		return false;
+			Account acc = accCon.getAccountByUsername(username);
+			if(acc==null)return false;
+			if(password.equals(acc.getPasswordhash()))return true;
+			return false;
 	}
 
-	/**
-	 * Wandelt den Passwort-String in einen kryptischen Hash-Wert um. Das
-	 * Benutzerpasswort darf aus Sicherheitsgruenden NICHT als Klartext
-	 * abgespeichert werden, deshalb wird nur der umgewandelte String in der
-	 * Datenbank abgelegt.
-	 * 
-	 * @param s
-	 *            Passwort-String eines Accounts.
-	 * @return Verschluesselter Hash-Wert als String.
-	 */
-	public static String hash(String s) { // gibt md5 hash eines strings zurueck
-
-		return "";
-	}
 
 }
