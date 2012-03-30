@@ -5,5 +5,20 @@ package logger;
  * 
  */
 public enum WriteTo {
-	SYSOUT, LOGFILE, ALL
+	/**
+	 * Write to System.out.
+	 */
+	SYSOUT,
+	/**
+	 * Write to the file.
+	 */
+	LOGFILE,
+	/**
+	 * Write to all available channels.
+	 */
+	ALL,
+	/**
+	 * Don't write at all. All input is discarded.
+	 */
+	NONE
 }
