@@ -6,7 +6,7 @@
  *@author Oemer Sahin
  *@author Anatoli Brill
  */
-package userManagement;
+package user;
 
 import javax.servlet.http.HttpSession;
 

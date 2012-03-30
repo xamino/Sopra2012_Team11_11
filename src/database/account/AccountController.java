@@ -1,6 +1,7 @@
 /**
  * @author Patryk Boczon 
  * @author Oemer Sahin
+ * @author Manuel Güntzel
  **/
 package database.account;
 
@@ -129,6 +130,23 @@ public class AccountController {
 		dbc.update("accounts", columns, values, where);
 	}
 
+	/**
+	 * Diese Methode gibt den Account mit dem spezifizierten Username zurueck. Sollte dieser nicht existieren bekommt man einen <code>null</code>-Verweis zurueck.
+	 * @param username zu suchender Username
+	 * @return Account-Objekt das diesem Username entspricht. Falls nicht existent <code>null</code>.
+	 */
+	public Account getAccountByUsername(String username){
+		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"accounts"}, "username='"+username+"'");
+		try {
+			if(rs.next())return new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+			else return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("AccountController", "Error while reading Account from Database");
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Diese Methode selektiert alle Accounts mit uebergebenem Accounttyp.
 	 * 
