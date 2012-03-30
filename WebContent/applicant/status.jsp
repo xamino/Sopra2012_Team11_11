@@ -47,6 +47,24 @@
 		<hr>
 		<div class="textblock">
 			<div class="haupttext">
+				<h4>Berwebung für: WOW-TUT</h4>
+				<form class="listform">
+					<table>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+					</table>
+				</form>
+				<hr>
 				<div class="float">
 				<form method="post" action="mailto:email@email.com">
 					<input type="submit" value="Verwalter kontaktieren" />

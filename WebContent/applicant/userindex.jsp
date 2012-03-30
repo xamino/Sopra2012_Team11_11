@@ -45,7 +45,49 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="haupttext">Hier steht Kram!!</div>
+			<div class="haupttext">
+				<h4>Beworben:</h4>
+				<table class="sized">
+					<tr>
+						<th>Datum</th>
+						<th>Bezeichnung</th>
+						<th>Beschreibung</th>
+					</tr>
+					<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+					<tr id="mhhh" onclick="">
+						<td>01.01.2001</td>
+						<td>La le lu Tut</td>
+						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerbung ansehen" /></div><div class="clear"></div></td>
+					</tr>
+				</table>
+				<hr>
+				<h4>Offene Stellen:</h4>
+				<table class="sized">
+					<tr>
+						<th>Datum</th>
+						<th>Bezeichnung</th>
+						<th>Beschreibung</th>
+					</tr>
+					<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+					<tr id="lala" onclick="">
+						<td>01.01.2001</td>
+						<td>La le lu Tut</td>
+						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerben" /></div><div class="clear"></div></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 	</div>

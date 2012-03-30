@@ -83,7 +83,7 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<tr id="Xamino" onclick="">
+					<tr id="huhu" onclick="">
 						<td>01.01.2001</td>
 						<td>La le lu Tut</td>
 						<td>stellen<br> lalala<br> usw</td>
