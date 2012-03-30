@@ -87,7 +87,7 @@ public class AccountController {
 				account.getInstitute(),
 				account.getRepresentative()};
 		
-		dbc.insert("accounts", values);
+		dbc.insert("Accounts", values);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class AccountController {
 
 		String where = "benutzername = '"+ account.getUsername()+"'";
 		
-		dbc.delete("accounts", where);
+		dbc.delete("Accounts", where);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class AccountController {
 				"name","institut","stellvertreter"};
 
 		
-		dbc.update("accounts", columns, values, where);
+		dbc.update("Accounts", columns, values, where);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht existent <code>null</code>.
 	 */
 	public Account getAccountByUsername(String username){
-		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"accounts"}, "benutzername='"+username+"'");
+		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"Accounts"}, "benutzername='"+username+"'");
 		try {
 			if(rs.next())return new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
 			else return null;
@@ -164,7 +164,7 @@ public class AccountController {
 		Vector<Account> accountvec = new Vector<Account>(30,10);
 		
 		String[] select = {"*"};
-		String[] from = {"accounts"};
+		String[] from = {"Accounts"};
 		String where = "accounttyp = "+accounttype;
 		
 		ResultSet rs = dbc.select(select, from, where);
@@ -201,7 +201,7 @@ public class AccountController {
 		Vector<Account> accountvec = new Vector<Account>(30,10);
 		
 		String[] select = {"*"};
-		String[] from = {"accounts"};
+		String[] from = {"Accounts"};
 		String where = "institut = "+id;
 		
 		ResultSet rs = dbc.select(select, from, where);
