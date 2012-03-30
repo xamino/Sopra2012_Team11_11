@@ -43,7 +43,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Account verwalten</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: "Stellvertreter" should have
@@ -53,14 +53,13 @@
 			<hr>
 			<div class="textblock">
 				<form class="listform">
-					<div class="textblock">
-						<input type="button" value="Änderungen übernehmen" /> <input
-							type="button" value="Änderungen verwerfen"
-							onclick="window.location='userindex.jsp'" />
-						<!-- Shouldn't there be a delete option here too? 
-						<input style="float: right;" type="button" value="Account löschen" />
+					<input type="button" value="Änderungen übernehmen" /> <input
+						type="button" value="Änderungen verwerfen"
+						onclick="window.location='userindex.jsp'" />
+					<!-- Shouldn't there be a delete option here too? 
+					<input style="float: right;" type="button" value="Account löschen" />
 					-->
-					</div>
+					<br>
 					<hr>
 					<table class="sized">
 						<tr>

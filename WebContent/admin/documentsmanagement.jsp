@@ -40,7 +40,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Unterlagen Verwalten</h2>
 				<div class="text">
 					Erläuterungstext...<br>TODO: Format tabel to look better.
@@ -48,9 +48,10 @@
 			</div>
 			<hr>
 			<div class="textblock">
+			<div class="haupttext">
+			<div class="textblock">
 				<form class="listform">
 					<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
-					<div class="textblock">
 						<input type="button" value="Eintrag hinzufügen"
 							onclick="togglePopup('document_add', true);" /> <input
 							align="left" type="button" value="Eintrag ändern"
@@ -58,7 +59,6 @@
 							style="float: right;" type="button"
 							value="Markierte Einträge löschen"
 							onclick="togglePopup('document_del', true);" />
-					</div>
 					<hr>
 					<table>
 						<tr>
@@ -159,6 +159,8 @@
 						</tr>
 					</table>
 				</form>
+				</div>
+				</div>
 			</div>
 		</div>
 	</div>

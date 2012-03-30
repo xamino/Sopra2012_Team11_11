@@ -44,7 +44,7 @@
 	</div>
 	<div class="content">
 		<div class="rightborder">
-			<div class="haupttext">
+			<div class="textblock">
 				<h2>Bewerbungen verwalten</h2>
 				<div class="text">
 					Erläuterungstext ...<br>TODO: Button that leads to
@@ -53,11 +53,10 @@
 			</div>
 			<hr>
 			<div class="textblock">
+			<div class="haupttext">
 				<form class="listform">
-					<div class="textblock">
 						<input type="button" value="Bewerbung bearbeiten"
 							onclick="window.location='editapplication.jsp'" />
-					</div>
 					<hr>
 					<table>
 						<tr>
@@ -90,6 +89,7 @@
 						</tr>
 					</table>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>
