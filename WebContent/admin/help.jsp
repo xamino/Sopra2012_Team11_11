@@ -19,20 +19,21 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind als Administrator angemeldet. <br>
-			<input type="submit" value="Logout" />
+			Sie sind als Administrator angemeldet. <br> <input type="submit"
+				value="Logout" />
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
-				<div class="text">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="<%=Helper.D_ADMIN_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+			<div class="text">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_ADMIN_USERINDEX%>"
+					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
+				Hilfe <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
-				</div>
+			</div>
 		</div>
 	</div>
 	<div class="content">

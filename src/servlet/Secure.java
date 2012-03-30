@@ -72,6 +72,12 @@ public class Secure extends HttpServlet {
 			}
 			log.write("Secure", "Register: " + realName + ", " + email + " as "
 					+ userName + " with " + password + " as password.");
+			// TODO: The response will be written accordingly to what we need.
+			// That means that if the register was successful, write the URL to
+			// redirect to into the packet. Otherwise write false into it. If
+			// sending an URL the MIME type should be set accordingly
+			// ("text/url").
+			response.setContentType("text/plain");
 			response.getWriter().write("true");
 		}
 		// If unknown path:

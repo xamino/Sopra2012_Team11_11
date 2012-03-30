@@ -74,9 +74,10 @@ public class DatabaseController {
 	private DatabaseController() {
 		// Get & and save logger:
 		this.log = Log.getInstance();
+		log.write("DatabaseController", "Instance created.");
 		// Connect to database:
 		try {
-			log.write("Database", "Connecting to Database");
+			log.write("DatabaseController", "Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			getLoginInfo();
 			if (password != null)

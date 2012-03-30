@@ -39,8 +39,10 @@
 				<p>
 					<!-- return false on submit so that the form doesn't reload the form – this is handled
 					by the javascript function accordingly. -->
-					<input type="reset" value="Zurücksetzen" /> <input type="submit"
-						value="Anmelden" onclick="checkLogin(login); return false;" />
+					<input type="reset" value="Zurücksetzen"
+						onclick="toggleWarning('error_login', false, '')" /> <input
+						type="submit" value="Anmelden"
+						onclick="checkLogin(login); return false;" />
 				</p>
 			</form>
 			<a class="hintlink" href="register.jsp"
@@ -50,13 +52,14 @@
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
-				<div class="text">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="<%=Helper.D_INDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="<%=Helper.D_PUBLIC_REGISTER %>" title="Hier geht es zum Registrieren">Registrieren</a><br>
-					&rarr; Hilfe
-				</div>
+			<div class="text">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=Helper.D_INDEX%>"
+					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_PUBLIC_REGISTER%>"
+					title="Hier geht es zum Registrieren">Registrieren</a><br>
+				&rarr; Hilfe
+			</div>
 		</div>
 	</div>
 	<div class="content">

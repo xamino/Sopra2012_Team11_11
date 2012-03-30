@@ -38,7 +38,7 @@ public class ApplicationController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private ApplicationController() {
-
+		logger.Log.getInstance().write("ApplicationController", "Instance created.");
 	}
 
 	/**
