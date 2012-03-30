@@ -65,11 +65,31 @@
 		<div class="rightborder">
 			<div class="textblock">
 				<h2>Willkommen auf der Hiwi-Börse</h2>
-				<div class="text">Erläuterungstext ...</div>
+				<div class="text">Hier finden Sie alle im Moment angebotenen Stellen. <br> Um sich zu bewerben, registrieren Sie sich bitte, oder loggen Sie sich ein.</div>
 			</div>
 			<hr>
 			<div class="textblock">
-				<div class="haupttext">Hier steht Kram!!</div>
+				<div class="haupttext">
+				<table class="sized">
+					<tr>
+						<th>Datum</th>
+						<th>Bezeichnung</th>
+						<th>Beschreibung</th>
+					</tr>
+					<!-- This is how the entrys will be generated with javascript:
+					<tr id="username" onclick="function(username)">
+						<td>realname</td>
+						<td>username</td>
+						<td>account type</td>
+					</tr> 
+					-->
+					<tr id="Xamino" onclick="">
+						<td>01.01.2001</td>
+						<td>La le lu Tut</td>
+						<td>stellen<br> lalala<br> usw</td>
+					</tr>
+				</table>
+				</div>
 			</div>
 		</div>
 	</div>

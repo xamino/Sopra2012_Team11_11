@@ -66,7 +66,7 @@
 		<div class="rightborder">
 			<div class="textblock">
 				<h2>Hilfe</h2>
-				<div class="text">Erläuterungstext ...</div>
+				<div class="text">Hier erhalten Sie Hilfe.</div>
 			</div>
 			<hr>
 			<div class="textblock">

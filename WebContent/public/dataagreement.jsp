@@ -68,7 +68,7 @@
 		<div class="rightborder">
 			<div class="textblock">
 				<h2>Datenschutzerklärungen</h2>
-				<div class="text">Erläuterungstext ...</div>
+				<div class="text">Hier können Sie die aktuellen Datenschutzbestimmungen einsehen.</div>
 			</div>
 			<hr>
 			<div class="textblock">
