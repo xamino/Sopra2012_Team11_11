@@ -32,132 +32,187 @@
 			<h3>Navigation</h3>
 			<div class="text">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_USERINDEX%>">Zentrale</a><br> &rarr;
+					href="<%=Helper.D_ADMIN_USERINDEX%>">Startseite</a><br> &rarr;
 				Unterlagenverwaltung<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
 			</div>
 		</div>
 	</div>
 	<div class="content">
-		<div class="textblock">
-			<h2>Unterlagen Verwalten</h2>
-			<div class="text">
-				Erläuterungstext...<br>TODO: Format tabel to look better.
-			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<form class="listform">
-				<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
-				<div class="textblock">
-					<input type="button" value="Eintrag hinzufügen" /> <input
-						align="left" type="button" value="Eintrag ändern" /> <input
-						style="float: right;" type="button"
-						value="Markierte Einträge löschen" />
+		<div class="rightborder">
+			<div class="haupttext">
+				<h2>Unterlagen Verwalten</h2>
+				<div class="text">
+					Erläuterungstext...<br>TODO: Format tabel to look better.
 				</div>
-				<hr>
-				<table>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Superheldenbescheingung</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Bewerbungsnormvertrag</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td>Kündigungsnormvertrag</td>
-					</tr>
-				</table>
-			</form>
+			</div>
+			<hr>
+			<div class="textblock">
+				<form class="listform">
+					<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
+					<div class="textblock">
+						<input type="button" value="Eintrag hinzufügen"
+							onclick="togglePopup('document_add', true);" /> <input
+							align="left" type="button" value="Eintrag ändern"
+							onclick="togglePopup('document_edit', true);" /> <input
+							style="float: right;" type="button"
+							value="Markierte Einträge löschen"
+							onclick="togglePopup('document_del', true);" />
+					</div>
+					<hr>
+					<table>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Superheldenbescheingung</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Bewerbungsnormvertrag</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>Kündigungsnormvertrag</td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Here are the popups -->
+	<!-- Document add popup -->
+	<div id="document_add" class="popup_hidden">
+		<form>
+			<h3>Dokument hinzufügen</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>Link:<br> <input
+					type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_add', false);" />
+			</div>
+		</form>
+	</div>
+	<!-- Document edit popup -->
+	<div id="document_edit" class="popup_hidden">
+		<form>
+			<h3>Dokument modifizieren</h3>
+			<hr>
+			<div class="textblock">
+				Titel:<br> <input type="text" /><br>Link:<br> <input
+					type="text" /><br>
+				<div class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Speicher" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_edit', false);" />
+			</div>
+		</form>
+	</div>
+	<!-- Confirmation popup -->
+	<div id="document_del" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie die ausgewählten<br>Dokumente wirklich löschen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('document_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>

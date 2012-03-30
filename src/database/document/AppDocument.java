@@ -62,7 +62,7 @@ public class AppDocument {
 	/**
 	 * Setzt den Benutzername.
 	 * 
-	 * @param Benutzername
+	 * @param username
 	 *            .
 	 */
 	public void setUsername(String username) {
@@ -81,7 +81,7 @@ public class AppDocument {
 	/**
 	 * Setzt die AngebotsID.
 	 * 
-	 * @param AngebotsID
+	 * @param oID
 	 *            .
 	 */
 	public void setoID(int oID) {
@@ -100,7 +100,7 @@ public class AppDocument {
 	/**
 	 * Setzt die UnterlagenID.
 	 * 
-	 * @param UnterlagenID
+	 * @param dID
 	 *            .
 	 */
 	public void setdID(int dID) {

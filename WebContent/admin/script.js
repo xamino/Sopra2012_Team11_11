@@ -43,3 +43,20 @@ function toggleWarning(id, flag, text) {
 		// document.getElementById(id).innerHTML = text;
 	}
 }
+
+/**
+ * This function allows the simple showing / hidding of a popup.
+ * 
+ * @param id
+ *            The ID of the popup to change.
+ * @param flag
+ *            <code>True</code> makes the popup visible, <code>false</code>
+ *            makes it hidden.
+ */
+function togglePopup(id, flag) {
+	if (flag) {
+		document.getElementById(id).setAttribute("class", "popup_visible");
+	} else {
+		document.getElementById(id).setAttribute("class", "popup_hidden");
+	}
+}

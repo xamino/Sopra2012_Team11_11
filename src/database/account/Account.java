@@ -52,13 +52,15 @@ public class Account {
 	 *            E-Mail adresse.
 	 * @param name
 	 *            Realer Name des Accountinhabers.
+	 * @param institute 
+	 * @param representative
 	 */
-	public Account(String benutzername, String passworthash, int accounttyp,
+	public Account(String username, String passwordhash, int accounttype,
 			String email, String name, int institute, String representative) {
 		super();
-		this.username = benutzername;
-		this.passwordhash = passworthash;
-		this.accounttype = accounttyp;
+		this.username = username;
+		this.passwordhash = passwordhash;
+		this.accounttype = accounttype;
 		this.email = email;
 		this.name = name;
 		this.institute = institute;

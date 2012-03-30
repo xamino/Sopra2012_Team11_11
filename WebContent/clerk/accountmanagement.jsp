@@ -33,7 +33,7 @@
 			<h3>Navigation</h3>
 			<div class="text">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_USERINDEX%>">Zentrale</a><br>
+					href="<%=Helper.D_CLERK_USERINDEX%>">Startseite</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/hiwi/Clerk/js/doExcelExport">ExcelExport</a><br>
 				&rarr; Accountverwaltung<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_OFFERMANAGEMENT%>">Angebotsverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
@@ -42,53 +42,56 @@
 		</div>
 	</div>
 	<div class="content">
-		<div class="textblock">
-			<h2>Account verwalten</h2>
-			<div class="text">
-				Erläuterungstext ...<br>TODO: "Stellvertreter" should have
-				better field for none than "null" – maybe like "keinen"?
+		<div class="rightborder">
+			<div class="haupttext">
+				<h2>Account verwalten</h2>
+				<div class="text">
+					Erläuterungstext ...<br>TODO: "Stellvertreter" should have
+					better field for none than "null" – maybe like "keinen"?
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<form class="listform">
-				<div class="textblock">
-					<input type="button" value="Änderungen übernehmen" /> <input
-						type="button" value="Änderungen verwerfen" />
-					<!-- Shouldn't there be a delete option here too? 
+			<hr>
+			<div class="textblock">
+				<form class="listform">
+					<div class="textblock">
+						<input type="button" value="Änderungen übernehmen" /> <input
+							type="button" value="Änderungen verwerfen"
+							onclick="window.location='userindex.jsp'" />
+						<!-- Shouldn't there be a delete option here too? 
 						<input style="float: right;" type="button" value="Account löschen" />
 					-->
-				</div>
-				<hr>
-				<table class="sized">
-					<tr>
-						<td>Name:</td>
-						<td><input type="text" value="Max Mustermann" size="40" /></td>
-					</tr>
-					<!-- TODO: username has a max size – use it here too -->
-					<tr>
-						<td>Benutzername:</td>
-						<td><input type="text" value="max_the_great" /></td>
-					</tr>
-					<tr>
-						<td>Email:</td>
-						<td><input type="text" value="max.mustermann@uni-ulm.de"
-							size="40" /></td>
-					</tr>
-					<tr>
-						<td>Passwort:</td>
-						<td><input type="password" value="********" /></td>
-					</tr>
-					<tr>
-						<td>Passwort bestätigen:</td>
-						<td><input type="password" value="********" /></td>
-					</tr>
-					<tr>
-						<td>Stellvertreter:</td>
-						<td><input type="text" value="null" /></td>
-					</tr>
-				</table>
-			</form>
+					</div>
+					<hr>
+					<table class="sized">
+						<tr>
+							<td>Name:</td>
+							<td><input type="text" value="Max Mustermann" size="40" /></td>
+						</tr>
+						<!-- TODO: username has a max size – use it here too -->
+						<tr>
+							<td>Benutzername:</td>
+							<td><input type="text" value="max_the_great" /></td>
+						</tr>
+						<tr>
+							<td>Email:</td>
+							<td><input type="text" value="max.mustermann@uni-ulm.de"
+								size="40" /></td>
+						</tr>
+						<tr>
+							<td>Passwort:</td>
+							<td><input type="password" value="********" /></td>
+						</tr>
+						<tr>
+							<td>Passwort bestätigen:</td>
+							<td><input type="password" value="********" /></td>
+						</tr>
+						<tr>
+							<td>Stellvertreter:</td>
+							<td><input type="text" value="null" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

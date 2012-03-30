@@ -8,9 +8,12 @@ package database.application;
 /**
  * Verwaltet alle Datenbankzugriffe auf Bewerbungs-bezogene Daten.
  */
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
+import database.account.Account;
 import database.offer.OfferController;
 
 public class ApplicationController {
@@ -35,7 +38,7 @@ public class ApplicationController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private ApplicationController() {
-
+		logger.Log.getInstance().write("ApplicationController", "Instance created.");
 	}
 
 	/**
@@ -61,6 +64,10 @@ public class ApplicationController {
 	 */
 	public void createApplication(Application application) {
 
+		Object[] values = {application.getUsername(),application.getAid(),application.isFinished(),application.getClerk(),application.isChosen()};
+		
+		dbc.insert("bewerbungen", values);
+		
 	}
 
 	/**
@@ -72,7 +79,7 @@ public class ApplicationController {
 	 *            dazugehoerigen Attributen.
 	 */
 	public void deleteApplication(Application application) {
-
+		dbc.delete("bewerbungen", "AID = "+application.getAid());
 	}
 
 	/**
@@ -85,6 +92,12 @@ public class ApplicationController {
 	 */
 	public void updateApplication(Application application) {
 
+		String[] columns = {"benutzername", "status", "sachbearbeiter", "ausgewaehlt"};
+		Object[] values = {application.getUsername(), application.isFinished(), application.getClerk(), application.isChosen()};
+		String where = "AID = "+application.getAid();
+		
+		dbc.update("bewerbung", columns, values, where);
+		
 	}
 
 	/**
@@ -95,7 +108,30 @@ public class ApplicationController {
 	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getAllApplications() {
-		return null;
+		
+		Vector<Application> applicationvec = new Vector<Application>(50,10);
+		
+		String[] select = {"*"};
+		String[] from = {"bewerbungen"};
+		
+		ResultSet rs = dbc.select(select, from, null);
+		try {
+			while(rs.next()){
+				Application currentapp;
+				currentapp = new Application(rs.getString(1),rs.getInt(2),rs.getBoolean(3),rs.getString(4),rs.getBoolean(5));
+
+				applicationvec.add(currentapp);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return applicationvec;
 
 	}
 
@@ -110,7 +146,31 @@ public class ApplicationController {
 	 *         eines Vectors werden zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByApplicant(String username) {
-		return null;
+		
+		Vector<Application> applicationvec = new Vector<Application>(3,2);
+		
+		String[] select = {"*"};
+		String[] from = {"bewerbungen"};
+		String where = "benutzername = '"+username+"'";
+		
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				Application currentapp;
+				currentapp = new Application(rs.getString(1),rs.getInt(2),rs.getBoolean(3),rs.getString(4),rs.getBoolean(5));
+
+				applicationvec.add(currentapp);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return applicationvec;
 
 	}
 
@@ -124,7 +184,31 @@ public class ApplicationController {
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByOffer(int aid) {
-		return null;
+
+		Vector<Application> applicationvec = new Vector<Application>(10,5);
+		
+		String[] select = {"*"};
+		String[] from = {"bewerbungen"};
+		String where = "AID = "+aid;
+		
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				Application currentapp;
+				currentapp = new Application(rs.getString(1),rs.getInt(2),rs.getBoolean(3),rs.getString(4),rs.getBoolean(5));
+
+				applicationvec.add(currentapp);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return applicationvec;
 
 	}
 
@@ -137,7 +221,31 @@ public class ApplicationController {
 	 * @return Es wird ein Vektor mit Bewerbungen zurueckgegeben.
 	 */
 	public Vector<Application> getApprovedApplicationsByClerk(String clerkname) {
-		return null;
+
+		Vector<Application> applicationvec = new Vector<Application>(50,10);
+		
+		String[] select = {"*"};
+		String[] from = {"bewerbungen"};
+		String where = "sachbearbeiter = '"+clerkname+"'";
+		
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				Application currentapp;
+				currentapp = new Application(rs.getString(1),rs.getInt(2),rs.getBoolean(3),rs.getString(4),rs.getBoolean(5));
+
+				applicationvec.add(currentapp);
+			}
+			
+			rs.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+		
+		return applicationvec;
 	}
 
 }

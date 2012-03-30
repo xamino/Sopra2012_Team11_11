@@ -32,7 +32,7 @@
 		<div class="nav">
 			<h3>Navigation</h3>
 			<div class="text">
-				&rarr; Zentrale<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+				&rarr; Startseite<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="/hiwi/Clerk/js/doExcelExport">ExcelExport</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
@@ -42,24 +42,29 @@
 		</div>
 	</div>
 	<div class="content">
-		<div class="textblock">
-			<h2>Willkommen in ihrer persönlichen Zentrale</h2>
-			<div class="text">
-				Erläuterungstext ...<br>TODO: Fill with sensible information.
+		<div class="rightborder">
+			<div class="textblock">
+				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
+				<div class="text">
+					Erläuterungstext ...<br>TODO: Fill with sensible information.<br>
+					Hilfe finden Sie <a	href="<%=Helper.D_CLERK_HELP %>" title="Hilfe"> hier</a>.
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<table class="hidden">
-				<tr>
-					<td>Ungeprüfte Angebote:</td>
-					<td>3</td>
-				</tr>
-				<tr>
-					<td>Offene Bewerbungen:</td>
-					<td>42</td>
-				</tr>
-			</table>
+			<hr>
+			<div class="textblock">
+			<div class="haupttext">
+				<table class="hidden">
+					<tr>
+						<td>Ungeprüfte Angebote:</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td>Offene Bewerbungen:</td>
+						<td>42</td>
+					</tr>
+				</table>
+			</div>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>
