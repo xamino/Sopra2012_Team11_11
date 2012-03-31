@@ -22,7 +22,6 @@ import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
 
 import logger.Log;
-import logger.WriteTo;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die

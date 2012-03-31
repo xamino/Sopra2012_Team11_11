@@ -3,4 +3,5 @@ int | port | 3306
 String | password |
 String |user | root
 String | database | sopra
-path | log | $HOME | .soprpa | log
+path | log | $HOME | .sopra | log
+int | logWriteTo | 3

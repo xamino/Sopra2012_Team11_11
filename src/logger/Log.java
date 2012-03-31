@@ -10,12 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import config.Configurator;
+import config.IllegalTypeException;
+import config.UnknownOptionException;
+
 /**
  * This class implements the Logger for the complete program. All information
  * that could be useful for debugging or is required to check the correct
  * function of the program should be posted here. The standard setting is that
- * the log prints to the console AND writes to the log file. TODO: implement
- * that the option is read from the config file.
+ * the log prints to the console AND writes to the log file. This Class
+ * implements the Configurator.
  */
 public class Log {
 
@@ -48,6 +52,15 @@ public class Log {
 	private long timer;
 
 	/**
+	 * Instance of configurator.
+	 */
+	private Configurator config;
+	/**
+	 * Path where to place log file.
+	 */
+	private String logFilePath;
+
+	/**
 	 * Method for getting a valid instance of Log. The returned instance can
 	 * then be used to write all the data.
 	 * 
@@ -66,10 +79,44 @@ public class Log {
 	private Log() {
 		// Set initial start time:
 		startTimer();
-		// Initialize fileStreamSaved:
+		// Get Configurator:
+		config = Configurator.getInstance();
+		// Set default writeTo:
+		WriteTo set = WriteTo.ALL;
+		// Set default logfile path:
+		logFilePath = System.getProperty("user.home")
+				+ System.getProperty("file.separator") + "log";
+		// Get config data:
+		try {
+			// Read path:
+			logFilePath = config.getPath("log");
+			// Read where all to print output:
+			switch (config.getInt("logWriteTo")) {
+			case 0:
+				set = WriteTo.NONE;
+				break;
+			case 1:
+				set = WriteTo.SYSOUT;
+				break;
+			case 2:
+				set = WriteTo.LOGFILE;
+				break;
+			case 3:
+				set = WriteTo.ALL;
+				break;
+			default:
+				break;
+			}
+		} catch (IllegalTypeException e) {
+
+		} catch (UnknownOptionException e) {
+
+		}
+		// Initialize fileStreamSaved. Must happen AFTER conf has been read!
 		fileStreamSaved = createFile();
-		// Set default output stream:
-		setOutputStream(WriteTo.ALL, true);
+		// Set default output stream. Must happen AFTER fileStreamSaved is
+		// initialized!
+		setOutputStream(set, true);
 	}
 
 	/**
@@ -201,12 +248,10 @@ public class Log {
 		if (fileStream != null)
 			return fileStream;
 
-		final String SEPERATOR = System.getProperty("file.separator");
-		final String HOME = System.getProperty("user.home");
-
 		// Creates the file in the home directory in which the log will be
 		// written.
-		File logFile = new File(HOME + SEPERATOR + ".sopra_log");
+		System.out.println(logFilePath + "");
+		File logFile = new File(logFilePath);
 		// If the file already exists, we need to delete it first:
 		if (logFile.exists())
 			logFile.delete();
@@ -217,7 +262,6 @@ public class Log {
 			return buf;
 		} catch (IOException e) {
 			// On error, set to System.out and return null:
-			e.printStackTrace();
 			setOutputStream(WriteTo.SYSOUT, true);
 			write("LOG", "Error creating file. Setting stream to SYSOUT.");
 			return null;
