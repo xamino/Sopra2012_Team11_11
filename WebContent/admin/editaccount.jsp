@@ -25,7 +25,8 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
+					<input type="button" value="Abmelden" name="logout"
+						onclick="window.location='/hiwi/Secure/js/doLogout'" />
 				</p>
 			</form>
 		</div>
@@ -72,6 +73,10 @@
 						<tr>
 							<td>Benutzername:</td>
 							<td><input type="text" value="max_the_great" /></td>
+						</tr>
+						<tr>
+							<td>Passwort:</td>
+							<td><input type="password" value="****" /></td>
 						</tr>
 						<tr>
 							<td>Email:</td>
