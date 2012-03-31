@@ -9,7 +9,7 @@
 <script type="text/javascript" src="script.js"></script>
 <title>Account Verwaltung | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="loadAccounts();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -60,7 +60,7 @@
 						style="float: right;" type="button" value="Account löschen"
 						onclick="togglePopup('account_del', true);" />
 				<hr>
-				<table class="sized">
+				<table class="sized" id="accountTable">
 					<tr>
 						<th>Benutzer Name</th>
 						<th>Name</th>
@@ -69,29 +69,12 @@
 					</tr>
 					<!-- This is how the entrys will be generated with javascript:
 					<tr id="username" onclick="function(username)">
-						<td>realname</td>
 						<td>username</td>
+						<td>realname</td>
+						<td>email</td>
 						<td>account type</td>
 					</tr> 
 					-->
-					<tr id="Xamino" onclick="">
-						<td>Xamino</td>
-						<td>Tamino Hartmann</td>
-						<td>tamino.hartmann@uni-ulm.de</td>
-						<td>Bewerber</td>
-					</tr>
-					<tr id="pete" onclick="">
-						<td>pete</td>
-						<td>Peter Maier</td>
-						<td>peter.maier@uni-ulm.de</td>
-						<td>Administrator</td>
-					</tr>
-					<tr id="Captain_Jack" onclick="">
-						<td>Captain_Jack</td>
-						<td>Jack Sparrow</td>
-						<td>captain.jack@black.pearl.int</td>
-						<td>Anbieter</td>
-					</tr>
 				</table>
 				</div>
 			</div>

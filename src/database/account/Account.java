@@ -15,9 +15,14 @@ public class Account {
 	 */
 	private String username;
 	/**
-	 * Passworthash des Benutzerpassworts
+	 * Passworthash des Benutzerpassworts. Achtung: ist <code>transient</code>
+	 * um Passworthash vor automatiesierten Reflections zu schuetzen. Dies
+	 * verhindert das Senden des Passworthashs durch GSON im AdminServlet.
 	 */
-	private String passwordhash;
+	// Kommentar von Tamino: NICHT transient wegmachen – sollte das gebraucht
+	// werden MUSS man das mit mir klären da sonst eine riesen Sicherheitslücke
+	// im System entsteht!
+	private transient String passwordhash;
 	/**
 	 * Der Berechtigungstyp des Accounts. 0 - Admin 1 - Anbieter 2 - Verwalter 3
 	 * - Bewerber
@@ -52,7 +57,7 @@ public class Account {
 	 *            E-Mail adresse.
 	 * @param name
 	 *            Realer Name des Accountinhabers.
-	 * @param institute 
+	 * @param institute
 	 * @param representative
 	 */
 	public Account(String username, String passwordhash, int accounttype,
@@ -199,4 +204,10 @@ public class Account {
 		this.representative = representative;
 	}
 
+	/**
+	 * Einfache toString methode. Gibt nicht alle Parameter zurueck.
+	 */
+	public String toString() {
+		return "[" + username + ":" + name + ":" + email + "]";
+	}
 }

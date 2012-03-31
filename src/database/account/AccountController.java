@@ -136,10 +136,11 @@ public class AccountController {
 				new String[] { "Accounts" }, null);
 		Vector<Account> accounts = new Vector<Account>();
 		try {
-			if (rs.next())
+			while (rs.next()) {
 				accounts.add(new Account(rs.getString(1), rs.getString(2), rs
 						.getInt(3), rs.getString(4), rs.getString(5), rs
 						.getInt(6), rs.getString(7)));
+			}
 		} catch (SQLException e) {
 			logger.Log.getInstance().write("AccountController",
 					"Error while reading all accounts from Database.");

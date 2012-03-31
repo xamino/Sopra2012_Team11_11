@@ -60,3 +60,63 @@ function togglePopup(id, flag) {
 		document.getElementById(id).setAttribute("class", "popup_hidden");
 	}
 }
+
+/**
+ * Given a xmlhttp object, it will return the MIME type set.
+ */
+function getMIME(responseobject) {
+	return responseobject.getResponseHeader("Content-Type").split(";")[0];
+}
+
+/**
+ * This function loads all the accounts in the system from the database and
+ * displays them.
+ */
+function loadAccounts() {
+	xmlhttp.open("GET", "/hiwi/Admin/js/loadAccounts");
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var mimeType = getMIME(xmlhttp);
+			if (mimeType == "text/url") {
+				window.location = xmlhttp.responseText;
+			} else if (mimeType == "application/json") {
+				// Erstelle Array aus JSON array:
+				var JSONarray = eval(xmlhttp.responseText);
+				// Get the table:
+				var table = document.getElementById("accountTable");
+				for ( var i = 0; i < JSONarray.length; i++) {
+					table.innerHTML += "<tr><td>" + JSONarray[i].username
+							+ "</td><td>" + JSONarray[i].name + "</td><td>"
+							+ JSONarray[i].email + "</td><td>"
+							+ getTypeString(JSONarray[i].accounttype)
+							+ "</td></tr>";
+				}
+			}
+		}
+	};
+	xmlhttp.send();
+}
+
+/**
+ * A help function that returns the descriptive account type name.
+ * 
+ * @param number
+ */
+function getTypeString(number) {
+	switch (number) {
+	case 0:
+		return "Administrator";
+		break;
+	case 1:
+		return "Anbieter";
+		break;
+	case 2:
+		return "Verwalter";
+		break;
+	case 3:
+		return "Bewerber";
+		break;
+	default:
+		break;
+	}
+}
