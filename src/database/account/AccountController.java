@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
-import database.application.ApplicationController;
 
 /**
  * Der Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
@@ -49,8 +48,9 @@ public class AccountController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private AccountController() {
-		dbc=DatabaseController.getInstance();
-		logger.Log.getInstance().write("AccountController", "Instance created.");
+		dbc = DatabaseController.getInstance();
+		logger.Log.getInstance()
+				.write("AccountController", "Instance created.");
 	}
 
 	/**
@@ -79,14 +79,11 @@ public class AccountController {
 	 */
 	public void createAccount(Account account) {
 
-		Object[] values = {account.getUsername(),account.
-				getPasswordhash(),
-				account.getAccounttype(),
-				account.getEmail(),
-				account.getName(),
-				account.getInstitute(),
-				account.getRepresentative()};
-		
+		Object[] values = { account.getUsername(), account.getPasswordhash(),
+				account.getAccounttype(), account.getEmail(),
+				account.getName(), account.getInstitute(),
+				account.getRepresentative() };
+
 		dbc.insert("Accounts", values);
 	}
 
@@ -100,8 +97,8 @@ public class AccountController {
 	 */
 	public void deleteAccount(Account account) {
 
-		String where = "benutzername = '"+ account.getUsername()+"'";
-		
+		String where = "benutzername = '" + account.getUsername() + "'";
+
 		dbc.delete("Accounts", where);
 	}
 
@@ -115,39 +112,68 @@ public class AccountController {
 	 */
 	public void updateAccount(Account account) {
 
-		String where = "benutzername = '"+ account.getUsername()+"'";
-		
-		Object[] values = {account.getPasswordhash(),
-				account.getAccounttype(),
-				account.getEmail(),
-				account.getName(),
-				account.getInstitute(),
-				account.getRepresentative()};
-		
-		String[] columns = {"passworthash","accounttyp","email",
-				"name","institut","stellvertreter"};
+		String where = "benutzername = '" + account.getUsername() + "'";
 
-		
+		Object[] values = { account.getPasswordhash(),
+				account.getAccounttype(), account.getEmail(),
+				account.getName(), account.getInstitute(),
+				account.getRepresentative() };
+
+		String[] columns = { "passworthash", "accounttyp", "email", "name",
+				"institut", "stellvertreter" };
+
 		dbc.update("Accounts", columns, values, where);
 	}
 
 	/**
-	 * Diese Methode gibt den Account mit dem spezifizierten Username zurueck. Sollte dieser nicht existieren bekommt man einen <code>null</code>-Verweis zurueck.
-	 * @param username zu suchender Username
-	 * @return Account-Objekt das diesem Username entspricht. Falls nicht existent <code>null</code>.
+	 * Diese Methode gibt alle in der Datenbank gespeicherten Accounts zurück.
+	 * 
+	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
+	 *         existent <code>null</code>.
 	 */
-	public Account getAccountByUsername(String username){
-		ResultSet rs = dbc.select(new String[]{"*"},new String[]{"Accounts"}, "benutzername='"+username+"'");
+	public Vector<Account> getAllAccounts() {
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { "Accounts" }, null);
+		Vector<Account> accounts = new Vector<Account>();
 		try {
-			if(rs.next())return new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
-			else return null;
+			if (rs.next())
+				accounts.add(new Account(rs.getString(1), rs.getString(2), rs
+						.getInt(3), rs.getString(4), rs.getString(5), rs
+						.getInt(6), rs.getString(7)));
 		} catch (SQLException e) {
-			logger.Log.getInstance().write("AccountController", "Error while reading Account from Database");
+			logger.Log.getInstance().write("AccountController",
+					"Error while reading all accounts from Database.");
+		}
+		return accounts;
+	}
+
+	/**
+	 * Diese Methode gibt den Account mit dem spezifizierten Username zurueck.
+	 * Sollte dieser nicht existieren bekommt man einen <code>null</code>
+	 * -Verweis zurueck.
+	 * 
+	 * @param username
+	 *            zu suchender Username
+	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
+	 *         existent <code>null</code>.
+	 */
+	public Account getAccountByUsername(String username) {
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { "Accounts" }, "benutzername='" + username + "'");
+		try {
+			if (rs.next())
+				return new Account(rs.getString(1), rs.getString(2),
+						rs.getInt(3), rs.getString(4), rs.getString(5),
+						rs.getInt(6), rs.getString(7));
+			else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("AccountController",
+					"Error while reading Account from Database");
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * Diese Methode selektiert alle Accounts mit uebergebenem Accounttyp.
 	 * 
@@ -160,30 +186,31 @@ public class AccountController {
 	 *         Accounttyp.
 	 */
 	public Vector<Account> getAccountsByAccounttype(int accounttype) {
-		
-		Vector<Account> accountvec = new Vector<Account>(30,10);
-		
-		String[] select = {"*"};
-		String[] from = {"Accounts"};
-		String where = "accounttyp = "+accounttype;
-		
+
+		Vector<Account> accountvec = new Vector<Account>(30, 10);
+
+		String[] select = { "*" };
+		String[] from = { "Accounts" };
+		String where = "accounttyp = " + accounttype;
+
 		ResultSet rs = dbc.select(select, from, where);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				Account currentacc;
-				currentacc = new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+				currentacc = new Account(rs.getString(1), rs.getString(2),
+						rs.getInt(3), rs.getString(4), rs.getString(5),
+						rs.getInt(6), rs.getString(7));
 
 				accountvec.add(currentacc);
 			}
-			
+
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         
-		
+
 		return accountvec;
 
 	}
@@ -197,30 +224,31 @@ public class AccountController {
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
 	public Vector<Account> getAccountsByInstitute(int id) {
-		
-		Vector<Account> accountvec = new Vector<Account>(30,10);
-		
-		String[] select = {"*"};
-		String[] from = {"Accounts"};
-		String where = "institut = "+id;
-		
+
+		Vector<Account> accountvec = new Vector<Account>(30, 10);
+
+		String[] select = { "*" };
+		String[] from = { "Accounts" };
+		String where = "institut = " + id;
+
 		ResultSet rs = dbc.select(select, from, where);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				Account currentacc;
-				currentacc = new Account(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(7));
+				currentacc = new Account(rs.getString(1), rs.getString(2),
+						rs.getInt(3), rs.getString(4), rs.getString(5),
+						rs.getInt(6), rs.getString(7));
 
 				accountvec.add(currentacc);
 			}
-			
+
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         
-		
+
 		return accountvec;
 
 	}
