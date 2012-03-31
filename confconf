@@ -1,0 +1,6 @@
+$HOME | .sopra | sopraconf
+int | port | 3306
+String | password |
+String |user | root
+String | database | sopra
+path | log | $HOME | .soprpa | log
