@@ -19,7 +19,7 @@ public class Configurator {
 	/**
  	* Pfad zur Konfigurationsdatei des Configurators
  	*/
-	private final String CCPATH = System.getProperty("user.dir")+System.getProperty("file.separator")+"confconf";
+	private final String CCPATH = System.getProperty("user.home")+System.getProperty("file.separator")+".sopra"+System.getProperty("file.separator")+"confconf";
 	/**
 	 * Pfad der externen Konfigurationsdatei
 	 */
