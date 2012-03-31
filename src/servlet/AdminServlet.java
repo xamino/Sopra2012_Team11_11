@@ -75,6 +75,23 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(accounts, accounts.getClass()));
 
+		}
+		// Delete an account:
+		else if (path.equals("/js/deleteAccount")) {
+			if (!checkAuthenticity(request.getSession())) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_INDEX);
+				return;
+			}
+			String username = request.getParameter("name");
+			if (username == null)
+				return;
+			Account account = accountController.getAccountByUsername(username);
+			if (account == null)
+				return;
+			log.write("AdminServlet", "Deleting account with username <"
+					+ username + ">");
+			accountController.deleteAccount(account);
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
@@ -94,7 +111,7 @@ public class AdminServlet extends HttpServlet {
 			log.write("AdminServlet", "Admin NOT authenticate.");
 			return false;
 		}
-		log.write("Admin Servlet", "Admin authenticated.");
+		log.write("AdminServlet", "Admin authenticated.");
 		return true;
 	}
 }

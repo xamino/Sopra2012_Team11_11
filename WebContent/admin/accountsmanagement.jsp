@@ -24,7 +24,8 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" onclick="window.location='/hiwi/Secure/js/doLogout'" />
+					<input type="button" value="Abmelden" name="logout"
+						onclick="window.location='/hiwi/Secure/js/doLogout'" />
 				</p>
 			</form>
 		</div>
@@ -58,16 +59,12 @@
 						type="button" value="Account ändern"
 						onclick="window.location='editaccount.jsp'" /> <input
 						style="float: right;" type="button" value="Account löschen"
-						onclick="togglePopup('account_del', true);" />
-				<hr>
-				<table class="sized" id="accountTable">
-					<tr>
-						<th>Benutzer Name</th>
-						<th>Name</th>
-						<th>Emailaddresse</th>
-						<th>Account Typ</th>
-					</tr>
-					<!-- This is how the entrys will be generated with javascript:
+						onclick="togglePopup('account_del', true);" /> 
+					<div style="float: right;" class="hiddenerror" id="error_selection"></div>
+					<div class="clear"></div>
+					<hr>
+					<table class="sized" id="accountTable">
+						<!-- This is how the entrys will be generated with javascript:
 					<tr id="username" onclick="function(username)">
 						<td>username</td>
 						<td>realname</td>
@@ -75,7 +72,7 @@
 						<td>account type</td>
 					</tr> 
 					-->
-				</table>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -93,8 +90,10 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" /> <input type="button"
-					value="Abbrechen" onclick="togglePopup('account_del', false);" />
+				<input type="button" value="Löschen"
+					onclick="deleteSelectedAccount(); togglePopup('account_del', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('account_del', false);" />
 			</div>
 		</form>
 	</div>

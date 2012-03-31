@@ -45,6 +45,10 @@ table.hidden td,table.hidden th {
 	/* background-color: gray; */
 }
 
+tr.selected {
+	background-color: rgb(200, 200, 200);
+}
+
 /*fuer Fehlermeldungen*/
 div.hiddenerror,div.visibleerror {
 	font-size: small;
@@ -151,8 +155,8 @@ div.bordered_float {
 }
 
 input {
-      font-family: sans-serif;                
-  }
+	font-family: sans-serif;
+}
 
 .form {
 	padding-right: 10px;

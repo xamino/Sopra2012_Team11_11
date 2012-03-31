@@ -1,7 +1,11 @@
 /**
  * Script for admin webpages.
+ * 
  * @author: Tamino Hartmann
  */
+
+// All public, non-xmlhttp variables here:
+var selectedID;
 
 /**
  * Get XMLHttpRequest object for all important browsers.
@@ -65,7 +69,10 @@ function togglePopup(id, flag) {
  * Given a xmlhttp object, it will return the MIME type set.
  */
 function getMIME(responseobject) {
-	return responseobject.getResponseHeader("Content-Type").split(";")[0];
+	if (responseobject.getResponseHeader("Content-Type") != null)
+		return responseobject.getResponseHeader("Content-Type").split(";")[0];
+	else
+		return "";
 }
 
 /**
@@ -84,9 +91,15 @@ function loadAccounts() {
 				var JSONarray = eval(xmlhttp.responseText);
 				// Get the table:
 				var table = document.getElementById("accountTable");
+				// Write table – probably replaces old data!
+				table.innerHTML = "<tr><th>Benutzer Name</th><th>Name</th><th>Emailaddresse</th><th>Account Typ</th></tr>";
 				for ( var i = 0; i < JSONarray.length; i++) {
-					table.innerHTML += "<tr><td>" + JSONarray[i].username
-							+ "</td><td>" + JSONarray[i].name + "</td><td>"
+					table.innerHTML += "<tr class=\"\" id=\""
+							+ JSONarray[i].username
+							+ "\" onclick=\"markSelected(\'"
+							+ JSONarray[i].username + "\');\"><td>"
+							+ JSONarray[i].username + "</td><td>"
+							+ JSONarray[i].name + "</td><td>"
 							+ JSONarray[i].email + "</td><td>"
 							+ getTypeString(JSONarray[i].accounttype)
 							+ "</td></tr>";
@@ -95,6 +108,52 @@ function loadAccounts() {
 		}
 	};
 	xmlhttp.send();
+}
+
+/**
+ * 
+ */
+function deleteSelectedAccount() {
+	if (selectedID == null) {
+		toggleWarning("error_selection", true, "Kein Account ausgewählt!");
+		return;
+	}
+	toggleWarning("error_selection", false, "");
+	// Tell servlet to delete account:
+	xmlhttp.open("GET", "/hiwi/Admin/js/deleteAccount?name=" + selectedID);
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var mimeType = getMIME(xmlhttp);
+			if (mimeType == "text/url") {
+				window.location = xmlhttp.responseText;
+			} else {
+				// Reload to show deletion of account:
+				loadAccounts();
+			}
+		}
+	};
+	xmlhttp.send();
+}
+
+/**
+ * Function remembers which account has been clicked.
+ * 
+ * @param username
+ *            The username ID of the clicked entry.
+ */
+function markSelected(id) {
+	// Remove marking from previous selected, if applicable:
+	if (selectedID != null)
+		document.getElementById(selectedID).setAttribute("class", "");
+	// If clicked again, unselect:
+	if (selectedID == id) {
+		selectedID = null;
+		return;
+	}
+	// Else save & mark new one:
+	selectedID = id;
+	document.getElementById(id).setAttribute("class", "selected");
+	// alert(selectedID + " is selected.");
 }
 
 /**

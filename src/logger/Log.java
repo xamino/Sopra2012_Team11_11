@@ -250,7 +250,6 @@ public class Log {
 
 		// Creates the file in the home directory in which the log will be
 		// written.
-		System.out.println(logFilePath + "");
 		File logFile = new File(logFilePath);
 		// If the file already exists, we need to delete it first:
 		if (logFile.exists())
