@@ -74,7 +74,9 @@
 					<textarea name="notiz" cols="50" rows="10">Anbieternotiz</textarea> <br> <br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
-						<input type="submit" value="Angebot einstellen" />
+						<input type="button" value="Angebot einstellen"
+						onclick="togglePopup('create_offer',true);" /> 
+						<!-- <input type="submit" value="Angebot einstellen" />-->
 					</p>
 				</form>
 			</div>

@@ -69,7 +69,9 @@
 						<td>nix</td>
 					</tr>
 				</table>
-				<input type="submit" value="Ausgewählte annehmen" />
+				<input type="button" value="Annehmen"
+						onclick="togglePopup('accept',true);" /> 
+				<!-- <input type="submit" value="Ausgewählte annehmen" />-->
 			</div>
 		</div>
 </div>

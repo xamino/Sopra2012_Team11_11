@@ -62,7 +62,9 @@
 						<td>TUT xy</td>
 						<td>14/10<br><input type="submit" value="Bewerberauswahl" onclick="window.location='applicantlist.jsp'" /></td>
 						<td><br><input type="submit" value="Angebot ändern" /> </td>
-						<td><br><input type="submit" value="Angebot zurückziehen" /> </td>
+						<td><br><input type="button" value="Angebot zurückziehen"
+						onclick="togglePopup('offer_cancel',true);" /> </td>
+						<!-- <td><br><input type="submit" value="Angebot zurückziehen" /> </td>-->
 					</tr>
 				</table><br>
 				<input type="submit" value="Neues Angebot erstellen" onclick="window.location='createoffer.jsp'" />

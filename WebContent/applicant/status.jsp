@@ -77,7 +77,9 @@
 				</div>
 				<div class="float">
 				<form name="stornieren">
-					<input type="submit" value="Bewerbung wiederrufen" />
+					<input type="button" value="Bewerbung wiederrufen"
+						onclick="togglePopup('application_cancel',true);" /> 
+					<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
 				</form>
 				</div>
 			</div>

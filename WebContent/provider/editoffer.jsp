@@ -61,7 +61,9 @@
 					<textarea name="beschreibung" cols="50" rows="10">Beschreibung</textarea> <br> <br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
-						<input type="submit" value="Angebot ändern" />
+						<input type="button" value="Angebot ändern"
+						onclick="togglePopup('edit_offer',true);" /> 
+						<!-- <input type="submit" value="Angebot ändern" />-->
 					</p>
 				</form>
 			</div>

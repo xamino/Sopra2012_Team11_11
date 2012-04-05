@@ -78,7 +78,9 @@
 					<div class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a> widerrufen</div><br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
-						<input type="submit" value="Ändern" />
+						<!-- <input type="submit" value="Ändern" />-->
+						<input type="button" value="Ändern"
+						onclick="togglePopup('ändern',true);" /> 
 					</p>
 				</form>
 			</div>
