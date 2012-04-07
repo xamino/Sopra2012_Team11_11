@@ -54,17 +54,17 @@
 			<hr>
 			<div class="haupttext">
 				<div class="textblock">
+					<!-- The URLs to editaccount.jsp are set with parameters so that the page reacts correctly. -->
 					<input type="button" value="Account hinzufügen"
-						onclick="window.location='editaccount.jsp'" /> <input
-						type="button" value="Account ändern"
-						onclick="window.location='editaccount.jsp'" /> <input
-						style="float: right;" type="button" value="Account löschen"
-						onclick="togglePopup('account_del', true);" /> 
+						onclick="window.location='editaccount.jsp?mode=add'" /> <input
+						type="button" value="Account ändern" onclick="checkLegalEdit();" />
+					<input style="float: right;" type="button" value="Account löschen"
+						onclick="togglePopup('account_del', true);" />
 					<div style="float: right;" class="hiddenerror" id="error_selection"></div>
 					<div class="clear"></div>
 					<hr>
 					<table class="sized" id="accountTable">
-						<!-- This is how the entrys will be generated with javascript:
+						<!-- This is how the entrys are generated with javascript:
 					<tr id="username" onclick="function(username)">
 						<td>username</td>
 						<td>realname</td>

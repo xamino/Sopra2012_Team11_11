@@ -84,14 +84,51 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			String username = request.getParameter("name");
-			if (username == null)
+			if (username == null || username.isEmpty()) {
+				log.write("AdminServlet", "Username invalid!");
+				response.setContentType("text/error");
+				response.getWriter().write("Username invalid!");
 				return;
+			}
+			// If user is currently logged in, we do not allow deletion:
+			if (LoggedInUsers.getUserByUsername(username) != null) {
+				log.write("AdminServlet", "Can not delete <" + username
+						+ "> as currently logged in!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Dieser Benutzer ist aktuell angemeldet! Kann nicht gelöscht werden!");
+				return;
+			}
 			Account account = accountController.getAccountByUsername(username);
-			if (account == null)
+			if (account == null) {
+				log.write("AdminServlet", "Can not delete <" + username
+						+ "> as no account exists!");
+				response.setContentType("text/error");
+				response.getWriter().write("This user doesn't seem to exist!");
 				return;
+			}
 			log.write("AdminServlet", "Deleting account with username <"
 					+ username + ">");
 			accountController.deleteAccount(account);
+		}
+		// Get the information of an account:
+		else if (path.equals("/js/getAccountData")) {
+			if (!checkAuthenticity(request.getSession())) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_INDEX);
+				return;
+			}
+			String username = request.getParameter("name");
+			if (username == null) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_ADMIN_ACCOUNTSMANAGEMENT);
+				return;
+			}
+			log.write("AdminServlet", "Getting data of account with username <"
+					+ username + ">");
+			Account account = accountController.getAccountByUsername(username);
+			response.setContentType("application/json");
+			response.getWriter().write(gson.toJson(account, Account.class));
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
@@ -111,6 +148,7 @@ public class AdminServlet extends HttpServlet {
 			log.write("AdminServlet", "Admin NOT authenticate.");
 			return false;
 		}
+		// TODO: Comment when done debugging:
 		log.write("AdminServlet", "Admin authenticated.");
 		return true;
 	}

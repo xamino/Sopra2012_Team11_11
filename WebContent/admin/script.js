@@ -76,6 +76,29 @@ function getMIME(responseobject) {
 }
 
 /**
+ * Function for reading parameters out of an URL. Returns null if none found.
+ * Credit: http://www.netlobo.com/url_query_string_javascript.html
+ * 
+ * @param parameterName
+ *            The name of the parameter tor read.
+ * @returns The value of the parameter. Null if none found.
+ */
+function getURLParameter(parameterName) {
+	parameterName = parameterName.replace(/[\[]/, "\\\[").replace(/[\]]/,
+			"\\\]");
+	var regexS = "[\\?&]" + parameterName + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(window.location.href);
+	if (results == null) {
+		return "";
+	} else {
+		return results[1];
+	}
+}
+
+// ----------------------------------------- END HELP FUNCTIONS --------------
+
+/**
  * This function loads all the accounts in the system from the database and
  * displays them.
  */
@@ -111,7 +134,7 @@ function loadAccounts() {
 }
 
 /**
- * 
+ * Deletes the account currently stored in the selectedID variable.
  */
 function deleteSelectedAccount() {
 	if (selectedID == null) {
@@ -120,16 +143,30 @@ function deleteSelectedAccount() {
 	}
 	toggleWarning("error_selection", false, "");
 	// Tell servlet to delete account:
-	xmlhttp.open("GET", "/hiwi/Admin/js/deleteAccount?name=" + selectedID);
+	deleteAccount(selectedID, loadAccounts);
+}
+
+/**
+ * This function simply deletes an account. If it receives an error back from
+ * the server, it will display it in an alert. WARNING: should not be called
+ * directly!
+ * 
+ * @param id
+ *            The username ID of the account to be deleted.
+ * @param callback
+ *            The function to call when done.
+ */
+function deleteAccount(id, callback) {
+	xmlhttp.open("GET", "/hiwi/Admin/js/deleteAccount?name=" + id);
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var mimeType = getMIME(xmlhttp);
 			if (mimeType == "text/url") {
 				window.location = xmlhttp.responseText;
-			} else {
-				// Reload to show deletion of account:
-				loadAccounts();
-			}
+			} else if (mimeType == "text/error") {
+				alert(xmlhttp.responseText);
+			} else
+				callback();
 		}
 	};
 	xmlhttp.send();
@@ -178,4 +215,84 @@ function getTypeString(number) {
 	default:
 		break;
 	}
+}
+
+/**
+ * Reacts to admin/accountsmanagement -> "Account ändern". Checks and sets
+ * correct values.
+ */
+function checkLegalEdit() {
+	if (selectedID == null) {
+		toggleWarning("error_selection", true, "Kein Account ausgewählt!");
+		return;
+	}
+	toggleWarning("error_selection", false, "");
+	// Load editaccount.jsp with correct mode:
+	// alert("editaccount.jsp?mode=edit&id=" + selectedID);
+	window.location = "editaccount.jsp?mode=edit&id=" + selectedID;
+}
+
+/**
+ * This function is used to correctly initialize the editaccount.jsp site.
+ */
+function loadEditOptions() {
+	var mode = getURLParameter("mode");
+	if (mode == "") {
+		// alert("Error in loading the page!");
+		return;
+	}
+	// Switch according to what the page is supposed to do:
+	if (mode == "add") {
+		alert("Do an add account!\nNot implemented yet.");
+	} else if (mode = "edit") {
+		// alert("Edit an account.");
+		// Read username from URL:
+		var username = getURLParameter("id");
+		if (username == "")
+			return;
+		// Set selection so that deleteAccount works if called:
+		selectedID = username;
+		// Get all data that belongs to this username:
+		xmlhttp.open("GET", "/hiwi/Admin/js/getAccountData?name=" + username);
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mimeType = getMIME(xmlhttp);
+				if (mimeType == "text/url") {
+					window.location = xmlhttp.responseText;
+				} else {
+					// Set data:
+					// alert(xmlhttp.responseText);
+					// TODO: Why do we need the () here? Doesn't work without.
+					var account = eval("(" + xmlhttp.responseText + ")");
+					// Set the values we have:
+					document.getElementById("userName").innerHTML = account.username;
+					document.getElementById("realName").value = account.name;
+					document.getElementById("accountType").value = account.accounttype;
+					document.getElementById("email").value = account.email;
+					document.getElementById("institute").value = account.institute;
+					// Set the values we don't necessarily have:
+					document.getElementById("password").value = "********";
+				}
+			}
+		};
+		xmlhttp.send();
+	} else {
+		alert("Unknown mode!");
+		return;
+	}
+}
+
+/**
+ * This function reacts to the delete button on editaccount.jsp with mode=edit
+ * (as not needed on add).
+ */
+function deleteEditAccount() {
+	if (getURLParameter("mode") != "edit")
+		return;
+	var username = getURLParameter("id");
+	if (username == "")
+		return;
+	deleteAccount(username, function() {
+		window.location = "accountsmanagement.jsp";
+	});
 }

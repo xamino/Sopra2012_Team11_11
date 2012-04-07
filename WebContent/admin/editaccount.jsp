@@ -10,7 +10,7 @@
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadEditOptions();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -55,46 +55,48 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<form class="listform">
+				<form name="dataForm" class="listform">
 					<div class="textblock">
-						<input type="button" value="Änderungen übernehmen" /> <input
+						<input id="saveButton" type="button" value="Änderungen übernehmen"
+							onclick="alert('TODO!');" /> <input id="cancelButton"
 							type="button" value="Änderungen verwerfen"
 							onclick="window.location='accountsmanagement.jsp'" /> <input
-							style="float: right;" type="button" value="Account löschen"
+							id="deleteButton" style="float: right;" type="button"
+							value="Account löschen"
 							onclick="togglePopup('account_del',true);" />
 					</div>
 					<hr>
 					<table class="sized">
-						<tr>
-							<td>Name:</td>
-							<td><input type="text" value="Max Mustermann" size="40" /></td>
-						</tr>
-						<!-- TODO: username has a max size – use it here too -->
+						<!-- Username can NOT be changed because primary key! -->
 						<tr>
 							<td>Benutzername:</td>
-							<td><input type="text" value="max_the_great" /></td>
+							<td id="userName"></td>
+						</tr>
+						<tr>
+							<td>Name:</td>
+							<td><input type="text" id="realName" size="40" /></td>
 						</tr>
 						<tr>
 							<td>Passwort:</td>
-							<td><input type="password" value="****" /></td>
+							<td><input type="password" id="password" /></td>
 						</tr>
 						<tr>
 							<td>Email:</td>
-							<td><input type="text" value="max.mustermann@uni-ulm.de"
-								size="40" /></td>
+							<td><input type="text" id="email" size="40" /></td>
 						</tr>
 						<tr>
 							<td>Accounttyp:</td>
-							<td><input type="text" value="Bewerber" /></td>
+							<td><input type="text" id="accountType" /></td>
 						</tr>
 						<tr>
 							<td>Institut:</td>
-							<td><input type="text" value="Student" /></td>
+							<td><input type="text" id="institute" /></td>
 						</tr>
-						<tr>
+						<!-- TODO: rename name... -->
+						<!-- <tr>
 							<td>Stellvertreter:</td>
-							<td><input type="text" value="null" /></td>
-						</tr>
+							<td><input type="text" id="standIn" /></td>
+						</tr> -->
 					</table>
 				</form>
 			</div>
@@ -113,11 +115,11 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" /> <input type="button"
-					value="Abbrechen" onclick="togglePopup('account_del', false);" />
+				<input type="button" value="Löschen" onclick="deleteEditAccount();" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('account_del', false);" />
 			</div>
 		</form>
 	</div>
 </body>
-
 </html>
