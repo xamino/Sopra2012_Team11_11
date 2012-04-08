@@ -76,8 +76,8 @@ function getMIME(responseobject) {
 }
 
 /**
- * Function for reading parameters out of an URL. Returns null if none found.
- * Credit: http://www.netlobo.com/url_query_string_javascript.html
+ * Function for reading parameters out of an URL. Returns an empty string if
+ * none found. Credit: http://www.netlobo.com/url_query_string_javascript.html
  * 
  * @param parameterName
  *            The name of the parameter tor read.
@@ -103,6 +103,8 @@ function getURLParameter(parameterName) {
  * displays them.
  */
 function loadAccounts() {
+	// reset selectedID (account could have been deleted in meantime)
+	selectedID = null;
 	xmlhttp.open("GET", "/hiwi/Admin/js/loadAccounts");
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -243,7 +245,16 @@ function loadEditOptions() {
 	}
 	// Switch according to what the page is supposed to do:
 	if (mode == "add") {
-		alert("Do an add account!\nNot implemented yet.");
+		// Rewrite buttons:
+		document.getElementById("saveButton").value = "Account erstellen";
+		document.getElementById("saveButton").setAttribute("onclick",
+				"addAccount(dataForm);");
+		document.getElementById("cancelButton").value = "Abbrechen";
+		document.getElementById("deleteButton").setAttribute("disabled",
+				"disabled");
+		// Add input for userName:
+		document.getElementById("userName").innerHTML = "<input type=\"text\" "
+				+ "name=\"name\"/><div id=\"error_userName\" class=\"invisibleWarning\"></div>";
 	} else if (mode = "edit") {
 		// alert("Edit an account.");
 		// Read username from URL:
@@ -295,4 +306,68 @@ function deleteEditAccount() {
 	deleteAccount(username, function() {
 		window.location = "accountsmanagement.jsp";
 	});
+}
+
+function addAccount(form) {
+	if (form == null)
+		return;
+	var error = false;
+	var realName = form.realName.value;
+	if (realName == null || realName == "") {
+		toggleWarning("error_realName", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_realName", false, "");
+	var email = form.email.value;
+	if (email == null || email == "") {
+		toggleWarning("error_email", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_email", false, "");
+	var userName = form.name.value;
+	if (userName == null || userName == "") {
+		toggleWarning("error_userName", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_userName", false, "");
+	var password = form.password.value;
+	if (password == null || password == "") {
+		toggleWarning("error_password", true, "Bitte ausfüllen!");
+		error = true;
+	} else {
+		password = b64_md5(password);
+		toggleWarning("error_password", false, "");
+	}
+	var accountType = form.accountType.value;
+	var institute = form.institute.value;
+	if (institute == null || institute == "") {
+		toggleWarning("error_institute", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_institute", false, "");
+	if (error)
+		return;
+	xmlhttp.open("GET", "/hiwi/Admin/js/addAccount?realName=" + realName
+			+ "&email=" + email + "&userName=" + userName + "&userPassword="
+			+ password + "&accountType=" + accountType + "&institute="
+			+ institute);
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var mimeType = getMIME(xmlhttp);
+			// alert(mimeType);
+			if (mimeType == "text/url") {
+				window.location = xmlhttp.responseText;
+				return;
+			} else if (mimeType == "text/plain") {
+				if (xmlhttp.responseText == "true") {
+					window.location = "accountsmanagement.jsp";
+					return;
+				}
+			} else if (mimeType == "text/error") {
+				alert(xmlhttp.responseText);
+				return;
+			}
+		}
+	};
+	xmlhttp.send();
 }

@@ -45,10 +45,9 @@
 			<div class="textblock">
 				<h2>Accounts verwalten</h2>
 				<div class="text">
-					Erläuterungstext...<br>TODO: Implement the selection so that
-					the js saves which entry was clicked, then let the buttons react
-					accordingly. Maybe add shortcuts à la doubleclick and key support
-					(like del for löschen)? Remember to sort!
+					Hier können Sie die im System vorhandenen Accounts einsehen,
+					verändern, und löschen.<br>TODO: Maybe add shortcuts à la
+					doubleclick and key support (like del for löschen).
 				</div>
 			</div>
 			<hr>

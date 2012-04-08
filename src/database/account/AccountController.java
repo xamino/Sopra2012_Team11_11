@@ -76,15 +76,16 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
+	 * @return Gibt an, ob das erstellen des Accounts erfolgreich war.
 	 */
-	public void createAccount(Account account) {
+	public boolean createAccount(Account account) {
 
 		Object[] values = { account.getUsername(), account.getPasswordhash(),
 				account.getAccounttype(), account.getEmail(),
 				account.getName(), account.getInstitute(),
 				account.getRepresentative() };
 
-		dbc.insert("Accounts", values);
+		return dbc.insert("Accounts", values);
 	}
 
 	/**

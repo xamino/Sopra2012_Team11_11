@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="md5.js"></script>
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
@@ -74,23 +75,32 @@
 						</tr>
 						<tr>
 							<td>Name:</td>
-							<td><input type="text" id="realName" size="40" /></td>
+							<td><input type="text" id="realName" name="realName"
+								size="40" />
+								<div id="error_realName" class="invisibleWarning"></div></td>
 						</tr>
 						<tr>
 							<td>Passwort:</td>
-							<td><input type="password" id="password" /></td>
+							<td><input type="password" id="password" name="password" />
+								<div id="error_password" class="invisibleWarning"></div></td>
 						</tr>
 						<tr>
 							<td>Email:</td>
-							<td><input type="text" id="email" size="40" /></td>
+							<td><input type="text" id="email" name="email" size="40" />
+							<div id="error_email" class="invisibleWarning"></div></td>
 						</tr>
 						<tr>
 							<td>Accounttyp:</td>
-							<td><input type="text" id="accountType" /></td>
+							<td><select id="accountType" name="accountType"><option
+										value="0">Administrator</option>
+									<option value="1">Anbieter</option>
+									<option value="2">Verwalter</option>
+									<option selected="selected" value="3">Bewerber</option></select></td>
 						</tr>
 						<tr>
 							<td>Institut:</td>
-							<td><input type="text" id="institute" /></td>
+							<td><input type="text" id="institute" name="institute" /><div
+									id="error_institute" class="invisibleWarning"></div></td>
 						</tr>
 						<!-- TODO: rename name... -->
 						<!-- <tr>
