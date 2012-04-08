@@ -176,7 +176,7 @@ public class AdminServlet extends HttpServlet {
 			if (!accountController.createAccount(new Account(userName,
 					password, accountType, email, realName, institute, null))) {
 				// This can happen if the institute doesn't exist:
-				log.write("AdminServlet", "Unknown error creating account!");
+				log.write("AdminServlet", "Error creating account! Is the institute valid?");
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Account konnte nicht erstellt werden! Existiert das Institut in der Datenbank?");
