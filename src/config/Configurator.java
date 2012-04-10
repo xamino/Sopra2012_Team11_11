@@ -51,8 +51,12 @@ public class Configurator {
 	private Configurator(){
 		try{
 		BufferedReader bufread = new BufferedReader(new InputStreamReader(new FileInputStream(new File(CCPATH)),"UTF-8"));
-		
-		String s = bufread.readLine();
+		String s = ""; 
+		while(true){
+			s = bufread.readLine();
+			if(properTrim(s).charAt(0)=='#')continue;
+			break;
+		}
 		String[] sa = s.split("\\|");
 		for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
 		if(sa[0].equals("$HOME")){
@@ -66,6 +70,7 @@ public class Configurator {
 		while(true){
 			if(!bufread.ready())break;
 			s = bufread.readLine();
+			if(properTrim(s).charAt(0)=='#')continue;
 			sa = s.split("\\|");
 			for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
 			if(sa[0].equalsIgnoreCase("path")){

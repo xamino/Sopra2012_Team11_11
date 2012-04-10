@@ -1,7 +1,31 @@
+# Die erste Zeile gibt an, an welchem Ort die zu interpretierende
+# Konfigurationsdatei Liegt.
+#
+# in Dateipfaden steht $HOME für das Homeverzeichnis.
+# 
+# Mögliche Optionstypen: int, String, boolean und path
+#
+# Neue Optionen werden nach folgendem Schema hinzugefügt: 
+#
+# Typ | name | Standardwert
+#
+# Bleibt der Standardwert frei, so werden folgende Standards gesetzt:
+#
+# int: 0
+# String: ""
+# boolean: false
+# path: ""
+#
 $HOME | .sopra | sopraconf
+# Port der Mysql Datenbank
 int | port | 3306
+# Passwort für die Mysql Datenbank
 String | password |
+# Benutzername für die Mysql Datenbank
 String |user | root
+# Name der Mysql Datenbank
 String | database | sopra
-path | log | $HOME | .sopra | log
+# Pfad der Log Datei
+path | log | $HOME | .soprpa | log
+# Komisches Zeugs von Tamino
 int | logWriteTo | 3
