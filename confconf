@@ -15,7 +15,7 @@
 # String: ""
 # boolean: false
 # path: ""
-#
+
 $HOME | .sopra | sopraconf
 # Port der Mysql Datenbank
 int | port | 3306
@@ -27,5 +27,6 @@ String |user | root
 String | database | sopra
 # Pfad der Log Datei
 path | log | $HOME | .soprpa | log
-# Komisches Zeugs von Tamino
+# Wo der log geschriebene wird.
+# 0 = null, 1 = System.out, 2 = log file, 3 = System.out UND log file
 int | logWriteTo | 3
