@@ -17,7 +17,7 @@ public abstract class LoggedInUsers {
 	 * Statische Variable für den Logger
 	 */
 	private static Log log = Log.getInstance();
-	
+
 	/**
 	 * Vector mit den eingelogten Usern des Systems.
 	 */
@@ -49,38 +49,33 @@ public abstract class LoggedInUsers {
 		User tempuserbysession = getUserBySession(u.getUserData().getSession());
 		if (tempuserbyname == null && tempuserbysession == null) {
 			users.add(u);
-			log.write("UserManagement" , u.getUserData().getUsername()
+			log.write("UserManagement", u.getUserData().getUsername()
 					+ " has logged in.");
-			log.write("UserManagement",
-					LoggedInUsers.getUsers().size()
+			log.write("UserManagement", LoggedInUsers.getUsers().size()
 					+ " user are currently logged in.");
+			return;
 
-		} else {
-			if (tempuserbysession != null) {
-				removeUserBySession(u.getUserData().getSession());
-				if (tempuserbyname == null) {
-					users.add(u);
-					log.write("UserManagement" , u.getUserData().getUsername()
-							+ " has logged in.");
-					log.write("UserManagement",
-							LoggedInUsers.getUsers().size()
-							+ " user are currently logged in.");
-				}
-
-			}
-			if (tempuserbyname != null) {
-				HttpSession tempsession = tempuserbyname.getUserData().getSession();
-				tempuserbyname.getUserData().setSession(u.getUserData().getSession());
-				tempsession.setAttribute("userName", null);
-				tempsession.invalidate();
-				log.write("UserManagement" , u.getUserData().getUsername()
-						+ " displaced.");
-				log.write("UserManagement",
-						LoggedInUsers.getUsers().size()
-						+ " user are currently logged in.");
-			}
+		} else if (tempuserbysession == null && tempuserbyname != null) {
+			log.write("UserManagement", "Killed User: "+tempuserbyname.getUserData().getUsername());
+			tempuserbyname.invalidate();
+			users.add(u);
+			log.write("UserManagement", u.getUserData().getUsername()
+					+ " has logged in.");
+			log.write("UserManagement", LoggedInUsers.getUsers().size()
+					+ " user are currently logged in.");
+			return;
 
 		}
+		if (tempuserbyname == null && tempuserbysession!=null) {
+			log.write("UserManagement", "Killed User: "+tempuserbysession.getUserData().getUsername());
+			removeUserBySession(u.getUserData().getSession());
+			users.add(u);
+			log.write("UserManagement", u.getUserData().getUsername()
+					+ " has logged in.");
+			log.write("UserManagement", LoggedInUsers.getUsers().size()
+					+ " user are currently logged in.");
+		}
+		if(tempuserbyname !=null && tempuserbysession!=null);
 
 	}
 
@@ -137,11 +132,6 @@ public abstract class LoggedInUsers {
 			if (users.get(i).getUserData().getSession() == session) {
 				String name = users.get(i).getUserData().getUsername();
 				users.remove(i);
-				log.write("UserManagement" , name
-						+ " has logged out.");
-				log.write("UserManagement",
-						LoggedInUsers.getUsers().size()
-						+ " user are currently logged in.");
 				break;
 			}
 		}
