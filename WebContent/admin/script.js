@@ -8,131 +8,42 @@
 var selectedID;
 
 /**
- * Get XMLHttpRequest object for all important browsers.
- * 
- * @returns XMLHttpRequest object.
- */
-function getXMLObject() {
-	// Code for IE7+, Firefox, Chrome, Opera, Safari
-	if (window.XMLHttpRequest) {
-		return new XMLHttpRequest();
-	}
-	// Code for IE6, IE5
-	else {
-		return new ActiveXObject("Microsoft.XMLHTTP");
-	}
-}
-
-// Required for all calls:
-var xmlhttp = new getXMLObject();
-
-/**
- * Use this function to toggle the visibility of error messages in error divs.
- * 
- * @param id
- *            The ID of the div which to toggle.
- * @param flag
- *            If <code>true</code> show, with <code>false</code> hide.
- * @param text
- *            Text to input. If flag is false, won't be set.
- */
-function toggleWarning(id, flag, text) {
-	// alert("ID: " + id + "\nFLAG: " + flag);
-	if (flag == true) {
-		document.getElementById(id).setAttribute("class", "visibleerror");
-		document.getElementById(id).innerHTML = text;
-	} else {
-		document.getElementById(id).setAttribute("class", "hiddenerror");
-		// By false, keep old text (won't be seen anyway):
-		// document.getElementById(id).innerHTML = text;
-	}
-}
-
-/**
- * This function allows the simple showing / hidding of a popup.
- * 
- * @param id
- *            The ID of the popup to change.
- * @param flag
- *            <code>True</code> makes the popup visible, <code>false</code>
- *            makes it hidden.
- */
-function togglePopup(id, flag) {
-	if (flag) {
-		document.getElementById(id).setAttribute("class", "popup_visible");
-	} else {
-		document.getElementById(id).setAttribute("class", "popup_hidden");
-	}
-}
-
-/**
- * Given a xmlhttp object, it will return the MIME type set.
- */
-function getMIME(responseobject) {
-	if (responseobject.getResponseHeader("Content-Type") != null)
-		return responseobject.getResponseHeader("Content-Type").split(";")[0];
-	else
-		return "";
-}
-
-/**
- * Function for reading parameters out of an URL. Returns an empty string if
- * none found. Credit: http://www.netlobo.com/url_query_string_javascript.html
- * 
- * @param parameterName
- *            The name of the parameter tor read.
- * @returns The value of the parameter. Null if none found.
- */
-function getURLParameter(parameterName) {
-	parameterName = parameterName.replace(/[\[]/, "\\\[").replace(/[\]]/,
-			"\\\]");
-	var regexS = "[\\?&]" + parameterName + "=([^&#]*)";
-	var regex = new RegExp(regexS);
-	var results = regex.exec(window.location.href);
-	if (results == null) {
-		return "";
-	} else {
-		return results[1];
-	}
-}
-
-// ----------------------------------------- END HELP FUNCTIONS --------------
-
-/**
  * This function loads all the accounts in the system from the database and
  * displays them.
  */
 function loadAccounts() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedID = null;
-	xmlhttp.open("GET", "/hiwi/Admin/js/loadAccounts");
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var mimeType = getMIME(xmlhttp);
-			if (mimeType == "text/url") {
-				window.location = xmlhttp.responseText;
-			} else if (mimeType == "application/json") {
-				// Erstelle Array aus JSON array:
-				var JSONarray = eval(xmlhttp.responseText);
-				// Get the table:
-				var table = document.getElementById("accountTable");
-				// Write table – probably replaces old data!
-				table.innerHTML = "<tr><th>Benutzer Name</th><th>Name</th><th>Emailaddresse</th><th>Account Typ</th></tr>";
-				for ( var i = 0; i < JSONarray.length; i++) {
-					table.innerHTML += "<tr class=\"\" id=\""
-							+ JSONarray[i].username
-							+ "\" onclick=\"markSelected(\'"
-							+ JSONarray[i].username + "\');\"><td>"
-							+ JSONarray[i].username + "</td><td>"
-							+ JSONarray[i].name + "</td><td>"
-							+ JSONarray[i].email + "</td><td>"
-							+ getTypeString(JSONarray[i].accounttype)
-							+ "</td></tr>";
-				}
-			}
+	connect("/hiwi/Admin/js/loadAccounts", handleLoadAccountsResponse);
+}
+
+/**
+ * This function displays all the accounts in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadAccountsResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "application/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval(data);
+		// Get the table:
+		var table = document.getElementById("accountTable");
+		// Write table – probably replaces old data!
+		table.innerHTML = "<tr><th>Benutzer Name</th><th>Name</th><th>Emailaddresse</th><th>Account Typ</th></tr>";
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
+					+ "\" onclick=\"markSelected(\'" + JSONarray[i].username
+					+ "\');\"><td>" + JSONarray[i].username + "</td><td>"
+					+ JSONarray[i].name + "</td><td>" + JSONarray[i].email
+					+ "</td><td>" + getTypeString(JSONarray[i].accounttype)
+					+ "</td></tr>";
 		}
-	};
-	xmlhttp.send();
+	}
 }
 
 /**
@@ -158,20 +69,31 @@ function deleteSelectedAccount() {
  * @param callback
  *            The function to call when done.
  */
-function deleteAccount(id, callback) {
-	xmlhttp.open("GET", "/hiwi/Admin/js/deleteAccount?name=" + id);
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var mimeType = getMIME(xmlhttp);
-			if (mimeType == "text/url") {
-				window.location = xmlhttp.responseText;
-			} else if (mimeType == "text/error") {
-				alert(xmlhttp.responseText);
-			} else
-				callback();
-		}
-	};
-	xmlhttp.send();
+
+// This var saves the callback function because I can't callback with a callback
+// function... :P
+var callback;
+
+function deleteAccount(id, t_callback) {
+	callback = t_callback;
+	connect("/hiwi/Admin/js/deleteAccount?name=" + id,
+			handleDeleteAccountResponse);
+}
+
+/**
+ * 
+ * @param mime
+ * @param data
+ */
+function handleDeleteAccountResponse(mime, data) {
+	if (mime == null)
+		callback();
+	else if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "text/error") {
+		alert(data);
+	} else
+		callback();
 }
 
 /**
@@ -193,30 +115,6 @@ function markSelected(id) {
 	selectedID = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
-}
-
-/**
- * A help function that returns the descriptive account type name.
- * 
- * @param number
- */
-function getTypeString(number) {
-	switch (number) {
-	case 0:
-		return "Administrator";
-		break;
-	case 1:
-		return "Anbieter";
-		break;
-	case 2:
-		return "Verwalter";
-		break;
-	case 3:
-		return "Bewerber";
-		break;
-	default:
-		break;
-	}
 }
 
 /**
@@ -264,32 +162,33 @@ function loadEditOptions() {
 		// Set selection so that deleteAccount works if called:
 		selectedID = username;
 		// Get all data that belongs to this username:
-		xmlhttp.open("GET", "/hiwi/Admin/js/getAccountData?name=" + username);
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				var mimeType = getMIME(xmlhttp);
-				if (mimeType == "text/url") {
-					window.location = xmlhttp.responseText;
-				} else {
-					// Set data:
-					// alert(xmlhttp.responseText);
-					// TODO: Why do we need the () here? Doesn't work without.
-					var account = eval("(" + xmlhttp.responseText + ")");
-					// Set the values we have:
-					document.getElementById("userName").innerHTML = account.username;
-					document.getElementById("realName").value = account.name;
-					document.getElementById("accountType").value = account.accounttype;
-					document.getElementById("email").value = account.email;
-					document.getElementById("institute").value = account.institute;
-					// Set the values we don't necessarily have:
-					document.getElementById("password").value = "********";
-				}
-			}
-		};
-		xmlhttp.send();
+		connect("/hiwi/Admin/js/getAccountData?name=" + username,
+				handleLoadEditResponse);
 	} else {
 		alert("Unknown mode!");
 		return;
+	}
+}
+
+/**
+ * 
+ */
+function handleLoadEditResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else {
+		// Set data:
+		// alert(data);
+		// TODO: Why do we need the () here? Doesn't work without.
+		var account = eval("(" + data + ")");
+		// Set the values we have:
+		document.getElementById("userName").innerHTML = account.username;
+		document.getElementById("realName").value = account.name;
+		document.getElementById("accountType").value = account.accounttype;
+		document.getElementById("email").value = account.email;
+		document.getElementById("institute").value = account.institute;
+		// Set the values we don't necessarily have:
+		document.getElementById("password").value = "********";
 	}
 }
 
@@ -308,6 +207,10 @@ function deleteEditAccount() {
 	});
 }
 
+/**
+ * 
+ * @param form
+ */
 function addAccount(form) {
 	if (form == null)
 		return;
@@ -347,27 +250,28 @@ function addAccount(form) {
 		toggleWarning("error_institute", false, "");
 	if (error)
 		return;
-	xmlhttp.open("GET", "/hiwi/Admin/js/addAccount?realName=" + realName
-			+ "&email=" + email + "&userName=" + userName + "&userPassword="
-			+ password + "&accountType=" + accountType + "&institute="
-			+ institute);
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			var mimeType = getMIME(xmlhttp);
-			// alert(mimeType);
-			if (mimeType == "text/url") {
-				window.location = xmlhttp.responseText;
-				return;
-			} else if (mimeType == "text/plain") {
-				if (xmlhttp.responseText == "true") {
-					window.location = "accountsmanagement.jsp";
-					return;
-				}
-			} else if (mimeType == "text/error") {
-				alert(xmlhttp.responseText);
-				return;
-			}
+	connect("/hiwi/Admin/js/addAccount?realName=" + realName + "&email="
+			+ email + "&userName=" + userName + "&userPassword=" + password
+			+ "&accountType=" + accountType + "&institute=" + institute,
+			handleCreateAccountResponse);
+}
+
+/**
+ * 
+ * @param mime
+ * @param data
+ */
+function handleCreateAccountResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "text/plain") {
+		if (data == "true") {
+			window.location = "accountsmanagement.jsp";
+			return;
 		}
-	};
-	xmlhttp.send();
+	} else if (mime == "text/error") {
+		alert(data);
+		return;
+	}
 }

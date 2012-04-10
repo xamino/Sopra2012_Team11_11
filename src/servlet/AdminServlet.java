@@ -205,7 +205,6 @@ public class AdminServlet extends HttpServlet {
 			log.write("AdminServlet", "Admin NOT authenticate.");
 			return false;
 		}
-		// TODO: Comment when done debugging:
 		// log.write("AdminServlet", "Admin authenticated.");
 		return true;
 	}

@@ -4,53 +4,6 @@
  */
 
 // This script requires the md5.js file! (Needs to be imported on the webpages that use this file.)
-/**
- * Get XMLHttpRequest object for all important browsers.
- * 
- * @returns XMLHttpRequest object.
- */
-function getXMLObject() {
-	// Code for IE7+, Firefox, Chrome, Opera, Safari
-	if (window.XMLHttpRequest) {
-		return new XMLHttpRequest();
-	}
-	// Code for IE6, IE5
-	else {
-		return new ActiveXObject("Microsoft.XMLHTTP");
-	}
-}
-
-// Required for all calls:
-var xmlhttp = new getXMLObject();
-
-/**
- * Use this function to toggle the visibility of error messages in error divs.
- * 
- * @param id
- *            The ID of the div which to toggle.
- * @param flag
- *            If <code>true</code> show, with <code>false</code> hide.
- * @param text
- *            Text to input. If flag is false, won't be set.
- */
-function toggleWarning(id, flag, text) {
-	// alert("ID: " + id + "\nFLAG: " + flag);
-	if (flag == true) {
-		document.getElementById(id).setAttribute("class", "visibleerror");
-		document.getElementById(id).innerHTML = text;
-	} else {
-		document.getElementById(id).setAttribute("class", "hiddenerror");
-		// By false, keep old text (won't be seen anyway):
-		// document.getElementById(id).innerHTML = text;
-	}
-}
-
-/**
- * Given a xmlhttp object, it will return the MIME type set.
- */
-function getMIME(responseobject) {
-	return responseobject.getResponseHeader("Content-Type").split(";")[0];
-}
 
 /**
  * This function checks that all the fields required for login are filled and
@@ -84,31 +37,29 @@ function checkLogin(form) {
 	userPassword = b64_md5(userPassword);
 	// alert("Password hash: " + userPassword);
 	// Send login data:
-	xmlhttp.open("GET", "/hiwi/Secure/js/doLogin?userName=" + userName
-			+ "&userPassword=" + userPassword);
-	// When status changes do:
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// Check what the server sent:
-			// alert(xmlhttp.responseText);
-			// Get the MIME type:
-			var mimeType = getMIME(xmlhttp);
-			// Check what mime it is:
-			// alert(mimeType);
-			// Switch according to mime type:
-			if (mimeType == "text/plain") {
-				if (xmlhttp.responseText == "false") {
-					// alert("Invalid!");
-					// Inform user that login was invalid:
-					toggleWarning("error_login", true, "Login ungültig!");
-				}
-			} else if (mimeType == "text/url") {
-				window.location = xmlhttp.responseText;
-			}
+	connect("/hiwi/Secure/js/doLogin?userName=" + userName + "&userPassword="
+			+ userPassword, handleLoginResponse);
+}
+
+/**
+ * Function for handling the server response.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data received.
+ */
+function handleLoginResponse(mime, data) {
+	if (mime == "text/plain") {
+		if (data == "false") {
+			// alert("Invalid!");
+			// Inform user that login was invalid:
+			toggleWarning("error_login", true, "Login ungültig!");
 		}
-	};
-	// Send request.
-	xmlhttp.send();
+	} else if (mime == "text/url") {
+		window.location = data;
+	} else
+		return;
 }
 
 /**
@@ -207,35 +158,33 @@ function checkRegister(form) {
 	// MD5 hash the password:
 	password_1 = b64_md5(password_1);
 	// Send register data:
-	xmlhttp.open("GET", "/hiwi/Secure/js/doRegister?realName=" + realName
-			+ "&email=" + email_1 + "&userName=" + userName + "&userPassword="
-			+ password_1);
-	// When status changes do:
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			// Check what the server sent:
-			// alert(xmlhttp.responseText);
-			// Get the MIME type:
-			var mimeType = getMIME(xmlhttp);
-			// Check what mime it is:
-			// alert(mimeType);
-			// Switch according to mime type:
-			if (mimeType == "text/plain") {
-				if (xmlhttp.responseText == "false") {
-					// alert("Invalid!");
-					// Only error that can pop up at this stage (except for
-					// hacks):
-					toggleWarning("error_emptyfields", true,
-							"Nicht alle Felder wurden übertragen.Bitte füllen sie alles aus!");
-				} else if (xmlhttp.responseText == "used") {
-					toggleWarning("error_alreadyUsed", true,
-							"Benutzername ist bereits vergeben. Bitte nehmen sie einen anderen!");
-				}
-			} else if (mimeType == "text/url") {
-				window.location = xmlhttp.responseText;
-			}
+	connect(
+			"/hiwi/Secure/js/doRegister?realName=" + realName + "&email="
+					+ email_1 + "&userName=" + userName + "&userPassword="
+					+ password_1, handleRegisterResponse);
+}
+
+/**
+ * Function for handling the server response.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data received.
+ */
+function handleRegisterResponse(mime, data) {
+	if (mime == "text/plain") {
+		if (data == "false") {
+			// alert("Invalid!");
+			// Only error that can pop up at this stage (except for
+			// hacks):
+			toggleWarning("error_emptyfields", true,
+					"Nicht alle Felder wurden übertragen.Bitte füllen sie alles aus!");
+		} else if (data == "used") {
+			toggleWarning("error_alreadyUsed", true,
+					"Benutzername ist bereits vergeben. Bitte nehmen sie einen anderen!");
 		}
-	};
-	// Send request.
-	xmlhttp.send();
+	} else if (mime == "text/url") {
+		window.location = xmlhttp.responseText;
+	}
 }

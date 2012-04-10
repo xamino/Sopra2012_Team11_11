@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/hiwi/style.css" />
 <script type="text/javascript" src="/hiwi/public/script.js"></script>
 <script type="text/javascript" src="/hiwi/public/md5.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Startseite | Hiwi Job Börse</title>
 </head>
 
