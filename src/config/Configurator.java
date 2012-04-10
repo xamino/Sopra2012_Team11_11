@@ -54,7 +54,8 @@ public class Configurator {
 		String s = ""; 
 		while(true){
 			s = bufread.readLine();
-			if(properTrim(s).charAt(0)=='#')continue;
+			if(!properTrim(s).isEmpty())if(properTrim(s).charAt(0)=='#')continue;
+			if(properTrim(s).isEmpty())continue;
 			break;
 		}
 		String[] sa = s.split("\\|");
@@ -70,7 +71,7 @@ public class Configurator {
 		while(true){
 			if(!bufread.ready())break;
 			s = bufread.readLine();
-			if(properTrim(s).charAt(0)=='#')continue;
+			if(!properTrim(s).isEmpty())if(properTrim(s).charAt(0)=='#')continue;
 			sa = s.split("\\|");
 			for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
 			if(sa[0].equalsIgnoreCase("path")){
