@@ -53,7 +53,6 @@ public abstract class LoggedInUsers {
 					+ " has logged in.");
 			log.write("UserManagement", LoggedInUsers.getUsers().size()
 					+ " user are currently logged in.");
-			return;
 
 		} else if (tempuserbysession == null && tempuserbyname != null) {
 			log.write("UserManagement", "Killed User: "+tempuserbyname.getUserData().getUsername());
@@ -63,10 +62,9 @@ public abstract class LoggedInUsers {
 					+ " has logged in.");
 			log.write("UserManagement", LoggedInUsers.getUsers().size()
 					+ " user are currently logged in.");
-			return;
 
 		}
-		if (tempuserbyname == null && tempuserbysession!=null) {
+		else if (tempuserbyname == null && tempuserbysession!=null) {
 			log.write("UserManagement", "Killed User: "+tempuserbysession.getUserData().getUsername());
 			removeUserBySession(u.getUserData().getSession());
 			users.add(u);
@@ -75,7 +73,18 @@ public abstract class LoggedInUsers {
 			log.write("UserManagement", LoggedInUsers.getUsers().size()
 					+ " user are currently logged in.");
 		}
-		if(tempuserbyname !=null && tempuserbysession!=null);
+		else if(tempuserbyname !=null && tempuserbysession!=null){
+			if(tempuserbyname==tempuserbysession)return;
+			log.write("UserManagement", "Killed User: "+tempuserbysession.getUserData().getUsername());
+			removeUserBySession(u.getUserData().getSession());
+			log.write("UserManagement", "Killed User: "+tempuserbyname.getUserData().getUsername());
+			tempuserbyname.invalidate();
+			users.add(u);
+			log.write("UserManagement", u.getUserData().getUsername()
+					+ " has logged in.");
+			log.write("UserManagement", LoggedInUsers.getUsers().size()
+					+ " user are currently logged in.");
+		}
 
 	}
 
