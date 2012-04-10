@@ -50,7 +50,8 @@ public class Configurator {
 	 */
 	private Configurator(){
 		try{
-		BufferedReader bufread = new BufferedReader(new InputStreamReader(new FileInputStream(new File(CCPATH))));
+		BufferedReader bufread = new BufferedReader(new InputStreamReader(new FileInputStream(new File(CCPATH)),"UTF-8"));
+		
 		String s = bufread.readLine();
 		String[] sa = s.split("\\|");
 		for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
