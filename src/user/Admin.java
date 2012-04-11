@@ -16,9 +16,12 @@ import database.document.Document;
 public class Admin extends User {
 
 	/**
-	 * Private variable des Loggers.
+	 * Private Instanz des Loggers.
 	 */
 	private Log log;
+	/**
+	 * Private Instanz des AccountController.
+	 */
 	private AccountController accountController;
 
 	/**
@@ -42,7 +45,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Erstellt einen neuen Account.
+	 * Löscht einen neuen Account.
 	 * 
 	 * @param acc
 	 *            anzulegender Account.
@@ -69,13 +72,21 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Löscht einen Account.
+	 * Erstellt einen Account.
 	 * 
 	 * @param acc
 	 *            zu loeschender Account.
 	 */
-	public void createAccount(Account acc) {
-
+	public boolean createAccount(Account account) {
+		if (!accountController.createAccount(account)) {
+			// This can happen if the institute doesn't exist:
+			log.write("Admin",
+					"Error creating account! Is the institute valid?");
+			return false;
+		}
+		log.write("Admin", "Created account for <" + account.getUsername()
+				+ ">.");
+		return true;
 	}
 
 	/**
