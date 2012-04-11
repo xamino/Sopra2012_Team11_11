@@ -158,13 +158,19 @@ public class AdminServlet extends HttpServlet {
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
 			response.setContentType("application/json");
+			Runtime r = Runtime.getRuntime();
 			response.getWriter().write(
-
-			Helper.jsonAtor(
-							new String[] { "loggedInUsers", "allUsers" },
-							new Object[] { LoggedInUsers.getUsers().size(),
-									accountController.accountCount() }));
-
+					Helper.jsonAtor(new String[] { "loggedInUsers", "allUsers",
+							"totalRAM", "freeRAM", "maxRAM" },
+							new Object[] {
+									LoggedInUsers.getUsers().size(),
+									accountController.accountCount(),
+									"Total Memory: " + r.totalMemory()
+											/ (1024 * 1024) + " MB",
+									"Free Memory: " + r.freeMemory()
+											/ (1024 * 1024) + " MB",
+									"Max Memory: " + r.maxMemory()
+											/ (1024 * 1024) + " MB" }));
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
