@@ -5,12 +5,6 @@ package servlet;
 
 import javax.servlet.http.HttpSession;
 
-import com.sun.org.apache.bcel.internal.generic.Type;
-
-import user.Admin;
-import user.Applicant;
-import user.Clerk;
-import user.Provider;
 import user.User;
 import userManagement.LoggedInUsers;
 import logger.Log;
@@ -146,6 +140,7 @@ public final class Helper {
 	 *            Die session zum ueberpruefen.
 	 * @return Das Admin Object wenn korrekt, sonst null.
 	 */
+	@SuppressWarnings("unchecked")
 	public static <U> U checkAuthenticity(HttpSession session,
 			Class<U> c) {
 		User user = LoggedInUsers.getUserBySession(session);
