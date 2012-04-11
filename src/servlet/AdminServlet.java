@@ -160,17 +160,14 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			Runtime r = Runtime.getRuntime();
 			response.getWriter().write(
-					Helper.jsonAtor(new String[] { "loggedInUsers", "allUsers",
-							"totalRAM", "freeRAM", "maxRAM" },
-							new Object[] {
-									LoggedInUsers.getUsers().size(),
+					Helper.jsonAtor(
+							new String[] { "loggedInUsers", "allUsers",
+									"totalRAM", "freeRAM", "maxRAM" },
+							new Object[] { LoggedInUsers.getUsers().size(),
 									accountController.accountCount(),
-									"Total Memory: " + r.totalMemory()
-											/ (1024 * 1024) + " MB",
-									"Free Memory: " + r.freeMemory()
-											/ (1024 * 1024) + " MB",
-									"Max Memory: " + r.maxMemory()
-											/ (1024 * 1024) + " MB" }));
+									r.totalMemory() / (1024 * 1024) + " MB",
+									r.freeMemory() / (1024 * 1024) + " MB",
+									r.maxMemory() / (1024 * 1024) + " MB" }));
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
