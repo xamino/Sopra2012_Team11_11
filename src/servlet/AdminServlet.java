@@ -165,8 +165,8 @@ public class AdminServlet extends HttpServlet {
 									"totalRAM", "maxRAM" },
 							new Object[] { LoggedInUsers.getUsers().size(),
 									accountController.accountCount(),
-									r.totalMemory() / (1024 * 1024) + " MB",
-									r.maxMemory() / (1024 * 1024) + " MB" }));
+									"~"+r.totalMemory() / (1024 * 1024) + " MB",
+									"~"+r.maxMemory() / (1024 * 1024) + " MB" }));
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
