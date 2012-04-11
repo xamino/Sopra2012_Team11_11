@@ -47,8 +47,8 @@ public class Admin extends User {
 	/**
 	 * Löscht einen neuen Account.
 	 * 
-	 * @param acc
-	 *            anzulegender Account.
+	 * @param username
+	 *            Username des anzulegenden Account.
 	 */
 
 	public boolean deleteAccount(String username) {
@@ -74,7 +74,7 @@ public class Admin extends User {
 	/**
 	 * Erstellt einen Account.
 	 * 
-	 * @param acc
+	 * @param account
 	 *            zu loeschender Account.
 	 */
 	public boolean createAccount(Account account) {

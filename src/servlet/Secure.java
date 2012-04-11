@@ -51,8 +51,6 @@ public class Secure extends HttpServlet {
 
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
-	 * 
-	 * @param userPassword
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

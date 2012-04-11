@@ -1,21 +1,11 @@
 package user;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
-import com.sun.corba.se.spi.ior.Writeable;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Vector;
-import jxl.*;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
-import database.DatabaseController;
 import database.account.Account;
-import database.application.Application;
-import database.application.ApplicationController;
 import file.ExcelExport;
 
 /**
