@@ -44,6 +44,7 @@ public class AccountController {
 
 	}
 
+	
 	/**
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
@@ -126,6 +127,14 @@ public class AccountController {
 		dbc.update("Accounts", columns, values, where);
 	}
 
+	/**
+	 * Gibt die Anzahl der registrierten Accounts zurück.
+	 * @return Anzahl der Accounts
+	 */
+	public int accountCount(){
+		return dbc.count(new String[]{"accounts"}, null);
+	}
+	
 	/**
 	 * Diese Methode gibt alle in der Datenbank gespeicherten Accounts zurück.
 	 * 
