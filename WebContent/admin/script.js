@@ -291,7 +291,6 @@ function handleLoadUserindex(mime, data) {
 		var jsonData = eval("(" + data + ")");
 		document.getElementById("loggedInUsers").innerHTML = jsonData.loggedInUsers;
 		document.getElementById("allUsers").innerHTML = jsonData.allUsers;
-		document.getElementById("freeRAM").innerHTML = jsonData.freeRAM;
 		document.getElementById("totalRAM").innerHTML = jsonData.totalRAM;
 		document.getElementById("maxRAM").innerHTML = jsonData.maxRAM;
 	}

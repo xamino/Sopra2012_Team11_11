@@ -67,10 +67,7 @@
 							<td>Total RAM:</td>
 							<td id="totalRAM"></td>
 						</tr>
-						<tr>
-							<td>Free RAM:</td>
-							<td id="freeRAM"></td>
-						</tr>
+				
 						<tr>
 							<td>Max RAM:</td>
 							<td id="maxRAM"></td>
