@@ -160,6 +160,7 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("text/plain");
 			response.getWriter().write(
 					String.valueOf(LoggedInUsers.getUsers().size()));
+			
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
