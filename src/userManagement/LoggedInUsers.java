@@ -1,5 +1,6 @@
 package userManagement;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,10 @@ public abstract class LoggedInUsers {
 	 */
 	private static Log log = Log.getInstance();
 
+	// TODO LoggedinUsers auf hashmap statt vector umstellen ^
+	private static HashMap<String, User> userMap = new HashMap<String, User>();
+	
+	
 	/**
 	 * Vector mit den eingelogten Usern des Systems.
 	 */
@@ -94,6 +99,8 @@ public abstract class LoggedInUsers {
 			if (users.get(i).getUserData().getUsername().equals(username))
 				return users.get(i);
 		return null;
+		
+		
 	}
 
 	/**
