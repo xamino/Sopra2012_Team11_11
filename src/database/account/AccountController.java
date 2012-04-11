@@ -132,7 +132,7 @@ public class AccountController {
 	 * @return Anzahl der Accounts
 	 */
 	public int accountCount(){
-		return dbc.count(new String[]{"accounts"}, null);
+		return dbc.count(new String[]{"Accounts"}, null);
 	}
 	
 	/**

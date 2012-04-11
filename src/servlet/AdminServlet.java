@@ -157,10 +157,14 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
-			response.setContentType("text/plain");
+			response.setContentType("application/json");
 			response.getWriter().write(
-					String.valueOf(LoggedInUsers.getUsers().size()));
-			
+
+			Helper.jsonAtor(
+							new String[] { "loggedInUsers", "allUsers" },
+							new Object[] { LoggedInUsers.getUsers().size(),
+									accountController.accountCount() }));
+
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}

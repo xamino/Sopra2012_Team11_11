@@ -286,6 +286,10 @@ function loadUserindex() {
 function handleLoadUserindex(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
-	else if (mime == "text/plain")
-		document.getElementById("loggedInUsers").innerHTML = data + "";
+	else if (mime == "application/json") {
+		// alert(data);
+		var jsonData = eval("(" + data + ")");
+		document.getElementById("loggedInUsers").innerHTML = jsonData.loggedInUsers;
+		document.getElementById("allUsers").innerHTML = jsonData.allUsers;
+	}
 }
