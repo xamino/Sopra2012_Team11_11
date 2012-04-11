@@ -58,16 +58,18 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Check authenticity:
+		Admin admin = Helper.checkAuthenticity(request.getSession(),
+				Admin.class);
+		if (admin == null) {
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+			return;
+		}
+		// Switch action on path:
 		String path = request.getPathInfo();
 		log.write("AdminServlet", "Received request: " + path);
-		// Switch action on path:
 		if (path.equals("/js/loadAccounts")) {
-			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
-			if (admin == null) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			Vector<Account> accounts = accountController.getAllAccounts();
 			response.setContentType("application/json");
 			response.getWriter().write(
@@ -75,14 +77,6 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
-			// Load admin user:
-			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
-			// Check if legal:
-			if (admin == null) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			// Get username parameter:
 			String username = request.getParameter("name");
 			// Check if legal:
@@ -101,12 +95,6 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {
-			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
-			if (admin == null) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			String username = request.getParameter("name");
 			if (username == null) {
 				response.setContentType("text/url");
@@ -119,12 +107,6 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(account, Account.class));
 		} else if (path.equals("/js/addAccount")) {
-			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
-			if (admin == null) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			// /hiwi/Admin/js/addAccount?realName=&email=&userName=&userPassword=&accountType=&institute=
 			String realName = request.getParameter("realName");
 			String email = request.getParameter("email");
@@ -175,16 +157,11 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
-			if (Helper.checkAuthenticity(request.getSession(), Admin.class) == null) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			response.setContentType("text/plain");
 			response.getWriter().write(
 					String.valueOf(LoggedInUsers.getUsers().size()));
 		} else {
-			response.sendRedirect(Helper.D_INDEX);
+			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
 	}
 }
