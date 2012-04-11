@@ -70,8 +70,7 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write(Helper.D_INDEX);
 				return;
 			}
-			Vector<Account> accounts = new Vector<Account>();
-			accounts = accountController.getAllAccounts();
+			Vector<Account> accounts = accountController.getAllAccounts();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(accounts, accounts.getClass()));
@@ -79,19 +78,24 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
+			// Load admin user:
 			Admin admin = checkAuthenticity(request.getSession());
+			// Check if legal:
 			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
 			}
+			// Get username parameter:
 			String username = request.getParameter("name");
+			// Check if legal:
 			if (username == null || username.isEmpty()) {
 				log.write("AdminServlet", "Username invalid!");
 				response.setContentType("text/error");
 				response.getWriter().write("Username invalid!");
 				return;
 			}
+			// Do & check if all okay:
 			if (!admin.deleteAccount(username)) {
 				response.setContentType("text/error");
 				response.getWriter()
@@ -162,17 +166,14 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// Okay, all okay, continue:
-			if (!accountController.createAccount(new Account(userName,
-					password, accountType, email, realName, institute, null))) {
-				// This can happen if the institute doesn't exist:
-				log.write("AdminServlet",
-						"Error creating account! Is the institute valid?");
+			Account account = new Account(userName, password, accountType,
+					email, realName, institute, null);
+			if (!admin.createAccount(account)) {
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Account konnte nicht erstellt werden! Existiert das Institut in der Datenbank?");
 				return;
 			}
-			log.write("AdminServlet", "Created account for <" + userName + ">.");
 			response.setContentType("text/plain");
 			response.getWriter().write("true");
 			return;
