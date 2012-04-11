@@ -20,7 +20,6 @@ import database.account.Account;
 import database.account.AccountController;
 
 import user.Admin;
-import user.User;
 import userManagement.LoggedInUsers;
 
 import logger.Log;
@@ -78,7 +77,7 @@ public class AdminServlet extends HttpServlet {
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
 			// Load admin user:
-			Admin admin = checkAuthenticity(request.getSession());
+			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
 			// Check if legal:
 			if (admin == null) {
 				response.setContentType("text/url");
@@ -103,7 +102,7 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {
-			Admin admin = checkAuthenticity(request.getSession());
+			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
 			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
@@ -121,7 +120,7 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(account, Account.class));
 		} else if (path.equals("/js/addAccount")) {
-			Admin admin = checkAuthenticity(request.getSession());
+			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
 			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
@@ -177,7 +176,7 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
-			if (checkAuthenticity(request.getSession()) == null) {
+			if (Helper.checkAuthenticity(request.getSession(), Admin.class) == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
