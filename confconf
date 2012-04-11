@@ -22,11 +22,11 @@ int | port | 3306
 # Passwort für die Mysql Datenbank
 String | password |
 # Benutzername für die Mysql Datenbank
-String |user | root
+String | user | root
 # Name der Mysql Datenbank
 String | database | sopra
 # Pfad der Log Datei
-path | log | $HOME | .soprpa | log
+path | log | $HOME | .sopra | log
 # Wo der log geschriebene wird.
 # 0 = null, 1 = System.out, 2 = log file, 3 = System.out UND log file
 int | logWriteTo | 3

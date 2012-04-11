@@ -11,7 +11,7 @@
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Administrator Startseite | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="loadUserindex();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -57,7 +57,7 @@
 					<table class="hidden">
 						<tr>
 							<td>Angemeldete Benutzer:</td>
-							<td>42</td>
+							<td id="loggedInUsers">42</td>
 						</tr>
 						<tr>
 							<td>Registrierte Benutzer:</td>

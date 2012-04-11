@@ -176,7 +176,8 @@ public class AdminServlet extends HttpServlet {
 			if (!accountController.createAccount(new Account(userName,
 					password, accountType, email, realName, institute, null))) {
 				// This can happen if the institute doesn't exist:
-				log.write("AdminServlet", "Error creating account! Is the institute valid?");
+				log.write("AdminServlet",
+						"Error creating account! Is the institute valid?");
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Account konnte nicht erstellt werden! Existiert das Institut in der Datenbank?");
@@ -186,6 +187,8 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("text/plain");
 			response.getWriter().write("true");
 			return;
+		} else if (path.equals("/js/getSystemInformation")) {
+			// Nothing yet.
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
@@ -202,7 +205,7 @@ public class AdminServlet extends HttpServlet {
 	private boolean checkAuthenticity(HttpSession session) {
 		User user = LoggedInUsers.getUserBySession(session);
 		if (user == null || !(user instanceof Admin)) {
-			log.write("AdminServlet", "Admin NOT authenticate.");
+			log.write("AdminServlet", "Admin NOT authentic.");
 			return false;
 		}
 		// log.write("AdminServlet", "Admin authenticated.");
