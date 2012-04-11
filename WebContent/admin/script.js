@@ -284,6 +284,8 @@ function loadUserindex() {
 }
 
 function handleLoadUserindex(mime, data) {
-	alert(mime);
-	alert(data);
+	if (mime == "text/url")
+		window.location = data;
+	else if (mime == "text/plain")
+		document.getElementById("loggedInUsers").innerHTML = data + "";
 }

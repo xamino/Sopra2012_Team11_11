@@ -61,7 +61,7 @@
 						</tr>
 						<tr>
 							<td>Registrierte Benutzer:</td>
-							<td>3142</td>
+							<td id="allUsers">3142</td>
 						</tr>
 						<tr>
 							<td>RAM (in MB):</td>

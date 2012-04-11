@@ -64,7 +64,8 @@ public class AdminServlet extends HttpServlet {
 		log.write("AdminServlet", "Received request: " + path);
 		// Switch action on path:
 		if (path.equals("/js/loadAccounts")) {
-			if (!checkAuthenticity(request.getSession())) {
+			Admin admin = checkAuthenticity(request.getSession());
+			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
@@ -78,7 +79,8 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
-			if (!checkAuthenticity(request.getSession())) {
+			Admin admin = checkAuthenticity(request.getSession());
+			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
@@ -90,30 +92,16 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write("Username invalid!");
 				return;
 			}
-			// If user is currently logged in, we do not allow deletion:
-			if (LoggedInUsers.getUserByUsername(username) != null) {
-				log.write("AdminServlet", "Can not delete <" + username
-						+ "> as currently logged in!");
+			if (!admin.deleteAccount(username)) {
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Dieser Benutzer ist aktuell angemeldet! Kann nicht gelöscht werden!");
-				return;
+						.write("Dieser Benutzer existiert nicht oder ist aktuell angemeldet. Kann nicht gelöscht werden!");
 			}
-			Account account = accountController.getAccountByUsername(username);
-			if (account == null) {
-				log.write("AdminServlet", "Can not delete <" + username
-						+ "> as no account exists!");
-				response.setContentType("text/error");
-				response.getWriter().write("This user doesn't seem to exist!");
-				return;
-			}
-			log.write("AdminServlet", "Deleting account with username <"
-					+ username + ">");
-			accountController.deleteAccount(account);
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {
-			if (!checkAuthenticity(request.getSession())) {
+			Admin admin = checkAuthenticity(request.getSession());
+			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
@@ -130,7 +118,8 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(account, Account.class));
 		} else if (path.equals("/js/addAccount")) {
-			if (!checkAuthenticity(request.getSession())) {
+			Admin admin = checkAuthenticity(request.getSession());
+			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 				return;
@@ -188,7 +177,14 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
-			// Nothing yet.
+			if (checkAuthenticity(request.getSession()) == null) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_INDEX);
+				return;
+			}
+			response.setContentType("text/plain");
+			response.getWriter().write(
+					String.valueOf(LoggedInUsers.getUsers().size()));
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
@@ -200,15 +196,15 @@ public class AdminServlet extends HttpServlet {
 	 * 
 	 * @param session
 	 *            Die session zum ueberpruefen.
-	 * @return <code>True</code> wenn ja, sonst <code>false</code>.
+	 * @return Das Admin Object wenn korrekt, sonst null.
 	 */
-	private boolean checkAuthenticity(HttpSession session) {
+	private Admin checkAuthenticity(HttpSession session) {
 		User user = LoggedInUsers.getUserBySession(session);
 		if (user == null || !(user instanceof Admin)) {
 			log.write("AdminServlet", "Admin NOT authentic.");
-			return false;
+			return null;
 		}
 		// log.write("AdminServlet", "Admin authenticated.");
-		return true;
+		return (Admin) user;
 	}
 }

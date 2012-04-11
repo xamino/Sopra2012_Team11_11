@@ -2,13 +2,24 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
+import userManagement.LoggedInUsers;
+
 import database.account.Account;
+import database.account.AccountController;
 import database.document.Document;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.
  */
 public class Admin extends User {
+
+	/**
+	 * Private variable des Loggers.
+	 */
+	private Log log;
+	private AccountController accountController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -24,8 +35,10 @@ public class Admin extends User {
 	 *            Session des Benutzers.
 	 */
 	public Admin(String username, String email, String name, HttpSession session) {
-		super(username,email,name,session);
+		super(username, email, name, session);
 		userManagement.LoggedInUsers.addUser(this);
+		this.log = Log.getInstance();
+		this.accountController = AccountController.getInstance();
 	}
 
 	/**
@@ -35,8 +48,24 @@ public class Admin extends User {
 	 *            anzulegender Account.
 	 */
 
-	public void createAccount(Account acc) {
-
+	public boolean deleteAccount(String username) {
+		Account account = accountController.getAccountByUsername(username);
+		if (account == null) {
+			log.write("Admin", "Can not delete <" + username
+					+ ">. Does not exist!");
+			// response.setContentType("text/error");
+			// response.getWriter().write("This user doesn't seem to exist!");
+			return false;
+		}
+		// If user is currently logged in, we do not allow deletion:
+		if (LoggedInUsers.getUserByUsername(username) != null) {
+			log.write("Admin", "Can not delete <" + username
+					+ "> as currently logged in!");
+			return false;
+		}
+		log.write("Admin", "Deleting account with username <" + username + ">");
+		accountController.deleteAccount(account);
+		return true;
 	}
 
 	/**
@@ -45,7 +74,7 @@ public class Admin extends User {
 	 * @param acc
 	 *            zu loeschender Account.
 	 */
-	public void deleteAccount(Account acc) {
+	public void createAccount(Account acc) {
 
 	}
 
