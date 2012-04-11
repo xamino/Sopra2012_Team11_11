@@ -275,3 +275,15 @@ function handleCreateAccountResponse(mime, data) {
 		return;
 	}
 }
+
+/**
+ * 
+ */
+function loadUserindex() {
+	connect("/hiwi/Admin/js/getSystemInformation", handleLoadUserindex);
+}
+
+function handleLoadUserindex(mime, data) {
+	alert(mime);
+	alert(data);
+}
