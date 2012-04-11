@@ -147,12 +147,12 @@ public final class Helper {
 	 * @return Das Admin Object wenn korrekt, sonst null.
 	 */
 	public static <U> U checkAuthenticity(HttpSession session,
-			Class c) {
+			Class<U> c) {
 		User user = LoggedInUsers.getUserBySession(session);
-		if (user == null || !(user instanceof typeOfSrc) {
+		if (user == null || !(user.getClass() == c)) {
 			log.write("Helper", "User not authentic.");
 			return null;
 		}
-		return (typeOfSrc) user;
+		return (U) user;
 	}
 }
