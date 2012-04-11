@@ -3,6 +3,16 @@
  */
 package servlet;
 
+import javax.servlet.http.HttpSession;
+
+import com.sun.org.apache.bcel.internal.generic.Type;
+
+import user.Admin;
+import user.Applicant;
+import user.Clerk;
+import user.Provider;
+import user.User;
+import userManagement.LoggedInUsers;
 import logger.Log;
 
 /**
@@ -122,9 +132,27 @@ public final class Helper {
 	 * Pfad zu /hiwi/provider/help.jsp.
 	 */
 	public static final String D_PROVIDER_HELP = "/hiwi/provider/help.jsp";
-	
+
 	/**
 	 * All servlets within the servlet package should use this instance of Log.
 	 */
 	public static final Log log = Log.getInstance();
+
+	/**
+	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
+	 * ist.
+	 * 
+	 * @param session
+	 *            Die session zum ueberpruefen.
+	 * @return Das Admin Object wenn korrekt, sonst null.
+	 */
+	public static <U> U checkAuthenticity(HttpSession session,
+			Class c) {
+		User user = LoggedInUsers.getUserBySession(session);
+		if (user == null || !(user instanceof typeOfSrc) {
+			log.write("Helper", "User not authentic.");
+			return null;
+		}
+		return (typeOfSrc) user;
+	}
 }

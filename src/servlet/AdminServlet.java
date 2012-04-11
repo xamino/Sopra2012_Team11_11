@@ -64,7 +64,7 @@ public class AdminServlet extends HttpServlet {
 		log.write("AdminServlet", "Received request: " + path);
 		// Switch action on path:
 		if (path.equals("/js/loadAccounts")) {
-			Admin admin = checkAuthenticity(request.getSession());
+			Admin admin = Helper.checkAuthenticity(request.getSession(), Admin.class);
 			if (admin == null) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
@@ -74,7 +74,6 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(accounts, accounts.getClass()));
-
 		}
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
@@ -189,23 +188,5 @@ public class AdminServlet extends HttpServlet {
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
-	}
-
-	/**
-	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
-	 * ist.
-	 * 
-	 * @param session
-	 *            Die session zum ueberpruefen.
-	 * @return Das Admin Object wenn korrekt, sonst null.
-	 */
-	private Admin checkAuthenticity(HttpSession session) {
-		User user = LoggedInUsers.getUserBySession(session);
-		if (user == null || !(user instanceof Admin)) {
-			log.write("AdminServlet", "Admin NOT authentic.");
-			return null;
-		}
-		// log.write("AdminServlet", "Admin authenticated.");
-		return (Admin) user;
 	}
 }
