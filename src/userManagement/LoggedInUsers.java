@@ -51,39 +51,31 @@ public abstract class LoggedInUsers {
 			users.add(u);
 			log.write("LoggedInUsers", u.getUserData().getUsername()
 					+ " has logged in.");
-			log.write("LoggedInUsers", LoggedInUsers.getUsers().size()
-					+ " user are currently logged in.");
 
 		} else if (tempuserbysession == null && tempuserbyname != null) {
-			log.write("LoggedInUsers", "Killed User: "+tempuserbyname.getUserData().getUsername());
+			log.write("LoggedInUsers", "Killing User: "+tempuserbyname.getUserData().getUsername());
 			tempuserbyname.invalidate();
 			users.add(u);
 			log.write("LoggedInUsers", u.getUserData().getUsername()
 					+ " has logged in.");
-			log.write("LoggedInUsers", LoggedInUsers.getUsers().size()
-					+ " user are currently logged in.");
 
 		}
 		else if (tempuserbyname == null && tempuserbysession!=null) {
-			log.write("LoggedInUsers", "Killed User: "+tempuserbysession.getUserData().getUsername());
+			log.write("LoggedInUsers", "Killing User: "+tempuserbysession.getUserData().getUsername());
 			removeUserBySession(u.getUserData().getSession());
 			users.add(u);
 			log.write("LoggedInUsers", u.getUserData().getUsername()
 					+ " has logged in.");
-			log.write("LoggedInUsers", LoggedInUsers.getUsers().size()
-					+ " user are currently logged in.");
 		}
 		else if(tempuserbyname !=null && tempuserbysession!=null){
 			if(tempuserbyname==tempuserbysession)return;
-			log.write("LoggedInUsers", "Killed User: "+tempuserbysession.getUserData().getUsername());
+			log.write("LoggedInUsers", "Killing User: "+tempuserbysession.getUserData().getUsername());
 			removeUserBySession(u.getUserData().getSession());
-			log.write("LoggedInUsers", "Killed User: "+tempuserbyname.getUserData().getUsername());
+			log.write("LoggedInUsers", "Killing User: "+tempuserbyname.getUserData().getUsername());
 			tempuserbyname.invalidate();
 			users.add(u);
 			log.write("LoggedInUsers", u.getUserData().getUsername()
 					+ " has logged in.");
-			log.write("LoggedInUsers", LoggedInUsers.getUsers().size()
-					+ " user are currently logged in.");
 		}
 
 	}
@@ -132,18 +124,14 @@ public abstract class LoggedInUsers {
 	 */
 	static void removeUserBySession(HttpSession session) {
 		// userName==null keine aktion
-		String caller = Thread.currentThread().getStackTrace()[2].getMethodName();
 		if (session.getAttribute("userName") == null)
 			return;
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getUserData().getSession() == session) {
 				String name = users.get(i).getUserData().getUsername();
 				users.remove(i);
-				if(caller.equals("sessionDestroyed")){
-					log.write("LoggedInUsers", name+ " has logged out.");
-					log.write("LoggedInUsers", LoggedInUsers.getUsers().size()
-							+ " user are currently logged in.");
-				}
+				log.write("LoggedInUsers", name+ " has logged out.");
+				
 				break;
 			}
 		}
