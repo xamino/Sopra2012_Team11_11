@@ -57,15 +57,15 @@
 					<table class="hidden">
 						<tr>
 							<td>Angemeldete Benutzer:</td>
-							<td id="loggedInUsers">42</td>
+							<td id="loggedInUsers"></td>
 						</tr>
 						<tr>
 							<td>Registrierte Benutzer:</td>
-							<td id="allUsers">3142</td>
+							<td id="allUsers"></td>
 						</tr>
 						<tr>
 							<td>RAM (in MB):</td>
-							<td>254</td>
+							<td>TODO</td>
 						</tr>
 					</table>
 				</div>

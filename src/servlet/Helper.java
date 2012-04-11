@@ -141,13 +141,38 @@ public final class Helper {
 	 * @return Das Admin Object wenn korrekt, sonst null.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <U> U checkAuthenticity(HttpSession session,
-			Class<U> c) {
+	public static <U> U checkAuthenticity(HttpSession session, Class<U> c) {
 		User user = LoggedInUsers.getUserBySession(session);
 		if (user == null || !(user.getClass() == c)) {
 			log.write("Helper", "User not authentic.");
 			return null;
 		}
 		return (U) user;
+	}
+
+	/**
+	 * Help function for creating correct JSON objects with given names and
+	 * parameters.
+	 * 
+	 * @param varNames
+	 *            The name of the variables.
+	 * @param variables
+	 *            The value of the variables.
+	 * @return The JSON string.
+	 */
+	public static String jsonAtor(String[] varNames, Object[] variables) {
+		if (varNames.length != variables.length || varNames.length <= 0)
+			return null;
+		String json = "{";
+		for (int i = 0; i < varNames.length; i++) {
+			if (i != 0)
+				json += ",";
+			if (variables[i] instanceof String)
+				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
+			else
+				json += "\"" + varNames[i] + "\":" + variables[i];
+		}
+		json += "}";
+		return json;
 	}
 }
