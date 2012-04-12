@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -20,7 +19,6 @@ import database.account.Account;
 import database.account.AccountController;
 
 import user.Admin;
-import user.User;
 import userManagement.LoggedInUsers;
 
 import logger.Log;
@@ -60,64 +58,43 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Check authenticity:
+		Admin admin = Helper.checkAuthenticity(request.getSession(),
+				Admin.class);
+		if (admin == null) {
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+			return;
+		}
+		// Switch action on path:
 		String path = request.getPathInfo();
 		log.write("AdminServlet", "Received request: " + path);
-		// Switch action on path:
 		if (path.equals("/js/loadAccounts")) {
-			if (!checkAuthenticity(request.getSession())) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
-			Vector<Account> accounts = new Vector<Account>();
-			accounts = accountController.getAllAccounts();
+			Vector<Account> accounts = accountController.getAllAccounts();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(accounts, accounts.getClass()));
-
 		}
 		// Delete an account:
 		else if (path.equals("/js/deleteAccount")) {
-			if (!checkAuthenticity(request.getSession())) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
+			// Get username parameter:
 			String username = request.getParameter("name");
+			// Check if legal:
 			if (username == null || username.isEmpty()) {
 				log.write("AdminServlet", "Username invalid!");
 				response.setContentType("text/error");
 				response.getWriter().write("Username invalid!");
 				return;
 			}
-			// If user is currently logged in, we do not allow deletion:
-			if (LoggedInUsers.getUserByUsername(username) != null) {
-				log.write("AdminServlet", "Can not delete <" + username
-						+ "> as currently logged in!");
+			// Do & check if all okay:
+			if (!admin.deleteAccount(username)) {
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Dieser Benutzer ist aktuell angemeldet! Kann nicht gelöscht werden!");
-				return;
+						.write("Dieser Benutzer existiert nicht oder ist aktuell angemeldet. Kann nicht gelöscht werden!");
 			}
-			Account account = accountController.getAccountByUsername(username);
-			if (account == null) {
-				log.write("AdminServlet", "Can not delete <" + username
-						+ "> as no account exists!");
-				response.setContentType("text/error");
-				response.getWriter().write("This user doesn't seem to exist!");
-				return;
-			}
-			log.write("AdminServlet", "Deleting account with username <"
-					+ username + ">");
-			accountController.deleteAccount(account);
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {
-			if (!checkAuthenticity(request.getSession())) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			String username = request.getParameter("name");
 			if (username == null) {
 				response.setContentType("text/url");
@@ -130,11 +107,6 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(account, Account.class));
 		} else if (path.equals("/js/addAccount")) {
-			if (!checkAuthenticity(request.getSession())) {
-				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_INDEX);
-				return;
-			}
 			// /hiwi/Admin/js/addAccount?realName=&email=&userName=&userPassword=&accountType=&institute=
 			String realName = request.getParameter("realName");
 			String email = request.getParameter("email");
@@ -173,40 +145,70 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// Okay, all okay, continue:
-			if (!accountController.createAccount(new Account(userName,
-					password, accountType, email, realName, institute, null))) {
-				// This can happen if the institute doesn't exist:
-				log.write("AdminServlet", "Error creating account! Is the institute valid?");
+			Account account = new Account(userName, password, accountType,
+					email, realName, institute, null);
+			if (!admin.createAccount(account)) {
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Account konnte nicht erstellt werden! Existiert das Institut in der Datenbank?");
 				return;
 			}
-			log.write("AdminServlet", "Created account for <" + userName + ">.");
+			response.setContentType("text/plain");
+			response.getWriter().write("true");
+			return;
+		} else if (path.equals("/js/getSystemInformation")) {
+			response.setContentType("application/json");
+			Runtime r = Runtime.getRuntime();
+			response.getWriter()
+					.write(Helper.jsonAtor(
+							new String[] { "loggedInUsers", "allUsers",
+									"totalRAM", "maxRAM" },
+							new Object[] {
+									LoggedInUsers.getUsers().size(),
+									accountController.accountCount(),
+									"~" + r.totalMemory() / (1024 * 1024)
+											+ " MB",
+									"~" + r.maxMemory() / (1024 * 1024) + " MB" }));
+		} else if (path.equals("/js/editAccount")) {
+			String realName = request.getParameter("realName");
+			String email = request.getParameter("email");
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("userPassword");
+			int accountType = -1;
+			int institute = -1;
+			try {
+				institute = Integer.parseInt(request.getParameter("institute"));
+				accountType = Integer.parseInt(request
+						.getParameter("accountType"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut und AccountType.");
+				return;
+			}
+			if (realName == null || realName.isEmpty() || userName == null
+					|| email == null || email.isEmpty() || userName.isEmpty()
+					|| password == null || password.isEmpty()
+					|| accountType < 0 || accountType > 3 || institute == -1) {
+				log.write("AdminServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter().write("Werte illegal!");
+				return;
+			}
+			if (!admin.editAccount(new Account(userName, password, accountType,
+					email, realName, institute, null))) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim Update in der Datenbank!");
+				return;
+			}
 			response.setContentType("text/plain");
 			response.getWriter().write("true");
 			return;
 		} else {
-			response.sendRedirect(Helper.D_INDEX);
+			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
-	}
-
-	/**
-	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
-	 * ist.
-	 * 
-	 * @param session
-	 *            Die session zum ueberpruefen.
-	 * @return <code>True</code> wenn ja, sonst <code>false</code>.
-	 */
-	private boolean checkAuthenticity(HttpSession session) {
-		User user = LoggedInUsers.getUserBySession(session);
-		if (user == null || !(user instanceof Admin)) {
-			log.write("AdminServlet", "Admin NOT authenticate.");
-			return false;
-		}
-		// TODO: Comment when done debugging:
-		// log.write("AdminServlet", "Admin authenticated.");
-		return true;
 	}
 }

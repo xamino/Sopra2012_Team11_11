@@ -6,8 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript" src="/hiwi/admin/script.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
@@ -59,7 +60,7 @@
 				<form name="dataForm" class="listform">
 					<div class="textblock">
 						<input id="saveButton" type="button" value="Änderungen übernehmen"
-							onclick="alert('TODO!');" /> <input id="cancelButton"
+							onclick="saveChanges(dataForm);" /> <input id="cancelButton"
 							type="button" value="Änderungen verwerfen"
 							onclick="window.location='accountsmanagement.jsp'" /> <input
 							id="deleteButton" style="float: right;" type="button"

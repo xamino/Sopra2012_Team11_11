@@ -110,8 +110,9 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public void updateAccount(Account account) {
+	public boolean updateAccount(Account account) {
 
 		String where = "benutzername = '" + account.getUsername() + "'";
 
@@ -123,7 +124,16 @@ public class AccountController {
 		String[] columns = { "passworthash", "accounttyp", "email", "name",
 				"institut", "stellvertreter" };
 
-		dbc.update("Accounts", columns, values, where);
+		return dbc.update("Accounts", columns, values, where);
+	}
+
+	/**
+	 * Gibt die Anzahl der registrierten Accounts zurück.
+	 * 
+	 * @return Anzahl der Accounts
+	 */
+	public int accountCount() {
+		return dbc.count(new String[] { "Accounts" }, null);
 	}
 
 	/**

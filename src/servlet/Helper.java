@@ -3,6 +3,10 @@
  */
 package servlet;
 
+import javax.servlet.http.HttpSession;
+
+import user.User;
+import userManagement.LoggedInUsers;
 import logger.Log;
 
 /**
@@ -122,9 +126,53 @@ public final class Helper {
 	 * Pfad zu /hiwi/provider/help.jsp.
 	 */
 	public static final String D_PROVIDER_HELP = "/hiwi/provider/help.jsp";
-	
+
 	/**
 	 * All servlets within the servlet package should use this instance of Log.
 	 */
 	public static final Log log = Log.getInstance();
+
+	/**
+	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
+	 * ist.
+	 * 
+	 * @param session
+	 *            Die session zum ueberpruefen.
+	 * @return Das Admin Object wenn korrekt, sonst null.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <U> U checkAuthenticity(HttpSession session, Class<U> c) {
+		User user = LoggedInUsers.getUserBySession(session);
+		if (user == null || !(user.getClass() == c)) {
+			log.write("Helper", "User not authentic.");
+			return null;
+		}
+		return (U) user;
+	}
+
+	/**
+	 * Help function for creating correct JSON objects with given names and
+	 * parameters.
+	 * 
+	 * @param varNames
+	 *            The name of the variables.
+	 * @param variables
+	 *            The value of the variables.
+	 * @return The JSON string.
+	 */
+	public static String jsonAtor(String[] varNames, Object[] variables) {
+		if (varNames.length != variables.length || varNames.length <= 0)
+			return null;
+		String json = "{";
+		for (int i = 0; i < varNames.length; i++) {
+			if (i != 0)
+				json += ",";
+			if (variables[i] instanceof String)
+				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
+			else
+				json += "\"" + varNames[i] + "\":" + variables[i];
+		}
+		json += "}";
+		return json;
+	}
 }

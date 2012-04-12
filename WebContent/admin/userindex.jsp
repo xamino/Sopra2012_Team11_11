@@ -6,10 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/admin/script.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Administrator Startseite | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="loadUserindex();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -55,15 +57,20 @@
 					<table class="hidden">
 						<tr>
 							<td>Angemeldete Benutzer:</td>
-							<td>42</td>
+							<td id="loggedInUsers"></td>
 						</tr>
 						<tr>
 							<td>Registrierte Benutzer:</td>
-							<td>3142</td>
+							<td id="allUsers"></td>
 						</tr>
 						<tr>
-							<td>RAM (in MB):</td>
-							<td>254</td>
+							<td>Total RAM:</td>
+							<td id="totalRAM"></td>
+						</tr>
+				
+						<tr>
+							<td>Max RAM:</td>
+							<td id="maxRAM"></td>
 						</tr>
 					</table>
 				</div>

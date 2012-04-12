@@ -7,7 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Datenschutzerklärungen | Hiwi Job Börse</title>
 </head>
 

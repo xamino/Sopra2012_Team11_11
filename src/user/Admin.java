@@ -2,13 +2,27 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
+import userManagement.LoggedInUsers;
+
 import database.account.Account;
+import database.account.AccountController;
 import database.document.Document;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.
  */
 public class Admin extends User {
+
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	private Log log;
+	/**
+	 * Private Instanz des AccountController.
+	 */
+	private AccountController accountController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -24,29 +38,57 @@ public class Admin extends User {
 	 *            Session des Benutzers.
 	 */
 	public Admin(String username, String email, String name, HttpSession session) {
-		super(username,email,name,session);
+		super(username, email, name, session);
 		userManagement.LoggedInUsers.addUser(this);
+		this.log = Log.getInstance();
+		this.accountController = AccountController.getInstance();
 	}
 
 	/**
-	 * Erstellt einen neuen Account.
+	 * Löscht einen neuen Account.
 	 * 
-	 * @param acc
-	 *            anzulegender Account.
+	 * @param username
+	 *            Username des anzulegenden Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 
-	public void createAccount(Account acc) {
-
+	public boolean deleteAccount(String username) {
+		Account account = accountController.getAccountByUsername(username);
+		if (account == null) {
+			log.write("Admin", "Can not delete <" + username
+					+ ">. Does not exist!");
+			// response.setContentType("text/error");
+			// response.getWriter().write("This user doesn't seem to exist!");
+			return false;
+		}
+		// If user is currently logged in, we do not allow deletion:
+		if (LoggedInUsers.getUserByUsername(username) != null) {
+			log.write("Admin", "Can not delete <" + username
+					+ "> as currently logged in!");
+			return false;
+		}
+		log.write("Admin", "Deleting account with username <" + username + ">");
+		accountController.deleteAccount(account);
+		return true;
 	}
 
 	/**
-	 * Löscht einen Account.
+	 * Erstellt einen Account.
 	 * 
-	 * @param acc
+	 * @param account
 	 *            zu loeschender Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public void deleteAccount(Account acc) {
-
+	public boolean createAccount(Account account) {
+		if (!accountController.createAccount(account)) {
+			// This can happen if the institute doesn't exist:
+			log.write("Admin",
+					"Error creating account! Is the institute valid?");
+			return false;
+		}
+		log.write("Admin", "Created account for <" + account.getUsername()
+				+ ">.");
+		return true;
 	}
 
 	/**
@@ -55,9 +97,18 @@ public class Admin extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public void editAccount(Account acc) {
-
+	public boolean editAccount(Account account) {
+		// For debugging wrong character set:
+		// System.out.println(account.getName());
+		if (!accountController.updateAccount(account)) {
+			log.write("Admin", "Error modifying account!");
+			return false;
+		}
+		log.write("Admin", "Modified account of <" + account.getUsername()
+				+ ">.");
+		return true;
 	}
 
 	/**

@@ -169,7 +169,28 @@ public class DatabaseController {
 			return false;
 		}
 	}
-
+	/**
+	 * Gibt die anzahl der Zeilen einer Tabelle aus die die Where Bedingung erfuellen
+	 * @param from Tabellen die in die Suche miteinbezogen werden sollen
+	 * @param where zu erfuellende Bedinung
+	 * @return Anzahl der Zeilen
+	 */
+	synchronized public int count(String[] from, String where){
+		String sel = "SELECT COUNT(*) FROM "
+				+ commanator(from);
+		if (where != null)
+			sel += " WHERE " + where;
+		ResultSet rs;
+		try {
+			rs = st.executeQuery(sel);
+			rs.next();
+			return rs.getInt("COUNT(*)");
+		} catch (SQLException e) {
+			log.write("DatabaseController", "COUNT error! <"+sel+">");
+		}
+		return 0;
+	}
+	
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
 	 * 
