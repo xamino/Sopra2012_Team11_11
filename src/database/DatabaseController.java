@@ -145,6 +145,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "DELETE error! <"+del+">");
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -164,6 +165,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "INSERT error! <"+insert+">");
+			e.printStackTrace();
 			return false;
 		}
 	}
