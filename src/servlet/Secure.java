@@ -55,7 +55,7 @@ public class Secure extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
-		path = path == null ? "" : path;
+		path = (path == null) ? "" : path;
 		log.write("Secure", "Received request <" + path + ">.");
 		// If login is asked:
 		if (path.equals("/js/doLogin")) {

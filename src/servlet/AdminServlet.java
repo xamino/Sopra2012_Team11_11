@@ -200,7 +200,8 @@ public class AdminServlet extends HttpServlet {
 			if (!admin.editAccount(new Account(userName, password, accountType,
 					email, realName, institute, null))) {
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim Update in der Datenbank!");
+				response.getWriter().write(
+						"Fehler beim Update in der Datenbank!");
 				return;
 			}
 			response.setContentType("text/plain");

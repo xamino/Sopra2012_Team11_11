@@ -100,6 +100,8 @@ public class Admin extends User {
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean editAccount(Account account) {
+		// For debugging wrong character set:
+		// System.out.println(account.getName());
 		if (!accountController.updateAccount(account)) {
 			log.write("Admin", "Error modifying account!");
 			return false;
