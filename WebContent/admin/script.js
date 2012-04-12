@@ -179,7 +179,6 @@ function handleLoadEditResponse(mime, data) {
 	} else {
 		// Set data:
 		// alert(data);
-		// TODO: Why do we need the () here? Doesn't work without.
 		var account = eval("(" + data + ")");
 		// Set the values we have:
 		document.getElementById("userName").innerHTML = account.username;
@@ -205,6 +204,63 @@ function deleteEditAccount() {
 	deleteAccount(username, function() {
 		window.location = "accountsmanagement.jsp";
 	});
+}
+
+function saveChanges(form) {
+	if (form == null)
+		return;
+	var error = false;
+	var realName = form.realName.value;
+	if (realName == null || realName == "") {
+		toggleWarning("error_realName", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_realName", false, "");
+	var email = form.email.value;
+	if (email == null || email == "") {
+		toggleWarning("error_email", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_email", false, "");
+	var password = form.password.value;
+	if (password == null || password == "") {
+		toggleWarning("error_password", true, "Bitte ausfüllen!");
+		error = true;
+	} else {
+		password = b64_md5(password);
+		toggleWarning("error_password", false, "");
+	}
+	var accountType = form.accountType.value;
+	var institute = form.institute.value;
+	if (institute == null || institute == "") {
+		toggleWarning("error_institute", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_institute", false, "");
+	if (error)
+		return;
+	// As of here, send:
+	// alert("All okay!");
+	var userName = document.getElementById("userName").innerHTML;
+	connect("/hiwi/Admin/js/editAccount?realName=" + realName + "&email="
+			+ email + "&userName=" + userName + "&userPassword=" + password
+			+ "&accountType=" + accountType + "&institute=" + institute,
+			handleEditAccountResponse);
+}
+
+function handleEditAccountResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "text/plain") {
+		if (data == "true") {
+			window.location = "accountsmanagement.jsp";
+			return;
+		}
+	} else if (mime == "text/error") {
+		alert(data);
+		return;
+	}
 }
 
 /**

@@ -60,7 +60,7 @@
 				<form name="dataForm" class="listform">
 					<div class="textblock">
 						<input id="saveButton" type="button" value="Änderungen übernehmen"
-							onclick="alert('TODO!');" /> <input id="cancelButton"
+							onclick="saveChanges(dataForm);" /> <input id="cancelButton"
 							type="button" value="Änderungen verwerfen"
 							onclick="window.location='accountsmanagement.jsp'" /> <input
 							id="deleteButton" style="float: right;" type="button"

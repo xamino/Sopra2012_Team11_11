@@ -49,6 +49,7 @@ public class Admin extends User {
 	 * 
 	 * @param username
 	 *            Username des anzulegenden Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 
 	public boolean deleteAccount(String username) {
@@ -76,6 +77,7 @@ public class Admin extends User {
 	 * 
 	 * @param account
 	 *            zu loeschender Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createAccount(Account account) {
 		if (!accountController.createAccount(account)) {
@@ -95,9 +97,16 @@ public class Admin extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public void editAccount(Account acc) {
-
+	public boolean editAccount(Account account) {
+		if (!accountController.updateAccount(account)) {
+			log.write("Admin", "Error modifying account!");
+			return false;
+		}
+		log.write("Admin", "Modified account of <" + account.getUsername()
+				+ ">.");
+		return true;
 	}
 
 	/**

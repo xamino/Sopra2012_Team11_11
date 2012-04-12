@@ -159,14 +159,53 @@ public class AdminServlet extends HttpServlet {
 		} else if (path.equals("/js/getSystemInformation")) {
 			response.setContentType("application/json");
 			Runtime r = Runtime.getRuntime();
-			response.getWriter().write(
-					Helper.jsonAtor(
+			response.getWriter()
+					.write(Helper.jsonAtor(
 							new String[] { "loggedInUsers", "allUsers",
 									"totalRAM", "maxRAM" },
-							new Object[] { LoggedInUsers.getUsers().size(),
+							new Object[] {
+									LoggedInUsers.getUsers().size(),
 									accountController.accountCount(),
-									"~"+r.totalMemory() / (1024 * 1024) + " MB",
-									"~"+r.maxMemory() / (1024 * 1024) + " MB" }));
+									"~" + r.totalMemory() / (1024 * 1024)
+											+ " MB",
+									"~" + r.maxMemory() / (1024 * 1024) + " MB" }));
+		} else if (path.equals("/js/editAccount")) {
+			String realName = request.getParameter("realName");
+			String email = request.getParameter("email");
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("userPassword");
+			int accountType = -1;
+			int institute = -1;
+			try {
+				institute = Integer.parseInt(request.getParameter("institute"));
+				accountType = Integer.parseInt(request
+						.getParameter("accountType"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut und AccountType.");
+				return;
+			}
+			if (realName == null || realName.isEmpty() || userName == null
+					|| email == null || email.isEmpty() || userName.isEmpty()
+					|| password == null || password.isEmpty()
+					|| accountType < 0 || accountType > 3 || institute == -1) {
+				log.write("AdminServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter().write("Werte illegal!");
+				return;
+			}
+			if (!admin.editAccount(new Account(userName, password, accountType,
+					email, realName, institute, null))) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Update in der Datenbank!");
+				return;
+			}
+			response.setContentType("text/plain");
+			response.getWriter().write("true");
+			return;
 		} else {
 			log.write("AdminServlet", "Unknown parameters <" + path + ">");
 		}
