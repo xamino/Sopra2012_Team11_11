@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import database.account.Account;
 import database.account.AccountController;
+import database.document.DocumentController;
+import database.document.Document;
 
 import user.Admin;
 import userManagement.LoggedInUsers;
@@ -43,14 +45,21 @@ public class AdminServlet extends HttpServlet {
 	 */
 	private AccountController accountController;
 	/**
+	 * Variable zum speicher der Instanz des DocumentController.
+	 */
+	private DocumentController docController;
+	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
-	private Gson gson = new Gson();
+	private Gson gson;
 
 	public AdminServlet() {
 		super();
 		log = Helper.log;
+		gson = new Gson();
 		accountController = AccountController.getInstance();
+		docController = DocumentController.getInstance();
+		log.write("AdminServlet", "Instance created.");
 	}
 
 	/**
@@ -207,8 +216,47 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("text/plain");
 			response.getWriter().write("true");
 			return;
+		} else if (path.equals("/js/loadDocuments")) {
+			Vector<Document> documents = docController.getAllDocuments();
+			response.setContentType("application/json");
+			response.getWriter().write(
+					gson.toJson(documents, documents.getClass()));
+		} else if (path.equals("/js/addDocument")) {
+			String title = request.getParameter("title");
+			String description = request.getParameter("description");
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+				return;
+			}
+			if (title == null || title.isEmpty() || description == null
+					|| description.isEmpty() || uid < 0) {
+				log.write("AdminServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler bei Eingabe! Fehlende Eingaben.");
+				return;
+			}
+			// all okay... continue:
+			if (!admin.addDoc(new Document(uid, title, description))) {
+				log.write("AdminServlet", "Couldn't create document!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+				return;
+			}
+			log.write("AdminServlet", "Created document <" + title + ">.");
+			response.setContentType("text/plain");
+			response.getWriter().write("true");
+			return;
 		} else {
-			log.write("AdminServlet", "Unknown parameters <" + path + ">");
+			log.write("AdminServlet", "Unknown path <" + path + ">");
 		}
 	}
 }

@@ -5,7 +5,14 @@
  */
 
 // All public, non-xmlhttp variables here:
-var selectedID;
+/**
+ * Stores the selected Account:
+ */
+var selectedAccount;
+/**
+ * Stores the selected Document:
+ */
+var selectedDocument;
 
 /**
  * This function loads all the accounts in the system from the database and
@@ -13,7 +20,7 @@ var selectedID;
  */
 function loadAccounts() {
 	// reset selectedID (account could have been deleted in meantime)
-	selectedID = null;
+	selectedAccount = null;
 	connect("/hiwi/Admin/js/loadAccounts", handleLoadAccountsResponse);
 }
 
@@ -37,11 +44,11 @@ function handleLoadAccountsResponse(mime, data) {
 		table.innerHTML = "<tr><th>Benutzer Name</th><th>Name</th><th>Emailaddresse</th><th>Account Typ</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
-					+ "\" onclick=\"markSelected(\'" + JSONarray[i].username
-					+ "\');\"><td>" + JSONarray[i].username + "</td><td>"
-					+ JSONarray[i].name + "</td><td>" + JSONarray[i].email
-					+ "</td><td>" + getTypeString(JSONarray[i].accounttype)
-					+ "</td></tr>";
+					+ "\" onclick=\"markAccountSelected(\'"
+					+ JSONarray[i].username + "\');\"><td>"
+					+ JSONarray[i].username + "</td><td>" + JSONarray[i].name
+					+ "</td><td>" + JSONarray[i].email + "</td><td>"
+					+ getTypeString(JSONarray[i].accounttype) + "</td></tr>";
 		}
 	}
 }
@@ -50,13 +57,13 @@ function handleLoadAccountsResponse(mime, data) {
  * Deletes the account currently stored in the selectedID variable.
  */
 function deleteSelectedAccount() {
-	if (selectedID == null) {
+	if (selectedAccount == null) {
 		toggleWarning("error_selection", true, "Kein Account ausgewählt!");
 		return;
 	}
 	toggleWarning("error_selection", false, "");
 	// Tell servlet to delete account:
-	deleteAccount(selectedID, loadAccounts);
+	deleteAccount(selectedAccount, loadAccounts);
 }
 
 /**
@@ -102,17 +109,17 @@ function handleDeleteAccountResponse(mime, data) {
  * @param username
  *            The username ID of the clicked entry.
  */
-function markSelected(id) {
+function markAccountSelected(id) {
 	// Remove marking from previous selected, if applicable:
-	if (selectedID != null)
-		document.getElementById(selectedID).setAttribute("class", "");
+	if (selectedAccount != null)
+		document.getElementById(selectedAccount).setAttribute("class", "");
 	// If clicked again, unselect:
-	if (selectedID == id) {
-		selectedID = null;
+	if (selectedAccount == id) {
+		selectedAccount = null;
 		return;
 	}
 	// Else save & mark new one:
-	selectedID = id;
+	selectedAccount = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
 }
@@ -122,14 +129,14 @@ function markSelected(id) {
  * correct values.
  */
 function checkLegalEdit() {
-	if (selectedID == null) {
+	if (selectedAccount == null) {
 		toggleWarning("error_selection", true, "Kein Account ausgewählt!");
 		return;
 	}
 	toggleWarning("error_selection", false, "");
 	// Load editaccount.jsp with correct mode:
 	// alert("editaccount.jsp?mode=edit&id=" + selectedID);
-	window.location = "editaccount.jsp?mode=edit&id=" + selectedID;
+	window.location = "editaccount.jsp?mode=edit&id=" + selectedAccount;
 }
 
 /**
@@ -160,7 +167,7 @@ function loadEditOptions() {
 		if (username == "")
 			return;
 		// Set selection so that deleteAccount works if called:
-		selectedID = username;
+		selectedAccount = username;
 		// Get all data that belongs to this username:
 		connect("/hiwi/Admin/js/getAccountData?name=" + username,
 				handleLoadEditResponse);
@@ -350,4 +357,95 @@ function handleLoadUserindex(mime, data) {
 		document.getElementById("totalRAM").innerHTML = jsonData.totalRAM;
 		document.getElementById("maxRAM").innerHTML = jsonData.maxRAM;
 	}
+}
+
+/**
+ * Function for sending a document load request.
+ */
+function loadDocuments() {
+	connect("/hiwi/Admin/js/loadDocuments", handleLoadDocuments);
+	selectedDocument = null;
+}
+
+function markDocumentSelected(id) {
+	alert("TODO!\n" + id);
+}
+
+/**
+ * Handles the documents sent from the server.
+ * 
+ * @param mime
+ *            The MIME type of the answer.
+ * @param data
+ *            The data.
+ */
+function handleLoadDocuments(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "application/json") {
+		var documents = eval(data);
+		var table = document.getElementById("documentsList");
+		table.innerHTML = "<tr><th>UID</th><th>Name</th><th>Beschreibung</th></tr>";
+		for ( var i = 0; i < documents.length; i++)
+			table.innerHTML += "<tr class=\"\" id=\"" + documents[i].uid
+					+ "\" onclick=\"markDocumentSelected(" + documents[i].uid
+					+ ")\"><td>" + documents[i].uid + "</td><td>"
+					+ documents[i].name + "</td><td>"
+					+ documents[i].description + "</td></tr>";
+	}
+}
+
+function addDocument() {
+	var form = addDocumentForm;
+	if (form == null)
+		return;
+	var error = false;
+	var uid = form.uid.value;
+	if (uid == null || uid == "") {
+		toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_uid", false, "");
+	var title = form.title.value;
+	if (title == null || title == "") {
+		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_title", false, "");
+	var description = form.description.value;
+	if (description == null || description == "") {
+		toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_descr", false, "");
+	if (error)
+		return;
+	// alert("All okay!");
+	connect("/hiwi/Admin/js/addDocument?uid=" + uid + "&title=" + title
+			+ "&description=" + description, handleAddDocumentResponse);
+}
+
+function handleAddDocumentResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "text/error") {
+		alert(data);
+	} else if (mime == "text/plain") {
+		if (data == "true") {
+			clearAddDocumentPopup();
+			togglePopup("document_add", false);
+			loadDocuments();
+		}
+	}
+}
+
+function clearAddDocumentPopup() {
+	addDocumentForm.uid.value = "";
+	addDocumentForm.title.value = "";
+	addDocumentForm.description.value = "";
+	toggleWarning("error_addDocument_uid", false, "");
+	toggleWarning("error_addDocument_descr", false, "");
+	toggleWarning("error_addDocument_title", false, "");
 }

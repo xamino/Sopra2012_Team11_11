@@ -9,7 +9,6 @@ package database.document;
 /**
  * Verwaltet alle Datenbankzugriffe auf Unterlagen-bezogene Daten.
  */
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -60,13 +59,11 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
+	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
-	public void createDocument(Document document) { // checked
-
-		dbc.insert(
-				"Unterlagen",
-				new Object[] { document.getUid(), document.getName(),
-						document.getDescription() });
+	public boolean createDocument(Document document) { // checked
+		return dbc.insert("Unterlagen", new Object[] { document.getUid(),
+				document.getName(), document.getDescription() });
 	}
 
 	/**
@@ -111,7 +108,7 @@ public class DocumentController {
 	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
-	public Vector<OfferDocument> getDocumentsByOffer(int aid) { //checked
+	public Vector<OfferDocument> getDocumentsByOffer(int aid) { // checked
 
 		// Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots
 		// bei gegebener Angebots-ID
@@ -121,8 +118,9 @@ public class DocumentController {
 
 		try {
 			while (rs.next()) {
-				docVect.add(new OfferDocument(rs.getInt("aid"), rs.getInt("uid"))); // !!! Mit ResultSet ein
-											// Document-Objekt machen !!!
+				docVect.add(new OfferDocument(rs.getInt("aid"), rs
+						.getInt("uid"))); // !!! Mit ResultSet ein
+				// Document-Objekt machen !!!
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -138,22 +136,22 @@ public class DocumentController {
 					.println("There was an error while trying to close the ResultSet.");
 			e.printStackTrace();
 		}
-		
-		/*//Nur zum Testen, ob alle Standardunterlagen mit aid im Vector sind
-		for (int i=0;i<docVect.size();i++){
-			try{
-				OfferDocument offDoc = docVect.elementAt(i);
-				System.out.println("AID="+offDoc.getOfferID()+" UID="+offDoc.getDocumentid());
-			}
-			catch (ArrayIndexOutOfBoundsException ae){
-				System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-			}
-			
-		}
-		*/
-		
+
+		/*
+		 * //Nur zum Testen, ob alle Standardunterlagen mit aid im Vector sind
+		 * for (int i=0;i<docVect.size();i++){ try{ OfferDocument offDoc =
+		 * docVect.elementAt(i);
+		 * System.out.println("AID="+offDoc.getOfferID()+" UID="
+		 * +offDoc.getDocumentid()); } catch (ArrayIndexOutOfBoundsException
+		 * ae){
+		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
+		 * }
+		 * 
+		 * }
+		 */
+
 		return docVect;
-		
+
 	}
 
 	/**
@@ -165,7 +163,7 @@ public class DocumentController {
 	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
-	public Vector<AppDocument> getAppDocumentByOffer(int aid) { //checked
+	public Vector<AppDocument> getAppDocumentByOffer(int aid) { // checked
 
 		// Vector fuer die Rueckgabe der Bewerbungsunterlagen eines bestimmten
 		// Angebots bei gegebener Angebots-ID
@@ -175,7 +173,9 @@ public class DocumentController {
 
 		try {
 			while (rs.next()) {
-				appDocVect.add(new AppDocument(rs.getString("benutzername"), rs.getInt("aid"), rs.getInt("uid"), rs.getBoolean("status")));
+				appDocVect.add(new AppDocument(rs.getString("benutzername"), rs
+						.getInt("aid"), rs.getInt("uid"), rs
+						.getBoolean("status")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -191,20 +191,21 @@ public class DocumentController {
 			System.out
 					.println("There was an error while trying to close the ResultSet.");
 			e.printStackTrace();
-		} 
-		/*//Nur zum Testen, ob alle Bewerbungsunterlagen mit aid im Vector sind
-		for (int i=0;i<appDocVect.size();i++){
-			try{
-				AppDocument offDoc = appDocVect.elementAt(i);
-				System.out.println("Benutzername="+offDoc.getUsername()+"  AID="+offDoc.getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent());
-			}
-			catch (ArrayIndexOutOfBoundsException ae){
-				System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-			}
-			
 		}
-		*/
-		
+		/*
+		 * //Nur zum Testen, ob alle Bewerbungsunterlagen mit aid im Vector sind
+		 * for (int i=0;i<appDocVect.size();i++){ try{ AppDocument offDoc =
+		 * appDocVect.elementAt(i);
+		 * System.out.println("Benutzername="+offDoc.getUsername
+		 * ()+"  AID="+offDoc
+		 * .getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent()); }
+		 * catch (ArrayIndexOutOfBoundsException ae){
+		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
+		 * }
+		 * 
+		 * }
+		 */
+
 		return appDocVect;
 
 	}
@@ -223,19 +224,24 @@ public class DocumentController {
 	 *         Account zu einem bestimmten Jobangebot aus der Datenbank
 	 *         zurueckgegeben.
 	 */
-	public Vector<AppDocument> getDocumentsByUserAndOffer(Account account, Offer offer) { //checked;  statt Offer offer vielleicht int aid ?
+	public Vector<AppDocument> getDocumentsByUserAndOffer(Account account,
+			Offer offer) { // checked; statt Offer offer vielleicht int aid ?
 		// Account oder Application Instanz?
 
 		// Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots
 		// und Accounts bei gegebenem Account und Angebot
 		Vector<AppDocument> userOffDocVect = new Vector<AppDocument>();
-		ResultSet rs = dbc.select(new String[] { "*" },new String[] { "Bewerbungsunterlagen" },"Benutzername='" + 
-						account.getUsername() + "' AND AID="+ offer.getAid());
+		ResultSet rs = dbc
+				.select(new String[] { "*" },
+						new String[] { "Bewerbungsunterlagen" },
+						"Benutzername='" + account.getUsername() + "' AND AID="
+								+ offer.getAid());
 
 		try {
 			while (rs.next()) {
 				userOffDocVect.add(new AppDocument(
-						rs.getString("Benutzername"), rs.getInt("aid"), rs.getInt("uid"), rs.getBoolean("status")));
+						rs.getString("Benutzername"), rs.getInt("aid"), rs
+								.getInt("uid"), rs.getBoolean("status")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -251,26 +257,30 @@ public class DocumentController {
 					.println("There was an error while trying to close the ResultSet.");
 			e.printStackTrace();
 		}
-		/*//Nur zum Testen, ob alle Bewerbungsunterlagen mit aid und account im Vector sind
-		for (int i=0;i<userOffDocVect.size();i++){
-			try{
-				AppDocument offDoc = userOffDocVect.elementAt(i);
-				System.out.println("Benutzername="+offDoc.getUsername()+"  AID="+offDoc.getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent());
-			}
-			catch (ArrayIndexOutOfBoundsException ae){
-				System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-			}
-			
-		}
-		
-		Kommt in Secure rein zum Testen:
-		Account acci = new Account("max.payne","adfe3",3,"sfdsf@dqd.com","Max Payne",100,"");
-		Offer offi = new Offer(901,"agent47","The Cleaning","Bitte schnell online stellen.",false,3,47.3,
-		"Spuren beseitigen, tatort reinigen, DNA Spurenbeseitigung.",new Date(3456),new Date(4367),34.5,8,new Date(3452));
-			
-		DocumentController.getInstance().getDocumentsByUserAndOffer(acci,offi);
-		
-		*/
+		/*
+		 * //Nur zum Testen, ob alle Bewerbungsunterlagen mit aid und account im
+		 * Vector sind for (int i=0;i<userOffDocVect.size();i++){ try{
+		 * AppDocument offDoc = userOffDocVect.elementAt(i);
+		 * System.out.println("Benutzername="
+		 * +offDoc.getUsername()+"  AID="+offDoc
+		 * .getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent()); }
+		 * catch (ArrayIndexOutOfBoundsException ae){
+		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
+		 * }
+		 * 
+		 * }
+		 * 
+		 * Kommt in Secure rein zum Testen: Account acci = new
+		 * Account("max.payne","adfe3",3,"sfdsf@dqd.com","Max Payne",100,"");
+		 * Offer offi = new
+		 * Offer(901,"agent47","The Cleaning","Bitte schnell online stellen."
+		 * ,false,3,47.3,
+		 * "Spuren beseitigen, tatort reinigen, DNA Spurenbeseitigung.",new
+		 * Date(3456),new Date(4367),34.5,8,new Date(3452));
+		 * 
+		 * DocumentController.getInstance().getDocumentsByUserAndOffer(acci,offi)
+		 * ;
+		 */
 		return userOffDocVect;
 	}
 
@@ -282,11 +292,12 @@ public class DocumentController {
 	 *         Datenbank zurueckgegeben.
 	 * @throws SQLException
 	 */
-	public Vector<Document> getAllDocuments() { //checked
+	public Vector<Document> getAllDocuments() { // checked
 
 		// Vector fuer die Rueckgabe aller vorhandenen Unterlagen
 		Vector<Document> allDocVect = new Vector<Document>();
-		ResultSet rs = dbc.select(new String[] { "*" },new String[] { "Unterlagen" }, null);
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { "Unterlagen" }, null);
 
 		try {
 			while (rs.next()) {
@@ -307,19 +318,19 @@ public class DocumentController {
 					.println("There was an error while trying to close the ResultSet.");
 			e.printStackTrace();
 		}
-		
-		/*//Nur zum Testen, ob alle Unterlagen im Vector sind
-		for (int i=0;i<allDocVect.size();i++){
-			try{
-				Document offDoc = allDocVect.elementAt(i);
-				System.out.println("UID="+offDoc.getUid()+"  Name="+offDoc.getName()+" Beschreibung="+offDoc.getDescription());
-			}
-			catch (ArrayIndexOutOfBoundsException ae){
-				System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-			}
-			
-		}
-		*/
+
+		/*
+		 * //Nur zum Testen, ob alle Unterlagen im Vector sind for (int
+		 * i=0;i<allDocVect.size();i++){ try{ Document offDoc =
+		 * allDocVect.elementAt(i);
+		 * System.out.println("UID="+offDoc.getUid()+"  Name="
+		 * +offDoc.getName()+" Beschreibung="+offDoc.getDescription()); } catch
+		 * (ArrayIndexOutOfBoundsException ae){
+		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
+		 * }
+		 * 
+		 * }
+		 */
 		return allDocVect;
 	}
 
@@ -362,7 +373,9 @@ public class DocumentController {
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
 	 */
-	public void updateAppDocument(AppDocument document) { // checked; Update von Status funktioniert
+	public void updateAppDocument(AppDocument document) { // checked; Update von
+															// Status
+															// funktioniert
 
 		String where = "Benutzername='" + document.getUsername() + "' AND AID="
 				+ document.getoID() + " AND UID=" + document.getdID();
@@ -418,26 +431,30 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
-	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked: PROBLEM
+	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked:
+																						// PROBLEM
 		/*
 		 * Problem: DocumentController.java Methode updateOfferDocument(). Was
-		 * soll bei Standardunterlagen geändert werden? AID soll unverändert und
-		 * UID up-to-date sein? Aber übergeben wird ein OfferDocument Objekt,
-		 * d.h. der neue Wert des UID muss bei Methodenaufruf mit übergeben
+		 * soll bei Standardunterlagen geï¿½ndert werden? AID soll unverï¿½ndert und
+		 * UID up-to-date sein? Aber ï¿½bergeben wird ein OfferDocument Objekt,
+		 * d.h. der neue Wert des UID muss bei Methodenaufruf mit ï¿½bergeben
 		 * werden oder? Sonst macht die MEthode ja z.B. beim Aufruf:
 		 * 
-		 * DocumentController.getInstance().updateOfferDocument(newOfferDocument(901,999)); 
+		 * DocumentController.getInstance().updateOfferDocument(newOfferDocument(
+		 * 901,999));
 		 * 
-		 * In Worten: "Mach ein update bei Standardunterlagen, wo AID=901 und UID=999 mit new Object []
-		 * {document.getOfferID(), document.getDocumentid()} was beideutet
-		 * AID=901 bleibt 901 und UID=999 auch? Macht eine update methode hier
-		 * überhaupt Sinn? Löschen und neu anlegen ist doch praktischer oder?
-		 * Das würde ich vorschlagen. @author Oemer Sahin
+		 * In Worten: "Mach ein update bei Standardunterlagen, wo AID=901 und
+		 * UID=999 mit new Object [] {document.getOfferID(),
+		 * document.getDocumentid()} was beideutet AID=901 bleibt 901 und
+		 * UID=999 auch? Macht eine update methode hier ï¿½berhaupt Sinn? Lï¿½schen
+		 * und neu anlegen ist doch praktischer oder? Das wï¿½rde ich vorschlagen.
+		 * @author Oemer Sahin
 		 */
 		String where = "AID=" + document.getOfferID() + " AND UID="
 				+ document.getDocumentid();
 		String[] columns = new String[] { "AID", "UID" };
-		Object[] values = new Object[] { document.getOfferID(),document.getDocumentid()};
+		Object[] values = new Object[] { document.getOfferID(),
+				document.getDocumentid() };
 		// Object[] values = new Object[]{document.getOfferID(),newDocumentId};
 
 		dbc.update("Standardunterlagen", columns, values, where);
@@ -448,8 +465,9 @@ public class DocumentController {
 	 * Bewerbungsunterlagen anzugeben?
 	 */
 	public void updateStatus() { // not useful
-		/* Diese Funktionalität wird schon in der Methode updateAppDocument(AppDocument document) realisiert.
-		 * 
+		/*
+		 * Diese Funktionalitï¿½t wird schon in der Methode
+		 * updateAppDocument(AppDocument document) realisiert.
 		 */
 	}
 }

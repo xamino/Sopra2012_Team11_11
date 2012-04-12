@@ -9,6 +9,7 @@ import userManagement.LoggedInUsers;
 import database.account.Account;
 import database.account.AccountController;
 import database.document.Document;
+import database.document.DocumentController;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.
@@ -23,6 +24,10 @@ public class Admin extends User {
 	 * Private Instanz des AccountController.
 	 */
 	private AccountController accountController;
+	/**
+	 * Private Instanz des DocumentController.
+	 */
+	private DocumentController docController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -42,6 +47,7 @@ public class Admin extends User {
 		userManagement.LoggedInUsers.addUser(this);
 		this.log = Log.getInstance();
 		this.accountController = AccountController.getInstance();
+		this.docController = DocumentController.getInstance();
 	}
 
 	/**
@@ -125,9 +131,11 @@ public class Admin extends User {
 	 * Fuegt ein Administrator Dokument hinzu.
 	 * 
 	 * @param doc
+	 *            Das zu erstellende Dokument.
+	 * @return Gibt an, ob das Dokument erstellt worden konnte.
 	 */
-	public void addDoc(Document doc) {
-
+	public boolean addDoc(Document doc) {
+		return docController.createDocument(doc);
 	}
 
 	/**
