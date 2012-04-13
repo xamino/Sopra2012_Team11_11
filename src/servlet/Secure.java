@@ -52,8 +52,8 @@ public class Secure extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		path = (path == null) ? "" : path;
 		log.write("Secure", "Received request <" + path + ">.");

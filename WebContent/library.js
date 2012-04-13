@@ -26,17 +26,20 @@ var xmlhttp = new getXMLObject();
  * Function for abstracting the connection to the Server.
  * 
  * @param URL
- *            The URL to be called. Give parameters here as
- *            ?varName=varValue&...
+ *            The URL to be called.
+ * @param data
+ *            The data to be sent. Must be of the form "name=value&age=value".
  * @param callback
  *            The function to be called when an answer is received. Must be of
- *            the form: callback(String MIMETYPE, String CONTENT)
+ *            the form: callback(String MIMETYPE, String CONTENT). Can be null,
+ *            but nothing happens then of course.
  */
 function connect(URL, data, callback) {
 	// Send login data:
 	xmlhttp.open("POST", URL);
+	// Important!! charset=UTF-8 is the key... :D
 	xmlhttp.setRequestHeader("Content-type",
-			"application/x-www-form-urlencoded");
+			"application/x-www-form-urlencoded;charset=UTF-8");
 	// When status changes do:
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
