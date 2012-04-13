@@ -1,6 +1,9 @@
 package userManagement;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -19,22 +22,20 @@ public abstract class LoggedInUsers {
 	 */
 	private static Log log = Log.getInstance();
 
-	// TODO LoggedinUsers auf hashmap statt vector umstellen ^
+	/**
+	 * Hashmap mit der eingeloggten session ids mit zugehörigem User Objekt
+	 */
 	private static HashMap<String, User> userMap = new HashMap<String, User>();
 	
-	
-	/**
-	 * Vector mit den eingelogten Usern des Systems.
-	 */
-	private static Vector<User> users = new Vector<User>();
 
 	/**
-	 * Gibt den Vector mit den eingeloggten Usern zurueck.
+	 * Gibt einen Vector mit den eingeloggten Usern zurueck.
 	 * 
 	 * @return Vector mit eingeloggten Usern
 	 */
 	public static Vector<User> getUsers() {
-		return users;
+		return new Vector<User>(userMap.values());
+	
 	}
 
 	/**
@@ -52,24 +53,25 @@ public abstract class LoggedInUsers {
 	static public void addUser(User u) {
 		User tempuserbyname = getUserByUsername(u.getUserData().getUsername());
 		User tempuserbysession = getUserBySession(u.getUserData().getSession());
+		String name = u.getUserData().getUsername();
 		if (tempuserbyname == null && tempuserbysession == null) {
-			users.add(u);
-			log.write("LoggedInUsers", u.getUserData().getUsername()
+			userMap.put(u.getUserData().getSession().getId(), u);
+			log.write("LoggedInUsers", name
 					+ " has logged in.");
 
 		} else if (tempuserbysession == null && tempuserbyname != null) {
 			log.write("LoggedInUsers", "Killing User: "+tempuserbyname.getUserData().getUsername());
 			tempuserbyname.invalidate();
-			users.add(u);
-			log.write("LoggedInUsers", u.getUserData().getUsername()
+			userMap.put(u.getUserData().getSession().getId(), u);
+			log.write("LoggedInUsers", name
 					+ " has logged in.");
 
 		}
 		else if (tempuserbyname == null && tempuserbysession!=null) {
 			log.write("LoggedInUsers", "Killing User: "+tempuserbysession.getUserData().getUsername());
 			removeUserBySession(u.getUserData().getSession());
-			users.add(u);
-			log.write("LoggedInUsers", u.getUserData().getUsername()
+			userMap.put(u.getUserData().getSession().getId(), u);
+			log.write("LoggedInUsers", name
 					+ " has logged in.");
 		}
 		else if(tempuserbyname !=null && tempuserbysession!=null){
@@ -78,8 +80,8 @@ public abstract class LoggedInUsers {
 			removeUserBySession(u.getUserData().getSession());
 			log.write("LoggedInUsers", "Killing User: "+tempuserbyname.getUserData().getUsername());
 			tempuserbyname.invalidate();
-			users.add(u);
-			log.write("LoggedInUsers", u.getUserData().getUsername()
+			userMap.put(u.getUserData().getSession().getId(), u);
+			log.write("LoggedInUsers", name
 					+ " has logged in.");
 		}
 
@@ -95,12 +97,13 @@ public abstract class LoggedInUsers {
 	 * @see User
 	 */
 	public static User getUserByUsername(String username) {
-		for (int i = 0; i < users.size(); i++)
-			if (users.get(i).getUserData().getUsername().equals(username))
-				return users.get(i);
+		Iterator<Entry<String, User>> it = userMap.entrySet().iterator();
+		User u;
+		while(it.hasNext()){
+			u=it.next().getValue();
+			if(u.getUserData().getUsername().equals(username))return u;
+		}
 		return null;
-		
-		
 	}
 
 	/**
@@ -112,12 +115,7 @@ public abstract class LoggedInUsers {
 	 *         <code>Null</code>
 	 **/
 	public static User getUserBySession(HttpSession session) {
-		for (int i = 0; i < users.size(); i++) {
-			if (users.get(i).getUserData().getSession() == session) {
-				return users.get(i);
-			}
-		}
-		return null;
+		return userMap.get(session.getId());
 	}
 
 	/**
@@ -130,17 +128,14 @@ public abstract class LoggedInUsers {
 	 * 
 	 */
 	static void removeUserBySession(HttpSession session) {
-		// userName==null keine aktion
-		if (session.getAttribute("userName") == null)
+		String id = session.getId();
+		String name="";
+		try{
+			name = userMap.get(id).getUserData().getUsername();
+		}catch(NullPointerException n){
 			return;
-		for (int i = 0; i < users.size(); i++) {
-			if (users.get(i).getUserData().getSession() == session) {
-				String name = users.get(i).getUserData().getUsername();
-				users.remove(i);
-				log.write("LoggedInUsers", name+ " has logged out.");
-				
-				break;
-			}
 		}
+		userMap.remove(id);
+		log.write("LoggedInUsers", name+ " has logged out.");
 	}
 }

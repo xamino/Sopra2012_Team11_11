@@ -105,4 +105,5 @@ public abstract class User {
 				+ uData.getSession().getId() + "]";
 	}
 
+	
 }
