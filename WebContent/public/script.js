@@ -4,7 +4,6 @@
  */
 
 // This script requires the md5.js file! (Needs to be imported on the webpages that use this file.)
-
 /**
  * This function checks that all the fields required for login are filled and
  * sends the data to the server. On correct login it redirects to the userindex
@@ -37,8 +36,8 @@ function checkLogin(form) {
 	userPassword = b64_md5(userPassword);
 	// alert("Password hash: " + userPassword);
 	// Send login data:
-	connect("/hiwi/Secure/js/doLogin?userName=" + userName + "&userPassword="
-			+ userPassword, handleLoginResponse);
+	connect("/hiwi/Secure/js/doLogin", "userName=" + userName
+			+ "&userPassword=" + userPassword, handleLoginResponse);
 }
 
 /**
@@ -158,10 +157,10 @@ function checkRegister(form) {
 	// MD5 hash the password:
 	password_1 = b64_md5(password_1);
 	// Send register data:
-	connect(
-			"/hiwi/Secure/js/doRegister?realName=" + realName + "&email="
-					+ email_1 + "&userName=" + userName + "&userPassword="
-					+ password_1, handleRegisterResponse);
+	connect("/hiwi/Secure/js/doRegister",
+			"realName=" + realName + "&email=" + email_1 + "&userName="
+					+ userName + "&userPassword=" + password_1,
+			handleRegisterResponse);
 }
 
 /**

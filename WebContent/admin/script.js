@@ -17,7 +17,7 @@ var selectedAccount;
 function loadAccounts() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedAccount = null;
-	connect("/hiwi/Admin/js/loadAccounts", handleLoadAccountsResponse);
+	connect("/hiwi/Admin/js/loadAccounts", "", handleLoadAccountsResponse);
 }
 
 /**
@@ -79,7 +79,7 @@ var callback;
 
 function deleteAccount(id, t_callback) {
 	callback = t_callback;
-	connect("/hiwi/Admin/js/deleteAccount?name=" + id,
+	connect("/hiwi/Admin/js/deleteAccount", "name=" + id,
 			handleDeleteAccountResponse);
 }
 
@@ -165,7 +165,7 @@ function loadEditOptions() {
 		// Set selection so that deleteAccount works if called:
 		selectedAccount = username;
 		// Get all data that belongs to this username:
-		connect("/hiwi/Admin/js/getAccountData?name=" + username,
+		connect("/hiwi/Admin/js/getAccountData", "name=" + username,
 				handleLoadEditResponse);
 	} else {
 		alert("Unknown mode!");
@@ -190,7 +190,7 @@ function handleLoadEditResponse(mime, data) {
 		document.getElementById("email").value = account.email;
 		document.getElementById("institute").value = account.institute;
 		// Set the values we don't necessarily have:
-		document.getElementById("password").value = "********";
+		document.getElementById("password").value = "";
 	}
 }
 
@@ -226,13 +226,10 @@ function saveChanges(form) {
 	} else
 		toggleWarning("error_email", false, "");
 	var password = form.password.value;
-	if (password == null || password == "") {
-		toggleWarning("error_password", true, "Bitte ausfüllen!");
-		error = true;
-	} else {
+	if (password != null && password != "") {
 		password = b64_md5(password);
-		toggleWarning("error_password", false, "");
-	}
+	} else
+		password = "";
 	var accountType = form.accountType.value;
 	var institute = form.institute.value;
 	if (institute == null || institute == "") {
@@ -245,7 +242,7 @@ function saveChanges(form) {
 	// As of here, send:
 	// alert("All okay!");
 	var userName = document.getElementById("userName").innerHTML;
-	connect("/hiwi/Admin/js/editAccount?realName=" + realName + "&email="
+	connect("/hiwi/Admin/js/editAccount", "realName=" + realName + "&email="
 			+ email + "&userName=" + userName + "&userPassword=" + password
 			+ "&accountType=" + accountType + "&institute=" + institute,
 			handleEditAccountResponse);
@@ -309,7 +306,7 @@ function addAccount(form) {
 		toggleWarning("error_institute", false, "");
 	if (error)
 		return;
-	connect("/hiwi/Admin/js/addAccount?realName=" + realName + "&email="
+	connect("/hiwi/Admin/js/addAccount", "realName=" + realName + "&email="
 			+ email + "&userName=" + userName + "&userPassword=" + password
 			+ "&accountType=" + accountType + "&institute=" + institute,
 			handleCreateAccountResponse);
@@ -339,7 +336,7 @@ function handleCreateAccountResponse(mime, data) {
  * 
  */
 function loadUserindex() {
-	connect("/hiwi/Admin/js/getSystemInformation", handleLoadUserindex);
+	connect("/hiwi/Admin/js/getSystemInformation", "", handleLoadUserindex);
 }
 
 function handleLoadUserindex(mime, data) {

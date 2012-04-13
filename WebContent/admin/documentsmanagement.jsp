@@ -26,7 +26,7 @@
 				<br>
 				<p>
 					<input type="button" value="Abmelden" name="logout"
-						onclick="window.location='/hiwi/Secure/js/doLogout'" />
+						onclick="doLogout();" />
 				</p>
 			</form>
 		</div>
@@ -52,20 +52,20 @@
 			<div class="textblock">
 				<div class="haupttext">
 					<div class="textblock">
-						<form class="listform">
-							<!-- I use form here so that I can use checkboxes – this also simplifies the call in js to get the selected boxes. -->
-							<input type="button" value="Eintrag hinzufügen"
-								onclick="togglePopup('document_add', true);" /> <input
-								align="left" type="button" value="Eintrag ändern"
-								onclick="togglePopup('document_edit', true);" /> <input
-								style="float: right;" type="button"
-								value="Markierte Einträge löschen"
-								onclick="togglePopup('document_del', true);" />
-							<hr>
-							<table id="documentsList">
-								<!-- javascript loads documents here -->
-							</table>
-						</form>
+						<input type="button" value="Eintrag hinzufügen"
+							onclick="togglePopup('document_add', true);" /> <input
+							align="left" type="button" value="Eintrag ändern"
+							onclick="togglePopup('document_edit', true);" /> <input
+							style="float: right;" type="button"
+							value="Markierte Einträge löschen"
+							onclick="togglePopup('document_del', true);" />
+						<div style="float: right;" class="hiddenerror"
+							id="error_selection"></div>
+						<div class="clear"></div>
+						<hr>
+						<table id="documentsList">
+							<!-- javascript loads documents here -->
+						</table>
 					</div>
 				</div>
 			</div>
@@ -87,8 +87,7 @@
 				<div id="error_addDocument_title" class="hiddenerror"></div>
 				Beschreibung: <br>
 				<textarea name="description" rows="4" cols="30"></textarea>
-				<div id="error_addDocument_descr" class="hiddenerror">Hello,
-					here I am!</div>
+				<div id="error_addDocument_descr" class="hiddenerror"></div>
 			</div>
 			<hr>
 			<div class="textblock">
@@ -100,13 +99,18 @@
 	</div>
 	<!-- Document edit popup -->
 	<div id="document_edit" class="popup_hidden">
-		<form>
+		<form name="editDocumentForm">
 			<h3>Dokument modifizieren</h3>
 			<hr>
 			<div class="textblock">
-				Titel:<br> <input type="text" /><br>Beschreibung:<br>
-				<input type="text" /><br>
-				<div class="hiddenerror"></div>
+				UID: <br> <input name="uid" type="text" />
+				<div id="error_editDocument_uid" class="hiddenerror"></div>
+				Titel: <br>
+				<textarea name="title" rows="1" cols="30"></textarea>
+				<div id="error_editDocument_title" class="hiddenerror"></div>
+				Beschreibung: <br>
+				<textarea name="description" rows="4" cols="30"></textarea>
+				<div id="error_editDocument_descr" class="hiddenerror"></div>
 			</div>
 			<hr>
 			<div class="textblock">
@@ -125,8 +129,9 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" /> <input type="button"
-					value="Abbrechen" onclick="togglePopup('document_del', false);" />
+				<input type="button" value="Löschen" onclick="deleteDocument();" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>
 	</div>

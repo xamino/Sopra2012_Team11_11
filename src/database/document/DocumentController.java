@@ -13,19 +13,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import logger.Log;
+
 import database.DatabaseController;
 import database.account.Account;
 import database.offer.Offer;
 
 public class DocumentController {
 
-	public DatabaseController dbc;
+	/**
+	 * Private Instanz des DatabaseController.
+	 */
+	private DatabaseController dbc;
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
 	 * vorhanden war, mit der Methode <code>getInstance</code> angelegt.
 	 */
 	private static DocumentController doccontr;
+	/**
+	 * Private Instanz des loggers.
+	 */
+	private Log log;
 
 	/**
 	 * Diese Methode prueft ob ein DocumentController-Objekt existiert. Falls
@@ -48,8 +57,8 @@ public class DocumentController {
 	 */
 	private DocumentController() {
 		dbc = DatabaseController.getInstance();
-		logger.Log.getInstance().write("DocumentController",
-				"Instance created.");
+		log = Log.getInstance();
+		log.write("DocumentController", "Instance created.");
 	}
 
 	/**
@@ -72,16 +81,17 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
+	 * @return Gibt an, ob das löschen erfolgreich war.
 	 */
-	public void deleteDocument(Document document) { // checked
+	public boolean deleteDocument(Document document) { // checked
 		/*
 		 * Beim Loeschen einer Unterlage muss diese nicht nur in "Unterlagen",
 		 * sondern auch in "Standardunterlagen" und "Bewerbungsunterlagen"
 		 * geloescht werden, da diese nicht mehr existiert.
 		 */
-		dbc.delete("Bewerbungsunterlagen", "UID=" + document.getUid());
-		dbc.delete("Standardunterlagen", "UID=" + document.getUid());
-		dbc.delete("Unterlagen", "UID=" + document.getUid());
+		return dbc.delete("Bewerbungsunterlagen", "UID=" + document.getUid())
+				&& dbc.delete("Standardunterlagen", "UID=" + document.getUid())
+				&& dbc.delete("Unterlagen", "UID=" + document.getUid());
 	}
 
 	/**
@@ -96,6 +106,30 @@ public class DocumentController {
 		dbc.update("Unterlagen", new String[] { "Name", "Beschreibung" },
 				new Object[] { document.getName(), document.getDescription() },
 				"UID=" + document.getUid());
+	}
+
+	public Document getDocumentByUID(int uid) {
+		Document doc = null;
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { "Unterlagen" }, "uid=" + uid);
+		try {
+			if (rs.next()) {
+				doc = new Document(rs.getInt("UID"), rs.getString("Name"),
+						rs.getString("Beschreibung"));
+			}
+		} catch (SQLException e) {
+			log.write("DocumentController",
+					"Error in getting document with UID=" + uid);
+			// e.printStackTrace();
+		}
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			log.write("DocumentController",
+					"There was an error while trying to close the ResultSet.");
+			// e.printStackTrace();
+		}
+		return doc;
 	}
 
 	/**
@@ -448,6 +482,7 @@ public class DocumentController {
 		 * document.getDocumentid()} was beideutet AID=901 bleibt 901 und
 		 * UID=999 auch? Macht eine update methode hier �berhaupt Sinn? L�schen
 		 * und neu anlegen ist doch praktischer oder? Das w�rde ich vorschlagen.
+		 * 
 		 * @author Oemer Sahin
 		 */
 		String where = "AID=" + document.getOfferID() + " AND UID="

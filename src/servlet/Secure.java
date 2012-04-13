@@ -52,8 +52,8 @@ public class Secure extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String path = request.getPathInfo();
 		path = (path == null) ? "" : path;
 		log.write("Secure", "Received request <" + path + ">.");
@@ -130,6 +130,7 @@ public class Secure extends HttpServlet {
 				log.write("Secure",
 						"Registration failed! Username already used!");
 			}
+			return;
 		}
 		// If logout is asked:
 		else if (path.equals("/js/doLogout")) {
@@ -138,7 +139,9 @@ public class Secure extends HttpServlet {
 			// Abfrage da evtl user gar nicht eingeloggt wurde:
 			if (user != null)
 				user.invalidate();
-			response.sendRedirect(Helper.D_INDEX);
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+			return;
 		}
 		// If unknown path:
 		else {

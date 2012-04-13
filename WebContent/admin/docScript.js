@@ -13,10 +13,16 @@ var selectedDocument;
  * Function for sending a document load request.
  */
 function loadDocuments() {
-	connect("/hiwi/Admin/js/loadDocuments", handleLoadDocuments);
+	connect("/hiwi/Admin/js/loadDocuments", "", handleLoadDocuments);
 	selectedDocument = null;
 }
 
+/**
+ * This function handles all that has to happen when a selection is registered.
+ * 
+ * @param id
+ *            The ID of the object clicked.
+ */
 function markDocumentSelected(id) {
 	// Remove marking from previous selected, if applicable:
 	if (selectedDocument != null)
@@ -28,6 +34,7 @@ function markDocumentSelected(id) {
 	}
 	// Else save & mark new one:
 	selectedDocument = id;
+	toggleWarning("error_selection", false, "");
 	document.getElementById(id).setAttribute("class", "selected");
 }
 
@@ -56,6 +63,9 @@ function handleLoadDocuments(mime, data) {
 	}
 }
 
+/**
+ * Function handles the checking of parameters for adding a new Document.
+ */
 function addDocument() {
 	var form = addDocumentForm;
 	if (form == null)
@@ -82,10 +92,18 @@ function addDocument() {
 	if (error)
 		return;
 	// alert("All okay!");
-	connect("/hiwi/Admin/js/addDocument?uid=" + uid + "&title=" + title
+	connect("/hiwi/Admin/js/addDocument", "uid=" + uid + "&title=" + title
 			+ "&description=" + description, handleAddDocumentResponse);
 }
 
+/**
+ * Handles the response to an add request.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
 function handleAddDocumentResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
@@ -101,6 +119,9 @@ function handleAddDocumentResponse(mime, data) {
 	}
 }
 
+/**
+ * Clears the addDocument popup.
+ */
 function clearAddDocumentPopup() {
 	addDocumentForm.uid.value = "";
 	addDocumentForm.title.value = "";
@@ -108,4 +129,33 @@ function clearAddDocumentPopup() {
 	toggleWarning("error_addDocument_uid", false, "");
 	toggleWarning("error_addDocument_descr", false, "");
 	toggleWarning("error_addDocument_title", false, "");
+}
+
+/**
+ * Deletes a document if one is selected.
+ */
+function deleteDocument() {
+	if (selectedDocument == null) {
+		toggleWarning("error_selection", true, "Kein Dokument ausgewählt! ");
+		togglePopup("document_del", false);
+		return;
+	}
+	// alert("/hiwi/Admin/js/deleteDocument?uid=" + selectedDocument);
+	connect("/hiwi/Admin/js/deleteDocument", "uid=" + selectedDocument,
+			handleDeleteDocumentResponse);
+}
+
+/**
+ * Handles the response to a deletion request.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleDeleteDocumentResponse(mime, data) {
+	if (mime == "text/error")
+		alert(data);
+	else if (mime == "text/url")
+		window.location = data;
 }

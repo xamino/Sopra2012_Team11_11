@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Hilfe | Hiwi Job Börse</title>
 </head>
 
@@ -20,7 +21,7 @@
 	<div class="right">
 		<div class="angemeldet">
 			Sie sind als Sachbearbeiter angemeldet. <br>
-			<input type="submit" value="Logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
+			<input type="submit" value="Logout" onclick="doLogout();"/>
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>

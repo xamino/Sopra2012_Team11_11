@@ -32,17 +32,20 @@ var xmlhttp = new getXMLObject();
  *            The function to be called when an answer is received. Must be of
  *            the form: callback(String MIMETYPE, String CONTENT)
  */
-function connect(URL, callback) {
+function connect(URL, data, callback) {
 	// Send login data:
-	xmlhttp.open("GET", URL);
+	xmlhttp.open("POST", URL);
+	xmlhttp.setRequestHeader("Content-type",
+			"application/x-www-form-urlencoded");
 	// When status changes do:
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			callback(getMIME(xmlhttp), xmlhttp.responseText);
+			if (callback != null)
+				callback(getMIME(xmlhttp), xmlhttp.responseText);
 		}
 	};
 	// Send request.
-	xmlhttp.send();
+	xmlhttp.send(data);
 }
 
 /**
@@ -138,4 +141,14 @@ function getTypeString(number) {
 	default:
 		break;
 	}
+}
+
+/**
+ * Function for logout.
+ */
+function doLogout() {
+	connect("/hiwi/Secure/js/doLogout", "", function(mime, data) {
+		if (mime == "text/url")
+			window.location = data;
+	});
 }

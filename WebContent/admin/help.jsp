@@ -21,7 +21,7 @@
 	<div class="right">
 		<div class="angemeldet">
 			Sie sind als Administrator angemeldet. <br> <input type="submit"
-				value="Logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
+				value="Logout" onclick="doLogout();"/>
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>

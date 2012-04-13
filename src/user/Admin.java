@@ -123,8 +123,8 @@ public class Admin extends User {
 	 * @param doc
 	 *            zu löschendes Dokument.
 	 */
-	public void deleteDoc(Document doc) {
-
+	public boolean deleteDoc(Document doc) {
+		return docController.deleteDocument(doc);
 	}
 
 	/**

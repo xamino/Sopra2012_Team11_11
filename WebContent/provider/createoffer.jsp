@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Angebot erstellen | Hiwi Job Börse</title>
 </head>
 
@@ -22,7 +23,7 @@
 	<div class="right">
 		<div class="angemeldet">
 			Sie sind als Anbieter angemeldet. <br>
-			<input type="submit" value="Logout" onclick="window.location='/hiwi/Secure/js/doLogout'"/>
+			<input type="submit" value="Logout" onclick="doLogout();"/>
 		</div>				
 			<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">

@@ -65,7 +65,7 @@ public class AdminServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	protected void doGet(HttpServletRequest request,
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
 		Admin admin = Helper.checkAuthenticity(request.getSession(),
@@ -183,6 +183,7 @@ public class AdminServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("userPassword");
+			// System.out.println(password);
 			int accountType = -1;
 			int institute = -1;
 			try {
@@ -199,13 +200,17 @@ public class AdminServlet extends HttpServlet {
 			}
 			if (realName == null || realName.isEmpty() || userName == null
 					|| email == null || email.isEmpty() || userName.isEmpty()
-					|| password == null || password.isEmpty()
 					|| accountType < 0 || accountType > 3 || institute == -1) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write("Werte illegal!");
 				return;
 			}
+			// This can happen and is legal if the password isn't to be changed:
+			if (password == null || password.isEmpty())
+				password = accountController.getAccountByUsername(userName)
+						.getPasswordhash();
+			// System.out.println(password);
 			if (!admin.editAccount(new Account(userName, password, accountType,
 					email, realName, institute, null))) {
 				response.setContentType("text/error");
@@ -254,6 +259,22 @@ public class AdminServlet extends HttpServlet {
 			log.write("AdminServlet", "Created document <" + title + ">.");
 			response.setContentType("text/plain");
 			response.getWriter().write("true");
+			return;
+		} else if (path.equals("/js/deleteDocument")) {
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehlerhafte uid!");
+				return;
+			}
+			Document doc = docController.getDocumentByUID(uid);
+			admin.deleteDoc(doc);
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;
 		} else {
 			log.write("AdminServlet", "Unknown path <" + path + ">");
