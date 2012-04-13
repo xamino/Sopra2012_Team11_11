@@ -57,7 +57,7 @@
 							align="left" type="button" value="Eintrag ändern"
 							onclick="loadSelectedEdit();" /> <input
 							style="float: right;" type="button"
-							value="Markierte Einträge löschen"
+							value="Markierten Eintrag löschen"
 							onclick="togglePopup('document_del', true);" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
