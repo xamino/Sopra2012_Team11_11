@@ -19,6 +19,8 @@ import database.account.Account;
 import database.account.AccountController;
 import database.document.DocumentController;
 import database.document.Document;
+import database.institute.Institute;
+import database.institute.InstituteController;
 
 import user.Admin;
 import userManagement.LoggedInUsers;
@@ -49,6 +51,10 @@ public class AdminServlet extends HttpServlet {
 	 */
 	private DocumentController docController;
 	/**
+	 * Variable zum speicher der Instanz des InstituteController.
+	 */
+	private InstituteController instController;
+	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
@@ -59,6 +65,7 @@ public class AdminServlet extends HttpServlet {
 		gson = new Gson();
 		accountController = AccountController.getInstance();
 		docController = DocumentController.getInstance();
+		instController = InstituteController.getInstance();
 		log.write("AdminServlet", "Instance created.");
 	}
 
@@ -321,6 +328,18 @@ public class AdminServlet extends HttpServlet {
 			}
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
+			return;
+		} else if (path.equals("/js/loadInstitutes")) {
+			Vector<Institute> inst = instController.getAllInstitutes();
+			if (inst == null) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim laden der Institute!");
+				return;
+			}
+			// for (Institute in : inst)
+			// System.out.println(in.getIID() + ":" + in.getName());
+			response.setContentType("application/json");
+			response.getWriter().write(gson.toJson(inst, inst.getClass()));
 			return;
 		} else {
 			log.write("AdminServlet", "Unknown path <" + path + ">");

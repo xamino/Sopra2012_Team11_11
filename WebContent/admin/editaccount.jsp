@@ -12,7 +12,7 @@
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
-<body onload="loadEditOptions();">
+<body onload="loadInstitute();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -88,7 +88,7 @@
 						<tr>
 							<td>Email:</td>
 							<td><input type="text" id="email" name="email" size="40" />
-							<div id="error_email" class="invisibleWarning"></div></td>
+								<div id="error_email" class="invisibleWarning"></div></td>
 						</tr>
 						<tr>
 							<td>Accounttyp:</td>
@@ -100,8 +100,8 @@
 						</tr>
 						<tr>
 							<td>Institut:</td>
-							<td><input type="text" id="institute" name="institute" /><div
-									id="error_institute" class="invisibleWarning"></div></td>
+							<td><select id="institute" name="institute"></select>
+							<div id="error_institute" class="invisibleWarning"></div></td>
 						</tr>
 						<!-- TODO: rename name... -->
 						<!-- <tr>

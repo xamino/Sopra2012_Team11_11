@@ -136,6 +136,36 @@ function checkLegalEdit() {
 }
 
 /**
+ * Start loading site here, else something goes wrong! This function will call
+ * the loadEditOptions() once the institutes have been loaded.
+ */
+function loadInstitute() {
+	connect(
+			"/hiwi/Admin/js/loadInstitutes",
+			"",
+			function(mime, data) {
+				if (mime == "text/url")
+					window.location = data;
+				else if (mime == "application/json") {
+					// alert(data);
+					document.getElementById("institute").innerHTML = "";
+					var institute = eval(data);
+					for ( var i = 0; i < institute.length; i++) {
+						// alert("<option value=\"" + institute[i].IID + "\">"
+						// + institute[i].name + "</option>");
+						document.getElementById("institute").innerHTML += "<option value=\""
+								+ institute[i].IID
+								+ "\">"
+								+ institute[i].name
+								+ "</option>";
+					}
+					loadEditOptions();
+				} else if (mime == "text/error")
+					alert(data);
+			});
+}
+
+/**
  * This function is used to correctly initialize the editaccount.jsp site.
  */
 function loadEditOptions() {
@@ -179,7 +209,7 @@ function loadEditOptions() {
 function handleLoadEditResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
-	} else {
+	} else if (mime == "application/json") {
 		// Set data:
 		// alert(data);
 		var account = eval("(" + data + ")");

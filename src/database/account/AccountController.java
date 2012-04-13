@@ -54,17 +54,6 @@ public class AccountController {
 	}
 
 	/**
-	 * Diese Methode gibt den Namen eines Instituts bei uebergebener Id.
-	 * 
-	 * @param id
-	 *            Id ist der Primaerschluessel in der Institute-DB.
-	 * @return Zurueckgegeben wird der Name des Institutes.
-	 */
-	public String getInstituteById(int id) {
-		return null;
-	}
-
-	/**
 	 * Diese Instanz dient zum Zugang in die Datenbank.
 	 */
 	public DatabaseController dbc;
