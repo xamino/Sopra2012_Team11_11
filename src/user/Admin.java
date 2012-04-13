@@ -73,7 +73,8 @@ public class Admin extends User {
 					+ "> as currently logged in!");
 			return false;
 		}
-		log.write("Admin", "Deleting account with username <" + username + ">");
+		log.write("Admin", "<" + getUserData().getUsername()
+				+ "> deleted account with username <" + username + ">");
 		accountController.deleteAccount(account);
 		return true;
 	}
@@ -92,8 +93,8 @@ public class Admin extends User {
 					"Error creating account! Is the institute valid?");
 			return false;
 		}
-		log.write("Admin", "Created account for <" + account.getUsername()
-				+ ">.");
+		log.write("Admin", "<" + getUserData().getUsername()
+				+ "> created account for <" + account.getUsername() + ">.");
 		return true;
 	}
 
@@ -112,8 +113,8 @@ public class Admin extends User {
 			log.write("Admin", "Error modifying account!");
 			return false;
 		}
-		log.write("Admin", "Modified account of <" + account.getUsername()
-				+ ">.");
+		log.write("Admin", "<" + getUserData().getUsername()
+				+ "> modified account of <" + account.getUsername() + ">.");
 		return true;
 	}
 
@@ -124,7 +125,14 @@ public class Admin extends User {
 	 *            zu löschendes Dokument.
 	 */
 	public boolean deleteDoc(Document doc) {
-		return docController.deleteDocument(doc);
+		if (!docController.deleteDocument(doc)) {
+			log.write("Admin", "Error deleting document!");
+			return false;
+		} else {
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> deleted document <" + doc.getName() + ">.");
+			return true;
+		}
 	}
 
 	/**
@@ -135,7 +143,14 @@ public class Admin extends User {
 	 * @return Gibt an, ob das Dokument erstellt worden konnte.
 	 */
 	public boolean addDoc(Document doc) {
-		return docController.createDocument(doc);
+		if (!docController.createDocument(doc)) {
+			log.write("Admin", "Error adding a document!");
+			return false;
+		} else {
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> added document <" + doc.getName() + ">.");
+			return true;
+		}
 	}
 
 	/**
@@ -146,6 +161,13 @@ public class Admin extends User {
 	 * @return Gibt an, ob das Editieren erfolgreich war.
 	 */
 	public boolean editDoc(Document doc) {
-		return docController.updateDocument(doc);
+		if (!docController.updateDocument(doc)) {
+			log.write("Admin", "Error updating document!");
+			return false;
+		} else {
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> modified document <" + doc.getName() + ">.");
+			return true;
+		}
 	}
 }

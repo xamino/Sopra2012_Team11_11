@@ -41,7 +41,7 @@ public class ClerkServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	protected void doGet(HttpServletRequest request,
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		log.write("ClerkServlet", "Received request: " + path);

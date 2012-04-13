@@ -20,7 +20,7 @@ public class Servlet extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request,
+	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 	}
 }

@@ -77,7 +77,8 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Switch action on path:
 		String path = request.getPathInfo();
-		log.write("AdminServlet", "Received request: " + path);
+		// Only activate this if you need to debug the path:
+		// log.write("AdminServlet", "Received request <" + path+">.");
 		if (path.equals("/js/loadAccounts")) {
 			Vector<Account> accounts = accountController.getAllAccounts();
 			response.setContentType("application/json");
@@ -250,13 +251,11 @@ public class AdminServlet extends HttpServlet {
 			}
 			// all okay... continue:
 			if (!admin.addDoc(new Document(uid, title, description))) {
-				log.write("AdminServlet", "Couldn't create document!");
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
 				return;
 			}
-			log.write("AdminServlet", "Created document <" + title + ">.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;
@@ -314,14 +313,12 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// all okay... continue:
-			if(!admin.editDoc(new Document(uid, title, description))) {
-				log.write("AdminServlet", "Couldn't edit document!");
+			if (!admin.editDoc(new Document(uid, title, description))) {
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler beim edititieren des Dokuments!");
+				response.getWriter().write(
+						"Fehler beim edititieren des Dokuments!");
 				return;
 			}
-			log.write("AdminServlet", "Edited document <" + title + ">.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;

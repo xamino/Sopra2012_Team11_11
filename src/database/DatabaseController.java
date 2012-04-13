@@ -101,7 +101,7 @@ public class DatabaseController {
 		} catch (Exception e) {
 			log.write("DatabaseController", "Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
 			// Commented out by Tamino (it was making me edgy... :D )
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
@@ -145,7 +145,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "DELETE error! <"+del+">");
-			e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
 	}
@@ -165,7 +165,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "INSERT error! <"+insert+">");
-			e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
 	}
