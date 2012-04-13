@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.Applicant;
+import user.Clerk;
+
 import logger.Log;
 
 /**
@@ -43,6 +46,14 @@ public class ClerkServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// Check authenticity:
+		Clerk clerk = Helper.checkAuthenticity(request.getSession(),
+				Clerk.class);
+		if (clerk == null) {
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+			return;
+		}
 		String path = request.getPathInfo();
 		log.write("ClerkServlet", "Received request: " + path);
 

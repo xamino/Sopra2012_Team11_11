@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.Admin;
+import user.Provider;
+
 /**
  * Das <code>Provider</code> Servlet behandelt alle Aktionen von angemeldeten
  * Anbietern / Mitgliedern (Provider).
@@ -35,5 +38,16 @@ public class ProviderServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+	// Check authenticity:
+	Provider provider = Helper.checkAuthenticity(request.getSession(),
+			Provider.class);
+	if (provider == null) {
+		response.setContentType("text/url");
+		response.getWriter().write(Helper.D_INDEX);
+		return;
+	}
+	// Switch action on path:
+	String path = request.getPathInfo();
+	System.out.println(path);
 	}
 }
