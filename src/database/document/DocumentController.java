@@ -101,11 +101,13 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
+	 * @return Gibt an, ob das Update erfolgreich war.
 	 */
-	public void updateDocument(Document document) { // checked
-		dbc.update("Unterlagen", new String[] { "Name", "Beschreibung" },
-				new Object[] { document.getName(), document.getDescription() },
-				"UID=" + document.getUid());
+	public boolean updateDocument(Document document) { // checked
+		return dbc.update("Unterlagen",
+				new String[] { "Name", "Beschreibung" }, new Object[] {
+						document.getName(), document.getDescription() }, "UID="
+						+ document.getUid());
 	}
 
 	public Document getDocumentByUID(int uid) {

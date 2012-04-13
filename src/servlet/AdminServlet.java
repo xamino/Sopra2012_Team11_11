@@ -257,8 +257,8 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			log.write("AdminServlet", "Created document <" + title + ">.");
-			response.setContentType("text/plain");
-			response.getWriter().write("true");
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;
 		} else if (path.equals("/js/deleteDocument")) {
 			int uid = -1;
@@ -273,6 +273,55 @@ public class AdminServlet extends HttpServlet {
 			}
 			Document doc = docController.getDocumentByUID(uid);
 			admin.deleteDoc(doc);
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
+			return;
+		} else if (path.equals("/js/getDocument")) {
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehlerhafte uid!");
+				return;
+			}
+			Document doc = docController.getDocumentByUID(uid);
+			response.setContentType("application/json");
+			response.getWriter().write(gson.toJson(doc, Document.class));
+			return;
+		} else if (path.equals("/js/editDocument")) {
+			String title = request.getParameter("title");
+			String description = request.getParameter("description");
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+				return;
+			}
+			if (title == null || title.isEmpty() || description == null
+					|| description.isEmpty() || uid < 0) {
+				log.write("AdminServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler bei Eingabe! Fehlende Eingaben.");
+				return;
+			}
+			// all okay... continue:
+			if(!admin.editDoc(new Document(uid, title, description))) {
+				log.write("AdminServlet", "Couldn't edit document!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim edititieren des Dokuments!");
+				return;
+			}
+			log.write("AdminServlet", "Edited document <" + title + ">.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;

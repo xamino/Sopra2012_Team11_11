@@ -143,9 +143,9 @@ public class Admin extends User {
 	 * 
 	 * @param doc
 	 *            geaendertes Dokument
+	 * @return Gibt an, ob das Editieren erfolgreich war.
 	 */
-	public void editDoc(Document doc) {
-
+	public boolean editDoc(Document doc) {
+		return docController.updateDocument(doc);
 	}
-
 }

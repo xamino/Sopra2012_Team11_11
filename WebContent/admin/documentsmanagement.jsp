@@ -55,7 +55,7 @@
 						<input type="button" value="Eintrag hinzufügen"
 							onclick="togglePopup('document_add', true);" /> <input
 							align="left" type="button" value="Eintrag ändern"
-							onclick="togglePopup('document_edit', true);" /> <input
+							onclick="loadSelectedEdit();" /> <input
 							style="float: right;" type="button"
 							value="Markierte Einträge löschen"
 							onclick="togglePopup('document_del', true);" />
@@ -103,7 +103,7 @@
 			<h3>Dokument modifizieren</h3>
 			<hr>
 			<div class="textblock">
-				UID: <br> <input name="uid" type="text" />
+				UID: <br> <input name="uid" type="text" disabled="disabled"/>
 				<div id="error_editDocument_uid" class="hiddenerror"></div>
 				Titel: <br>
 				<textarea name="title" rows="1" cols="30"></textarea>
@@ -114,7 +114,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" /> <input type="button"
+				<input type="button" value="Speichern" onclick="editDocument();"/> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_edit', false);" />
 			</div>
 		</form>

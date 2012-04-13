@@ -110,12 +110,6 @@ function handleAddDocumentResponse(mime, data) {
 		return;
 	} else if (mime == "text/error") {
 		alert(data);
-	} else if (mime == "text/plain") {
-		if (data == "true") {
-			clearAddDocumentPopup();
-			togglePopup("document_add", false);
-			loadDocuments();
-		}
 	}
 }
 
@@ -158,4 +152,98 @@ function handleDeleteDocumentResponse(mime, data) {
 		alert(data);
 	else if (mime == "text/url")
 		window.location = data;
+}
+
+/**
+ * Loads the selected document's data and displays it, if selection is valid.
+ */
+function loadSelectedEdit() {
+	if (selectedDocument == null) {
+		toggleWarning("error_selection", true, "Kein Dokument ausgewählt! ");
+		return;
+	}
+	connect("/hiwi/Admin/js/getDocument", "uid=" + selectedDocument,
+			handleLoadEditResponse);
+}
+/**
+ * Handles the response to selecting a document for editing.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadEditResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "text/error") {
+		alert(data);
+	} else if (mime == "application/json") {
+		var adminDocument = eval("(" + data + ")");
+		editDocumentForm.uid.value = adminDocument.uid;
+		editDocumentForm.title.value = adminDocument.name;
+		editDocumentForm.description.value = adminDocument.description;
+		togglePopup('document_edit', true);
+	}
+}
+
+/**
+ * Checks that all information is legal and sends it to the server.
+ */
+function editDocument() {
+	var form = editDocumentForm;
+	if (form == null)
+		return;
+	var error = false;
+	var uid = form.uid.value;
+	if (uid == null || uid == "") {
+		toggleWarning("error_editDocument_uid", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_editDocument_uid", false, "");
+	var title = form.title.value;
+	if (title == null || title == "") {
+		toggleWarning("error_editDocument_title", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_editDocument_title", false, "");
+	var description = form.description.value;
+	if (description == null || description == "") {
+		toggleWarning("error_editDocument_descr", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_editDocument_descr", false, "");
+	if (error)
+		return;
+	// alert("All okay!");
+	connect("/hiwi/Admin/js/editDocument", "uid=" + uid + "&title=" + title
+			+ "&description=" + description, handleEditResponse);
+}
+
+/**
+ * Handles the response from the server upon an edit request.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleEditResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "text/error") {
+		alert(data);
+	}
+}
+
+/**
+ * Clears the editDocument popup.
+ */
+function clearEditDocumentPopup() {
+	editDocumentForm.uid.value = "";
+	editDocumentForm.title.value = "";
+	editDocumentForm.description.value = "";
+	toggleWarning("error_editDocument_uid", false, "");
+	toggleWarning("error_editDocument_descr", false, "");
+	toggleWarning("error_editDocument_title", false, "");
 }
