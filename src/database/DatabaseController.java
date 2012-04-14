@@ -1,3 +1,10 @@
+/**
+ * @author Manuel Güntzel
+ * @author Tamino Hartmann
+ */
+
+// TODO: Is sql.date format handled correctly throughout?
+
 package database;
 
 import java.sql.Connection;
@@ -5,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import config.Configurator;
 
@@ -20,7 +28,7 @@ public class DatabaseController {
 	 * Variable for storing the instance of the class.
 	 */
 	private static DatabaseController instance;
-	
+
 	/**
 	 * Variable welche auf den Logger zeigt.
 	 */
@@ -74,24 +82,24 @@ public class DatabaseController {
 		try {
 			log.write("DatabaseController", "Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-//			getLoginInfo();
+			// getLoginInfo();
 			Configurator conf = Configurator.getInstance();
-			user=conf.getString("user");
-			password=conf.getString("password");
-			database=conf.getString("database");
-			port=Integer.toString(conf.getInt("port"));
-			
-			if (password != null){
-				log.write("DatabaseController", "Try login: "+"jdbc:mysql://localhost:"
-						+ port + "/" + database + "?user=" + user
-						+ "&password=" + password);
+			user = conf.getString("user");
+			password = conf.getString("password");
+			database = conf.getString("database");
+			port = Integer.toString(conf.getInt("port"));
+
+			if (password != null) {
+				log.write("DatabaseController", "Try login: "
+						+ "jdbc:mysql://localhost:" + port + "/" + database
+						+ "?user=" + user + "&password=" + password);
 				con = DriverManager.getConnection("jdbc:mysql://localhost:"
 						+ port + "/" + database + "?user=" + user
 						+ "&password=" + password);
-			}
-			else{
-				log.write("DatabaseController", "Try login: "+"jdbc:mysql://localhost:"
-						+ port + "/" + database + "?user=" + user );
+			} else {
+				log.write("DatabaseController", "Try login: "
+						+ "jdbc:mysql://localhost:" + port + "/" + database
+						+ "?user=" + user);
 				con = DriverManager.getConnection("jdbc:mysql://localhost:"
 						+ port + "/" + database + "?user=" + user);
 			}
@@ -99,7 +107,9 @@ public class DatabaseController {
 
 			log.write("DatabaseController", "Connection successful.");
 		} catch (Exception e) {
-			log.write("DatabaseController", "Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
+			log.write(
+					"DatabaseController",
+					"Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
@@ -108,10 +118,15 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "update" Statement ausfuehrt.
 	 * 
-	 * @param table Name der Tabelle.
-	 * @param columns Name der Spalten welche aktualisiert werden sollen.
-	 * @param values Daten, welche in die entsprechenden Spalten gefühlt werden sollen.
-	 * @param where Bedingung für die Aktualisierung.
+	 * @param table
+	 *            Name der Tabelle.
+	 * @param columns
+	 *            Name der Spalten welche aktualisiert werden sollen.
+	 * @param values
+	 *            Daten, welche in die entsprechenden Spalten gefühlt werden
+	 *            sollen.
+	 * @param where
+	 *            Bedingung für die Aktualisierung.
 	 * @return <code>True</code> wenn erfolgreich, sonst <code>false</code>.
 	 */
 	synchronized public boolean update(String table, String[] columns,
@@ -122,7 +137,7 @@ public class DatabaseController {
 			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
-			log.write("DatabaseController", "UPDATE error! <"+update+">");
+			log.write("DatabaseController", "UPDATE error! <" + update + ">");
 			return false;
 		}
 	}
@@ -144,7 +159,7 @@ public class DatabaseController {
 			st.executeUpdate(del);
 			return true;
 		} catch (SQLException e) {
-			log.write("DatabaseController", "DELETE error! <"+del+">");
+			log.write("DatabaseController", "DELETE error! <" + del + ">");
 			// e.printStackTrace();
 			return false;
 		}
@@ -153,8 +168,10 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "insert" Statement ausfuehrt.
 	 * 
-	 * @param table Name der Tabelle.
-	 * @param values Einzufügende Werte.
+	 * @param table
+	 *            Name der Tabelle.
+	 * @param values
+	 *            Einzufügende Werte.
 	 * @return Boolean welcher angibt, ob INSERT erfolgreich war.
 	 */
 	synchronized public boolean insert(String table, Object[] values) {
@@ -164,20 +181,24 @@ public class DatabaseController {
 			st.executeUpdate(insert);
 			return true;
 		} catch (SQLException e) {
-			log.write("DatabaseController", "INSERT error! <"+insert+">");
+			log.write("DatabaseController", "INSERT error! <" + insert + ">");
 			// e.printStackTrace();
 			return false;
 		}
 	}
+
 	/**
-	 * Gibt die anzahl der Zeilen einer Tabelle aus die die Where Bedingung erfuellen
-	 * @param from Tabellen die in die Suche miteinbezogen werden sollen
-	 * @param where zu erfuellende Bedinung
+	 * Gibt die anzahl der Zeilen einer Tabelle aus die die Where Bedingung
+	 * erfuellen
+	 * 
+	 * @param from
+	 *            Tabellen die in die Suche miteinbezogen werden sollen
+	 * @param where
+	 *            zu erfuellende Bedinung
 	 * @return Anzahl der Zeilen
 	 */
-	synchronized public int count(String[] from, String where){
-		String sel = "SELECT COUNT(*) FROM "
-				+ commanator(from);
+	synchronized public int count(String[] from, String where) {
+		String sel = "SELECT COUNT(*) FROM " + commanator(from);
 		if (where != null)
 			sel += " WHERE " + where;
 		ResultSet rs;
@@ -186,17 +207,21 @@ public class DatabaseController {
 			rs.next();
 			return rs.getInt("COUNT(*)");
 		} catch (SQLException e) {
-			log.write("DatabaseController", "COUNT error! <"+sel+">");
+			log.write("DatabaseController", "COUNT error! <" + sel + ">");
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
 	 * 
-	 * @param select Welche Werte ausgewählt werden sollen.
-	 * @param from Namen der Tabellen.
-	 * @param where Zusätzliche Bedingung. Wird keine benötigt kann <code>null</code> gesetzt werden.
+	 * @param select
+	 *            Welche Werte ausgewählt werden sollen.
+	 * @param from
+	 *            Namen der Tabellen.
+	 * @param where
+	 *            Zusätzliche Bedingung. Wird keine benötigt kann
+	 *            <code>null</code> gesetzt werden.
 	 * @return Gibt ein <code>ResultSet</code> mit den Antworddaten zurück.
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
@@ -210,7 +235,7 @@ public class DatabaseController {
 			rs = st.executeQuery(sel);
 			return rs;
 		} catch (SQLException e) {
-			log.write("DatabaseController", "SELECT error! <"+sel+">");
+			log.write("DatabaseController", "SELECT error! <" + sel + ">");
 		}
 		return null;
 	}
@@ -218,9 +243,13 @@ public class DatabaseController {
 	/**
 	 * Methode welche ein SQL "insert on not null update" Statement ausfuehrt.
 	 * 
-	 * @param table Name der Tabelle.
-	 * @param columns Namen der Spalten.
-	 * @param values Ensprechende Werte welche eingefügt oder aktualiesiert werden sollen.
+	 * @param table
+	 *            Name der Tabelle.
+	 * @param columns
+	 *            Namen der Spalten.
+	 * @param values
+	 *            Ensprechende Werte welche eingefügt oder aktualiesiert werden
+	 *            sollen.
 	 * @return <code>True</code> wenn erfolgreich, ansonsten <code>false</code>.
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
@@ -232,95 +261,97 @@ public class DatabaseController {
 			st.executeUpdate(update);
 			return true;
 		} catch (SQLException e) {
-			log.write("DatabaseController", "INSERTONNULLUPDATE error! <"+update+">");
+			log.write("DatabaseController", "INSERTONNULLUPDATE error! <"
+					+ update + ">");
 		}
 		return false;
 	}
 
-//	/**
-//	 * Erstellt eine Datei mit Logininformationen für die Datenbank. In der
-//	 * Datei werden der Usename,der Datenbankname und das Passwort gespeichert.
-//	 * Dies wird benoetigt damit eine Verbindung mit der Datenbank unabhaengig
-//	 * der Hardware hergestellt werden kann.
-//	 * 
-//	 */
-//	private void createLoginInfo() {
-//		String sep = System.getProperty("file.separator");
-//		String home = System.getProperty("user.home");
-//		File f = new File(home + sep + ".sopraconf");
-//		f.delete(); // erst vorhandene löschen
-//		try {
-//			f.createNewFile(); // dann neue erstellen
-//		} catch (IOException e) {
-//			System.out
-//					.println("[Database] createLoginInfo():f.createNewFile()");
-//			e.printStackTrace();
-//		}
-//		try {
-//			BufferedWriter buf = new BufferedWriter(new FileWriter(f));
-//			buf.write("database=sopra");
-//			buf.newLine();
-//			buf.write("port=3306");
-//			buf.newLine();
-//			buf.write("user=root");
-//			buf.close();
-//		} catch (IOException e) {
-//			System.out.println("[Database] createLoginInfo():BufferedWriter");
-//			e.printStackTrace();
-//		}
-//		log.write("DatabaseController", "New loginfile created.");
-//	}
-//
-//	/**
-//	 * Liest die Informationen zum Verbindungsaufbau zur Datenbank aus einer
-//	 * Config-Datei. Die Datei behinhaltet den Username,den Datenbanknamen und
-//	 * das Passwort welche benoetigt werden um eine Verbindung zur Datenbank
-//	 * herzustellen.
-//	 * 
-//	 */
-//	private void getLoginInfo() { // Liest die Config Datei aus
-//		String sep = System.getProperty("file.separator");
-//		String home = System.getProperty("user.home");
-//		try {
-//			File f = new File(home + sep + ".sopraconf"); // datei im homeordner
-//															// namens .sopraconf
-//			if (f.exists()) { // falls config datei existiert
-//				BufferedReader buf = new BufferedReader(new FileReader(f));
-//				Field field;
-//				database = "sopra";
-//				user = "root";
-//				port = "3306";
-//				password = null;
-//				while (true) {
-//					if (!buf.ready())
-//						break;
-//					String conf = buf.readLine();
-//					String[] confarr = conf.split("=");
-//					if (confarr[0].trim().equalsIgnoreCase("password")
-//							|| confarr[0].trim().equalsIgnoreCase("user")
-//							|| confarr[0].trim().equalsIgnoreCase("database")
-//							|| confarr[0].trim().equalsIgnoreCase("port")) {
-//						field = getClass().getDeclaredField(confarr[0].trim());
-//						field.set(this, confarr[1].trim());
-//					} else
-//						log.write("DatabaseController", "Error in ConfigFile on: " + conf);
-//				}
-//			} else { // falls noch nicht existent
-//				createLoginInfo(); // config datei erstellen
-//				database = "sopra";
-//				user = "root";
-//				port = "3306";
-//				password = null;
-//			}
-//			log.write("Database", "Try Login: user=" + user
-//					+ " password=" + password + " database=" + database
-//					+ " port=" + port);
-//		} catch (Exception e) {
-//			System.out.print("[Database] getLoginInfo()");
-//			e.printStackTrace();
-//
-//		}
-//	}
+	// /**
+	// * Erstellt eine Datei mit Logininformationen für die Datenbank. In der
+	// * Datei werden der Usename,der Datenbankname und das Passwort
+	// gespeichert.
+	// * Dies wird benoetigt damit eine Verbindung mit der Datenbank unabhaengig
+	// * der Hardware hergestellt werden kann.
+	// *
+	// */
+	// private void createLoginInfo() {
+	// String sep = System.getProperty("file.separator");
+	// String home = System.getProperty("user.home");
+	// File f = new File(home + sep + ".sopraconf");
+	// f.delete(); // erst vorhandene löschen
+	// try {
+	// f.createNewFile(); // dann neue erstellen
+	// } catch (IOException e) {
+	// System.out
+	// .println("[Database] createLoginInfo():f.createNewFile()");
+	// e.printStackTrace();
+	// }
+	// try {
+	// BufferedWriter buf = new BufferedWriter(new FileWriter(f));
+	// buf.write("database=sopra");
+	// buf.newLine();
+	// buf.write("port=3306");
+	// buf.newLine();
+	// buf.write("user=root");
+	// buf.close();
+	// } catch (IOException e) {
+	// System.out.println("[Database] createLoginInfo():BufferedWriter");
+	// e.printStackTrace();
+	// }
+	// log.write("DatabaseController", "New loginfile created.");
+	// }
+	//
+	// /**
+	// * Liest die Informationen zum Verbindungsaufbau zur Datenbank aus einer
+	// * Config-Datei. Die Datei behinhaltet den Username,den Datenbanknamen und
+	// * das Passwort welche benoetigt werden um eine Verbindung zur Datenbank
+	// * herzustellen.
+	// *
+	// */
+	// private void getLoginInfo() { // Liest die Config Datei aus
+	// String sep = System.getProperty("file.separator");
+	// String home = System.getProperty("user.home");
+	// try {
+	// File f = new File(home + sep + ".sopraconf"); // datei im homeordner
+	// // namens .sopraconf
+	// if (f.exists()) { // falls config datei existiert
+	// BufferedReader buf = new BufferedReader(new FileReader(f));
+	// Field field;
+	// database = "sopra";
+	// user = "root";
+	// port = "3306";
+	// password = null;
+	// while (true) {
+	// if (!buf.ready())
+	// break;
+	// String conf = buf.readLine();
+	// String[] confarr = conf.split("=");
+	// if (confarr[0].trim().equalsIgnoreCase("password")
+	// || confarr[0].trim().equalsIgnoreCase("user")
+	// || confarr[0].trim().equalsIgnoreCase("database")
+	// || confarr[0].trim().equalsIgnoreCase("port")) {
+	// field = getClass().getDeclaredField(confarr[0].trim());
+	// field.set(this, confarr[1].trim());
+	// } else
+	// log.write("DatabaseController", "Error in ConfigFile on: " + conf);
+	// }
+	// } else { // falls noch nicht existent
+	// createLoginInfo(); // config datei erstellen
+	// database = "sopra";
+	// user = "root";
+	// port = "3306";
+	// password = null;
+	// }
+	// log.write("Database", "Try Login: user=" + user
+	// + " password=" + password + " database=" + database
+	// + " port=" + port);
+	// } catch (Exception e) {
+	// System.out.print("[Database] getLoginInfo()");
+	// e.printStackTrace();
+	//
+	// }
+	// }
 
 	/**
 	 * Hilfsmethode zum Konkatenieren von Strings mit Kommasetzung.
@@ -351,8 +382,13 @@ public class DatabaseController {
 		String ret = "";
 		for (int i = 0; i < objects.length; i++) {
 			if (objects[i] instanceof String)
+				// Correctly display strings:
 				ret += "'" + objects[i] + "'";
-			else
+			else if (objects[i] instanceof Date) {
+				// Correctly parse & enter dates:
+				ret += "'" + new java.sql.Date(((Date) objects[i]).getTime())
+						+ "'";
+			} else
 				ret += objects[i];
 			if (i != (objects.length - 1))
 				ret += ", ";

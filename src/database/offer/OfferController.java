@@ -2,6 +2,7 @@
  * @author Patryk Boczon
  * @author Oemer Sahin
  * @author Manuel Güntzel
+ * @author Tamino Hartmann
  */
 
 package database.offer;
@@ -13,10 +14,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import logger.Log;
+
 import database.DatabaseController;
 import database.application.Application;
 
 public class OfferController {
+
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	private Log log;
 
 	/**
 	 * Diese Methode prueft ob ein OfferController-Objekt existiert. Falls nicht
@@ -36,8 +44,9 @@ public class OfferController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
-		dbc=DatabaseController.getInstance();
-		logger.Log.getInstance().write("OfferController", "Instance created.");
+		dbc = DatabaseController.getInstance();
+		log = Log.getInstance();
+		log.write("OfferController", "Instance created.");
 	}
 
 	/**
@@ -64,12 +73,13 @@ public class OfferController {
 	 */
 	public void createOffer(Offer offer) {
 
-		
-		Object[] values = {offer.getAid(), offer.getAuthor(), offer.getName(), offer.getNote(),
-				offer.isChecked(), offer.getSlots(), offer.getHoursperweek(), offer.getDescription(),
-				offer.getStartdate(), offer.getEnddate(), offer.getWage(), offer.getInstitute(), offer.getModificationdate()};
-		
-		dbc.insert("angebote", values);
+		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
+				offer.getNote(), offer.isChecked(), offer.getSlots(),
+				offer.getHoursperweek(), offer.getDescription(),
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate() };
+
+		dbc.insert("Angebote", values);
 	}
 
 	/**
@@ -82,9 +92,9 @@ public class OfferController {
 	 *            entfernt.
 	 */
 	public void deleteOffer(Offer offer) {
-		
-		dbc.delete("angebote", "AID = "+offer.getAid());
-		
+
+		dbc.delete("Angebote", "AID = " + offer.getAid());
+
 	}
 
 	/**
@@ -96,18 +106,21 @@ public class OfferController {
 	 *            dazugehoerigen Attributen.
 	 */
 	public void updateOffer(Offer offer) {
-		
-		String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft", "Plaetze", "Stundenprowoche", "Beschreibung", 
-				"Beginn", "Ende", "Stundenlohn", "Institut", "aenderungsdatum"};
-		
-		Object[] values = {offer.getAuthor(), offer.getName(), offer.getNote(),
-				offer.isChecked(), offer.getSlots(), offer.getHoursperweek(), offer.getDescription(),
-				offer.getStartdate(), offer.getEnddate(), offer.getWage(), offer.getInstitute(), offer.getModificationdate()};
-		
-		String where = "AID = "+offer.getAid();
-		
-		dbc.update("angebote", columns, values, where);
-		
+
+		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
+				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+				"Stundenlohn", "Institut", "aenderungsdatum" };
+
+		Object[] values = { offer.getAuthor(), offer.getName(),
+				offer.getNote(), offer.isChecked(), offer.getSlots(),
+				offer.getHoursperweek(), offer.getDescription(),
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate() };
+
+		String where = "AID = " + offer.getAid();
+
+		dbc.update("Angebote", columns, values, where);
+
 	}
 
 	/**
@@ -119,30 +132,31 @@ public class OfferController {
 	 */
 	public Vector<Offer> getAllOffers() {
 
-		Vector<Offer> offervec = new Vector<Offer>(50,10);
-		
-		String[] select = {"*"};
-		String[] from = {"angebote"};
-		
+		Vector<Offer> offervec = new Vector<Offer>(50, 10);
+
+		String[] select = { "*" };
+		String[] from = { "Angebote" };
+
 		ResultSet rs = dbc.select(select, from, null);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5),
-						rs.getInt(6),rs.getDouble(7),rs.getString(8),rs.getDate(9),rs.getDate(10),rs.getDouble(11),
-						rs.getInt(12),rs.getDate(13));
+				currentoff = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13));
 
 				offervec.add(currentoff);
 			}
-			
+
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         
-		
+
 		return offervec;
 	}
 
@@ -160,33 +174,34 @@ public class OfferController {
 	 */
 	public Vector<Offer> getOffersByCheck(Offer offer) {
 
-		Vector<Offer> offervec = new Vector<Offer>(50,10);
-		
-		String[] select = {"*"};
-		String[] from = {"angebote"};
-		String where = "Geprueft = '"+offer.isChecked()+"'";
-		
+		Vector<Offer> offervec = new Vector<Offer>(50, 10);
+
+		String[] select = { "*" };
+		String[] from = { "Angebote" };
+		String where = "Geprueft = '" + offer.isChecked() + "'";
+
 		ResultSet rs = dbc.select(select, from, where);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5),
-						rs.getInt(6),rs.getDouble(7),rs.getString(8),rs.getDate(9),rs.getDate(10),rs.getDouble(11),
-						rs.getInt(12),rs.getDate(13));
+				currentoff = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13));
 
 				offervec.add(currentoff);
 			}
-			
+
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         
-		
+
 		return offervec;
-		
+
 	}
 
 	/**
@@ -195,35 +210,30 @@ public class OfferController {
 	 * 
 	 * @return Es wird ein Vector mit allen noch freien Jobangeboten aus der
 	 *         Datenbank zurueckgegeben. Frei entspricht freie plaetze (slots)
-	 *         >= 1.
+	 *         >= 1. Wenn keine in der Datenbank sind wird <code>null</code>
+	 *         zurueckgegeben.
 	 */
 	public Vector<Offer> getOffersWithFreeSlots() {
-		
-		Vector<Offer> offervec = new Vector<Offer>(50,10);
-		
-		String[] select = {"*"};
-		String[] from = {"angebote"};
+		Vector<Offer> offervec = new Vector<Offer>(50, 10);
+		String[] select = { "*" };
+		String[] from = { "Angebote" };
 		String where = "Plaetze > 0";
-		
 		ResultSet rs = dbc.select(select, from, where);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5),
-						rs.getInt(6),rs.getDouble(7),rs.getString(8),rs.getDate(9),rs.getDate(10),rs.getDouble(11),
-						rs.getInt(12),rs.getDate(13));
-
+				currentoff = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13));
 				offervec.add(currentoff);
 			}
-			
 			rs.close();
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.write("OfferController", "Error reading free offers!");
+			return null;
 		}
-         
-		
 		return offervec;
 	}
 
@@ -238,35 +248,37 @@ public class OfferController {
 	 *         sich ein Bewerber beworben hat.
 	 */
 	public Vector<Offer> getOffersByApplicatiot(Vector<Application> applications) {
-	
-		Vector<Offer> offervec = new Vector<Offer>(50,10);
-		String[] select = {"*"};
-		String[] from = {"angebote"};
+
+		Vector<Offer> offervec = new Vector<Offer>(50, 10);
+		String[] select = { "*" };
+		String[] from = { "angebote" };
 		String where;
-		
-		for(int i = 0; i<applications.size(); i++){
-			
-			where = "AID = "+applications.elementAt(i).getAid();
-			
+
+		for (int i = 0; i < applications.size(); i++) {
+
+			where = "AID = " + applications.elementAt(i).getAid();
+
 			ResultSet rs = dbc.select(select, from, where);
 			try {
-				while(rs.next()){
+				while (rs.next()) {
 					Offer currentoff;
-					currentoff = new Offer(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5),
-							rs.getInt(6),rs.getDouble(7),rs.getString(8),rs.getDate(9),rs.getDate(10),rs.getDouble(11),
-							rs.getInt(12),rs.getDate(13));
-	
+					currentoff = new Offer(rs.getInt(1), rs.getString(2),
+							rs.getString(3), rs.getString(4), rs.getBoolean(5),
+							rs.getInt(6), rs.getDouble(7), rs.getString(8),
+							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+							rs.getInt(12), rs.getDate(13));
+
 					offervec.add(currentoff);
 				}
-				
+
 				rs.close();
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		return offervec;
 	}
 }

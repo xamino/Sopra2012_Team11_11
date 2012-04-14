@@ -3,7 +3,45 @@
  * @author: Tamino Hartmann
  */
 
-// This script requires the md5.js file! (Needs to be imported on the webpages that use this file.)
+/**
+ * Sends call for all available offers:
+ */
+function loadOffers() {
+	connect("/hiwi/Servlet/js/loadOffers", "", handleLoadOffers);
+}
+
+/**
+ * Handles displaying of all available offers.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadOffers(mime, data) {
+	if (mime == "application/json") {
+		// alert(data);
+		var offers = eval(data);
+		var table = document.getElementById("offersTable");
+		table.innerHTML = "<tr><th>Datum</th><th>Bezeichnung</th><th>Beschreibung</th><th>Anbieter</th><th>Stellen</th></tr>";
+		for ( var i = 0; i < offers.length; i++) {
+			table.innerHTML += "<tr><td>" + offers[i].startdate + "</td><td>"
+					+ offers[i].name + "</td><td>" + offers[i].description
+					+ "</td><td>" + offers[i].author + "</td><td>"
+					+ offers[i].slots + "</td></tr>";
+		}
+		return;
+	} else if (mime == "text/plain") {
+		if (data == "null") {
+			var table = document.getElementById("offersTable");
+			table.innerHTML = "<tr><th>Aktuell gibt es keine offenen Angebote!</th></tr>";
+			return;
+		}
+	}
+}
+
+// This script requires the md5.js file! (Needs to be imported on the webpages
+// that use this file.)
 /**
  * This function checks that all the fields required for login are filled and
  * sends the data to the server. On correct login it redirects to the userindex
