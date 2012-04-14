@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import user.Applicant;
 import user.Clerk;
 
 import logger.Log;
@@ -59,7 +58,9 @@ public class ClerkServlet extends HttpServlet {
 
 		if (path.equals("/js/doExcelExport")) {
 			log.write("ClerkServlet", "Excel export requested.");
-			response.sendRedirect(Helper.D_CLERK_USERINDEX);
+			// For now, simply redirect to userindex:
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_CLERK_USERINDEX);
 		}
 	}
 }

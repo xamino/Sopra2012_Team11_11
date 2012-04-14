@@ -55,8 +55,10 @@ public class Secure extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
+		// Makes sure that no NullPointerExceptions are thrown...
 		path = (path == null) ? "" : path;
-		log.write("Secure", "Received request <" + path + ">.");
+		// Only use to debug path:
+		// log.write("Secure", "Received request <" + path + ">.");
 		// If login is asked:
 		if (path.equals("/js/doLogin")) {
 			String userName = request.getParameter("userName");
@@ -81,6 +83,7 @@ public class Secure extends HttpServlet {
 				UserFactory.getUserInstance(acc, session);
 				int type = acc.getAccounttype();
 				response.setContentType("text/url");
+				// Switch according to accounttype:
 				if (type == 0)
 					response.getWriter().write(Helper.D_ADMIN_USERINDEX);
 				if (type == 1)
@@ -146,7 +149,7 @@ public class Secure extends HttpServlet {
 		// If unknown path:
 		else {
 			log.write("Secure", "Unknown operation!");
-			response.sendRedirect(Helper.D_INDEX);
+			// response.sendRedirect(Helper.D_INDEX);
 		}
 	}
 }
