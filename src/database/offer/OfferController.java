@@ -79,7 +79,7 @@ public class OfferController {
 				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 				offer.getInstitute(), offer.getModificationdate() };
 
-		dbc.insert("Angebote", values);
+		dbc.insert("angebote", values);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class OfferController {
 	 */
 	public void deleteOffer(Offer offer) {
 
-		dbc.delete("Angebote", "AID = " + offer.getAid());
+		dbc.delete("angebote", "AID = " + offer.getAid());
 
 	}
 
@@ -119,7 +119,7 @@ public class OfferController {
 
 		String where = "AID = " + offer.getAid();
 
-		dbc.update("Angebote", columns, values, where);
+		dbc.update("angebote", columns, values, where);
 
 	}
 
@@ -135,7 +135,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "Angebote" };
+		String[] from = { "angebote" };
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -177,7 +177,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "Angebote" };
+		String[] from = { "angebote" };
 		String where = "Geprueft = '" + offer.isChecked() + "'";
 
 		ResultSet rs = dbc.select(select, from, where);
@@ -216,7 +216,7 @@ public class OfferController {
 	public Vector<Offer> getOffersWithFreeSlots() {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
-		String[] from = { "Angebote" };
+		String[] from = { "angebote" };
 		String where = "Plaetze > 0";
 		ResultSet rs = dbc.select(select, from, where);
 		try {

@@ -45,7 +45,7 @@ public class InstituteController {
 	 */
 	public String getInstituteNameById(int id) {
 		ResultSet rs = dbc.select(new String[] { "Name" },
-				new String[] { "Institute" }, "IID=" + id);
+				new String[] { "institute" }, "IID=" + id);
 		try {
 			if (rs.next()) {
 				return rs.getString("Name");
@@ -64,7 +64,7 @@ public class InstituteController {
 	 */
 	public Vector<Institute> getAllInstitutes() {
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Institute" }, null);
+				new String[] { "institute" }, null);
 		Vector<Institute> inst = new Vector<Institute>();
 		try {
 			while (rs.next()) {
