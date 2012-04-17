@@ -2,14 +2,26 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
 
 import database.account.Account;
+import database.account.AccountController;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Anbieters.
  */
 public class Provider extends User {
 
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	private Log log;
+	/**
+	 * Private Instanz des AccountController.
+	 */
+	private AccountController accountController;
+	
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der
 	 * LoggedInUsers-Klasse aufgenommen.
@@ -37,8 +49,15 @@ public class Provider extends User {
 	 * @param acc
 	 *            geaenderter Account
 	 */
-	public void editAccount(Account acc) {
-
+	public boolean editAccount(Account acc) {
+		
+		if (!accountController.updateAccount(acc)) {
+			log.write("Appllicant", "Error modifying account!");
+			return false;
+		}
+		log.write("Applicant", "<" + getUserData().getUsername()
+				+ "> modified account of <" + acc.getUsername() + ">.");
+		return true;
 	}
 
 	/**

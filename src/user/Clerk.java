@@ -1,3 +1,7 @@
+/**
+ * @author Anatoli Brill
+ */
+
 package user;
 
 import javax.servlet.http.HttpSession;
@@ -5,13 +9,24 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
+import logger.Log;
 import database.account.Account;
+import database.account.AccountController;
 import file.ExcelExport;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Verwalters.
  */
 public class Clerk extends User {
+	
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	private Log log;
+	/**
+	 * Private Instanz des AccountController.
+	 */
+	private AccountController accountController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -38,8 +53,15 @@ public class Clerk extends User {
 	 * @param acc
 	 *            geaenderter Account
 	 */
-	public void editAccount(Account acc) {
-
+	public boolean editAccount(Account acc) {
+		
+		if (!accountController.updateAccount(acc)) {
+			log.write("Appllicant", "Error modifying account!");
+			return false;
+		}
+		log.write("Applicant", "<" + getUserData().getUsername()
+				+ "> modified account of <" + acc.getUsername() + ">.");
+		return true;
 	}
 
 	/**

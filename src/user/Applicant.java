@@ -10,12 +10,25 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
 import database.account.Account;
+import database.account.AccountController;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Bewerbers.
  */
 public class Applicant extends User {
+
+	/**
+	 * Private Instanz des AccountController.
+	 */
+	private AccountController accountController;
+
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	private Log log;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -32,7 +45,7 @@ public class Applicant extends User {
 	 */
 	public Applicant(String username, String email, String name,
 			HttpSession session) {
-		super(username,email,name,session);
+		super(username, email, name, session);
 		userManagement.LoggedInUsers.addUser(this);
 	}
 
@@ -43,8 +56,15 @@ public class Applicant extends User {
 	 * @param acc
 	 *            geaenderter Account
 	 */
-	public void editAccount(Account acc) {
+	public boolean editAccount(Account acc) {
 
+		if (!accountController.updateAccount(acc)) {
+			log.write("Appllicant", "Error modifying account!");
+			return false;
+		}
+		log.write("Applicant", "<" + getUserData().getUsername()
+				+ "> modified account of <" + acc.getUsername() + ">.");
+		return true;
 	}
 
 	/**
@@ -54,15 +74,18 @@ public class Applicant extends User {
 	 *            ID des Angebots
 	 */
 	public void apply(int offerID) {
-
+		
 	}
 
 	/**
-	 * Diese Methode entfernt ein bestimmtes Bewerbungs-Objekt von der Datenbank.
+	 * Diese Methode entfernt ein bestimmtes Bewerbungs-Objekt von der
+	 * Datenbank.
+	 * 
 	 * @param applicationID
-	 * Parameter "applicant" ist eindeutiger Identifizierer des Bewerbungs-Objekts.
+	 *            Parameter "applicant" ist eindeutiger Identifizierer des
+	 *            Bewerbungs-Objekts.
 	 */
-	public void deleteApplication(int applicationID){
-
+	public void deleteApplication(int applicationID) {
+		
 	}
 }
