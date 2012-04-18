@@ -471,6 +471,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
+	
 	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked:
 																						// PROBLEM
 		/*

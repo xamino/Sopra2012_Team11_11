@@ -12,9 +12,12 @@ import java.sql.SQLException;
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
 import logger.Log;
+import database.document.Document;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
+import database.document.AppDocument;
+import database.document.OfferDocument;
 import database.offer.Offer;
 import file.ExcelExport;
 
@@ -81,43 +84,60 @@ public class Clerk extends User {
 	 */
 	public void rejectOffer(int offerID) throws SQLException {
 		Offer off = offcon.getOfferById(offerID);
+		offcon.deleteOffer(off);
+		//TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert werden.
 
 	}
 
 	/**
 	 * Methode zum aktualiesieren eines Angebots.
 	 */
-	public void updateOffer() {
+	public void updateOffer(Offer off) {
+		offcon.updateOffer(off);
 
 	}
 
 	/**
 	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
 	 * Bewerber einzeln Dokumente hinzugefuegt werden.
+	 * @param username
+	 * 			Benutzername wird zur eindeutigen Zuordnung des Dokuments benoetigt.
+	 * @param aID
+	 * 			ID des Bewerbers
 	 */
-	public void addAppDoc() {
+	public void addAppDoc(String username, int aID, int uID, boolean present) {
+		AppDocument doc = new AppDocument(username, aID, uID, present);
+		doccon.createAppDocument(doc);
 
 	}
 
 	/**
 	 * Methode zum hinzufuegen von Dokumenten.
+	 * @param UID
+	 * 			ID der Unterlage
+	 * @param name
+	 * 			Name der Unterlage
+	 * @param description
+	 * 			Beschreibung zur Unterlage
 	 */
-	public void addDoc() {
-
+	public void addDoc(int UID, String name, String description) {
+		Document doc = new Document(UID, name, description);
+		doccon.createDocument(doc);
 	}
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
 	 */
-	public void delDoc() {
-
+	public void delDoc(int UID) {
+		Document doc = doccon.getDocumentByUID(UID);
+		doccon.deleteDocument(doc);
 	}
 
 	/**
 	 * Methode zum annehmen eines Bewerbers.
 	 */
-	public void acceptApplication() {
-
+	public void acceptApplication(int AID) {
+		
 	}
 
 	/**

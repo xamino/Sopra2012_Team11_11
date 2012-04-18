@@ -283,6 +283,15 @@ public class OfferController {
 
 		return offervec;
 	}
+	
+	/**
+	 * 
+	 * @param ID
+	 * 			ID des Angebots
+	 * @return
+	 * 			Gibt das gesuchte Angebot zurueck
+	 * @throws SQLException
+	 */
 	public Offer getOfferById(int ID) throws SQLException{
 		String[] select = {"AID"};
 		String[] from = { tableName};
