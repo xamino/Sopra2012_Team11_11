@@ -236,6 +236,7 @@ public class DatabaseController {
 			return rs;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "SELECT error! <" + sel + ">");
+			e.printStackTrace();
 		}
 		return null;
 	}
