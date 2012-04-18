@@ -58,7 +58,7 @@ public class ApplicationController {
 	 */
 	public DatabaseController dbc;
 	
-	final static String tableName = "Bewerbungen";//tabellenname
+	final static String tableName = "bewerbungen";//tabellenname
 
 	/**
 	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
@@ -74,7 +74,7 @@ public class ApplicationController {
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
 
-		dbc.insert("bewerbungen", values);
+		dbc.insert(tableName, values);
 
 	}
 
@@ -88,7 +88,7 @@ public class ApplicationController {
 	 */
 
 	public void deleteApplication(Application application) {
-		dbc.delete("bewerbungen", "AID = " + application.getAid());
+		dbc.delete(tableName, "AID = " + application.getAid());
 
 	}
 
@@ -109,7 +109,7 @@ public class ApplicationController {
 				application.isChosen() };
 		String where = "AID = " + application.getAid();
 
-		dbc.update("bewerbung", columns, values, where);
+		dbc.update(tableName, columns, values, where);
 
 	}
 
@@ -125,7 +125,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "bewerbungen" };
+		String[] from = { tableName };
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -163,7 +163,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(3, 2);
 
 		String[] select = { "*" };
-		String[] from = { "bewerbungen" };
+		String[] from = { tableName };
 		String where = "benutzername = '" + username + "'";
 
 
@@ -203,7 +203,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(10, 5);
 
 		String[] select = { "*" };
-		String[] from = { "bewerbungen" };
+		String[] from = { tableName };
 		String where = "AID = " + aid;
 
 		ResultSet rs = dbc.select(select, from, where);
@@ -241,7 +241,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "bewerbungen" };
+		String[] from = { tableName };
 		String where = "sachbearbeiter = '" + clerkname + "'";
 
 
@@ -274,7 +274,7 @@ public class ApplicationController {
 	 */
 	public Application getApplicationById(int AId) throws SQLException {
 		String[] select = { "AID" };
-		String[] from = { "bewerbungen" };
+		String[] from = { tableName };
 		String where = null;
 
 		ResultSet rs = dbc.select(select, from, where);

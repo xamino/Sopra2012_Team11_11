@@ -7,11 +7,15 @@ package user;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
 import logger.Log;
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
+import database.offer.Offer;
 import file.ExcelExport;
 
 /**
@@ -73,8 +77,10 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum ablehnen eines Angebots.
+	 * @throws SQLException 
 	 */
-	public void rejectOffer() {
+	public void rejectOffer(int offerID) throws SQLException {
+		Offer off = offcon.getOfferById(offerID);
 
 	}
 
