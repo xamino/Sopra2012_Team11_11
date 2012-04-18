@@ -8,12 +8,15 @@
  */
 package user;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
 
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Bewerbers.
@@ -74,6 +77,8 @@ public class Applicant extends User {
 	 *            ID des Angebots
 	 */
 	public void apply(int offerID) {
+		Application app = new Application(getUserData().getName(), offerID, false, null, false);
+		appcon.updateApplication(app);
 		
 	}
 
@@ -84,8 +89,10 @@ public class Applicant extends User {
 	 * @param applicationID
 	 *            Parameter "applicant" ist eindeutiger Identifizierer des
 	 *            Bewerbungs-Objekts.
+	 * @throws SQLException 
 	 */
-	public void deleteApplication(int applicationID) {
-		
+	public void deleteApplication(int applicationID) throws SQLException {
+		Application app = appcon.getApplicationById(applicationID);
+		appcon.deleteApplication(app);
 	}
 }
