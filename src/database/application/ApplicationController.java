@@ -64,7 +64,7 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void createApplication(Application application) {
+	public void createApplication(Application application) { //checked
 
 		Object[] values = {application.getUsername(),application.getAid(),application.isFinished(),application.getClerk(),application.isChosen()};
 		
@@ -80,7 +80,7 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void deleteApplication(Application application) {
+	public void deleteApplication(Application application) { 
 		dbc.delete("bewerbungen", "AID = "+application.getAid());
 	}
 

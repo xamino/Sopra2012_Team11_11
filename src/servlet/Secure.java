@@ -65,7 +65,7 @@ public class Secure extends HttpServlet {
 			//TESTBLOCK ZUM RAUSSCHMEISSEN
 			System.out.println("BEGIN---------------------------TESTBEREICH---------------------------");
 			
-			ApplicationController.getInstance().createApplication(new Application("fischname",888,false,"sachfisch",false));
+			ApplicationController.getInstance().deleteApplication(new Application("Aquaman",901,false,"hulk.bam",false));
 			
 			System.out.println("---------------------------TESTBEREICH-----------------------------END");
 			//TESTBLOCK ZUM RAUSSCHMEISSEN
