@@ -85,7 +85,8 @@
 					<tr id="lala" onclick="">
 						<td>01.01.2001</td>
 						<td>La le lu Tut</td>
-						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerben" /></div><div class="clear"></div></td>
+						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="button" value="Bewerben"
+						onclick="togglePopup('application',true);" /> </div><div class="clear"></div></td>
 					</tr>
 				</table>
 			</div>
@@ -96,6 +97,25 @@
 	<div class="clear"></div>
 
 	<div class="footer"></div>
+
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="application" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen Sie sich<br>wirklich bewerben?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Bewerben"
+					onclick="deleteSelectedAccount(); togglePopup('application', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('application', false);" />
+			</div>
+		</form>
+	</div>
 
 </body>
 

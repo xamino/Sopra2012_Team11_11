@@ -62,7 +62,7 @@
 					<tr id="manohman" onclick="">
 						<td>TUT xy</td>
 						<td>14/10<br><input type="submit" value="Bewerberauswahl" onclick="window.location='applicantlist.jsp'" /></td>
-						<td><br><input type="submit" value="Angebot ändern" /> </td>
+						<td><br><input type="submit" value="Angebot ändern" onclick="window.location='editoffer.jsp'"/> </td>
 						<td><br><input type="button" value="Angebot zurückziehen"
 						onclick="togglePopup('offer_cancel',true);" /> </td>
 						<!-- <td><br><input type="submit" value="Angebot zurückziehen" /> </td>-->
@@ -77,6 +77,25 @@
 	<div class="clear"></div>
 
 	<div class="footer"></div>
+
+		<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="offer_cancel" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen Sie das Angebot<br>wirklich zurückziehen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Zurückziehen"
+					onclick="deleteSelectedAccount(); togglePopup('offer_cancel', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('offer_cancel', false);" />
+			</div>
+		</form>
+	</div>
 
 </body>
 

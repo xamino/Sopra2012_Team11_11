@@ -77,6 +77,25 @@
 
 	<div class="footer"></div>
 
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="edit_offer" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen Sie das Angebot<br>wirklich ändern?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Ändern"
+					onclick="deleteSelectedAccount(); togglePopup('edit_offer', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('edit_offer', false);" />
+			</div>
+		</form>
+	</div>
+
 </body>
 
 </html>
