@@ -2,6 +2,7 @@
  * @author Patryk Boczon
  * @author Oemer Sahin
  * @author Manuel Güntzel
+ * @author Anatoli Brill
  */
 
 package database.application;

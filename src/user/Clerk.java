@@ -56,10 +56,10 @@ public class Clerk extends User {
 	public boolean editAccount(Account acc) {
 		
 		if (!accountController.updateAccount(acc)) {
-			log.write("Appllicant", "Error modifying account!");
+			log.write("Clerk", "Error modifying account!");
 			return false;
 		}
-		log.write("Applicant", "<" + getUserData().getUsername()
+		log.write("Clerk", "<" + getUserData().getUsername()
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
