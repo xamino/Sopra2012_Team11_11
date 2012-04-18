@@ -25,6 +25,10 @@ public class DocumentController {
 	 * Private Instanz des DatabaseController.
 	 */
 	private DatabaseController dbc;
+	
+	final static String tableNameS = "Standardunterlagen";//tabellenname
+	final static String tableNameB = "Bewerbungsunterlagen";//tabellenname
+	final static String tableNameU = "Unterlagen";//tabellenname
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
@@ -71,7 +75,7 @@ public class DocumentController {
 	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
 	public boolean createDocument(Document document) { // checked
-		return dbc.insert("unterlagen", new Object[] { document.getUid(),
+		return dbc.insert(tableNameU, new Object[] { document.getUid(),
 				document.getName(), document.getDescription() });
 	}
 
@@ -89,9 +93,9 @@ public class DocumentController {
 		 * sondern auch in "Standardunterlagen" und "Bewerbungsunterlagen"
 		 * geloescht werden, da diese nicht mehr existiert.
 		 */
-		return dbc.delete("bewerbungsunterlagen", "UID=" + document.getUid())
-				&& dbc.delete("standardunterlagen", "UID=" + document.getUid())
-				&& dbc.delete("unterlagen", "UID=" + document.getUid());
+		return dbc.delete(tableNameB, "UID=" + document.getUid())
+				&& dbc.delete(tableNameS, "UID=" + document.getUid())
+				&& dbc.delete(tableNameU, "UID=" + document.getUid());
 	}
 
 	/**
@@ -104,7 +108,7 @@ public class DocumentController {
 	 * @return Gibt an, ob das Update erfolgreich war.
 	 */
 	public boolean updateDocument(Document document) { // checked
-		return dbc.update("unterlagen",
+		return dbc.update(tableNameU,
 				new String[] { "Name", "Beschreibung" }, new Object[] {
 						document.getName(), document.getDescription() }, "UID="
 						+ document.getUid());
@@ -113,7 +117,7 @@ public class DocumentController {
 	public Document getDocumentByUID(int uid) {
 		Document doc = null;
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "unterlagen" }, "UID=" + uid);
+				new String[] { tableNameU }, "UID=" + uid);
 		try {
 			if (rs.next()) {
 				doc = new Document(rs.getInt("UID"), rs.getString("Name"),
@@ -150,7 +154,7 @@ public class DocumentController {
 		// bei gegebener Angebots-ID
 		Vector<OfferDocument> docVect = new Vector<OfferDocument>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "standardunterlagen" }, "AID=" + aid);
+				new String[] { tableNameS }, "AID=" + aid);
 
 		try {
 			while (rs.next()) {
@@ -205,7 +209,7 @@ public class DocumentController {
 		// Angebots bei gegebener Angebots-ID
 		Vector<AppDocument> appDocVect = new Vector<AppDocument>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "bewerbungsunterlagen" }, "AID=" + aid);
+				new String[] { tableNameB }, "AID=" + aid);
 
 		try {
 			while (rs.next()) {
@@ -269,7 +273,7 @@ public class DocumentController {
 		Vector<AppDocument> userOffDocVect = new Vector<AppDocument>();
 		ResultSet rs = dbc
 				.select(new String[] { "*" },
-						new String[] { "bewerbungsunterlagen" },
+						new String[] { tableNameB },
 						"benutzername='" + account.getUsername() + "' AND AID="
 								+ offer.getAid());
 
@@ -333,7 +337,7 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe aller vorhandenen Unterlagen
 		Vector<Document> allDocVect = new Vector<Document>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "unterlagen" }, null);
+				new String[] { tableNameU }, null);
 
 		try {
 			while (rs.next()) {
@@ -380,7 +384,7 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void createAppDocument(AppDocument document) { // checked
-		dbc.insert("bewerbungsunterlagen",
+		dbc.insert(tableNameB,
 				new Object[] { document.getUsername(), document.getoID(),
 						document.getdID(), document.getPresent() });
 	}
@@ -395,7 +399,7 @@ public class DocumentController {
 	 *            Attributen.
 	 */
 	public void deleteAppDocument(AppDocument document) { // checked
-		dbc.delete("bewerbungsunterlagen",
+		dbc.delete(tableNameB,
 				"benutzername='" + document.getUsername() + "' AND AID="
 						+ document.getoID() + " AND UID=" + document.getdID());
 	}
@@ -428,7 +432,7 @@ public class DocumentController {
 		 * Aenderungen am System. Es sieht aus, als ob das System nichts machen
 		 * wuerde.
 		 */
-		dbc.update("bewerbungsunterlagen", columns, values, where);
+		dbc.update(tableNameB, columns, values, where);
 	}
 
 	/**
@@ -441,7 +445,7 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void createOfferDocument(OfferDocument document) { // checked
-		dbc.insert("standardunterlagen", new Object[] { document.getOfferID(),
+		dbc.insert(tableNameS, new Object[] { document.getOfferID(),
 				document.getDocumentid() });
 	}
 
@@ -455,7 +459,7 @@ public class DocumentController {
 	 */
 	public void deleteOfferDocument(OfferDocument document) { // checked
 
-		dbc.delete("standardunterlagen", "AID=" + document.getOfferID()
+		dbc.delete(tableNameS, "AID=" + document.getOfferID()
 				+ " AND UID=" + document.getDocumentid());
 	}
 
@@ -494,7 +498,7 @@ public class DocumentController {
 				document.getDocumentid() };
 		// Object[] values = new Object[]{document.getOfferID(),newDocumentId};
 
-		dbc.update("standardunterlagen", columns, values, where);
+		dbc.update(tableNameS, columns, values, where);
 	}
 
 	/**

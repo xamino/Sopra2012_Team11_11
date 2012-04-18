@@ -55,6 +55,8 @@ public class ApplicationController {
 	 * Diese Instanz dient zum Zugang in die Datenbank.
 	 */
 	public DatabaseController dbc;
+	
+	final static String tableName = "Bewerbungen";//tabellenname
 
 	/**
 	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
@@ -68,7 +70,7 @@ public class ApplicationController {
 
 		Object[] values = {application.getUsername(),application.getAid(),application.isFinished(),application.getClerk(),application.isChosen()};
 		
-		dbc.insert("bewerbungen", values);
+		dbc.insert(tableName, values);
 		
 	}
 
@@ -80,8 +82,10 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void deleteApplication(Application application) { 
-		dbc.delete("bewerbungen", "AID = "+application.getAid());
+
+	public void deleteApplication(Application application) {
+		dbc.delete(tableName, "AID = "+application.getAid());
+
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(50,10);
 		
 		String[] select = {"*"};
-		String[] from = {"bewerbungen"};
+		String[] from = {tableName};
 		
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -152,7 +156,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(3,2);
 		
 		String[] select = {"*"};
-		String[] from = {"bewerbungen"};
+		String[] from = {tableName};
 		String where = "benutzername = '"+username+"'";
 		
 		ResultSet rs = dbc.select(select, from, where);
@@ -190,7 +194,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(10,5);
 		
 		String[] select = {"*"};
-		String[] from = {"bewerbungen"};
+		String[] from = {tableName};
 		String where = "AID = "+aid;
 		
 		ResultSet rs = dbc.select(select, from, where);
@@ -227,7 +231,7 @@ public class ApplicationController {
 		Vector<Application> applicationvec = new Vector<Application>(50,10);
 		
 		String[] select = {"*"};
-		String[] from = {"bewerbungen"};
+		String[] from = {tableName};
 		String where = "sachbearbeiter = '"+clerkname+"'";
 		
 		ResultSet rs = dbc.select(select, from, where);

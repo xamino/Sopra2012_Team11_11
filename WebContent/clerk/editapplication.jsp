@@ -139,7 +139,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" /> <input type="button"
+				<input type="button" value="Speichern" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
