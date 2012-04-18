@@ -92,6 +92,25 @@
 
 	<div class="footer"></div>
 
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="application_cancel" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen Sie die Bewerbung<br>wirklich wiederrufen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Wiederrufen"
+					onclick="deleteSelectedAccount(); togglePopup('application_cancel', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('application_cancel', false);" />
+			</div>
+		</form>
+	</div>
+
 </body>
 
 </html>

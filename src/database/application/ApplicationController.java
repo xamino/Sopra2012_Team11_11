@@ -56,6 +56,8 @@ public class ApplicationController {
 	 * Diese Instanz dient zum Zugang in die Datenbank.
 	 */
 	public DatabaseController dbc;
+	
+	final static String tableName = "Bewerbungen";//tabellenname
 
 	/**
 	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
@@ -65,7 +67,7 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void createApplication(Application application) {
+	public void createApplication(Application application) { //checked
 
 		Object[] values = { application.getUsername(), application.getAid(),
 				application.isFinished(), application.getClerk(),
@@ -83,8 +85,10 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
+
 	public void deleteApplication(Application application) {
 		dbc.delete("bewerbungen", "AID = " + application.getAid());
+
 	}
 
 	/**
@@ -161,6 +165,7 @@ public class ApplicationController {
 		String[] from = { "bewerbungen" };
 		String where = "benutzername = '" + username + "'";
 
+
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -192,6 +197,7 @@ public class ApplicationController {
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByOffer(int aid) {
+
 
 		Vector<Application> applicationvec = new Vector<Application>(10, 5);
 
@@ -230,11 +236,13 @@ public class ApplicationController {
 	 */
 	public Vector<Application> getApprovedApplicationsByClerk(String clerkname) {
 
+
 		Vector<Application> applicationvec = new Vector<Application>(50, 10);
 
 		String[] select = { "*" };
 		String[] from = { "bewerbungen" };
 		String where = "sachbearbeiter = '" + clerkname + "'";
+
 
 		ResultSet rs = dbc.select(select, from, where);
 		try {
