@@ -28,6 +28,8 @@ public class AccountController {
 	 * AccountController. existiert.
 	 */
 	private static AccountController acccontr;
+	
+	final static String tableName = "Accounts";//tabellenname
 
 	/**
 	 * Diese Methode prueft ob ein AccountController-Objekt existiert. Falls
@@ -74,7 +76,7 @@ public class AccountController {
 				account.getName(), account.getInstitute(),
 				account.getRepresentative() };
 
-		return dbc.insert("accounts", values);
+		return dbc.insert(tableName, values);
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class AccountController {
 
 		String where = "benutzername = '" + account.getUsername() + "'";
 
-		dbc.delete("accounts", where);
+		dbc.delete("tableName", where);
 	}
 
 	/**
@@ -113,7 +115,7 @@ public class AccountController {
 		String[] columns = { "passworthash", "accounttyp", "email", "name",
 				"institut", "stellvertreter" };
 
-		return dbc.update("accounts", columns, values, where);
+		return dbc.update(tableName, columns, values, where);
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class AccountController {
 	 * @return Anzahl der Accounts
 	 */
 	public int accountCount() {
-		return dbc.count(new String[] { "accounts" }, null);
+		return dbc.count(new String[] { tableName }, null);
 	}
 
 	/**
@@ -133,7 +135,7 @@ public class AccountController {
 	 */
 	public Vector<Account> getAllAccounts() {
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "accounts" }, null);
+				new String[] { tableName }, null);
 		Vector<Account> accounts = new Vector<Account>();
 		try {
 			while (rs.next()) {
@@ -160,7 +162,7 @@ public class AccountController {
 	 */
 	public Account getAccountByUsername(String username) {
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "accounts" }, "benutzername='" + username + "'");
+				new String[] { tableName }, "benutzername='" + username + "'");
 		try {
 			if (rs.next())
 				return new Account(rs.getString(1), rs.getString(2),
@@ -191,7 +193,7 @@ public class AccountController {
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
 		String[] select = { "*" };
-		String[] from = { "accounts" };
+		String[] from = { tableName };
 		String where = "accounttyp = " + accounttype;
 
 		ResultSet rs = dbc.select(select, from, where);
@@ -229,7 +231,7 @@ public class AccountController {
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
 		String[] select = { "*" };
-		String[] from = { "accounts" };
+		String[] from = { tableName };
 		String where = "institut = " + id;
 
 		ResultSet rs = dbc.select(select, from, where);

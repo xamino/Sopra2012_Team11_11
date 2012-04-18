@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import database.account.Account;
 import database.account.AccountController;
+import database.document.DocumentController;
 
 import user.User;
 import userManagement.LoggedInUsers;

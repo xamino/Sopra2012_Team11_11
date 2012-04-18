@@ -62,6 +62,8 @@ public class OfferController {
 	 * Datenbankzugang benoetigt.
 	 */
 	private DatabaseController dbc;
+	
+	final static String tableName = "Angebote";//tabellenname
 
 	/**
 	 * Diese Methode erstellt ein neues Jobangebot in der Datenbank mit Daten
@@ -79,7 +81,7 @@ public class OfferController {
 				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 				offer.getInstitute(), offer.getModificationdate() };
 
-		dbc.insert("angebote", values);
+		dbc.insert(tableName, values);
 	}
 
 	/**
@@ -93,7 +95,7 @@ public class OfferController {
 	 */
 	public void deleteOffer(Offer offer) {
 
-		dbc.delete("angebote", "AID = " + offer.getAid());
+		dbc.delete(tableName, "AID = " + offer.getAid());
 
 	}
 
@@ -119,7 +121,7 @@ public class OfferController {
 
 		String where = "AID = " + offer.getAid();
 
-		dbc.update("angebote", columns, values, where);
+		dbc.update(tableName, columns, values, where);
 
 	}
 
@@ -135,7 +137,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "angebote" };
+		String[] from = { tableName };
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -177,7 +179,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 
 		String[] select = { "*" };
-		String[] from = { "angebote" };
+		String[] from = { tableName };
 		String where = "Geprueft = '" + offer.isChecked() + "'";
 
 		ResultSet rs = dbc.select(select, from, where);
@@ -216,7 +218,7 @@ public class OfferController {
 	public Vector<Offer> getOffersWithFreeSlots() {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
-		String[] from = { "angebote" };
+		String[] from = { tableName };
 		String where = "Plaetze > 0";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
@@ -251,7 +253,7 @@ public class OfferController {
 
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
-		String[] from = { "angebote" };
+		String[] from = { tableName };
 		String where;
 
 		for (int i = 0; i < applications.size(); i++) {
