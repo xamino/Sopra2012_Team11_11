@@ -67,7 +67,7 @@ public class AccountController {
 	 *            noetigen Attribute enthaelt.
 	 * @return Gibt an, ob das erstellen des Accounts erfolgreich war.
 	 */
-	public boolean createAccount(Account account) {
+	public boolean createAccount(Account account) { //checked
 
 		Object[] values = { account.getUsername(), account.getPasswordhash(),
 				account.getAccounttype(), account.getEmail(),
@@ -85,7 +85,7 @@ public class AccountController {
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
 	 */
-	public void deleteAccount(Account account) {
+	public void deleteAccount(Account account) { //checked
 
 		String where = "benutzername = '" + account.getUsername() + "'";
 
@@ -101,7 +101,7 @@ public class AccountController {
 	 *            noetigen Attribute enthaelt.
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public boolean updateAccount(Account account) {
+	public boolean updateAccount(Account account) { //checked
 
 		String where = "benutzername = '" + account.getUsername() + "'";
 
@@ -121,7 +121,7 @@ public class AccountController {
 	 * 
 	 * @return Anzahl der Accounts
 	 */
-	public int accountCount() {
+	public int accountCount() { //checked
 		return dbc.count(new String[] { "accounts" }, null);
 	}
 
@@ -131,7 +131,7 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
 	 *         existent <code>null</code>.
 	 */
-	public Vector<Account> getAllAccounts() {
+	public Vector<Account> getAllAccounts() { //checked
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { "accounts" }, null);
 		Vector<Account> accounts = new Vector<Account>();
@@ -158,14 +158,16 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
 	 *         existent <code>null</code>.
 	 */
-	public Account getAccountByUsername(String username) {
+	public Account getAccountByUsername(String username) { //checked
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "accounts" }, "benutzername='" + username + "'");
+				new String[] { "accounts" }, "benutzername = '" + username + "'");
 		try {
-			if (rs.next())
+			if (rs.next()){
+				
 				return new Account(rs.getString(1), rs.getString(2),
 						rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getString(7));
+			}
 			else
 				return null;
 		} catch (SQLException e) {
@@ -186,7 +188,7 @@ public class AccountController {
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem
 	 *         Accounttyp.
 	 */
-	public Vector<Account> getAccountsByAccounttype(int accounttype) {
+	public Vector<Account> getAccountsByAccounttype(int accounttype) { //checked
 
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
@@ -224,7 +226,7 @@ public class AccountController {
 	 * @return Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
-	public Vector<Account> getAccountsByInstitute(int id) {
+	public Vector<Account> getAccountsByInstitute(int id) { //checked
 
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
@@ -259,11 +261,23 @@ public class AccountController {
 	 * vorhanden ist, wird ein <code>NULL</code> zurueck gegeben.
 	 * 
 	 * @param name
-	 *            Name des Stellvertreters.
+	 *            Name des Accounts.
 	 * @return Gibt den Namen des Stellvertreters zurueck.
 	 */
-	public String getRepresentative(String name) {
+	public String getRepresentative(String name) { //checked
 
+		ResultSet rs = dbc.select(new String[] { "stellvertreter" },
+				new String[] { "accounts" }, "benutzername = '" + name + "'");
+		try {
+			if (rs.next()){
+				return rs.getString(1);
+			}
+			else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("AccountController",
+					"Error while reading Account from Database");
+		}
 		return null;
 	}
 
@@ -274,8 +288,12 @@ public class AccountController {
 	 *            Der Name des Stellvertreters.
 	 */
 
-	public void setRepresentative(String name) {
-
+	public void setRepresentative(String name, String newrepresentative) { //checked
+		String[] columns = {"stellvertreter"};
+		Object[] values = {newrepresentative};
+		String where = "benutzername = '"+name+"'";
+		
+		dbc.update("accounts", columns, values, where);
 	}
 
 }
