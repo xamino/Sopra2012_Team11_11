@@ -26,9 +26,9 @@ public class DocumentController {
 	 */
 	private DatabaseController dbc;
 	
-	final static String tableNameS = "Standardunterlagen";//tabellenname
-	final static String tableNameB = "Bewerbungsunterlagen";//tabellenname
-	final static String tableNameU = "Unterlagen";//tabellenname
+	final static String tableNameS = "standardunterlagen";//tabellenname
+	final static String tableNameB = "bewerbungsunterlagen";//tabellenname
+	final static String tableNameU = "unterlagen";//tabellenname
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
@@ -471,6 +471,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
+	
 	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked:
 																						// PROBLEM
 		/*

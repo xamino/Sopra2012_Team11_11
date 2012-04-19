@@ -283,4 +283,23 @@ public class OfferController {
 
 		return offervec;
 	}
+	
+	/**
+	 * 
+	 * @param ID
+	 * 			ID des Angebots
+	 * @return
+	 * 			Gibt das gesuchte Angebot zurueck
+	 * @throws SQLException
+	 */
+	public Offer getOfferById(int ID) throws SQLException{
+		String[] select = {"AID"};
+		String[] from = { tableName};
+		String where = null;
+		
+		ResultSet rs = dbc.select(select, from, where);
+		Offer off = new Offer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5), rs.getInt(6), 
+						rs.getDouble(7), rs.getString(8), rs.getDate(9), rs.getDate(10), rs.getDouble(11), rs.getInt(12), rs.getDate(13));
+		return off;
+	}
 }
