@@ -58,7 +58,7 @@ public class ApplicationController {
 	 */
 	public DatabaseController dbc;
 	
-	final static String tableName = "bewerbungen";//tabellenname
+	final static String tableName = "Bewerbungen";//tabellenname
 
 	/**
 	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
