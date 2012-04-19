@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import database.account.Account;
-import database.account.AccountController;
-
 import logger.Log;
 import user.User;
 import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
+import database.account.Account;
+import database.account.AccountController;
+import database.application.Application;
+import database.application.ApplicationController;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die
@@ -62,6 +62,17 @@ public class Secure extends HttpServlet {
 		// If login is asked:
 		if (path.equals("/js/doLogin")) {
 
+			
+			//TESTBLOCK ZUM RAUSSCHMEISSEN
+			System.out.println("BEGIN---------------------------TESTBEREICH---------------------------");
+			
+//			Application appli = new Application();
+//			ApplicationController.getInstance().deleteApplication(appli);
+			
+			System.out.println("---------------------------TESTBEREICH-----------------------------END");
+			//TESTBLOCK ZUM RAUSSCHMEISSEN
+			
+			
 			String userName = request.getParameter("userName");
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"

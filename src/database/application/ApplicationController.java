@@ -84,7 +84,8 @@ public class ApplicationController {
 	 */
 
 	public void deleteApplication(Application application) {
-		dbc.delete(tableName, "AID = "+application.getAid());
+		String where = "AID = "+application.getAid()+" benutzername = '"+application.getUsername()+"'";
+		dbc.delete(tableName, where);
 
 	}
 
