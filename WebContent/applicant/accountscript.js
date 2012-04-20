@@ -21,7 +21,7 @@ var selectedAccount;
 function loadAccount() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedAccount = null;
-	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountsResponse);
+	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountResponse);
 }
 
 
@@ -34,23 +34,20 @@ function loadAccount() {
  * @param data
  *            The data.
  */
-function handleLoadAccountsResponse(mime, data) {
+function handleLoadAccountResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
-		// Erstelle Array aus JSON array:
-		var JSONarray = eval(data);
-		// Get the table:
-		var table = document.getElementById("accountTable");
-		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Benutzer Name</th><th>Name</th><th>Emailaddresse</th><th>Account Typ</th></tr>";
-		for ( var i = 0; i < JSONarray.length; i++) {
-			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
-					+ "\" onclick=\"markAccountSelected(\'"
-					+ JSONarray[i].username + "\');\"><td>"
-					+ JSONarray[i].username + "</td><td>" + JSONarray[i].name
-					+ "</td><td>" + JSONarray[i].email + "</td><td>"
-					+ getTypeString(JSONarray[i].accounttype) + "</td></tr>";
-		}
+		// Evaluating the data
+		var JSONdata = eval(data);
+		// Get both inputs:
+		var inputemail = document.getElementById("newmail");
+		var inputnutzername = document.getElementById("newnutzername");
+		// Filling email and username inputs with old data
+		inputemail.value = JSONdata.email;
+		inputnutzername.value = JSONdata.username;
+		// Clearing both password inputs
+		document.getElementById("newpasswort").value = "";
+		document.getElementById("newpasswortwdh").value = "";
 	}
 }
