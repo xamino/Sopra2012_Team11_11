@@ -35,20 +35,17 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
-	alert(data);
-
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
-		
 		// Evaluating the data
-		var JSONdata = eval(data);
-		
+		var JSONdata = eval("("+data+")");
+	
 		// Filling email and username inputs with old data
-		inputemail.value = JSONdata.email;
-		inputnutzername.value = JSONdata.username;
 		
-		document.getElementById("newemail").innerHTML = "<input id=\"newemail\" type=\"text\" name=\"newemail\" size=\"20\" maxlength=\"100\" value=\""+JSONdata.email +"\"/>";
+		
+		document.getElementById("newemail").value = JSONdata.email;
+		document.getElementById("newnutzername").value =JSONdata.username;
 		
 		
 		// Clearing both password inputs
