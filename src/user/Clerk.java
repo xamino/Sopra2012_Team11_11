@@ -7,6 +7,7 @@ package user;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jxl.write.*;
@@ -135,9 +136,14 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum annehmen eines Bewerbers.
+	 * @param AID
+	 * 			ID der Bewerbung
+	 * @throws SQLException 
 	 */
-	public void acceptApplication(int AID) {
-		
+	public void acceptApplication(int AID) throws SQLException {
+		Application app = appcon.getApplicationById(AID);
+		app.setChosen(true);
+		appcon.updateApplication(app);
 	}
 
 	/**
@@ -150,9 +156,14 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum aktualisieren des Berwerbungs-Status.
+	 * @param AID
+	 * 			ID der Bewerbung
+	 * @throws SQLException 
 	 */
-	public void updateStatus() {
-
+	public void updateStatus(int AID) throws SQLException {
+		Application app = appcon.getApplicationById(AID);
+		app.setFinished(true);
+		appcon.updateApplication(app);
 	}
 
 	/**

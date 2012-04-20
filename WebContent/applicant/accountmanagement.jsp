@@ -9,12 +9,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/applicant/accountscript.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Accountverwaltung | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadAccount();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -50,31 +51,31 @@
 		<div class="textblock">
 			<div class="haupttext">
 				<div class="aendern">
-				<form name="datenAendern">
+				<form id="datenAendern" name="datenAendern">
 					<div class="breiteAendern">
 					<span> 
 						<label for="newemail">E-Mail</label>
 					</span>
 					<div class="regform">
-						<input type="text" name="newemail" size="20" maxlength="100" />
+						<input id="newemail" type="text" name="newemail" size="20" maxlength="100" />
 					</div> <br>
 					<span> 
 						<label for="newnutzername">Benutzername</label>
 					</span>
 					<div class="regform">
-						<input type="text" name="newnutzername" size="20" maxlength="100" />
+						<input id="newnutzername" type="text" name="newnutzername" size="20" maxlength="100" />
 					</div> <br>
 					<span> 
 						<label for="newpasswort">neues Passwort</label>
 					</span>
 					<div class="regform">
-						<input type="text" name="newpasswort" size="20" maxlength="100" />
+						<input id="newpasswort" type="text" name="newpasswort" size="20" maxlength="100" />
 					</div> <br>
 					<span> 
 						<label for="newpasswortwdh">neuesPasswort wiederholen</label>
 					</span>
 					<div class="regform">
-						<input type="text" name="newpasswortwdh" size="20" maxlength="100" />
+						<input id="newpasswortwdh" type="text" name="newpasswortwdh" size="20" maxlength="100" />
 					</div> <br>
 					</div>
 					<div class="clear"></div>

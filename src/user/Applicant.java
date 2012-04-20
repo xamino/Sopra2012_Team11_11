@@ -82,17 +82,9 @@ public class Applicant extends User {
 		
 	}
 
-	/**
-	 * Diese Methode entfernt ein bestimmtes Bewerbungs-Objekt von der
-	 * Datenbank.
-	 * 
-	 * @param applicationID
-	 *            Parameter "applicant" ist eindeutiger Identifizierer des
-	 *            Bewerbungs-Objekts.
-	 * @throws SQLException 
-	 */
+	
 	public void deleteApplication(int applicationID) throws SQLException {
-		Application app = appcon.getApplicationById(applicationID);
+		Application app = new Application(this.getUserData().getUsername(), applicationID, false, "", false);
 		appcon.deleteApplication(app);
 	}
 }
