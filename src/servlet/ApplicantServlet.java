@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import user.Applicant;
 import user.Provider;
 
@@ -43,6 +45,14 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Switch action on path:
 		String path = request.getPathInfo();
-		System.out.println(path);
+		if(path.equals("js/loadAccount")){
+			String username = applicant.getUserData().getUsername();
+			String email = applicant.getUserData().getEmail();
+			String JsonString = Helper.jsonAtor(new String[]{"username","email"}, new String[]{username,email});
+			response.setContentType("application/json");
+			response.getWriter().write(JsonString);
+		} else {
+			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
+		}
 	}
 }
