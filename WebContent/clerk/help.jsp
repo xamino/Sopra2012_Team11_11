@@ -30,7 +30,7 @@
 					href="<%=Helper.D_CLERK_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="/hiwi/Clerk/js/doExcelExport">ExcelExport</a><br>
+					onclick="doExcelExport();">ExcelExport</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a

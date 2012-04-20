@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import database.account.Account;
-import database.account.AccountController;
-
+import logger.Log;
 import user.User;
 import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
-
-import logger.Log;
+import database.account.Account;
+import database.account.AccountController;
+import database.application.Application;
+import database.application.ApplicationController;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die
@@ -55,10 +55,24 @@ public class Secure extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
+		// Makes sure that no NullPointerExceptions are thrown...
 		path = (path == null) ? "" : path;
-		log.write("Secure", "Received request <" + path + ">.");
+		// Only use to debug path:
+		// log.write("Secure", "Received request <" + path + ">.");
 		// If login is asked:
 		if (path.equals("/js/doLogin")) {
+
+			
+			//TESTBLOCK ZUM RAUSSCHMEISSEN
+			System.out.println("BEGIN---------------------------TESTBEREICH---------------------------");
+			
+//			Application appli = new Application();
+//			ApplicationController.getInstance().deleteApplication(appli);
+			
+			System.out.println("---------------------------TESTBEREICH-----------------------------END");
+			//TESTBLOCK ZUM RAUSSCHMEISSEN
+			
+			
 			String userName = request.getParameter("userName");
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
@@ -81,6 +95,7 @@ public class Secure extends HttpServlet {
 				UserFactory.getUserInstance(acc, session);
 				int type = acc.getAccounttype();
 				response.setContentType("text/url");
+				// Switch according to accounttype:
 				if (type == 0)
 					response.getWriter().write(Helper.D_ADMIN_USERINDEX);
 				if (type == 1)
@@ -146,7 +161,7 @@ public class Secure extends HttpServlet {
 		// If unknown path:
 		else {
 			log.write("Secure", "Unknown operation!");
-			response.sendRedirect(Helper.D_INDEX);
+			// response.sendRedirect(Helper.D_INDEX);
 		}
 	}
 }

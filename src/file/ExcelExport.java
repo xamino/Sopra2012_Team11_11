@@ -19,6 +19,7 @@ import user.UserData;
  * eines Verwalters.
  * 
  * @author Manuel Guentzel
+ * @author Anatoli Brill
  * 
  */
 public abstract class ExcelExport {

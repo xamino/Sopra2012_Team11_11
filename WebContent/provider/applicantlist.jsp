@@ -82,6 +82,25 @@
 
 	<div class="footer"></div>
 
+	<!-- Here are the popups -->
+	<!-- Confirmation account del popup -->
+	<div id="accept" class="popup_hidden">
+		<form>
+			<h3>Bestätigung</h3>
+			<hr>
+			<div class="textblock">
+				Wollen Sie den/ die<br>Bewerber wirklich annehmen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Annehmen"
+					onclick="deleteSelectedAccount(); togglePopup('accept', false);" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('accept', false);" />
+			</div>
+		</form>
+	</div>
+
 </body>
 
 </html>

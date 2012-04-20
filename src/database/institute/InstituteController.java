@@ -35,6 +35,8 @@ public class InstituteController {
 	 * Diese Instanz dient zum Zugang in die Datenbank.
 	 */
 	public DatabaseController dbc;
+	
+	final static String tableName = "Institute";//tabellenname
 
 	/**
 	 * Diese Methode gibt den Namen eines Instituts bei uebergebener Id.
@@ -45,7 +47,7 @@ public class InstituteController {
 	 */
 	public String getInstituteNameById(int id) {
 		ResultSet rs = dbc.select(new String[] { "Name" },
-				new String[] { "Institute" }, "IID=" + id);
+				new String[] { tableName }, "IID=" + id);
 		try {
 			if (rs.next()) {
 				return rs.getString("Name");
@@ -64,7 +66,7 @@ public class InstituteController {
 	 */
 	public Vector<Institute> getAllInstitutes() {
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Institute" }, null);
+				new String[] { tableName }, null);
 		Vector<Institute> inst = new Vector<Institute>();
 		try {
 			while (rs.next()) {

@@ -25,6 +25,10 @@ public class DocumentController {
 	 * Private Instanz des DatabaseController.
 	 */
 	private DatabaseController dbc;
+	
+	final static String tableNameS = "standardunterlagen";//tabellenname
+	final static String tableNameB = "bewerbungsunterlagen";//tabellenname
+	final static String tableNameU = "unterlagen";//tabellenname
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
@@ -71,7 +75,7 @@ public class DocumentController {
 	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
 	public boolean createDocument(Document document) { // checked
-		return dbc.insert("Unterlagen", new Object[] { document.getUid(),
+		return dbc.insert(tableNameU, new Object[] { document.getUid(),
 				document.getName(), document.getDescription() });
 	}
 
@@ -89,9 +93,9 @@ public class DocumentController {
 		 * sondern auch in "Standardunterlagen" und "Bewerbungsunterlagen"
 		 * geloescht werden, da diese nicht mehr existiert.
 		 */
-		return dbc.delete("Bewerbungsunterlagen", "UID=" + document.getUid())
-				&& dbc.delete("Standardunterlagen", "UID=" + document.getUid())
-				&& dbc.delete("Unterlagen", "UID=" + document.getUid());
+		return dbc.delete(tableNameB, "UID=" + document.getUid())
+				&& dbc.delete(tableNameS, "UID=" + document.getUid())
+				&& dbc.delete(tableNameU, "UID=" + document.getUid());
 	}
 
 	/**
@@ -104,7 +108,7 @@ public class DocumentController {
 	 * @return Gibt an, ob das Update erfolgreich war.
 	 */
 	public boolean updateDocument(Document document) { // checked
-		return dbc.update("Unterlagen",
+		return dbc.update(tableNameU,
 				new String[] { "Name", "Beschreibung" }, new Object[] {
 						document.getName(), document.getDescription() }, "UID="
 						+ document.getUid());
@@ -113,7 +117,7 @@ public class DocumentController {
 	public Document getDocumentByUID(int uid) {
 		Document doc = null;
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Unterlagen" }, "uid=" + uid);
+				new String[] { tableNameU }, "UID=" + uid);
 		try {
 			if (rs.next()) {
 				doc = new Document(rs.getInt("UID"), rs.getString("Name"),
@@ -150,12 +154,12 @@ public class DocumentController {
 		// bei gegebener Angebots-ID
 		Vector<OfferDocument> docVect = new Vector<OfferDocument>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Standardunterlagen" }, "AID=" + aid);
+				new String[] { tableNameS }, "AID=" + aid);
 
 		try {
 			while (rs.next()) {
-				docVect.add(new OfferDocument(rs.getInt("aid"), rs
-						.getInt("uid"))); // !!! Mit ResultSet ein
+				docVect.add(new OfferDocument(rs.getInt("AID"), rs
+						.getInt("UID"))); // !!! Mit ResultSet ein
 				// Document-Objekt machen !!!
 			}
 		} catch (SQLException e) {
@@ -205,12 +209,12 @@ public class DocumentController {
 		// Angebots bei gegebener Angebots-ID
 		Vector<AppDocument> appDocVect = new Vector<AppDocument>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Bewerbungsunterlagen" }, "AID=" + aid);
+				new String[] { tableNameB }, "AID=" + aid);
 
 		try {
 			while (rs.next()) {
 				appDocVect.add(new AppDocument(rs.getString("benutzername"), rs
-						.getInt("aid"), rs.getInt("uid"), rs
+						.getInt("AID"), rs.getInt("UID"), rs
 						.getBoolean("status")));
 			}
 		} catch (SQLException e) {
@@ -269,15 +273,15 @@ public class DocumentController {
 		Vector<AppDocument> userOffDocVect = new Vector<AppDocument>();
 		ResultSet rs = dbc
 				.select(new String[] { "*" },
-						new String[] { "Bewerbungsunterlagen" },
-						"Benutzername='" + account.getUsername() + "' AND AID="
+						new String[] { tableNameB },
+						"benutzername='" + account.getUsername() + "' AND AID="
 								+ offer.getAid());
 
 		try {
 			while (rs.next()) {
 				userOffDocVect.add(new AppDocument(
-						rs.getString("Benutzername"), rs.getInt("aid"), rs
-								.getInt("uid"), rs.getBoolean("status")));
+						rs.getString("benutzername"), rs.getInt("AID"), rs
+								.getInt("UID"), rs.getBoolean("status")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -333,12 +337,12 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe aller vorhandenen Unterlagen
 		Vector<Document> allDocVect = new Vector<Document>();
 		ResultSet rs = dbc.select(new String[] { "*" },
-				new String[] { "Unterlagen" }, null);
+				new String[] { tableNameU }, null);
 
 		try {
 			while (rs.next()) {
-				allDocVect.add(new Document(rs.getInt("uid"), rs
-						.getString("name"), rs.getString("beschreibung")));
+				allDocVect.add(new Document(rs.getInt("UID"), rs
+						.getString("Name"), rs.getString("Beschreibung")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -380,7 +384,7 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void createAppDocument(AppDocument document) { // checked
-		dbc.insert("Bewerbungsunterlagen",
+		dbc.insert(tableNameB,
 				new Object[] { document.getUsername(), document.getoID(),
 						document.getdID(), document.getPresent() });
 	}
@@ -395,7 +399,7 @@ public class DocumentController {
 	 *            Attributen.
 	 */
 	public void deleteAppDocument(AppDocument document) { // checked
-		dbc.delete("Bewerbungsunterlagen",
+		dbc.delete(tableNameB,
 				"benutzername='" + document.getUsername() + "' AND AID="
 						+ document.getoID() + " AND UID=" + document.getdID());
 	}
@@ -413,10 +417,10 @@ public class DocumentController {
 															// Status
 															// funktioniert
 
-		String where = "Benutzername='" + document.getUsername() + "' AND AID="
+		String where = "benutzername='" + document.getUsername() + "' AND AID="
 				+ document.getoID() + " AND UID=" + document.getdID();
-		String[] columns = new String[] { "Benutzername", "AID", "UID",
-				"Status" };
+		String[] columns = new String[] { "benutzername", "AID", "UID",
+				"status" };
 		Object[] values = new Object[] { document.getUsername(),
 				document.getoID(), document.getdID(), document.getPresent() };
 
@@ -428,7 +432,7 @@ public class DocumentController {
 		 * Aenderungen am System. Es sieht aus, als ob das System nichts machen
 		 * wuerde.
 		 */
-		dbc.update("Bewerbungsunterlagen", columns, values, where);
+		dbc.update(tableNameB, columns, values, where);
 	}
 
 	/**
@@ -441,7 +445,7 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void createOfferDocument(OfferDocument document) { // checked
-		dbc.insert("Standardunterlagen", new Object[] { document.getOfferID(),
+		dbc.insert(tableNameS, new Object[] { document.getOfferID(),
 				document.getDocumentid() });
 	}
 
@@ -455,7 +459,7 @@ public class DocumentController {
 	 */
 	public void deleteOfferDocument(OfferDocument document) { // checked
 
-		dbc.delete("Standardunterlagen", "AID=" + document.getOfferID()
+		dbc.delete(tableNameS, "AID=" + document.getOfferID()
 				+ " AND UID=" + document.getDocumentid());
 	}
 
@@ -467,6 +471,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
+	
 	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked:
 																						// PROBLEM
 		/*
@@ -494,7 +499,7 @@ public class DocumentController {
 				document.getDocumentid() };
 		// Object[] values = new Object[]{document.getOfferID(),newDocumentId};
 
-		dbc.update("Standardunterlagen", columns, values, where);
+		dbc.update(tableNameS, columns, values, where);
 	}
 
 	/**

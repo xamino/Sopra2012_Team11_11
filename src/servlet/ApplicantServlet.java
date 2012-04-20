@@ -16,18 +16,37 @@ import com.google.gson.Gson;
 
 import user.Applicant;
 import user.Provider;
+import database.account.Account;
+import database.account.AccountController;
 
 /**
  * Das <code>Applicant</code> Servlet behandelt alle Aktionen von angemeldeten
  * Bewerbern (Applicants).
  */
 
+
+
 @WebServlet("/Applicant/*")
 public class ApplicantServlet extends HttpServlet {
+	
+	/**
+	 * Variable zum speicher der Instanz des AccountController.
+	 */
+	private AccountController accountController;
+	
 	private static final long serialVersionUID = 1L;
 
+	
+	/**
+	 * Variable zum speichern der GSON Instanz.
+	 */
+	private Gson gson;
+	
+	
 	public ApplicantServlet() {
 		super();
+		accountController = AccountController.getInstance();
+		gson = new Gson();
 	}
 
 	/**
@@ -54,5 +73,6 @@ public class ApplicantServlet extends HttpServlet {
 		} else {
 			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
+
 	}
 }
