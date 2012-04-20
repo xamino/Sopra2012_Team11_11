@@ -39,11 +39,11 @@ function handleLoadOffersResponse(mime, data) {
 		// Write table – probably replaces old data!
 		table.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].Beginn
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].startdate
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].Beginn + "\');\"><td>"
-					+ JSONarray[i].Beginn + "</td><td>" + JSONarray[i].Name
-					+ "</td><td>" + JSONarray[i].Beschreibung + "</td></tr>";
+					+ JSONarray[i].startdate + "\');\"><td>"
+					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
+					+ "</td><td>" + JSONarray[i].description + "</td></tr>";
 		}
 	}
 }
