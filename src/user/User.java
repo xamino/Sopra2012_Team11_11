@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 
 
+import database.account.Account;
 import database.account.AccountController;
 import database.application.ApplicationController;
 import database.document.DocumentController;
@@ -82,7 +83,15 @@ public abstract class User {
 	public void invalidate() {
 			uData.getSession().invalidate();
 	}
-
+/**
+ * Löscht den eigenen Account
+ */
+	public void deleteOwnAccount(){
+		Account toDel = acccon.getAccountByUsername(uData.getUsername());
+		acccon.deleteAccount(toDel);
+		invalidate();
+	}
+	
 	/**
 	 * Standard toString()
 	 * 
