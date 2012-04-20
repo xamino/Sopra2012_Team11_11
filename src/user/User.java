@@ -2,8 +2,6 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
-
-
 import database.account.Account;
 import database.account.AccountController;
 import database.application.ApplicationController;
@@ -81,17 +79,20 @@ public abstract class User {
 	 * Invalidiert die Session des Benutzers
 	 */
 	public void invalidate() {
-			uData.getSession().invalidate();
+		uData.getSession().invalidate();
 	}
-/**
- * Löscht den eigenen Account
- */
-	public void deleteOwnAccount(){
+
+	/**
+	 * Löscht den eigenen Account
+	 */
+	public boolean deleteOwnAccount() {
 		Account toDel = acccon.getAccountByUsername(uData.getUsername());
-		acccon.deleteAccount(toDel);
-		invalidate();
+		if (toDel == null)
+			return false;
+		// invalidate();
+		return acccon.deleteAccount(toDel);
 	}
-	
+
 	/**
 	 * Standard toString()
 	 * 
@@ -109,10 +110,10 @@ public abstract class User {
 		else if (this instanceof Applicant)
 			type = "Applicant";
 
-		return "User [Type=" + type + " Name=" + uData.getName() + ", Username="
-				+ uData.getUsername() + ", Email=" + uData.getEmail() + ", SessionID="
+		return "User [Type=" + type + " Name=" + uData.getName()
+				+ ", Username=" + uData.getUsername() + ", Email="
+				+ uData.getEmail() + ", SessionID="
 				+ uData.getSession().getId() + "]";
 	}
 
-	
 }

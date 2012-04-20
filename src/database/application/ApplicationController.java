@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
-import database.account.Account;
-import database.offer.OfferController;
 
 public class ApplicationController {
 
@@ -68,14 +66,11 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void createApplication(Application application) { //checked
-
+	public boolean createApplication(Application application) { //checked
 		Object[] values = { application.getUsername(), application.getAid(),
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
-
-		dbc.insert(tableName, values);
-
+		return dbc.insert(tableName, values);
 	}
 
 	/**
@@ -87,11 +82,9 @@ public class ApplicationController {
 	 *            dazugehoerigen Attributen.
 	 */
 
-	public void deleteApplication(Application application) {
-		
+	public boolean deleteApplication(Application application) {
 		String where = "AID = "+application.getAid()+"AND benutzername = '"+application.getUsername()+"'";
-		dbc.delete(tableName, where);
-
+		return dbc.delete(tableName, where);
 	}
 
 	/**

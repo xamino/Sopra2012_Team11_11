@@ -86,12 +86,11 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
+	 * @return 
 	 */
-	public void deleteAccount(Account account) { //checked
-
+	public boolean deleteAccount(Account account) { //checked
 		String where = "benutzername = '" + account.getUsername() + "'";
-
-		dbc.delete("tableName", where);
+		return dbc.delete("tableName", where);
 	}
 
 	/**
@@ -163,10 +162,8 @@ public class AccountController {
 	 */
 	public Account getAccountByUsername(String username) { //checked
 		ResultSet rs = dbc.select(new String[] { "*" },new String[] { tableName }, "benutzername='" + username + "'");
-
 		try {
-			if (rs.next()){
-				
+			if (rs.next()){		
 				return new Account(rs.getString(1), rs.getString(2),
 						rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getString(7));

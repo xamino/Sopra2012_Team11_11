@@ -5,7 +5,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -19,9 +18,6 @@ import logger.Log;
 import com.google.gson.Gson;
 
 import user.Applicant;
-import user.Provider;
-import database.account.Account;
-import database.account.AccountController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -30,31 +26,25 @@ import database.offer.OfferController;
  * Bewerbern (Applicants).
  */
 
-
-
 @WebServlet("/Applicant/*")
 public class ApplicantServlet extends HttpServlet {
-	
+
 	/**
-	 * Variable zum speicher der Instanz des AccountController.
+	 * Standart default serial.
 	 */
-	private AccountController accountController;
-	
 	private static final long serialVersionUID = 1L;
 	/**
 	 * log
 	 */
-	private Log log =Helper.log;
-	
+	private Log log = Helper.log;
+
 	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-	
-	
+
 	public ApplicantServlet() {
 		super();
-		accountController = AccountController.getInstance();
 		gson = new Gson();
 	}
 
@@ -73,38 +63,41 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Switch action on path:
 		String path = request.getPathInfo();
-		if(path.equals("/js/loadAccount")){
+		// Do loadAccount:
+		if (path.equals("/js/loadAccount")) {
 			String username = applicant.getUserData().getUsername();
 			String email = applicant.getUserData().getEmail();
-			String JsonString = Helper.jsonAtor(new String[]{"username","email"}, new String[]{username,email});
+			String JsonString = Helper.jsonAtor(new String[] { "username",
+					"email" }, new String[] { username, email });
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
-		} 
-		
+		}
+		// Delete an application:
 		else if (path.equals("/js/deleteApplication")) {
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			try {
-				applicant.deleteApplication(aid);
+			if (!applicant.deleteApplication(aid)) {
 				response.setContentType("text/text");
 				response.getWriter().write("deleted");
-			} catch (SQLException e) {
-				response.setContentType("text/error");
-				response.getWriter().write("Failed to delete application!");
+				return;
 			}
+			response.setContentType("text/error");
+			response.getWriter().write("Failed to delete application!");
 		}
+		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
 			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
 			response.setContentType("application/json");
-			response.getWriter().write(
-					gson.toJson(offers, offers.getClass()));
+			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 		}
-		else if(path.equals("/js/deleteAccount")){
+		// Delete own account:
+		else if (path.equals("/js/deleteAccount")) {
 			String name = applicant.getUserData().getUsername();
 			applicant.deleteOwnAccount();
-			log.write("ApplicantServlet", name+" has deleted his account.");
-			
+			log.write("ApplicantServlet", name + " has deleted his account.");
+			// Simply now for debugging:
+			response.setContentType("text/plain");
+			response.getWriter().write("true");
 		}
-		
 		else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}

@@ -12,7 +12,6 @@
 <script type="text/javascript" src="/hiwi/applicant/accountscript.js"></script>
 <script type="text/javascript" src="/hiwi/md5.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
-<script type="text/javascript" src="/hiwi/applicant/confirmscript.js"></script>
 <title>Accountverwaltung | Hiwi Job Börse</title>
 </head>
 
@@ -83,7 +82,7 @@
 					<div class="abstand"><input id="dataconfirm" type="checkbox" name="dataagreement" value="dataAkzeptieren"> <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a> widerrufen</div><br>
 					<p>
 						<input type="reset" value="Zurücksetzen" onclick="loadAccount();" /> 
-						<input type="submit" value="Ändern" onclick="check();"/>
+						<input type="submit" value="Ändern" onclick="check(); return false;"/>
 					</p>
 				</form>
 			</div>
