@@ -2,7 +2,7 @@
  * Script for admin webpages.
  * 
  * @author: Oemer Sahin
- * @author: Oemer Sahin
+ * @author: Laura Irlinger
  */
 
 /**
@@ -31,24 +31,19 @@ function loadOffers() {
 function handleLoadOffersResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
-		alert("1. if");
 	} else if (mime == "application/json") {
-		alert("2. if");
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval(data);
 		// Get the table:
 		var table = document.getElementById("offerTable");
 		// Write table – probably replaces old data!
-		alert("lala");
 		table.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
-		alert("mhhh");
 		for ( var i = 0; i < JSONarray.length; i++) {
-			alert("juhu");
-			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].Beginn
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].startdate
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].Beginn + "\');\"><td>"
-					+ JSONarray[i].Beginn + "</td><td>" + JSONarray[i].Name
-					+ "</td><td>" + JSONarray[i].Beschreibung + "</td></tr>";
+					+ JSONarray[i].startdate + "\');\"><td>"
+					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
+					+ "</td><td>" + JSONarray[i].description + "</td></tr>";
 		}
 	}
 }

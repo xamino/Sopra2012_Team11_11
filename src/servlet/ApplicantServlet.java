@@ -89,7 +89,6 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		else if (path.equals("/js/loadOffers")) {
 			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
-			System.out.println("wir sind hier");
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(offers, offers.getClass()));
