@@ -5,6 +5,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,7 +74,16 @@ public class ApplicantServlet extends HttpServlet {
 		} 
 		
 		else if (path.equals("/js/deleteApplication")) {
-		
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			try {
+				applicant.deleteApplication(aid);
+				response.setContentType("text/text");
+				response.getWriter().write("deleted");
+			} catch (SQLException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Failed to delete application!");
+			}
+			
 		}
 		else {
 			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
