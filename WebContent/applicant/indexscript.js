@@ -2,7 +2,7 @@
  * Script for admin webpages.
  * 
  * @author: Oemer Sahin
- * @author: Oemer Sahin
+ * @author: Laura Irlinger
  */
 
 /**
