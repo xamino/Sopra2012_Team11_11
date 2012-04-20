@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import logger.Log;
+
 import com.google.gson.Gson;
 
 import user.Applicant;
@@ -39,7 +41,10 @@ public class ApplicantServlet extends HttpServlet {
 	private AccountController accountController;
 	
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * log
+	 */
+	private Log log =Helper.log;
 	
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -94,11 +99,14 @@ public class ApplicantServlet extends HttpServlet {
 					gson.toJson(offers, offers.getClass()));
 		}
 		else if(path.equals("/js/deleteAccount")){
-			applicant.deleteOwnAccount();		
+			String name = applicant.getUserData().getUsername();
+			applicant.deleteOwnAccount();
+			log.write("ApplicantServlet", name+" has deleted his account.");
+			
 		}
 		
 		else {
-			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
+			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 
 	}

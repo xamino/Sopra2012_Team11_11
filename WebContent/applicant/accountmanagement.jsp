@@ -95,8 +95,10 @@
 	<div class="clear"></div>
 
 	<div class="footer"></div>
+	
+</body>
 	<!-- Confirmation popup -->
-	<div id="data_acc_del" class="popup_hidden">
+<div id="data_acc_del" class="popup_hidden">
 		<form>
 			<h3>Warnung</h3>
 			<hr>
@@ -111,6 +113,4 @@
 			</div>
 		</form>
 	</div>
-</body>
-
 </html>
