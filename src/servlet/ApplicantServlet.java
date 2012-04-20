@@ -18,6 +18,7 @@ import logger.Log;
 import com.google.gson.Gson;
 
 import user.Applicant;
+import database.account.Account;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -100,6 +101,18 @@ public class ApplicantServlet extends HttpServlet {
 			}else{
 				response.setContentType("text/error");
 				response.getWriter().write("Error while deleting account!");
+			}
+		}
+		else if(path.equals("/js/changeAccount")){
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String pw = request.getParameter("pw");
+			if(applicant.editOwnAccount(new Account(name, pw, 3, email, name, 0, null))){
+				response.setContentType("text/plain");
+				response.getWriter().write("true");
+			}else{
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim ändern der Daten.");
 			}
 		}
 		else {

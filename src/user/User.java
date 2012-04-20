@@ -92,7 +92,27 @@ public abstract class User {
 		invalidate();
 		return acccon.deleteAccount(toDel);
 	}
-
+	
+	/**
+	 * 
+	 */
+	public boolean editOwnAccount(Account a){
+		Account own = acccon.getAccountByUsername(uData.getUsername());
+		String temp = a.getEmail();
+		if(temp!=null){
+			own.setEmail(temp);
+			uData.setEmail(temp);
+		}
+		temp = a.getPasswordhash();
+		if(temp!=null)own.setPasswordhash(temp);
+		temp=a.getUsername();
+		if(temp!=null){
+			own.setUsername(temp);
+			uData.setUsername(temp);
+		}
+		if(acccon.updateAccount(own))return true;
+		return false;
+	}
 	/**
 	 * Standard toString()
 	 * 
