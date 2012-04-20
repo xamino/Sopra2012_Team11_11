@@ -6,22 +6,23 @@
  */
 
 /**
- * Stores the selected Account:
+ * Stores the selected Offer:
  */
-var selectedAccount;
+var selectedOffer;
 
 /**
- * This function loads all the accounts in the system from the database and
+ * This function loads all the offers in the system from the database and
  * displays them.
  */
 function loadOffers() {
+	alert("eins"); 																//ohne alerts funktionierts nicht =( ... wieso??
 	// reset selectedID (account could have been deleted in meantime)
-	selectedAccount = null;
+	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
 }
 
 /**
- * This function displays all the accounts in the system.
+ * This function displays all the offers in the system.
  * 
  * @param mime
  *            The MIME type of the data.
@@ -29,11 +30,12 @@ function loadOffers() {
  *            The data.
  */
 function handleLoadOffersResponse(mime, data) {
+	alert("zwei");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
 		// Erstelle Array aus JSON array:
-		var JSONarray = eval(data);
+		var JSONarray = eval("("+data+")");
 		// Get the table:
 		var table = document.getElementById("offerTable");
 		// Write table – probably replaces old data!
@@ -43,7 +45,54 @@ function handleLoadOffersResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].startdate + "\');\"><td>"
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
-					+ "</td><td>" + JSONarray[i].description + "</td></tr>";
+					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"togglePopup('application',true);\" /> </div><div class=\"clear\"></div></td></tr>";
+		}
+		loadMyOffers();
+		alert("fertig");
+	}
+}
+
+/**
+ * Stores the selected Offer:
+ */
+var selectedMyOffer;
+
+/**
+ * This function loads all the offers of the applicant in the system from the database and
+ * displays them.
+ */
+function loadMyOffers() {
+	alert("drin");
+	// reset selectedID (account could have been deleted in meantime)
+	selectedMyOffer = null;
+	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
+}
+
+/**
+ * This function displays all the offers of the applicant in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadMyOffersResponse(mime, data) {
+	alert("drindrin");
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "myapplication/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table2 = document.getElementById("myofferTable");
+		// Write table – probably replaces old data!
+		table2.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].startdate
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i].startdate + "\');\"><td>"
+					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
+					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" onclick=\"window.location='status.jsp'\" /></div><div class=\"clear\"></div></td></tr>";
 		}
 	}
 }

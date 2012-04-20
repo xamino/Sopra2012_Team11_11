@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import user.Applicant;
 import database.account.Account;
+import database.application.ApplicationController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -87,8 +88,31 @@ public class ApplicantServlet extends HttpServlet {
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
 			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
+			//bereits beworbene Stellen entfernen
+			Applicant appli1 = Helper.checkAuthenticity(request.getSession(),Applicant.class);
+			Vector<Offer> myoffers1 = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli1.getUserData().getUsername())); //Offer vom User geholt
+			boolean entfernen;
+			for(int i = 0; i < offers.size(); i++){
+				entfernen = false;
+				for(int j = 0; j<myoffers1.size(); j++){
+					if(offers.elementAt(i).getAid() == myoffers1.elementAt(j).getAid()){
+						entfernen = true;
+					}
+					if(entfernen){
+						offers.remove(i);
+					}
+				}
+			}
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
+		}
+		// Load my offers:
+		else if (path.equals("/js/loadMyOffers")) {
+			Applicant appli = Helper.checkAuthenticity(request.getSession(),
+					Applicant.class);
+			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli.getUserData().getUsername())); //Offer vom User geholt
+			response.setContentType("myapplication/json");
+			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {

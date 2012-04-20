@@ -42,7 +42,7 @@
 		<div class="textblock">
 			<h2>Bewerbungen</h2>
 			<div class="text">
-			Hier Finden Sie den Bearbeitungsstatus Ihrer Bewerbungen.
+			Hier finden Sie den Bearbeitungsstatus Ihrer Bewerbungen.
 			</div>
 		</div>
 		<hr>
