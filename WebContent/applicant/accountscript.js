@@ -63,10 +63,14 @@ function check(){
 	}else if(pw==pww){
 		changeAccount();
 	}else{
-		
+		//passwords didn't match
 	}
 }
 
 function changeAccount(){
+	connect("/hiwi/Applicant/js/changeAccount","",handleChangeResponse);
+}
+
+function handleChangeResponse(){
 	
 }
