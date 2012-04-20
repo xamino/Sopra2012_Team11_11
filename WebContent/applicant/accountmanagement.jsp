@@ -51,13 +51,13 @@
 		<div class="textblock">
 			<div class="haupttext">
 				<div class="aendern">
-				<form name="datenAendern">
+				<form id="datenAendern" name="datenAendern">
 					<div class="breiteAendern">
 					<span> 
 						<label for="newemail">E-Mail</label>
 					</span>
 					<div class="regform">
-						<input id="newmail" type="text" name="newemail" size="20" maxlength="100" />
+						<input id="newemail" type="text" name="newemail" size="20" maxlength="100" />
 					</div> <br>
 					<span> 
 						<label for="newnutzername">Benutzername</label>
