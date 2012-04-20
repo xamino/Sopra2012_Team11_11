@@ -70,7 +70,12 @@ public class ApplicantServlet extends HttpServlet {
 			String JsonString = Helper.jsonAtor(new String[]{"username","email"}, new String[]{username,email});
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
-		} else {
+		} 
+		
+		else if (path.equals("/js/deleteApplication")) {
+		
+		}
+		else {
 			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 
