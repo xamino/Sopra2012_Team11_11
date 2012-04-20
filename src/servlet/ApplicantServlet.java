@@ -64,7 +64,7 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Switch action on path:
 		String path = request.getPathInfo();
-		if(path.equals("js/loadAccount")){
+		if(path.equals("/js/loadAccount")){
 			String username = applicant.getUserData().getUsername();
 			String email = applicant.getUserData().getEmail();
 			String JsonString = Helper.jsonAtor(new String[]{"username","email"}, new String[]{username,email});
