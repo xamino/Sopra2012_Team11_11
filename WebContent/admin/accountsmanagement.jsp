@@ -11,7 +11,7 @@
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Account Verwaltung | Hiwi Job Börse</title>
 </head>
-<body onload="loadAccount();">
+<body onload="loadAccounts();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>

@@ -21,7 +21,7 @@ var selectedAccount;
 function loadAccount() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedAccount = null;
-	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountResponse);
+	connect("/hiwi/Applicant/js/loadAccount", handleLoadAccountResponse);
 }
 
 
