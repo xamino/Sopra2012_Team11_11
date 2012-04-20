@@ -36,20 +36,17 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
-	alert(mime);
 
 	if (mime == "text/url") {
 		window.location = data;
-		
 	} else if (mime == "application/json") {
-
 		// Evaluating the data
-		var account = eval("("+data+")");
+		var JSONdata = eval("("+data+")");
+	
+		// Filling email and username inputs with old data
+		document.getElementById("newemail").value = JSONdata.email;
+		document.getElementById("newnutzername").value =JSONdata.username;
 
-		
-		document.getElementById("newemail").value = account.email;
-		document.getElementById("newnutzername").value = account.username;
-		
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
 		document.getElementById("newpasswortwdh").value = "";

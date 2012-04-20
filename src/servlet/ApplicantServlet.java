@@ -6,6 +6,7 @@ package servlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,8 @@ import user.Applicant;
 import user.Provider;
 import database.account.Account;
 import database.account.AccountController;
+import database.offer.Offer;
+import database.offer.OfferController;
 
 /**
  * Das <code>Applicant</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -83,8 +86,14 @@ public class ApplicantServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("Failed to delete application!");
 			}
-			
 		}
+		else if (path.equals("/js/loadOffers")) {
+			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
+			response.setContentType("application/json");
+			response.getWriter().write(
+					gson.toJson(offers, offers.getClass()));
+		}
+		
 		else {
 			//log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
