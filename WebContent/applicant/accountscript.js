@@ -50,8 +50,7 @@ function deleteAccount(){
  * @param data
  */
 function handleDeleteResponse(mime, data) {
-	alert(mime);
-	alert(data);
+	if(mime=="text/error")alert data;
 }
 
 function check(){
@@ -61,6 +60,10 @@ function check(){
 	var name = document.getElementById("newnutzername".value);
 	if(document.getElementById("dataconfirm").checked){
 		togglePopup("data_acc_del", true);
+	}else if(pw==pww){
+		changeAccount();
+	}else{
+		
 	}
 }
 

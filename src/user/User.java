@@ -89,7 +89,7 @@ public abstract class User {
 		Account toDel = acccon.getAccountByUsername(uData.getUsername());
 		if (toDel == null)
 			return false;
-		// invalidate();
+		invalidate();
 		return acccon.deleteAccount(toDel);
 	}
 

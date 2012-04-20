@@ -92,11 +92,15 @@ public class ApplicantServlet extends HttpServlet {
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
 			String name = applicant.getUserData().getUsername();
-			applicant.deleteOwnAccount();
-			log.write("ApplicantServlet", name + " has deleted his account.");
-			// Simply now for debugging:
-			response.setContentType("text/plain");
-			response.getWriter().write("true");
+			if(applicant.deleteOwnAccount()){
+				log.write("ApplicantServlet", name + " has deleted his account.");
+				// Simply now for debugging:
+				response.setContentType("text/plain");
+				response.getWriter().write("true");
+			}else{
+				response.setContentType("text/error");
+				response.getWriter().write("Error while deleting account!");
+			}
 		}
 		else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
