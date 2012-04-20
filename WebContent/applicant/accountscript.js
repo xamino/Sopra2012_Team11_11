@@ -22,6 +22,7 @@ function loadAccount() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedAccount = null;
 	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountResponse);
+	
 }
 
 
@@ -35,21 +36,19 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
-	alert(data);
+	alert(mime);
 
 	if (mime == "text/url") {
 		window.location = data;
+		
 	} else if (mime == "application/json") {
-		
+
 		// Evaluating the data
-		var JSONdata = eval(data);
+		var account = eval("("+data+")");
+
 		
-		// Filling email and username inputs with old data
-		inputemail.value = JSONdata.email;
-		inputnutzername.value = JSONdata.username;
-		
-		document.getElementById("newemail").innerHTML = "<input id=\"newemail\" type=\"text\" name=\"newemail\" size=\"20\" maxlength=\"100\" value=\""+JSONdata.email +"\"/>";
-		
+		document.getElementById("newemail").value = account.email;
+		document.getElementById("newnutzername").value = account.username;
 		
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
