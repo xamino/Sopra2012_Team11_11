@@ -20,6 +20,7 @@ var selectedAccount;
  */
 function loadAccount() {
 	// reset selectedID (account could have been deleted in meantime)
+	alert("loadAccount()");
 	selectedAccount = null;
 	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountResponse);
 }
@@ -35,6 +36,7 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
+	alert("handle");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
