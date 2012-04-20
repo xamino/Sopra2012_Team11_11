@@ -93,6 +93,9 @@ public class ApplicantServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offers, offers.getClass()));
 		}
+		else if(path.equals("/js/deleteAccount")){
+			applicant.deleteOwnAccount();		
+		}
 		
 		else {
 			//log.write("ApplicantServlet", "Unknown path <" + path + ">");

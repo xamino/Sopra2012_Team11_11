@@ -12,6 +12,7 @@
 <script type="text/javascript" src="/hiwi/applicant/accountscript.js"></script>
 <script type="text/javascript" src="/hiwi/md5.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
+<script type="text/javascript" src="/hiwi/applicant/confirmscript.js"></script>
 <title>Accountverwaltung | Hiwi Job Börse</title>
 </head>
 
@@ -79,10 +80,10 @@
 					</div> <br>
 					</div>
 					<div class="clear"></div>
-					<div class="abstand"><input type="checkbox" name="dataagreement" value="dataAkzeptieren"> <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a> widerrufen</div><br>
+					<div class="abstand"><input id="dataconfirm" type="checkbox" name="dataagreement" value="dataAkzeptieren"> <a href="dataagreement.jsp" title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a> widerrufen</div><br>
 					<p>
-						<input type="reset" value="Zurücksetzen" /> 
-						<input type="submit" value="Ändern" />
+						<input type="reset" value="Zurücksetzen" onclick="loadAccount();" /> 
+						<input type="submit" value="Ändern" onclick="check();"/>
 					</p>
 				</form>
 			</div>
@@ -94,7 +95,22 @@
 	<div class="clear"></div>
 
 	<div class="footer"></div>
-
+	<!-- Confirmation popup -->
+	<div id="data_acc_del" class="popup_hidden">
+		<form>
+			<h3>Warnung</h3>
+			<hr>
+			<div class="textblock">
+				Wenn sie den Datenschutzbestimmungen <br>widerrufen wird ihr<br> Account nun gelöscht.
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" onclick="deleteAccount();" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('data_acc_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 
 </html>
