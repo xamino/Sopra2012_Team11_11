@@ -6,6 +6,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -90,11 +94,47 @@ public class ClerkServlet extends HttpServlet {
 		
 		else if (path.equals("/js/editOneOffer")){
 			System.out.println("pathequals editOneOffer");
+			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			System.out.println(aid);
+			
 			response.setContentType("offers/json");
-			
-			System.out.println(request.getParameter("select"));
-			
 		}
+		else if(path.equals("/js/approveOffer")){
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("setting offer "+aid+" to true");
+			Offer offertoapprove = OfferController.getInstance().getOfferById(aid);
+			System.out.println("before: "+offertoapprove.isChecked());
+			offertoapprove.setChecked(true);
+			System.out.println("after: "+offertoapprove.isChecked());
+			OfferController.getInstance().updateOffer(offertoapprove);
+			
+			//wir wollten doch einen String als date?
+//			OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+		}
+		else if(path.equals("/js/rejectOffer")){
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("setting offer "+aid+" to false");
+			
+			Offer offertoreject = OfferController.getInstance().getOfferById(aid);
+			System.out.println("before: "+offertoreject.isChecked());
+			offertoreject.setChecked(false);
+			System.out.println("after: "+offertoreject.isChecked());
+			OfferController.getInstance().updateOffer(offertoreject);
+			
+			//wir wollten doch einen String als date?
+//			OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+		}
+		
+		
+		
 
 	}
+	
+	private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 }

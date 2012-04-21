@@ -115,8 +115,8 @@
 					<div style="float: right;">
 						<input type="button" value="Mail an Anbieter" />
 					</div>
-					<input type="button" value="Angebot bestätigen" /> <input
-						type="button" value="Angebot ablehnen" />
+					<input type="button" id="angebotbestaetigen" value="Angebot bestätigen" onclick="angebotbestaetigen()"/> <input
+						type="button" id="angebotablehnen" value="Angebot ablehnen" onclick="angebotablehnen()"/>
 			</div>
 			</div>
 		</div>

@@ -1,5 +1,4 @@
 /**
-<<<<<<< HEAD
  * @author: Patryk Boczon
  * @author: Laura Irlinger
 **/
@@ -25,6 +24,7 @@ var selectedOffer;
 function showMyOffers() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
+	prepareButton();
 	connect("/hiwi/Clerk/js/showMyOffers", "", handleShowMyOffersResponse);
 }
 
@@ -39,7 +39,7 @@ function showMyOffers() {
  *            The data.
  */
 function handleShowMyOffersResponse(mime, data) {
-	alert("drindrin");
+
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "offers/json") {
@@ -52,7 +52,7 @@ function handleShowMyOffersResponse(mime, data) {
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].aid + "\');\"><td>"
+					+ JSONarray[i].aid + "\');\"><td>" 
 					+ JSONarray[i].author + "</td><td>"
 					+ JSONarray[i].name + "</td><td>"
 					+ JSONarray[i].slots + "</td><td>"
@@ -63,19 +63,49 @@ function handleShowMyOffersResponse(mime, data) {
 
 
 function editOneOffer() {
-	alert(selectedOffer);
-	connect("/hiwi/Clerk/js/editOneOffer", "", handleEditOneOfferResponse);
+	var aid = getURLParameter("AID");
+	alert(aid);
+	connect("/hiwi/Clerk/js/editOneOffer", "aid="+aid, handleEditOneOfferResponse);
 }
 
 
 function handleEditOneOfferResponse(mime, data){
-	alert("handleEditOneOfferResponse");
+	var aid = getURLParameter("AID");
+	alert("handleEditOneOfferResponse "+aid);
+	
 	if (mime == "text/url") {
 		window.location = data;
 	}
 	else if (mime == "offers/json") {
-		
+		/*
+		 * Attribute der Offers mit 'aid' anzeigen
+		 */ 
 	}
+}
+
+/**
+ * Function updates the 'Angebot pruefen' button by setting its onclick reference
+ * to the AID of the last marked offer
+ * 
+ */
+function prepareButton()
+{
+	alert("preparing button");
+    document.getElementById("angebotpruefen").onclick = function(){
+        window.location='editoffer.jsp?AID='+selectedOffer;
+    }
+}
+
+function angebotbestaetigen(){
+	var aid = getURLParameter("AID");
+	alert("Angebot "+aid+" bestaetigen");
+	connect("/hiwi/Clerk/js/approveOffer", "aid="+aid, handleEditOneOfferResponse);
+}
+
+function angebotablehnen(){
+	var aid = getURLParameter("AID");
+	alert("Angebot "+aid+" ablehnen");
+	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, handleEditOneOfferResponse);
 }
 
 /**
@@ -85,7 +115,7 @@ function handleEditOneOfferResponse(mime, data){
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
-	
+	alert("alte id: "+selectedOffer);
 	// Remove marking from previous selected, if applicable:
 	if (selectedOffer != null)
 		document.getElementById(selectedOffer).setAttribute("class", "");
@@ -96,10 +126,12 @@ function markOfferSelected(id) {
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
-	alert(selectedOffer);
 
-	document.getElementById(id).setAttribute("class", "selecte");
-//	document.getElementById(id).setAttribute("selected", id);
-//	alert(document.getElementById(id).getAttribute("selected"));
+	alert("aktuelle id: "+selectedOffer);
+
+	document.getElementById(id).setAttribute("class", "selected");
 	
+	//updating 'Angebot pruefen' button
+	prepareButton();
+
 }

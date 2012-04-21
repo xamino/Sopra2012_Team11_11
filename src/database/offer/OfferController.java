@@ -18,6 +18,7 @@ import logger.Log;
 import user.Clerk;
 import user.Provider;
 import database.DatabaseController;
+import database.account.Account;
 import database.application.Application;
 
 public class OfferController {
@@ -110,16 +111,29 @@ public class OfferController {
 	 */
 	public void updateOffer(Offer offer) {
 
-		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
-				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-				"Stundenlohn", "Institut", "aenderungsdatum" };
+		//Dates entfernt, da problematisch
+		
+//		String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
+//				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+//				"Stundenlohn", "Institut", "aenderungsdatum" };
+//
+//		Object[] values = offer.getAuthor(), offer.getName(),
+//				offer.getNote(), offer.isChecked(), offer.getSlots(),
+//				offer.getHoursperweek(), offer.getDescription(),
+//				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+//				offer.getInstitute(), offer.getModificationdate() };
+//
+//		
+		String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
+				"Plaetze", "Stundenprowoche", "Beschreibung",
+				"Stundenlohn", "Institut"};
 
-		Object[] values = { offer.getAuthor(), offer.getName(),
+		Object[] values = {offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-				offer.getInstitute(), offer.getModificationdate() };
+				offer.getWage(), offer.getInstitute()};
 
+		
 		String where = "AID = " + offer.getAid();
 
 		dbc.update(tableName, columns, values, where);
@@ -328,14 +342,25 @@ public class OfferController {
 	 * 			Gibt das gesuchte Angebot zurueck
 	 * @throws SQLException
 	 */
-	public Offer getOfferById(int ID) throws SQLException{
-		String[] select = {"AID"};
-		String[] from = { tableName};
-		String where = null;
+	public Offer getOfferById(int ID){
+		String[] select = {"*"};
+		String[] from = {tableName};
+		String where = "AID = "+ID;
 		
 		ResultSet rs = dbc.select(select, from, where);
-		Offer off = new Offer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5), rs.getInt(6), 
+		
+		try {
+			if (rs.next()){		
+				Offer off = new Offer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5), rs.getInt(6), 
 						rs.getDouble(7), rs.getString(8), rs.getDate(9), rs.getDate(10), rs.getDouble(11), rs.getInt(12), rs.getDate(13));
-		return off;
+				return off;
+			}
+			else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("OfferController",
+					"Error while reading Offer from Database");
+		}
+		return null;
 	}
 }

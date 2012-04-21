@@ -22,6 +22,8 @@ import database.account.Account;
 import database.application.Application;
 import database.application.ApplicationController;
 import database.document.Document;
+import database.document.DocumentController;
+import database.document.OfferDocument;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -119,13 +121,29 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Load my information about one application:
 		//noch nicht funktionsfähig!!!
-		else if (path.equals("/js/loadMyApplications")) {
-			Applicant appli = Helper.checkAuthenticity(request.getSession(),
-					Applicant.class);
-			Application application;
-			Vector<Document> documents ; 
-			response.setContentType("myapplication/json");
-			//response.getWriter().write(gson.toJson(documents, documents.getClass()));
+		else if (path.equals("/js/selectApplication")) {
+			String aid = request.getParameter("id");
+			int aid1 = Integer.parseInt(request.getParameter("id"));
+			System.out.println(aid);
+			System.out.println(aid1 +"neu");
+			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
+			
+			String offername;
+			Vector<OfferDocument> documents;
+			
+			for(int i=0; i<offersid.size(); i++){
+				if(aid1 == offersid.elementAt(i).getAid()){
+					System.out.println("drin: ");
+					offername = offersid.elementAt(i).getName();
+					System.out.println("name: "+offername);
+					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+					response.setContentType("angebotx/json");
+					response.getWriter().write(gson.toJson(offername, offername.getClass()));
+				}
+				
+			}
+
+			//}
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
