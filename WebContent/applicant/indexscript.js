@@ -1,7 +1,6 @@
 /**
- * Script for admin webpages.
+ * Script for applicant webpages.
  * 
- * @author: Oemer Sahin
  * @author: Laura Irlinger
  */
 
@@ -116,4 +115,50 @@ function markOfferSelected(id) {
 	selectedAccount = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
+}
+
+
+// noch nicht funktionsfähig!!
+
+/**
+ * Stores the selected Offer:
+ */
+var selectedApplication;
+
+/**
+ * This function loads all information about one application in the system from the database and
+ * displays them.
+ */
+function loadMyApplications() {
+	alert("eins"); 																//ohne alerts funktionierts nicht =( ... wieso??
+	// reset selectedID (account could have been deleted in meantime)
+	selectedApplication = null;
+	connect("/hiwi/Applicant/js/loadMyApplications", "", handleLoadMyApplicationsResponse);
+}
+
+/**
+ * This function displays all the information about one application in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadMyApplicationsResponse(mime, data) {
+	alert("zwei");
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "application/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table = document.getElementById("applicationsTable");
+		// Write table â€“ probably replaces old data!
+		table.innerHTML = "<h4>Bewerbung für:" +    JSONarray[i].description  +"</h4><form class=\"listform\"><table>";	//WOW-TUT
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table.innerHTML +="<tr><td><input type=\"checkbox\" /></td><td>" +    JSONarray[i].description  + "</td></tr>"; //Superheldenbescheinigung
+		}
+		table.innerHTML += "</table></form>";
+		alert("fertig");
+	}
 }

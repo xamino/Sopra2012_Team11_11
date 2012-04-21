@@ -14,7 +14,7 @@
 <title>Bewerbungsstatus | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadMyApplications()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -47,7 +47,7 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="haupttext">
+			<div class="haupttext" id="applicationsTable">
 				<h4>Bewerbung für: WOW-TUT</h4>
 				<form class="listform">
 					<table>

@@ -19,7 +19,9 @@ import com.google.gson.Gson;
 
 import user.Applicant;
 import database.account.Account;
+import database.application.Application;
 import database.application.ApplicationController;
+import database.document.Document;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -113,6 +115,16 @@ public class ApplicantServlet extends HttpServlet {
 			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli.getUserData().getUsername())); //Offer vom User geholt
 			response.setContentType("myapplication/json");
 			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
+		}
+		// Load my information about one application:
+		//noch nicht funktionsfähig!!!
+		else if (path.equals("/js/loadMyApplications")) {
+			Applicant appli = Helper.checkAuthenticity(request.getSession(),
+					Applicant.class);
+			Application application;
+			Vector<Document> documents ; 
+			response.setContentType("myapplication/json");
+			//response.getWriter().write(gson.toJson(documents, documents.getClass()));
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
