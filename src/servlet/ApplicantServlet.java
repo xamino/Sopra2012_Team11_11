@@ -57,6 +57,7 @@ public class ApplicantServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
+	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
@@ -90,6 +91,14 @@ public class ApplicantServlet extends HttpServlet {
 			response.getWriter().write("Failed to delete application!");
 			
 		}
+		// Load my offers:
+		else if (path.equals("/js/loadMyOffers")) {
+			Applicant appli = Helper.checkAuthenticity(request.getSession(),
+					Applicant.class);
+			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli.getUserData().getUsername())); //Offer vom User geholt
+			response.setContentType("myapplication/json");
+			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
+		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
 			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
@@ -111,39 +120,49 @@ public class ApplicantServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 		}
-		// Load my offers:
-		else if (path.equals("/js/loadMyOffers")) {
-			Applicant appli = Helper.checkAuthenticity(request.getSession(),
-					Applicant.class);
-			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli.getUserData().getUsername())); //Offer vom User geholt
-			response.setContentType("myapplication/json");
-			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
-		}
+
 		// Load my information about one application:
-		//noch nicht funktionsfähig!!!
 		else if (path.equals("/js/selectApplication")) {
 			String aid = request.getParameter("id");
 			int aid1 = Integer.parseInt(request.getParameter("id"));
-			System.out.println(aid);
-			System.out.println(aid1 +"neu");
 			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
-			
 			String offername;
-			Vector<OfferDocument> documents;
-			
+			//Vector<OfferDocument> documents;
 			for(int i=0; i<offersid.size(); i++){
 				if(aid1 == offersid.elementAt(i).getAid()){
-					System.out.println("drin: ");
 					offername = offersid.elementAt(i).getName();
-					System.out.println("name: "+offername);
-					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
-					response.setContentType("angebotx/json");
+					//documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+					//System.out.println(documents);
+					response.setContentType("offer/json");
 					response.getWriter().write(gson.toJson(offername, offername.getClass()));
 				}
 				
 			}
-
-			//}
+		}
+		// Load my information about one application(documents):
+		else if (path.equals("/js/selectDocuments")) {
+			String aid = request.getParameter("id");
+			int aid1 = Integer.parseInt(request.getParameter("id"));
+			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
+			//String offername;
+			Vector<OfferDocument> documents = null;
+			System.out.println("hier?");
+			for(int i=0; i<offersid.size(); i++){
+				if(aid1 == offersid.elementAt(i).getAid()){
+					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+				}}
+					Vector<String> documentsname = new Vector<String>();
+					
+					for(int j=0; j<documents.size(); j++){
+						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
+					}
+					System.out.println(documents);
+					System.out.println(documentsname);
+					response.setContentType("offerdocuments/json");
+					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+				
+				
+			
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {

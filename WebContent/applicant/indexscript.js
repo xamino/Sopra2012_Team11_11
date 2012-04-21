@@ -4,6 +4,9 @@
  * @author: Laura Irlinger
  */
 
+
+//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiß jmd wieso??!!!!!!!!!!!!
+
 /**
  * Stores the selected Offer:
  */
@@ -11,17 +14,17 @@ var selectedOffer;
 
 /**
  * This function loads all the offers in the system from the database and
- * displays them.
+ * displays them. (userindex.jsp)
  */
-function loadOffers() {
-	alert("eins"); 																//ohne alerts funktionierts nicht =( ... wieso??
+function loadOffers() { 														
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
+	alert("ohne alert funzt es ned =( 2");
 }
 
 /**
- * This function displays all the offers in the system.
+ * This function displays all the offers in the system. (userindex.jsp)
  * 
  * @param mime
  *            The MIME type of the data.
@@ -29,7 +32,6 @@ function loadOffers() {
  *            The data.
  */
 function handleLoadOffersResponse(mime, data) {
-	alert("zwei");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
@@ -46,29 +48,23 @@ function handleLoadOffersResponse(mime, data) {
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
 					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"togglePopup('application',true);\" /> </div><div class=\"clear\"></div></td></tr>";
 		}
-		loadMyOffers();
-		alert("fertig");
+		//loadMyOffers();
 	}
 }
 
-/**
- * Stores the selected Offer:
- */
-var selectedOffer;
 
 /**
- * This function loads all the offers of the applicant in the system from the database and
- * displays them.
+ * This function loads all the offers of the applicant (who is logged in) in the system from the database and
+ * displays them. (userindex.jsp)
  */
 function loadMyOffers() {
-	alert("drin");
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
 }
 
 /**
- * This function displays all the offers of the applicant in the system.
+ * This function displays all the offers of the applicant in the system.(userindex.jsp)
  * 
  * @param mime
  *            The MIME type of the data.
@@ -76,7 +72,7 @@ function loadMyOffers() {
  *            The data.
  */
 function handleLoadMyOffersResponse(mime, data) {
-	alert("drindrin");
+	alert("ohne alert funzt es ned =(");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "myapplication/json") {
@@ -91,8 +87,99 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].startdate + "\');\"><td>"
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
-					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].aid+ "\"  onclick=\"selectApplication(\'"
-					+ JSONarray[i].aid + "\');\" \></div><div class=\"clear\"></div></td></tr>";
+					+ "</td><td><div class=\"float2\">"+ JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].aid+ "\"onclick=\"selectApplication2(\'" + JSONarray[i].aid + "\');\" \></div><div class=\"clear\"></div></td></tr>";
+		} //über die onclick methode wird mit der id zur status.jsp weiter geleitet
+		loadOffers();
+	}
+}
+
+
+/**
+ * Function sends aid to status.jsp. (Button "Bewerbung ansehen"--> status.jsp)
+ * 
+ * @param id
+ *            The aid of the clicked entry.
+ */
+function selectApplication2(aid) {
+	window.location ="status.jsp?AID=" + aid;
+}
+
+/**
+ * This function displays the name about the clicked application in the system. (status.jsp)
+ * 
+ * @param id
+ *            The aid of the clicked entry.
+ */
+function selectApplication() {
+	var id = getURLParameter("AID");
+	// reset selectedID (account could have been deleted in meantime)
+	//selectedOffer = null;
+	connect("/hiwi/Applicant/js/selectApplication", "id=" + id, handleLoadMyApplicationResponse);
+}
+
+/**
+ * This function displays the name about one application in the system. (status.jsp)
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadMyApplicationResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "offer/json") {
+		//alert(data);
+		// Erstelle Array aus JSON array:
+		//var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table = document.getElementById("applications");
+		// Write table â€“ probably replaces old data!
+		table.innerHTML = "<h4>Bewerbung fuer:" +data+ "</h4>";
+		selectDocuments();
+	}
+}
+
+/**
+ * This function displays the documents of the clicked application in the system. (status.jsp)
+ * 
+ * @param id
+ *            The aid of the clicked entry.
+ */
+function selectDocuments() {
+	var id = getURLParameter("AID");
+	//alert("die id ist"+id);
+	// reset selectedID (account could have been deleted in meantime)
+	//selectedOffer = null;
+	alert("ohne alert funzt es ned =( ");
+	connect("/hiwi/Applicant/js/selectDocuments", "id=" + id, handleselectDocumentsResponse);
+	alert("ohne alert funzt es ned =( 2");
+}
+
+/**
+ * This function displays the documents of one application in the system. (status.jsp)
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleselectDocumentsResponse(mime, data) {
+	
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "offerdocuments/json") {
+		//alert("richtig="+data);
+		//data=[{"offerID":101,"documentID":2},{"offerID":101,"documentID":5}]			//richtig
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		//alert("data= "+JSONarray);
+		// Get the table:
+		var table2 = document.getElementById("applicationsTable");
+		// Write table â€“ probably replaces old data!
+		table2.innerHTML = "<th></th><th>Unterlagen</th>";
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table2.innerHTML +="<tr><td><input type=\"checkbox\" /></td><td>" +    JSONarray[i]  + "</td><br></tr>"; 
 		}
 	}
 }
@@ -116,69 +203,4 @@ function markOfferSelected(id) {
 	selectedOffer = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
-}
-
-//noch nicht funktionsfähig!!
-
-/**
- * Function remembers which application has been clicked.
- * 
- * @param id
- *            The aid of the clicked entry.
- */
-function selectApplication(id) {
-	window.location='status.jsp';
-	alert("yeah");
-	// reset selectedID (account could have been deleted in meantime)
-	//selectedOffer = null;
-	connect("/hiwi/Applicant/js/selectApplication", "id=" + id, handleLoadMyApplicationResponse);
-	alert("hunger");
-}
-
-/**
- * Function remembers which application has been clicked.
- * 
- * @param id
- *            The aid of the clicked entry.
- */
-function selectApplication(id) {
-	//window.location='status.jsp';
-	alert("yeah");
-	// reset selectedID (account could have been deleted in meantime)
-	//selectedOffer = null;
-	connect("/hiwi/Applicant/js/selectApplication", "id=" + id, handleLoadMyApplicationResponse);
-	alert("hunger");
-}
-
-// noch nicht funktionsfähig!!
-
-
-
-/**
- * This function displays all the information about one application in the system.
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
- */
-function handleLoadMyApplicationResponse(mime, data) {
-	alert("drin");
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "angebotx") {
-		alert=("drindrin");
-		// Erstelle Array aus JSON array:
-		var JSONarray = eval("("+data+")");
-		// Get the table:
-		var table = document.getElementById("applicationsTable");
-		// Write table â€“ probably replaces old data!
-		alert(offername);
-		table.innerHTML = "<h4>Bewerbung für:" +    offername +"</h4><form class=\"listform\"><table>";	//WOW-TUT
-		/*for ( var i = 0; i < JSONarray.length; i++) {
-			table.innerHTML +="<tr><td><input type=\"checkbox\" /></td><td>" +    JSONarray[i].description  + "</td></tr>"; //Superheldenbescheinigung
-		}
-		table.innerHTML += "</table></form>";*/
-		alert("fertig");
-	}
 }

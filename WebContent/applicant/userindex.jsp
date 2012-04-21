@@ -14,7 +14,7 @@
 <title>Bewerber Startseite | Hiwi Job Börse</title>
 </head>
 
-<body onload="loadOffers()">
+<body onload="loadMyOffers()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
