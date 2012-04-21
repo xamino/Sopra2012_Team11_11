@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import user.Provider;
+
 import logger.Log;
 
 import database.DatabaseController;
@@ -220,6 +222,41 @@ public class OfferController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "Plaetze > 0";
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while (rs.next()) {
+				Offer currentoff;
+				currentoff = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13));
+				offervec.add(currentoff);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			log.write("OfferController", "Error reading free offers!");
+			return null;
+		}
+		return offervec;
+	}
+	
+	
+	/**
+	 * Diese Methode sammelt alle Jobangebote eines Providers aus der
+	 * Datenbank und speichert diese in einem Vector.
+	 * 
+	 * @param provider
+	 * 		   Parameter gibt den benötigten Provider an
+	 * 
+	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
+	 *         Datenbank zurueckgegeben. 
+	 */
+	public Vector<Offer> getOffersByProvider(Provider provider) {
+		Vector<Offer> offervec = new Vector<Offer>(50, 10);
+		String[] select = { "*" };
+		String[] from = { tableName };
+		String where = "Ersteller = '"+provider.getUserData().getUsername()+"'";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {

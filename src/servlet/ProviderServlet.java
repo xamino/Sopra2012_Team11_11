@@ -5,13 +5,22 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Vector;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import database.application.ApplicationController;
+import database.offer.Offer;
+import database.offer.OfferController;
+
 import user.Admin;
+import user.Applicant;
 import user.Provider;
 
 /**
@@ -27,10 +36,16 @@ public class ProviderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Variable zum speichern der GSON Instanz.
+	 */
+	private Gson gson;
+	
+	/**
 	 * Konstruktor.
 	 */
 	public ProviderServlet() {
 		super();
+		gson = new Gson();
 	}
 
 	/**
@@ -48,6 +63,13 @@ public class ProviderServlet extends HttpServlet {
 	}
 	// Switch action on path:
 	String path = request.getPathInfo();
-	System.out.println(path);
+	// Load my offers:
+	if (path.equals("/js/loadOffers")) {
+		Provider provi = Helper.checkAuthenticity(request.getSession(),
+				Provider.class);
+		Vector<Offer> myoffers = OfferController.getInstance().getOffersByProvider(provi); //Offer vom Provider geholt
+		response.setContentType("offer/json");
+		response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
+			}
 	}
 }

@@ -9,12 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/provider/script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Anbieter Startseite | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadOffers()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -45,8 +45,8 @@
 		<hr>
 		<div class="textblock">
 			<div class="haupttext">
-				<table class="sized">
-					<tr>
+				<table class="sized" id="providerTable">
+					<!-- <tr>
 						<th>Meine Stellenangebote:</th>
 						<th>Bewerber/Stelle</th>
 						<th>Ändern</th>
@@ -59,14 +59,14 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<tr id="manohman" onclick="">
+					<!-- <tr id="manohman" onclick="">
 						<td>TUT xy</td>
 						<td>14/10<br><input type="submit" value="Bewerberauswahl" onclick="window.location='applicantlist.jsp'" /></td>
 						<td><br><input type="submit" value="Angebot ändern" onclick="window.location='editoffer.jsp'"/> </td>
 						<td><br><input type="button" value="Angebot zurückziehen"
 						onclick="togglePopup('offer_cancel',true);" /> </td>
 						<!-- <td><br><input type="submit" value="Angebot zurückziehen" /> </td>-->
-					</tr>
+					<!-- </tr>-->
 				</table><br>
 				<input type="submit" value="Neues Angebot erstellen" onclick="window.location='createoffer.jsp'" />
 			</div>

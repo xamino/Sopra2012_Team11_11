@@ -1,6 +1,7 @@
 /**
  * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Patryk Boczon
  */
 package servlet;
 
@@ -39,12 +40,19 @@ public class ClerkServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 	}
+	
+	private int offerid;
 
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("vor if");
+		if(request.getParameter("angebotpruefen")!=null){
+			System.out.println("in if");
+		}
+		
 		// Check authenticity:
 		Clerk clerk = Helper.checkAuthenticity(request.getSession(),
 				Clerk.class);
@@ -55,12 +63,15 @@ public class ClerkServlet extends HttpServlet {
 		}
 		String path = request.getPathInfo();
 		log.write("ClerkServlet", "Received request: " + path);
-
+		System.out.println(path);
 		if (path.equals("/js/doExcelExport")) {
 			log.write("ClerkServlet", "Excel export requested.");
 			// For now, simply redirect to userindex:
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_USERINDEX);
 		}
+		
+		
+		
 	}
 }

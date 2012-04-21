@@ -48,7 +48,7 @@
 		<div class="textblock">
 			<div class="haupttext">
 				<h4>Beworben:</h4>
-				<table class="sized">
+				<table class="sized" id="myofferTable">
 					<!-- <tr>
 						<th>Datum</th>
 						<th>Bezeichnung</th>

@@ -2,8 +2,7 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
-
-
+import database.account.Account;
 import database.account.AccountController;
 import database.application.ApplicationController;
 import database.document.DocumentController;
@@ -80,9 +79,40 @@ public abstract class User {
 	 * Invalidiert die Session des Benutzers
 	 */
 	public void invalidate() {
-			uData.getSession().invalidate();
+		uData.getSession().invalidate();
 	}
 
+	/**
+	 * Löscht den eigenen Account
+	 */
+	public boolean deleteOwnAccount() {
+		Account toDel = acccon.getAccountByUsername(uData.getUsername());
+		if (toDel == null)
+			return false;
+		invalidate();
+		return acccon.deleteAccount(toDel);
+	}
+	
+	/**
+	 * 
+	 */
+	public boolean editOwnAccount(Account a){
+		Account own = acccon.getAccountByUsername(uData.getUsername());
+		String temp = a.getEmail();
+		if(temp!=null){
+			own.setEmail(temp);
+			uData.setEmail(temp);
+		}
+		temp = a.getPasswordhash();
+		if(temp!=null)own.setPasswordhash(temp);
+		temp=a.getUsername();
+		if(temp!=null){
+			own.setUsername(temp);
+			uData.setUsername(temp);
+		}
+		if(acccon.updateAccount(own))return true;
+		return false;
+	}
 	/**
 	 * Standard toString()
 	 * 
@@ -100,10 +130,10 @@ public abstract class User {
 		else if (this instanceof Applicant)
 			type = "Applicant";
 
-		return "User [Type=" + type + " Name=" + uData.getName() + ", Username="
-				+ uData.getUsername() + ", Email=" + uData.getEmail() + ", SessionID="
+		return "User [Type=" + type + " Name=" + uData.getName()
+				+ ", Username=" + uData.getUsername() + ", Email="
+				+ uData.getEmail() + ", SessionID="
 				+ uData.getSession().getId() + "]";
 	}
 
-	
 }

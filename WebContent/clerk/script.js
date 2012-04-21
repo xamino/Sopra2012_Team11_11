@@ -1,3 +1,10 @@
+/**
+ * @author: Patryk Boczon
+ */
+
+
+
+
 function doExcelExport() {
 	connect("/hiwi/Clerk/js/doExcelExport", "", handleExport);
 }

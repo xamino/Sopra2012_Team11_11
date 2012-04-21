@@ -8,8 +8,6 @@
  */
 package user;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
@@ -77,14 +75,15 @@ public class Applicant extends User {
 	 *            ID des Angebots
 	 */
 	public void apply(int offerID) {
-		Application app = new Application(getUserData().getName(), offerID, false, null, false);
+		Application app = new Application(getUserData().getName(), offerID,
+				false, null, false);
 		appcon.updateApplication(app);
-		
+
 	}
 
-	
-	public void deleteApplication(int applicationID) throws SQLException {
-		Application app = new Application(this.getUserData().getUsername(), applicationID, false, "", false);
-		appcon.deleteApplication(app);
+	public boolean deleteApplication(int applicationID) {
+		Application app = new Application(this.getUserData().getUsername(),
+				applicationID, false, "", false);
+		return appcon.deleteApplication(app);
 	}
 }

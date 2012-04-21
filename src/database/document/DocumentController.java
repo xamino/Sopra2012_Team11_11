@@ -26,9 +26,9 @@ public class DocumentController {
 	 */
 	private DatabaseController dbc;
 	
-	final static String tableNameS = "standardunterlagen";//tabellenname
-	final static String tableNameB = "bewerbungsunterlagen";//tabellenname
-	final static String tableNameU = "unterlagen";//tabellenname
+	final static String tableNameS = "Standardunterlagen";//tabellenname
+	final static String tableNameB = "Bewerbungsunterlagen";//tabellenname
+	final static String tableNameU = "Unterlagen";//tabellenname
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
