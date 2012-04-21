@@ -6,6 +6,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import logger.Log;
 import user.Clerk;
 
-import logger.Log;
+import com.google.gson.Gson;
+
+import database.offer.Offer;
+import database.offer.OfferController;
 
 /**
  * Das <code>Clerk</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -34,11 +40,17 @@ public class ClerkServlet extends HttpServlet {
 	private Log log;
 
 	/**
+	 * Variable zum speichern der GSON Instanz.
+	 */
+	private Gson gson;
+	
+	/**
 	 * Konstruktor.
 	 */
 	public ClerkServlet() {
 		super();
 		log = Helper.log;
+		gson = new Gson();
 	}
 	
 	private int offerid;
@@ -48,10 +60,6 @@ public class ClerkServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("vor if");
-		if(request.getParameter("angebotpruefen")!=null){
-			System.out.println("in if");
-		}
 		
 		// Check authenticity:
 		Clerk clerk = Helper.checkAuthenticity(request.getSession(),
@@ -70,8 +78,23 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_USERINDEX);
 		}
+
+		// Load the offers of the clerk:
+		else if (path.equals("/js/showMyOffers")) {
+			Clerk clerk1 = Helper.checkAuthenticity(request.getSession(),
+					Clerk.class);					//wie wird definiert welche Angebote welcher clerk hat??
+			Vector<Offer> myoffers = OfferController.getInstance().getAllOffers(); //Offer vom User geholt
+			response.setContentType("offers/json");
+			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
+		}
 		
-		
-		
+		else if (path.equals("/js/editOneOffer")){
+			System.out.println("pathequals editOneOffer");
+			response.setContentType("offers/json");
+			
+			System.out.println(request.getParameter("select"));
+			
+		}
+
 	}
 }
