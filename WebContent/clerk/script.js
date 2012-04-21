@@ -28,11 +28,7 @@ function showMyOffers() {
 	connect("/hiwi/Clerk/js/showMyOffers", "", handleShowMyOffersResponse);
 }
 
-function editOneOffer() {
-	// reset selectedID (account could have been deleted in meantime)
-	selectedOffer = null;
-	connect("/hiwi/Clerk/js/editOneOffer", "", handleEditOneOfferResponse);
-}
+
 
 /**
  * This function displays all the offers of the clerk in the system.
@@ -66,6 +62,12 @@ function handleShowMyOffersResponse(mime, data) {
 }
 
 
+function editOneOffer() {
+	alert(selectedOffer);
+	connect("/hiwi/Clerk/js/editOneOffer", "", handleEditOneOfferResponse);
+}
+
+
 function handleEditOneOfferResponse(mime, data){
 	alert("handleEditOneOfferResponse");
 	if (mime == "text/url") {
@@ -83,6 +85,7 @@ function handleEditOneOfferResponse(mime, data){
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
+	
 	// Remove marking from previous selected, if applicable:
 	if (selectedOffer != null)
 		document.getElementById(selectedOffer).setAttribute("class", "");
@@ -93,6 +96,10 @@ function markOfferSelected(id) {
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
-	document.getElementById(id).setAttribute("class", "selected");
+	alert(selectedOffer);
+
+	document.getElementById(id).setAttribute("class", "selecte");
+//	document.getElementById(id).setAttribute("selected", id);
+//	alert(document.getElementById(id).getAttribute("selected"));
 	
 }
