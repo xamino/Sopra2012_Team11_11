@@ -14,7 +14,7 @@
 <title>Bewerbungsstatus | Hiwi Job Börse</title>
 </head>
 
-<body onload="selectApplication(id)">
+<body onload="selectApplication()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -47,11 +47,13 @@
 		</div>
 		<hr>
 		<div class="textblock">
-			<div class="haupttext" id="applicationsTable">
-				<!-- <h4>Bewerbung für: WOW-TUT</h4>
+			<div class="haupttext" >
+				<div id="applications">
+				</div>
+				<!-- <h4>Bewerbung für: WOW-TUT</h4>-->
 				<form class="listform">
-					<table>
-						<tr>
+					<table id="applicationsTable">
+						<!-- <tr>
 							<td><input type="checkbox" /></td>
 							<td>Superheldenbescheingung</td>
 						</tr>
@@ -62,7 +64,7 @@
 						<tr>
 							<td><input type="checkbox" /></td>
 							<td>Kündigungsnormvertrag</td>
-						</tr>
+						</tr>-->
 					</table>
 				</form>
 				<hr>
@@ -81,7 +83,7 @@
 					<input type="button" value="Bewerbung wiederrufen"
 						onclick="togglePopup('application_cancel',true);" /> 
 					<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
-				<!-- </form>-->
+				</form>
 				</div>
 			</div>
 		</div>
