@@ -54,8 +54,8 @@
 			<hr>
 			<div class="textblock">
 			<div class="haupttext">
-				<form class="listform">
-						<input type="button" value="Angebot prüfen"
+				<form id="angebotpruefenid" class="listform">
+						<input id="angebotpruefen" type="button" value="Angebot prüfen"
 							onclick="window.location='editoffer.jsp'" />
 					<hr>
 					<table id="clerkTable">

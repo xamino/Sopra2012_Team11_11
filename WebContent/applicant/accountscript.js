@@ -10,6 +10,7 @@
  */
 function loadAccount() {
 	connect("/hiwi/Applicant/js/loadAccount", "", handleLoadAccountResponse);
+	
 }
 
 /**
@@ -21,6 +22,7 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
+
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
@@ -28,7 +30,8 @@ function handleLoadAccountResponse(mime, data) {
 		var JSONdata = eval("(" + data + ")");
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
-		document.getElementById("newnutzername").value = JSONdata.username;
+		document.getElementById("newnutzername").value =JSONdata.username;
+
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
 		document.getElementById("newpasswortwdh").value = "";

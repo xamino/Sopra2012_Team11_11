@@ -88,6 +88,7 @@ public class ApplicantServlet extends HttpServlet {
 			}
 			response.setContentType("text/error");
 			response.getWriter().write("Failed to delete application!");
+			
 		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {

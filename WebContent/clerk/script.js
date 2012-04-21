@@ -1,8 +1,7 @@
 /**
- * Script for clerk webpages.
- * 
+ * @author: Patryk Boczon
  * @author: Laura Irlinger
- */
+**/
 
 function doExcelExport() {
 	connect("/hiwi/Clerk/js/doExcelExport", "", handleExport);
@@ -23,11 +22,15 @@ var selectedOffer;
  * displays them.
  */
 function showMyOffers() {
-	alert("drin");
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
-	alert("lala");
 	connect("/hiwi/Clerk/js/showMyOffers", "", handleShowMyOffersResponse);
+}
+
+function editOneOffer() {
+	// reset selectedID (account could have been deleted in meantime)
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/editOneOffer", "", handleEditOneOfferResponse);
 }
 
 /**
@@ -48,16 +51,28 @@ function handleShowMyOffersResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("clerkTable");
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th></th><th>Name des Zuständigen</th><th>Angebot</th><th>Plätze</th><th>Stunden pro Woche</th></tr>";
+		table2.innerHTML = "<tr><th>Name des Zuständigen</th><th>Angebot</th><th>Plätze</th><th>Stunden pro Woche</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].aid + "\');\"><td><input type=\"radio\" name=\"select\" id=\"" + JSONarray[i].name+ "\"/></td><td>" 		//da hast du (das 2. was schwarz ist
+					+ JSONarray[i].aid + "\');\"><td>" 
+					+ JSONarray[i].aid + "\');\"><td>"
 					+ JSONarray[i].author + "</td><td>"
 					+ JSONarray[i].name + "</td><td>"
 					+ JSONarray[i].slots + "</td><td>"
 					+ JSONarray[i].hoursperweek + "</td></tr>";
 		}
+	}
+}
+
+
+function handleEditOneOfferResponse(mime, data){
+	alert("handleEditOneOfferResponse");
+	if (mime == "text/url") {
+		window.location = data;
+	}
+	else if (mime == "offers/json") {
+		
 	}
 }
 
