@@ -24,6 +24,8 @@ import user.Clerk;
 
 import com.google.gson.Gson;
 
+import database.document.DocumentController;
+import database.document.OfferDocument;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -125,6 +127,30 @@ public class ClerkServlet extends HttpServlet {
 			
 			//wir wollten doch einen String als date?
 //			OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+		}
+		else if (path.equals("/js/documentsFromOffer")) {
+			String aid = request.getParameter("aid");
+			int aid1 = Integer.parseInt(aid);
+			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
+			//String offername;
+			Vector<OfferDocument> documents = new Vector<OfferDocument>();
+			System.out.println("hier?");
+			for(int i=0; i<offersid.size(); i++){
+				if(aid1 == offersid.elementAt(i).getAid()){
+					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+				}}
+					Vector<String> documentsname = new Vector<String>();
+					
+					for(int j=0; j<documents.size(); j++){
+						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
+					}
+					System.out.println(documents);
+					System.out.println(documentsname);
+					response.setContentType("documentsoffer/json");
+					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+				
+				
+			
 		}
 		
 		

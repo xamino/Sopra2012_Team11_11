@@ -59,9 +59,9 @@
 			<hr>
 			<div class="textblock">
 			<div class="haupttext">
-				<div class="bordered_float">
-					<table class="">
-						<tr>
+				<div class="bordered_float" >
+					<table class="" id="documentsTable">
+						<!-- <tr>
 							<th>Benötigte Dokumente:</th>
 						</tr>
 						<tr>
@@ -75,7 +75,7 @@
 						</tr>
 						<tr>
 							<td>Sonderbescheid</td>
-						</tr>
+						</tr>-->
 					</table>
 					<input type="button" value="Dokument hinzufügen"
 						onclick="togglePopup('document_add',true);" /> <input

@@ -160,9 +160,6 @@ public class ApplicantServlet extends HttpServlet {
 					System.out.println(documentsname);
 					response.setContentType("offerdocuments/json");
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
-				
-				
-			
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {

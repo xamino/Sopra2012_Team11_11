@@ -3,6 +3,8 @@
  * @author: Laura Irlinger
 **/
 
+//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiß jmd wieso??!!!!!!!!!!!!
+
 function doExcelExport() {
 	connect("/hiwi/Clerk/js/doExcelExport", "", handleExport);
 }
@@ -80,6 +82,33 @@ function handleEditOneOfferResponse(mime, data){
 		/*
 		 * Attribute der Offers mit 'aid' anzeigen
 		 */ 
+		documentsFromOffer();
+	}
+}
+
+function documentsFromOffer(){
+	var aid = getURLParameter("AID");
+	connect("/hiwi/Clerk/js/documentsFromOffer", "aid="+aid, handledocumentsFromOfferResponse);
+	alert("ohne alert funzt es ned =( ");
+}
+
+
+function handledocumentsFromOfferResponse(mime, data){
+	//alert("drin");
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "documentsoffer/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table = document.getElementById("documentsTable");
+		// Write table â€“ probably replaces old data!
+		table.innerHTML = "<tr><th>Benoetigte Documente</th></tr>";
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i]
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i] + "\');\"><td>" +    JSONarray[i]  + "</td><br></tr>";
+		}
 	}
 }
 
@@ -99,13 +128,13 @@ function prepareButton()
 function angebotbestaetigen(){
 	var aid = getURLParameter("AID");
 	alert("Angebot "+aid+" bestaetigen");
-	connect("/hiwi/Clerk/js/approveOffer", "aid="+aid, handleEditOneOfferResponse);
+	connect("/hiwi/Clerk/js/approveOffer", "aid="+aid, null);
 }
 
 function angebotablehnen(){
 	var aid = getURLParameter("AID");
 	alert("Angebot "+aid+" ablehnen");
-	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, handleEditOneOfferResponse);
+	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, null);
 }
 
 /**
