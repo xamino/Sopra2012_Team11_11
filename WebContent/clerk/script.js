@@ -50,9 +50,9 @@ function handleShowMyOffersResponse(mime, data) {
 		// Write table â€“ probably replaces old data!
 		table2.innerHTML = "<tr><th></th><th>Name des Zuständigen</th><th>Angebot</th><th>Plätze</th><th>Stunden pro Woche</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].author
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].author + "\');\"><td><input type=\"radio\" name=\"select\" id=\"" + JSONarray[i].name+ "\"/></td><td>" 		//da hast du (das 2. was schwarz ist
+					+ JSONarray[i].aid + "\');\"><td><input type=\"radio\" name=\"select\" id=\"" + JSONarray[i].name+ "\"/></td><td>" 		//da hast du (das 2. was schwarz ist
 					+ JSONarray[i].author + "</td><td>"
 					+ JSONarray[i].name + "</td><td>"
 					+ JSONarray[i].slots + "</td><td>"
@@ -79,5 +79,5 @@ function markOfferSelected(id) {
 	// Else save & mark new one:
 	selectedOffer = id;
 	document.getElementById(id).setAttribute("class", "selected");
-	// alert(selectedID + " is selected.");
+	//alert(selectedID + " is selected.");
 }

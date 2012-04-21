@@ -91,15 +91,11 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].startdate + "\');\"><td>"
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
-					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].name+ "\"  onclick=\"SelectApplication(\'"
-					+ JSONarray[i].name + "\');\" \></div><div class=\"clear\"></div></td></tr>";
+					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].aid+ "\"  onclick=\"selectApplication(\'"
+					+ JSONarray[i].aid + "\');\" \></div><div class=\"clear\"></div></td></tr>";
 		}
 	}
 }
-
-//window.location='status.jsp'    
-//</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"ansehen\" +i "\"onclick=\"loadMyApplication(id, data);\" /></div><div class=\"clear\"></div>
-
 
 /**
  * Function remembers which account has been clicked.
@@ -125,44 +121,38 @@ function markOfferSelected(id) {
 //noch nicht funktionsfähig!!
 
 /**
- * Function remembers which account has been clicked.
+ * Function remembers which application has been clicked.
  * 
- * @param username
- *            The username ID of the clicked entry.
+ * @param id
+ *            The aid of the clicked entry.
  */
-function SelectApplication(name) {
-	// Remove marking from previous selected, if applicable:
-	if (selectedOffer != null)
-		document.getElementById(selectedAccount).setAttribute("class", "");
-	// If clicked again, unselect:
-	if (selectedOffer == id) {
-		selectedOffer = null;
-		return;
-	}
-	// Else save & mark new one:
-	selectedOffer = id;
-	document.getElementById(id).setAttribute("class", "selected");
-	// alert(selectedID + " is selected.");
+function selectApplication(id) {
+	window.location='status.jsp';
+	alert("yeah");
+	// reset selectedID (account could have been deleted in meantime)
+	//selectedOffer = null;
+	connect("/hiwi/Applicant/js/selectApplication", "id=" + id, handleLoadMyApplicationResponse);
+	alert("hunger");
 }
 
+/**
+ * Function remembers which application has been clicked.
+ * 
+ * @param id
+ *            The aid of the clicked entry.
+ */
+function selectApplication(id) {
+	//window.location='status.jsp';
+	alert("yeah");
+	// reset selectedID (account could have been deleted in meantime)
+	//selectedOffer = null;
+	connect("/hiwi/Applicant/js/selectApplication", "id=" + id, handleLoadMyApplicationResponse);
+	alert("hunger");
+}
 
 // noch nicht funktionsfähig!!
 
-/**
- * Stores the selected Offer:
- */
-var selectedAppli;
 
-/**
- * This function loads all information about one application in the system from the database and
- * displays them.
- */
-function loadMyApplications() {
-	alert("eins"); 																//ohne alerts funktionierts nicht =( ... wieso??
-	// reset selectedID (account could have been deleted in meantime)
-	selectedAppli= null;
-	connect("/hiwi/Applicant/js/loadMyApplications", "", handleLoadMyApplicationsResponse);
-}
 
 /**
  * This function displays all the information about one application in the system.
@@ -172,21 +162,23 @@ function loadMyApplications() {
  * @param data
  *            The data.
  */
-function handleLoadMyApplicationsResponse(mime, data) {
-	alert("zwei");
+function handleLoadMyApplicationResponse(mime, data) {
+	alert("drin");
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "application/json") {
+	} else if (mime == "angebotx") {
+		alert=("drindrin");
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
 		// Get the table:
 		var table = document.getElementById("applicationsTable");
 		// Write table â€“ probably replaces old data!
-		table.innerHTML = "<h4>Bewerbung für:" +    JSONarray[i].description  +"</h4><form class=\"listform\"><table>";	//WOW-TUT
-		for ( var i = 0; i < JSONarray.length; i++) {
+		alert(offername);
+		table.innerHTML = "<h4>Bewerbung für:" +    offername +"</h4><form class=\"listform\"><table>";	//WOW-TUT
+		/*for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML +="<tr><td><input type=\"checkbox\" /></td><td>" +    JSONarray[i].description  + "</td></tr>"; //Superheldenbescheinigung
 		}
-		table.innerHTML += "</table></form>";
+		table.innerHTML += "</table></form>";*/
 		alert("fertig");
 	}
 }

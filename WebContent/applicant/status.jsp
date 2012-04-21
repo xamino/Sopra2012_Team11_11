@@ -9,12 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/applicant/indexscript.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Bewerbungsstatus | Hiwi Job Börse</title>
 </head>
 
-<body onload="loadMyApplications()">
+<body onload="selectApplication(id)">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -48,7 +48,7 @@
 		<hr>
 		<div class="textblock">
 			<div class="haupttext" id="applicationsTable">
-				<h4>Bewerbung für: WOW-TUT</h4>
+				<!-- <h4>Bewerbung für: WOW-TUT</h4>
 				<form class="listform">
 					<table>
 						<tr>
@@ -81,7 +81,7 @@
 					<input type="button" value="Bewerbung wiederrufen"
 						onclick="togglePopup('application_cancel',true);" /> 
 					<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
-				</form>
+				<!-- </form>-->
 				</div>
 			</div>
 		</div>
