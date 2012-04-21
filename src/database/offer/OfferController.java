@@ -14,10 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import user.Provider;
-
 import logger.Log;
-
+import user.Clerk;
+import user.Provider;
 import database.DatabaseController;
 import database.application.Application;
 
@@ -275,7 +274,7 @@ public class OfferController {
 		}
 		return offervec;
 	}
-
+	
 	/**
 	 * Diese Methode sammelt alle Jobangebote, fuer die Sich ein Bewerber
 	 * beworben hat, aus der Datenbank und speichert diese in einem Vector.

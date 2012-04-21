@@ -54,7 +54,7 @@ function handleLoadOffersResponse(mime, data) {
 /**
  * Stores the selected Offer:
  */
-var selectedMyOffer;
+var selectedOffer;
 
 /**
  * This function loads all the offers of the applicant in the system from the database and
@@ -63,7 +63,7 @@ var selectedMyOffer;
 function loadMyOffers() {
 	alert("drin");
 	// reset selectedID (account could have been deleted in meantime)
-	selectedMyOffer = null;
+	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
 }
 
@@ -91,10 +91,15 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].startdate + "\');\"><td>"
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
-					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" onclick=\"window.location='status.jsp'\" /></div><div class=\"clear\"></div></td></tr>";
+					+ "</td><td><div class=\"float2\">" + JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].name+ "\"  onclick=\"SelectApplication(\'"
+					+ JSONarray[i].name + "\');\" \></div><div class=\"clear\"></div></td></tr>";
 		}
 	}
 }
+
+//window.location='status.jsp'    
+//</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"ansehen\" +i "\"onclick=\"loadMyApplication(id, data);\" /></div><div class=\"clear\"></div>
+
 
 /**
  * Function remembers which account has been clicked.
@@ -104,15 +109,38 @@ function handleLoadMyOffersResponse(mime, data) {
  */
 function markOfferSelected(id) {
 	// Remove marking from previous selected, if applicable:
-	if (selectedAccount != null)
-		document.getElementById(selectedAccount).setAttribute("class", "");
+	if (selectedOffer != null)
+		document.getElementById(selectedOffer).setAttribute("class", "");
 	// If clicked again, unselect:
-	if (selectedAccount == id) {
-		selectedAccount = null;
+	if (selectedOffer == id) {
+		selectedOffer = null;
 		return;
 	}
 	// Else save & mark new one:
-	selectedAccount = id;
+	selectedOffer = id;
+	document.getElementById(id).setAttribute("class", "selected");
+	// alert(selectedID + " is selected.");
+}
+
+//noch nicht funktionsfähig!!
+
+/**
+ * Function remembers which account has been clicked.
+ * 
+ * @param username
+ *            The username ID of the clicked entry.
+ */
+function SelectApplication(name) {
+	// Remove marking from previous selected, if applicable:
+	if (selectedOffer != null)
+		document.getElementById(selectedAccount).setAttribute("class", "");
+	// If clicked again, unselect:
+	if (selectedOffer == id) {
+		selectedOffer = null;
+		return;
+	}
+	// Else save & mark new one:
+	selectedOffer = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
 }
@@ -123,7 +151,7 @@ function markOfferSelected(id) {
 /**
  * Stores the selected Offer:
  */
-var selectedApplication;
+var selectedAppli;
 
 /**
  * This function loads all information about one application in the system from the database and
@@ -132,7 +160,7 @@ var selectedApplication;
 function loadMyApplications() {
 	alert("eins"); 																//ohne alerts funktionierts nicht =( ... wieso??
 	// reset selectedID (account could have been deleted in meantime)
-	selectedApplication = null;
+	selectedAppli= null;
 	connect("/hiwi/Applicant/js/loadMyApplications", "", handleLoadMyApplicationsResponse);
 }
 

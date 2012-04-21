@@ -6,11 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/clerk/script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Angebote Verwalten | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="showMyOffers()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -58,8 +58,8 @@
 						<input type="button" value="Angebot prüfen"
 							onclick="window.location='editoffer.jsp'" />
 					<hr>
-					<table>
-						<tr>
+					<table id="clerkTable">
+						<!-- <tr>
 							<th></th>
 							<th>Name des Zuständigen</th>
 							<th>Fach</th>
@@ -86,7 +86,7 @@
 							<td>Programmierung von Systemen</td>
 							<td>15</td>
 							<td>6</td>
-						</tr>
+						</tr>-->
 					</table>
 				</form>
 			</div>

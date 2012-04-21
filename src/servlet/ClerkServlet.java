@@ -5,6 +5,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import database.application.ApplicationController;
+import database.offer.Offer;
+import database.offer.OfferController;
+
+import user.Applicant;
 import user.Clerk;
 
 import logger.Log;
@@ -33,11 +41,17 @@ public class ClerkServlet extends HttpServlet {
 	private Log log;
 
 	/**
+	 * Variable zum speichern der GSON Instanz.
+	 */
+	private Gson gson;
+	
+	/**
 	 * Konstruktor.
 	 */
 	public ClerkServlet() {
 		super();
 		log = Helper.log;
+		gson = new Gson();
 	}
 
 	/**
@@ -61,6 +75,14 @@ public class ClerkServlet extends HttpServlet {
 			// For now, simply redirect to userindex:
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_USERINDEX);
+		}
+		// Load the offers of the clerk:
+		else if (path.equals("/js/showMyOffers")) {
+			Clerk clerk1 = Helper.checkAuthenticity(request.getSession(),
+					Clerk.class);					//wie wird definiert welche Angebote welcher clerk hat??
+			Vector<Offer> myoffers = OfferController.getInstance().getAllOffers(); //Offer vom User geholt
+			response.setContentType("offers/json");
+			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
 		}
 	}
 }
