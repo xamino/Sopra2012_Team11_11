@@ -219,7 +219,7 @@ public class AccountController {
 	}
 
 	/**
-	 * Diese Methode selektiert alle Accounts mit uebergebenem Institut.
+	 * Diese Methode selektiert alle Verwalter Accounts mit uebergebenem Institut.
 	 * 
 	 * @param id
 	 *            Id ist der Primaerschluessel in der Institute-DB.
@@ -232,7 +232,45 @@ public class AccountController {
 
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "institut = " + id;
+		String where = "institut = " + id + " and accounttyp = 2";
+
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while (rs.next()) {
+				Account currentacc;
+				currentacc = new Account(rs.getString(1), rs.getString(2),
+						rs.getInt(3), rs.getString(4), rs.getString(5),
+						rs.getInt(6), rs.getString(7));
+
+				accountvec.add(currentacc);
+			}
+
+			rs.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return accountvec;
+
+	}
+	
+	/**
+	 * Diese Methode selektiert alle Provider Accounts mit uebergebenem Institut.
+	 * 
+	 * @param id
+	 *            Id ist der Primaerschluessel in der Institute-DB.
+	 * @return Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte
+	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
+	 */
+	public Vector<Account> getProviderAccountsByInstitute(int id) { //checked
+
+		Vector<Account> accountvec = new Vector<Account>(30, 10);
+
+		String[] select = { "*" };
+		String[] from = { tableName };
+		String where = "institut = " + id + " and accounttyp = 1";
 
 		ResultSet rs = dbc.select(select, from, where);
 		try {
