@@ -24,6 +24,7 @@ import user.Clerk;
 
 import com.google.gson.Gson;
 
+import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
 import database.offer.Offer;
@@ -44,6 +45,11 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speicher der Log Instanz.
 	 */
 	private Log log;
+	
+	/**
+	 * Variable zum speichern einer Instanz vom DocumentController;
+	 */
+	private DocumentController doccon;
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -148,12 +154,59 @@ public class ClerkServlet extends HttpServlet {
 					System.out.println(documentsname);
 					response.setContentType("documentsoffer/json");
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
-				
-				
 			
 		}
+		else if (path.equals("/js/addDocument")) {
+			String title = request.getParameter("title");
+			String description = request.getParameter("description");
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+				return;
+			}
+			if (title == null || title.isEmpty() || description == null
+					|| description.isEmpty() || uid < 0) {
+				log.write("ClerkServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler bei Eingabe! Fehlende Eingaben.");
+				return;
+			}
+			// all okay... continue:
+			if (!clerk.addDoc(new Document(uid, title, description))) {
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+				return;
+			}
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			return;
 		
-		
+		}
+		else if (path.equals("/js/deleteDocument")) {
+			int uid = -1;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehlerhafte uid!");
+				return;
+			}
+			Document doc = doccon.getDocumentByUID(uid);
+			clerk.delDoc(doc);
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			return;
+		}
 		
 
 	}

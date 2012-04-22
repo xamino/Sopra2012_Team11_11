@@ -3,7 +3,7 @@
  * @author: Laura Irlinger
 **/
 
-//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiß jmd wieso??!!!!!!!!!!!!
+//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiï¿½ jmd wieso??!!!!!!!!!!!!
 
 function doExcelExport() {
 	connect("/hiwi/Clerk/js/doExcelExport", "", handleExport);
@@ -50,7 +50,7 @@ function handleShowMyOffersResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("clerkTable");
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Zuständigen</th><th>Angebot</th><th>Plätze</th><th>Stunden pro Woche</th></tr>";
+		table2.innerHTML = "<tr><th>Name des Zustï¿½ndigen</th><th>Angebot</th><th>Plï¿½tze</th><th>Stunden pro Woche</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
@@ -122,7 +122,7 @@ function prepareButton()
 	alert("preparing button");
     document.getElementById("angebotpruefen").onclick = function(){
         window.location='editoffer.jsp?AID='+selectedOffer;
-    }
+    };
 }
 
 function angebotbestaetigen(){
@@ -163,4 +163,83 @@ function markOfferSelected(id) {
 	//updating 'Angebot pruefen' button
 	prepareButton();
 
+}
+
+/**
+ * Entfernt alle Eintraege.
+ */
+function clearAddDocumentPopup() {
+	addDocumentForm.uid.value = "";
+	addDocumentForm.title.value = "";
+	addDocumentForm.description.value = "";
+	toggleWarning("error_addDocument_uid", false, "");
+	toggleWarning("error_addDocument_descr", false, "");
+	toggleWarning("error_addDocument_title", false, "");
+}
+/**
+ * Deletes a document if one is selected.
+ */
+function deleteDocument() {
+	if (selectedDocument == null) {
+		toggleWarning("error_selection", true, "Kein Dokument ausgewÃ¤hlt! ");
+		togglePopup("document_del", false);
+		return;
+	}
+	// alert("/hiwi/Admin/js/deleteDocument?uid=" + selectedDocument);
+	connect("/hiwi/Clerk/js/deleteDocument", "uid=" + selectedDocument,
+			handleDeleteDocumentResponse);
+}
+
+/**
+ * Handles the response to a deletion request.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleDeleteDocumentResponse(mime, data) {
+	if (mime == "text/error")
+		alert(data);
+	else if (mime == "text/url")
+		window.location = data;
+}
+
+function addDocument() {
+	var form = FormAddDocument;
+	if (form == null)
+		return;
+	var error = false;
+	var uid = form.uid.value;
+	if (uid == null || uid == "") {
+		toggleWarning("error_addDocument_uid", true, "Bitte ausfÃ¼llen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_uid", false, "");
+	var title = form.title.value;
+	if (title == null || title == "") {
+		toggleWarning("error_addDocument_title", true, "Bitte ausfÃ¼llen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_title", false, "");
+	var description = form.description.value;
+	if (description == null || description == "") {
+		toggleWarning("error_addDocument_descr", true, "Bitte ausfÃ¼llen!");
+		error = true;
+	} else
+		toggleWarning("error_addDocument_descr", false, "");
+	if (error)
+		return;
+	// alert("All okay!");
+	connect("/hiwi/Clerk/js/addDocument", "uid=" + uid + "&title=" + title
+			+ "&description=" + description, handleAddDocumentResponse);
+}
+
+function handleAddDocumentResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "text/error") {
+		alert(data);
+	}
 }

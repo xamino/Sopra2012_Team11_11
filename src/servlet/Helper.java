@@ -79,6 +79,10 @@ public final class Helper {
 	 */
 	public static final String D_CLERK_OFFERMANAGEMENT = "/hiwi/clerk/offermanagement.jsp";
 	/**
+	 * Pfad zu /hiwi/clerk/edditapplication.jsp.
+	 */
+	public static final String D_CLERK_EDITAPPLICATION = "/hiwi/clerk/editapplication.jsp";
+	/**
 	 * Pfad zu /hiwi/clerk/applicationmanagement.jsp.
 	 */
 	public static final String D_CLERK_APPLICATIONMANAGEMENT = "/hiwi/clerk/applicationmanagement.jsp";

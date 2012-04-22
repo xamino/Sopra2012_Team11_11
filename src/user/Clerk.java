@@ -121,16 +121,22 @@ public class Clerk extends User {
 	 * @param description
 	 * 			Beschreibung zur Unterlage
 	 */
-	public void addDoc(int UID, String name, String description) {
-		Document doc = new Document(UID, name, description);
-		doccon.createDocument(doc);
+	public boolean addDoc(Document doc) {
+		if (!doccon.createDocument(doc)) {
+			log.write("Clerk", "Error adding a document!");
+			return false;
+		} else {
+			log.write("Clerk", "<" + getUserData().getUsername()
+					+ "> added document <" + doc.getName() + ">.");
+			return true;
+		}
 	}
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
 	 */
-	public void delDoc(int UID) {
-		Document doc = doccon.getDocumentByUID(UID);
+	public void delDoc(Document doc) {
+		
 		doccon.deleteDocument(doc);
 	}
 

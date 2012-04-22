@@ -129,18 +129,24 @@
 	<!-- Here are the popups -->
 	<!-- Document add popup -->
 	<div id="document_add" class="popup_hidden">
-		<form>
+		<form name="addDocumentForm">
 			<h3>Dokument hinzufügen</h3>
 			<hr>
 			<div class="textblock">
-				Titel:<br> <input type="text" /><br>Link:<br> <input
-					type="text" /><br>
-				<div class="hiddenerror"></div>
+				UID: <br> <input name="uid" type="text" />
+				<div id="error_addDocument_uid" class="hiddenerror"></div>
+				Titel: <br>
+				<textarea name="title" rows="1" cols="30"></textarea>
+				<div id="error_addDocument_title" class="hiddenerror"></div>
+				Beschreibung: <br>
+				<textarea name="description" rows="4" cols="30"></textarea>
+				<div id="error_addDocument_descr" class="hiddenerror"></div>
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" /> <input type="button"
-					value="Abbrechen" onclick="togglePopup('document_add', false);" />
+				<input type="button" value="Speicher" onclick="addDocument()" /> <input
+					type="button" value="Abbrechen"
+					onclick="clearAddDocumentPopup(); togglePopup('document_add', false);" />
 			</div>
 		</form>
 	</div>
@@ -154,8 +160,9 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" /> <input type="button"
-					value="Abbrechen" onclick="togglePopup('document_del', false);" />
+				<input type="button" value="Löschen" onclick="deleteDocument();" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>
 	</div>
