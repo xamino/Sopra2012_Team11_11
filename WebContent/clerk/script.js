@@ -243,3 +243,32 @@ function handleAddDocumentResponse(mime, data) {
 		alert(data);
 	}
 }
+
+/* noch ohne Funktion */
+function showApplication(){
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
+}
+
+function handleShowApplicationResponse(mime, data) {
+
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "showapplication/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table2 = document.getElementById("applicationTable");
+		// Write table – probably replaces old data!
+		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th><th>Fachsemester</th><th>Abschluss</th></tr>";
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i].aid + "\');\"><td>" 
+					+ JSONarray[i].author + "</td><td>"
+					+ JSONarray[i].name + "</td><td>"
+					+ JSONarray[i].slots + "</td><td>"
+					+ JSONarray[i].hoursperweek + "</td></tr>";
+		}
+	}
+}

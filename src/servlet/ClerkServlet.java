@@ -24,9 +24,13 @@ import user.Clerk;
 
 import com.google.gson.Gson;
 
+import database.account.Account;
+import database.account.AccountController;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
+import database.institute.Institute;
+import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -155,7 +159,28 @@ public class ClerkServlet extends HttpServlet {
 					response.setContentType("documentsoffer/json");
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
 			
-		}
+		}	
+		/* noch nicht funktionsfähig */
+		/*else if (path.equals("/js/showApplication")) {
+			Vector<Account> accounts = AccountController.getInstance().getProviderAccountsByInstitute(id);
+			//String offername;
+			Vector<OfferDocument> documents = new Vector<OfferDocument>();
+			System.out.println("hier?");
+			for(int i=0; i<offersid.size(); i++){
+				if(aid1 == offersid.elementAt(i).getAid()){
+					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+				}}
+					Vector<String> documentsname = new Vector<String>();
+					
+					for(int j=0; j<documents.size(); j++){
+						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
+					}
+					System.out.println(documents);
+					System.out.println(documentsname);
+					response.setContentType("showapplication/json");
+					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+			
+		}*/
 		else if (path.equals("/js/addDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");

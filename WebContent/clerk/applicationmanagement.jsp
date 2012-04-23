@@ -11,7 +11,7 @@
 <title>Bewerbungen Verwalten | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="showApplication()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -59,8 +59,8 @@
 						<input type="button" value="Bewerbung bearbeiten"
 							onclick="window.location='editapplication.jsp'" />
 					<hr>
-					<table>
-						<tr>
+					<table id="applicationTable">
+						<!-- <tr>
 							<th></th>
 							<th>Name des Bewerbers</th>
 							<th>Bewibt sich für</th>
@@ -87,7 +87,7 @@
 							<td>Maschienenbau Tutorium</td>
 							<td>1</td>
 							<td>Master</td>
-						</tr>
+						</tr>-->
 					</table>
 				</form>
 			</div>
