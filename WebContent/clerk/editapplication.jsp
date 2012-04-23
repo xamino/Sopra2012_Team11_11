@@ -74,7 +74,7 @@
 							<td>Bachlor</td>
 						</tr>
 					</table>
-					<br> <input type="button" value="Bewerbungsabschluss" />
+					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
 				</div>
 				<form class="listform">
 					<table class="">

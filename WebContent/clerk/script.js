@@ -63,7 +63,9 @@ function handleShowMyOffersResponse(mime, data) {
 	}
 }
 
-
+/**
+ * Function to edit a single offer.
+ */
 function editOneOffer() {
 	var aid = getURLParameter("AID");
 	alert(aid);
@@ -332,4 +334,18 @@ function handleApplicationDocumentsResponse(mime, data) {
 		}
 	}
 }
+/**
+ * This function checks if a applicant has delivered all of the rquired documents.
+ */
 
+function doApplicationCompletion(){
+	var user = getElementById(elementId);
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "UID"+user, handleApplicationCompletion);
+}
+
+function handleApplicationCompletion(mime,data){
+	if (mime == "text/url") {
+		window.location = data;
+	}
+	else{alert(data)};
+}
