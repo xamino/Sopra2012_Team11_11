@@ -60,7 +60,7 @@
 							onclick="window.location='editapplication.jsp'" />
 					<hr>
 					<table id="applicationTable">
-						<!-- <tr>
+						<tr>
 							<th></th>
 							<th>Name des Bewerbers</th>
 							<th>Bewibt sich für</th>
@@ -87,7 +87,7 @@
 							<td>Maschienenbau Tutorium</td>
 							<td>1</td>
 							<td>Master</td>
-						</tr>-->
+						</tr>
 					</table>
 				</form>
 			</div>
