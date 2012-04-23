@@ -70,14 +70,14 @@
 										Passwort</label>
 								</span>
 								<div class="regform">
-									<input id="newpasswort" type="text" name="newpasswort"
+									<input id="newpasswort" type="password" name="newpasswort"
 										size="20" maxlength="100" />
 								</div>
 								<br> <span> <label for="newpasswortwdh">neuesPasswort
 										wiederholen</label>
 								</span>
 								<div class="regform">
-									<input id="newpasswortwdh" type="text" name="newpasswortwdh"
+									<input id="newpasswortwdh" type="password" name="newpasswortwdh"
 										size="20" maxlength="100" />
 									<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 									<div id="error_unequalPasswords" class="hiddenerror"></div>

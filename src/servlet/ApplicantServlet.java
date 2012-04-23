@@ -176,11 +176,13 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		else if(path.equals("/js/changeAccount")){
 			String name = request.getParameter("name");
-			String email = request.getParameter("email");
+			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
+			if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
 			if(applicant.editOwnAccount(name, email, pw)){
-				response.setContentType("text/plain");
-				response.getWriter().write("true");
+				log.write("ApplicantServlet", applicant.getUserData().getUsername() + " has modified his account.");
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
 			}else{
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim ändern der Daten.");

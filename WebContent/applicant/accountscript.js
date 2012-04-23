@@ -126,8 +126,6 @@ function changeAccount(){
 		return;
 	// As of here, send:
 	// alert("All okay!");
-	alert("name=" + realName + "&mail="
-			+ email + "&pw=" + password);
 	connect("/hiwi/Applicant/js/changeAccount", "name=" + realName + "&mail="
 			+ email + "&pw=" + password,
 			handleChangeAccountResponse);
@@ -135,4 +133,5 @@ function changeAccount(){
 
 function handleChangeAccountResponse(mime, data){
 	if(mime=="text/error")alert(data);
+	if(mime=="text/url")window.location=data;
 }
