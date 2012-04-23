@@ -114,15 +114,25 @@ function handledocumentsFromOfferResponse(mime, data){
 
 /**
  * Function updates the 'Angebot pruefen' button by setting its onclick reference
- * to the AID of the last marked offer
+ * to the AID of the last marked offer (first if), or
+ *  Function updates the 'Bewerbung bearbeiten' button by setting its onclick reference
+ * to the name of the applicant of the last marked offer (second if).
  * 
  */
 function prepareButton()
 {
-	alert("preparing button");
-    document.getElementById("angebotpruefen").onclick = function(){
-        window.location='editoffer.jsp?AID='+selectedOffer;
-    };
+	alert("preparing button3");
+	if (document.getElementById("angebotpruefen") != null && selectedOffer != null){		//offermanagement.jsp --> editoffer.jsp, wenn etwas markiert ist
+	    document.getElementById("angebotpruefen").onclick = function(){
+	        window.location='editoffer.jsp?AID='+selectedOffer;
+	    };
+    }
+    alert("preparing button");
+    if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
+	    document.getElementById("editapplication").onclick = function(){
+	        window.location='editapplication.jsp?AID='+selectedOffer;
+	    };
+    }
 }
 
 function angebotbestaetigen(){
@@ -244,12 +254,23 @@ function handleAddDocumentResponse(mime, data) {
 	}
 }
 
-/* noch ohne Funktion */
+/**
+ * This function loads all the applicants of all offers from the clerk's institute in the system from the database and
+ * displays them.
+ */
 function showApplication(){
 	selectedOffer = null;
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 
+/**
+ * This function displays all the applicants of all offers from the clerk's institute in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
 function handleShowApplicationResponse(mime, data) {
 
 	if (mime == "text/url") {
@@ -260,15 +281,14 @@ function handleShowApplicationResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("applicationTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th><th>Fachsemester</th><th>Abschluss</th></tr>";
+		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].bewerbername
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].aid + "\');\"><td>" 
-					+ JSONarray[i].author + "</td><td>"
-					+ JSONarray[i].name + "</td><td>"
-					+ JSONarray[i].slots + "</td><td>"
-					+ JSONarray[i].hoursperweek + "</td></tr>";
+					+ JSONarray[i].bewerbername + "\');\"><td>" 
+					+ JSONarray[i].bewerbername + "</td><td>"
+					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
 	}
 }
+

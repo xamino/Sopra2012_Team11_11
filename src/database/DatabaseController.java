@@ -441,10 +441,12 @@ public class DatabaseController {
 				" JOIN accounts ON accounts.benutzername = bewerbungen.benutzername";
 		
 		ResultSet rs;
+		System.out.println(sel);
 		try {
 			rs = st.executeQuery(sel);
 			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
 			while(rs.next()){
+				System.out.println(rs.getString(1));
 				hdc.add(new HilfsDatenClerk(rs.getString(1),rs.getString(2)));
 			}
 			return hdc;
