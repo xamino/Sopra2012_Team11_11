@@ -25,6 +25,8 @@ import user.Provider;
 
 import com.google.gson.Gson;
 
+import database.DatabaseController;
+import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -169,6 +171,8 @@ public class ClerkServlet extends HttpServlet {
 					Clerk.class);
 			String username = clerk2.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
+			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			
 			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
 			
 			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts

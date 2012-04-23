@@ -18,18 +18,6 @@ import database.document.DocumentController;
  */
 public class Admin extends User {
 
-	/**
-	 * Private Instanz des Loggers.
-	 */
-	private Log log;
-	/**
-	 * Private Instanz des AccountController.
-	 */
-	private AccountController accountController;
-	/**
-	 * Private Instanz des DocumentController.
-	 */
-	private DocumentController docController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -48,8 +36,6 @@ public class Admin extends User {
 		super(username, email, name, session);
 		userManagement.LoggedInUsers.addUser(this);
 		this.log = Log.getInstance();
-		this.accountController = AccountController.getInstance();
-		this.docController = DocumentController.getInstance();
 	}
 
 	/**
@@ -61,7 +47,7 @@ public class Admin extends User {
 	 */
 
 	public boolean deleteAccount(String username) {
-		Account account = accountController.getAccountByUsername(username);
+		Account account = acccon.getAccountByUsername(username);
 		if (account == null) {
 			log.write("Admin", "Can not delete <" + username
 					+ ">. Does not exist!");
@@ -77,7 +63,7 @@ public class Admin extends User {
 		}
 		log.write("Admin", "<" + getUserData().getUsername()
 				+ "> deleted account with username <" + username + ">");
-		accountController.deleteAccount(account);
+		acccon.deleteAccount(account);
 		return true;
 	}
 
@@ -89,7 +75,7 @@ public class Admin extends User {
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createAccount(Account account) {
-		if (!accountController.createAccount(account)) {
+		if (!acccon.createAccount(account)) {
 			// This can happen if the institute doesn't exist:
 			log.write("Admin",
 					"Error creating account! Is the institute valid?");
@@ -111,7 +97,7 @@ public class Admin extends User {
 	public boolean editAccount(Account account) {
 		// For debugging wrong character set:
 		// System.out.println(account.getName());
-		if (!accountController.updateAccount(account)) {
+		if (!acccon.updateAccount(account)) {
 			log.write("Admin", "Error modifying account!");
 			return false;
 		}
@@ -127,7 +113,7 @@ public class Admin extends User {
 	 *            zu löschendes Dokument.
 	 */
 	public boolean deleteDoc(Document doc) {
-		if (!docController.deleteDocument(doc)) {
+		if (!doccon.deleteDocument(doc)) {
 			log.write("Admin", "Error deleting document!");
 			return false;
 		} else {
@@ -145,7 +131,7 @@ public class Admin extends User {
 	 * @return Gibt an, ob das Dokument erstellt worden konnte.
 	 */
 	public boolean addDoc(Document doc) {
-		if (!docController.createDocument(doc)) {
+		if (!doccon.createDocument(doc)) {
 			log.write("Admin", "Error adding a document!");
 			return false;
 		} else {
@@ -163,7 +149,7 @@ public class Admin extends User {
 	 * @return Gibt an, ob das Editieren erfolgreich war.
 	 */
 	public boolean editDoc(Document doc) {
-		if (!docController.updateDocument(doc)) {
+		if (!doccon.updateDocument(doc)) {
 			log.write("Admin", "Error updating document!");
 			return false;
 		} else {
