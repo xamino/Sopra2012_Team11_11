@@ -21,11 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import logger.Log;
 import user.Clerk;
+import user.Provider;
 
 import com.google.gson.Gson;
 
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
+import database.application.ApplicationController;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
@@ -161,26 +164,37 @@ public class ClerkServlet extends HttpServlet {
 			
 		}	
 		/* noch nicht funktionsfähig */
-		/*else if (path.equals("/js/showApplication")) {
-			Vector<Account> accounts = AccountController.getInstance().getProviderAccountsByInstitute(id);
-			//String offername;
-			Vector<OfferDocument> documents = new Vector<OfferDocument>();
-			System.out.println("hier?");
-			for(int i=0; i<offersid.size(); i++){
-				if(aid1 == offersid.elementAt(i).getAid()){
-					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
-				}}
-					Vector<String> documentsname = new Vector<String>();
-					
-					for(int j=0; j<documents.size(); j++){
-						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
-					}
-					System.out.println(documents);
-					System.out.println(documentsname);
-					response.setContentType("showapplication/json");
-					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+		else if (path.equals("/js/showApplication")) {
+			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
+					Clerk.class);
+			String username = clerk2.getUserData().getUsername();
+			Account clerka = AccountController.getInstance().getAccountByUsername(username);
+			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
 			
-		}*/
+			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts
+			Vector<Offer> currentoffers = new Vector<Offer>(); //alle offers eines providers in provaccounts
+			for(int i = 0; i < provaccounts.size(); i++){
+				currentoffers = OfferController.getInstance().getOffersByProvider(new Provider(provaccounts.elementAt(i).getUsername(), null, null, null));
+				for(int k = 0; k < currentoffers.size(); k++){
+					alloffers.add(currentoffers.elementAt(k));
+				}
+			}
+			System.out.println(alloffers);
+			
+			Vector<Application> allapplications = new Vector<Application>();
+			Vector<Application> currentapplications = new Vector<Application>();
+			
+			for(int l = 0; l < alloffers.size(); l++){
+				currentapplications = ApplicationController.getInstance().getApplicationsByOffer(alloffers.elementAt(l).getAid());
+				for(int q = 0; q < currentapplications.size(); q++){
+					allapplications.add(currentapplications.elementAt(q));
+				}
+			}
+			
+			response.setContentType("showapplication/json");
+			response.getWriter().write(gson.toJson(alloffers, alloffers.getClass()));
+			
+		}
 		else if (path.equals("/js/addDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
