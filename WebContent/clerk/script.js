@@ -272,3 +272,15 @@ function handleShowApplicationResponse(mime, data) {
 		}
 	}
 }
+
+function doApplicationCompletion(){
+	var user = getElementById(elementId);
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "UID"+user, handleApplicationCompletion);
+}
+
+function handleApplicationCompletion(mime,data){
+	if (mime == "text/url") {
+		window.location = data;
+	}
+	else{alert(data)};
+}

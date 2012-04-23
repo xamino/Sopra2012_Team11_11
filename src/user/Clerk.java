@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Vector;
 
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
@@ -176,6 +178,33 @@ public class Clerk extends User {
 	public String doExport() throws IOException, RowsExceededException, WriteException {
 		return ExcelExport.export(this.getUserData());
 
+	}
+	
+	/**
+	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
+	 * @return
+	 * 		True falls alles abgegeben wurde,
+	 * 		sonst False.
+	 */
+	public boolean checkAllDocFromApplicant(String username, int offerID){
+		Account acc = acccon.getAccountByUsername(username);
+		Offer off = offcon.getOfferById(offerID);
+		
+		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
+		
+		Iterator<AppDocument> it = vec.iterator();
+		
+		AppDocument aktuellesDokument;
+		int i = 0;
+		while(it.hasNext()){
+			aktuellesDokument = vec.get(i);
+			if (!aktuellesDokument.getPresent()) {
+				return false;
+			}
+		}
+		
+		return true;
+		
 	}
 
 }

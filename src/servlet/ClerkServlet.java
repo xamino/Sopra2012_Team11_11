@@ -165,7 +165,7 @@ public class ClerkServlet extends HttpServlet {
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
 			
 		}	
-		/* noch nicht funktionsfähig */
+		/* noch nicht funktionsfï¿½hig */
 		else if (path.equals("/js/showApplication")) {
 			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class);
@@ -238,7 +238,7 @@ public class ClerkServlet extends HttpServlet {
 			try {
 				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
-				log.write("AdminServlet",
+				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehlerhafte uid!");
@@ -249,6 +249,20 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
+		}
+		else if(path.equals("/js/doApplicationCompletion")){
+			int AID = 0;
+			String username;
+			try {
+				AID = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+			}
+			username = request.getParameter("username");
+			if (clerk.checkAllDocFromApplicant(username, AID)) {
+				response.setContentType("test/url");
+				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			}
 		}
 		
 
