@@ -88,7 +88,7 @@ public abstract class User {
 	}
 
 	/**
-	 * Löscht den eigenen Account
+	 * Loescht den eigenen Account
 	 */
 	public boolean deleteOwnAccount() {
 		Account toDel = acccon.getAccountByUsername(uData.getUsername());
@@ -99,7 +99,11 @@ public abstract class User {
 	}
 	
 	/**
-	 * 
+	 * Aendert die Daten des eigenen Accounts
+	 * @param name Neuer Name
+	 * @param email Neue Email
+	 * @param pw Neues Passwort (gehashed!)
+	 * @return Wahrheitswert ob erfolgreich
 	 */
 	public boolean editOwnAccount(String name, String email , String pw){
 		Account own = acccon.getAccountByUsername(uData.getUsername());
