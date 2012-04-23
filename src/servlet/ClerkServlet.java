@@ -172,7 +172,9 @@ public class ClerkServlet extends HttpServlet {
 			String username = clerk2.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
 			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			System.out.println("Ergebnis: "+daten.size());
 			
+			/*
 			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
 			
 			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts
@@ -194,9 +196,10 @@ public class ClerkServlet extends HttpServlet {
 					allapplications.add(currentapplications.elementAt(q));
 				}
 			}
+			*/
 			
 			response.setContentType("showapplication/json");
-			response.getWriter().write(gson.toJson(alloffers, alloffers.getClass()));
+			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			
 		}
 		else if (path.equals("/js/addDocument")) {

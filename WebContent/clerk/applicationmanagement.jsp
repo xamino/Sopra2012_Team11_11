@@ -56,12 +56,12 @@
 			<div class="textblock">
 			<div class="haupttext">
 				<form class="listform">
-						<input type="button" value="Bewerbung bearbeiten"
-							onclick="window.location='editapplication.jsp'" />
+						<input type="button" value="Bewerbung bearbeiten" id="editapplication" />
+							<!-- onclick="window.location='editapplication.jsp'"--> 
 					<hr>
 					<table id="applicationTable">
-						<!-- <tr>
-							<th></th>
+						<tr>
+							<!-- <th></th>
 							<th>Name des Bewerbers</th>
 							<th>Bewibt sich für</th>
 							<th>Fachsemester</th>
