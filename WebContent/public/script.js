@@ -223,5 +223,7 @@ function handleRegisterResponse(mime, data) {
 		}
 	} else if (mime == "text/url") {
 		window.location = xmlhttp.responseText;
+	} else if (mime == "text/url") {
+		alert(data);
 	}
 }
