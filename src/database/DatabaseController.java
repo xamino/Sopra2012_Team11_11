@@ -182,7 +182,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "INSERT error! <" + insert + ">");
-			// e.printStackTrace();
+			e.printStackTrace();
 			return false;
 		}
 	}
