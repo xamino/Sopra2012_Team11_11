@@ -165,39 +165,14 @@ public class ClerkServlet extends HttpServlet {
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
 			
 		}	
-		/* noch nicht funktionsfähig */
+		// Creates an Vector for the table in applicationmanagement.jsp
 		else if (path.equals("/js/showApplication")) {
 			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class);
 			String username = clerk2.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
 			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
-			System.out.println("Ergebnis: "+daten.size());
-			
-			/*
-			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
-			
-			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts
-			Vector<Offer> currentoffers = new Vector<Offer>(); //alle offers eines providers in provaccounts
-			for(int i = 0; i < provaccounts.size(); i++){
-				currentoffers = OfferController.getInstance().getOffersByProvider(new Provider(provaccounts.elementAt(i).getUsername(), null, null, null));
-				for(int k = 0; k < currentoffers.size(); k++){
-					alloffers.add(currentoffers.elementAt(k));
-				}
-			}
-			System.out.println(alloffers);
-			
-			Vector<Application> allapplications = new Vector<Application>();
-			Vector<Application> currentapplications = new Vector<Application>();
-			
-			for(int l = 0; l < alloffers.size(); l++){
-				currentapplications = ApplicationController.getInstance().getApplicationsByOffer(alloffers.elementAt(l).getAid());
-				for(int q = 0; q < currentapplications.size(); q++){
-					allapplications.add(currentapplications.elementAt(q));
-				}
-			}
-			*/
-			
+			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			

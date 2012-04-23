@@ -436,7 +436,7 @@ public class DatabaseController {
 	 */
 	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(int institute){
 		
-		String sel = "SELECT accounts.name, angebote.Name " +
+		String sel = "SELECT accounts.name, angebote.Name, accounts.benutzername, angebote.AID " +
 				"FROM bewerbungen JOIN angebote ON bewerbungen.AID = angebote.AID AND ausgewaehlt = 1 AND angebote.Institut = "+institute+
 				" JOIN accounts ON accounts.benutzername = bewerbungen.benutzername";
 		
@@ -447,7 +447,7 @@ public class DatabaseController {
 			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
 			while(rs.next()){
 				System.out.println(rs.getString(1));
-				hdc.add(new HilfsDatenClerk(rs.getString(1),rs.getString(2)));
+				hdc.add(new HilfsDatenClerk(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
 			}
 			return hdc;
 		} catch (SQLException e) {

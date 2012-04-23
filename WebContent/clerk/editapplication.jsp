@@ -10,7 +10,7 @@
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Bewerbung Bearbeiten | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="applicationDocuments()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>

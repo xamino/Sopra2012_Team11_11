@@ -271,7 +271,48 @@ function showApplication(){
  * @param data
  *            The data.
  */
+//Problem: zwei Daten schicken
 function handleShowApplicationResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "showapplication/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table2 = document.getElementById("applicationTable");
+		// Write table – probably replaces old data!
+		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";		
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
+					+ JSONarray[i].bewerbername + "</td><td>"
+					+ JSONarray[i].angebotsname + "</td></tr>";
+		}
+	}
+}
+/**
+ * This function loads all the documents of the chosen application in the system from the database and
+ * displays them.
+ */
+//ohne Funktion
+function applicationDocuments(){
+	var lala = getURLParameter("lala");
+	alert("ergebnis= "+lala);
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/applicationDocuments", "", handleApplicationDocumentsResponse);
+}
+
+/**
+ * This function displays all the documents of the chosen application in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+//ohne Funktion
+function handleApplicationDocumentsResponse(mime, data) {
 
 	if (mime == "text/url") {
 		window.location = data;
@@ -283,9 +324,9 @@ function handleShowApplicationResponse(mime, data) {
 		// Write table – probably replaces old data!
 		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].bewerbername
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].bewerbername + "\');\"><td>" 
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
 					+ JSONarray[i].bewerbername + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
