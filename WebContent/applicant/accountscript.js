@@ -30,7 +30,7 @@ function handleLoadAccountResponse(mime, data) {
 		var JSONdata = eval("(" + data + ")");
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
-		document.getElementById("newnutzername").value =JSONdata.username;
+		document.getElementById("realName").value =JSONdata.realName;
 
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
@@ -103,53 +103,36 @@ function check() {
 }
 
 function changeAccount(){
-	var pw = document.getElementById("newpasswort").value;
-	var mail = document.getElementById("newemail").value;
-	var name = document.getElementById("newnutzername".value);
-	var data="";
-	var bpw=false;
-	var bname=false;
-	var bmail=false;
-	for(i=0;i<3;i++){
-		if(!(pw!=null&&pw!=""&&name!=null&&name!=""&&mail!=null&&mail!=""))break;
-		if(i==0){
-			if(pw!=null&&pw!=""&&!bpw){
-				data+="pw="+b64_md5(pw);
-				bpw=true;
-				continue;
-			}
-			if(name!=""&&name!=null&&!bname){
-				data+="name="+name;
-				bname=true;
-				continue;
-			}
-			if(mail!=""&&mail!=null&&!bmail){
-				data+="email="+mail;
-				bmail=true;
-				continue
-			}
-			
-		}else{
-			if(pw!=null&&pw!=""&&!bpw){
-				data+="&pw="+b64_md5(pw);
-				bpw=true;
-				continue;
-			}
-			if(name!=""&&name!=null&&!bname){
-				data+="&name="+name;
-				bname=true;
-				continue;
-			}
-			if(mail!=""&&mail!=null&&!bmail){
-				data+="&email="+mail;
-				bmail=true;
-				continue
-			}
-		}
-	}
-	connect("/hiwi/Applicant/js/changeAccount",data,handleChangeResponse);
+	var form = datenAendern;
+	var error = false;
+	var realName = form.realName.value;
+	if (realName == null || realName == "") {
+		toggleWarning("error_realName", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_realName", false, "");
+	var email = form.newemail.value;
+	if (email == null || email == "") {
+		toggleWarning("error_email", true, "Bitte ausfüllen!");
+		error = true;
+	} else
+		toggleWarning("error_email", false, "");
+	var password = form.newpasswort.value;
+	if (password != null && password != "") {
+		password = b64_md5(password);
+	} else
+		password = "";
+	if (error)
+		return;
+	// As of here, send:
+	// alert("All okay!");
+	alert("name=" + realName + "&mail="
+			+ email + "&pw=" + password);
+	connect("/hiwi/Applicant/js/changeAccount", "name=" + realName + "&mail="
+			+ email + "&pw=" + password,
+			handleChangeAccountResponse);
 }
 
-function handleChangeResponse(mime, data){
+function handleChangeAccountResponse(mime, data){
 	if(mime=="text/error")alert(data);
 }

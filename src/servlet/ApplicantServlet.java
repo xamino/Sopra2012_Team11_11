@@ -72,10 +72,10 @@ public class ApplicantServlet extends HttpServlet {
 		String path = request.getPathInfo();
 		// Do loadAccount:
 		if (path.equals("/js/loadAccount")) {
-			String username = applicant.getUserData().getUsername();
+			String realName = applicant.getUserData().getName();
 			String email = applicant.getUserData().getEmail();
-			String JsonString = Helper.jsonAtor(new String[] { "username",
-					"email" }, new String[] { username, email });
+			String JsonString = Helper.jsonAtor(new String[] { "realName",
+					"email" }, new String[] { realName, email });
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
 		}
@@ -167,8 +167,8 @@ public class ApplicantServlet extends HttpServlet {
 			if(applicant.deleteOwnAccount()){
 				log.write("ApplicantServlet", name + " has deleted his account.");
 				// Simply now for debugging:
-				response.setContentType("text/plain");
-				response.getWriter().write("true");
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_INDEX);
 			}else{
 				response.setContentType("text/error");
 				response.getWriter().write("Error while deleting account!");
@@ -178,7 +178,7 @@ public class ApplicantServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String pw = request.getParameter("pw");
-			if(applicant.editOwnAccount(new Account(name, pw, 3, email, name, 0, null))){
+			if(applicant.editOwnAccount(name, email, pw)){
 				response.setContentType("text/plain");
 				response.getWriter().write("true");
 			}else{

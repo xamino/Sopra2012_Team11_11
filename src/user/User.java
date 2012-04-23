@@ -2,6 +2,8 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import logger.Log;
+
 import database.account.Account;
 import database.account.AccountController;
 import database.application.ApplicationController;
@@ -17,6 +19,10 @@ public abstract class User {
 	 */
 	private UserData uData;
 
+	/**
+	 * Private Instanz des Loggers.
+	 */
+	protected Log log;
 	/**
 	 * Gibt das Userdata Objekt zurueck
 	 * 
@@ -39,25 +45,20 @@ public abstract class User {
 	/**
 	 * AccountController fuer Datenbankzugriff auf accountbezogene Daten.
 	 */
-	public AccountController acccon;
+	protected AccountController acccon;
 	/**
 	 * ApplicationController fuer Datenbanzugriff auf bewerbungsbezogene Daten.
 	 */
-	public ApplicationController appcon;
+	protected ApplicationController appcon;
 	/**
 	 * DocumentController fuer Datenbankzugriff auf unterlagenbezogene Daten.
 	 */
-	public DocumentController doccon;
+	protected DocumentController doccon;
 	/**
 	 * OfferController fuer den Datenbankzugriff auf angebotsbezogene Daten.
 	 */
-	public OfferController offcon;
+	protected OfferController offcon;
 
-	/**
-	 * empty standard Constructor
-	 */
-	public User() {
-	};
 
 	/**
 	 * Konstruktor
@@ -73,6 +74,10 @@ public abstract class User {
 	 */
 	public User(String username, String email, String name, HttpSession session) {
 		uData = new UserData(username, email, name, session);
+		acccon = AccountController.getInstance();
+		appcon = ApplicationController.getInstance();
+		doccon = DocumentController.getInstance();
+		offcon= OfferController.getInstance();
 	}
 
 	/**
@@ -96,19 +101,16 @@ public abstract class User {
 	/**
 	 * 
 	 */
-	public boolean editOwnAccount(Account a){
+	public boolean editOwnAccount(String name, String email , String pw){
 		Account own = acccon.getAccountByUsername(uData.getUsername());
-		String temp = a.getEmail();
-		if(temp!=null){
-			own.setEmail(temp);
-			uData.setEmail(temp);
+		if(email!=null){
+			own.setEmail(email);
+			uData.setEmail(email);
 		}
-		temp = a.getPasswordhash();
-		if(temp!=null)own.setPasswordhash(temp);
-		temp=a.getUsername();
-		if(temp!=null){
-			own.setUsername(temp);
-			uData.setUsername(temp);
+		if(pw!=null)own.setPasswordhash(pw);
+		if(name!=null){
+			own.setName(name);
+			uData.setName(name);
 		}
 		if(acccon.updateAccount(own))return true;
 		return false;

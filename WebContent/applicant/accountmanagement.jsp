@@ -53,18 +53,19 @@
 					<div class="aendern">
 						<form id="datenAendern" name="datenAendern">
 							<div class="breiteAendern">
+								<span> <label for="realName">Name:</label>
+								</span>
+								<div class="regform">
+									<input id="realName" type="text" name="realName"
+										size="20" maxlength="100" /><div id="error_realName"></div>
+								</div>
 								<span> <label for="newemail">E-Mail</label>
 								</span>
 								<div class="regform">
 									<input id="newemail" type="text" name="newemail" size="20"
-										maxlength="100" />
+										maxlength="100" /><div id="error_email"></div>
 								</div>
-								<br> <span> <label for="newnutzername">Benutzername</label>
-								</span>
-								<div class="regform">
-									<input id="newnutzername" type="text" name="newnutzername"
-										size="20" maxlength="100" />
-								</div>
+								<br> 
 								<br> <span> <label for="newpasswort">neues
 										Passwort</label>
 								</span>

@@ -90,7 +90,7 @@ public class AccountController {
 	 */
 	public boolean deleteAccount(Account account) { //checked
 		String where = "benutzername = '" + account.getUsername() + "'";
-		return dbc.delete("tableName", where);
+		return dbc.delete("Accounts", where);
 	}
 
 	/**
@@ -163,13 +163,14 @@ public class AccountController {
 	public Account getAccountByUsername(String username) { //checked
 		ResultSet rs = dbc.select(new String[] { "*" },new String[] { tableName }, "benutzername='" + username + "'");
 		try {
-			if (rs.next()){		
+			if (rs.next()){	
 				return new Account(rs.getString(1), rs.getString(2),
 						rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getString(7));
 			}
-			else
+			else{
 				return null;
+			}
 		} catch (SQLException e) {
 			logger.Log.getInstance().write("AccountController",
 					"Error while reading Account from Database");

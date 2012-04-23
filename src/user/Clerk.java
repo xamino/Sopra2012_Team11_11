@@ -27,14 +27,6 @@ import file.ExcelExport;
  */
 public class Clerk extends User {
 	
-	/**
-	 * Private Instanz des Loggers.
-	 */
-	private Log log;
-	/**
-	 * Private Instanz des AccountController.
-	 */
-	private AccountController accountController;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -63,7 +55,7 @@ public class Clerk extends User {
 	 */
 	public boolean editAccount(Account acc) {
 		
-		if (!accountController.updateAccount(acc)) {
+		if (!acccon.updateAccount(acc)) {
 			log.write("Clerk", "Error modifying account!");
 			return false;
 		}
