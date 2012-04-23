@@ -202,6 +202,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			
 		}
+		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/addDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
@@ -236,6 +237,7 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		
 		}
+		//Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
 			int uid = -1;
 			try {
@@ -253,6 +255,9 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
+		
+		//TO DO!
+		//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
 		else if(path.equals("/js/doApplicationCompletion")){
 			int AID = 0;
 			String username;
@@ -262,10 +267,20 @@ public class ClerkServlet extends HttpServlet {
 				log.write("ClerkServlet", "NumberFormatException while parsing URL!");
 			}
 			username = request.getParameter("username");
+			//Prueft ob alle Dokumente abgegeben wurden.
+			//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+			//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+			//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
 			if (clerk.checkAllDocFromApplicant(username, AID)) {
 				response.setContentType("test/url");
-				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+			//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
 			}
+			else {
+				response.setContentType("error/url");
+				
+			}
+			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 		}
 		
 

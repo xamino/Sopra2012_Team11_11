@@ -196,6 +196,9 @@ public class Clerk extends User {
 		
 		AppDocument aktuellesDokument;
 		int i = 0;
+		//Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
+		//Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss man keine weiteren Informationen 
+		//rauslesen (oder doch?)
 		while(it.hasNext()){
 			aktuellesDokument = vec.get(i);
 			if (!aktuellesDokument.getPresent()) {
