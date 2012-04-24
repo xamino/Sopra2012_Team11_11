@@ -288,7 +288,7 @@ public class ClerkServlet extends HttpServlet {
 						response.setContentType("application/json");
 						response.getWriter().write(JsonString);
 					}
-		//TO DO!
+		//TODO
 				//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
 				else if(path.equals("/js/doApplicationCompletion")){
 					int AID = 0;
@@ -297,6 +297,9 @@ public class ClerkServlet extends HttpServlet {
 						AID = Integer.parseInt(request.getParameter("aid"));
 					} catch (NumberFormatException e) {
 						log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+						response.setContentType("text/error");
+						response.getWriter().write("Error while parsing String into int");
+						return;
 					}
 					username = request.getParameter("username");
 					//Prueft ob alle Dokumente abgegeben wurden.
@@ -304,9 +307,9 @@ public class ClerkServlet extends HttpServlet {
 					//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
 					//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
 					if (clerk.checkAllDocFromApplicant(username, AID)) {
-						response.setContentType("test/url");
+						response.setContentType("text/url");
 					//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
-					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewaehlt)
 					}
 					else {
 						response.setContentType("error/url");

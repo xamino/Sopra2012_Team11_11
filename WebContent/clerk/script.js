@@ -342,13 +342,19 @@ function handleApplicationDocumentsResponse(mime, data) {
  */
 
 function doApplicationCompletion(){
-	var user = getElementById(elementId);
-	connect("/hiwi/Clerk/js/doApplicationCompletion", "UID"+user, handleApplicationCompletion);
+	
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID="+aid+"&username=" +username, handleApplicationCompletion);
 }
 
 function handleApplicationCompletion(mime,data){
 	if (mime == "text/url") {
 		window.location = data;
 	}
-	else{alert(data)};
+	else if (mime == "error/url"){
+		alert(data);
+		toggleWarning(id, true, "Unvollständige Dokumente. Abschluss nicht möglich");
+		}
+	else if (mime == "text/error"){
+		alert(data);
+	}
 }
