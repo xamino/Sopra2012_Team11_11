@@ -10,7 +10,7 @@
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Bewerbung Bearbeiten | Hiwi Job Börse</title>
 </head>
-<body>
+<body onload="applicationDocuments()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -74,7 +74,7 @@
 							<td>Bachlor</td>
 						</tr>
 					</table>
-					<br> <input type="button" value="Bewerbungsabschluss" />
+					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
 				</div>
 				<form class="listform">
 					<table class="">

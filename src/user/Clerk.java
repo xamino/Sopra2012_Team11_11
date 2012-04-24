@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Vector;
 
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
@@ -193,6 +195,36 @@ public class Clerk extends User {
  */
 	public void setRepresentant(String representant) {
 		this.representant = representant;
+	}
+	
+	/**
+	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
+	 * @return
+	 * 		True falls alles abgegeben wurde,
+	 * 		sonst False.
+	 */
+	public boolean checkAllDocFromApplicant(String username, int offerID){
+		Account acc = acccon.getAccountByUsername(username);
+		Offer off = offcon.getOfferById(offerID);
+		
+		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
+		
+		Iterator<AppDocument> it = vec.iterator();
+		
+		AppDocument aktuellesDokument;
+		int i = 0;
+		//Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
+		//Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss man keine weiteren Informationen 
+		//rauslesen (oder doch?)
+		while(it.hasNext()){
+			aktuellesDokument = vec.get(i);
+			if (!aktuellesDokument.getPresent()) {
+				return false;
+			}
+		}
+		
+		return true;
+		
 	}
 
 }

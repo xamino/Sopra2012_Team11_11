@@ -25,6 +25,8 @@ import user.Provider;
 
 import com.google.gson.Gson;
 
+import database.DatabaseController;
+import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -163,38 +165,25 @@ public class ClerkServlet extends HttpServlet {
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
 			
 		}	
+
+
+		// Creates an Vector for the table in applicationmanagement.jsp
+
 		/* noch nicht funktionsf�hig */
+
+
 		else if (path.equals("/js/showApplication")) {
 			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class);
 			String username = clerk2.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
-			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
-			
-			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts
-			Vector<Offer> currentoffers = new Vector<Offer>(); //alle offers eines providers in provaccounts
-			for(int i = 0; i < provaccounts.size(); i++){
-				currentoffers = OfferController.getInstance().getOffersByProvider(new Provider(provaccounts.elementAt(i).getUsername(), null, null, null));
-				for(int k = 0; k < currentoffers.size(); k++){
-					alloffers.add(currentoffers.elementAt(k));
-				}
-			}
-			System.out.println(alloffers);
-			
-			Vector<Application> allapplications = new Vector<Application>();
-			Vector<Application> currentapplications = new Vector<Application>();
-			
-			for(int l = 0; l < alloffers.size(); l++){
-				currentapplications = ApplicationController.getInstance().getApplicationsByOffer(alloffers.elementAt(l).getAid());
-				for(int q = 0; q < currentapplications.size(); q++){
-					allapplications.add(currentapplications.elementAt(q));
-				}
-			}
-			
+			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
-			response.getWriter().write(gson.toJson(alloffers, alloffers.getClass()));
+			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			
 		}
+		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/addDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
@@ -229,12 +218,13 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		
 		}
+		//Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
 			int uid = -1;
 			try {
 				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
-				log.write("AdminServlet",
+				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehlerhafte uid!");
@@ -284,9 +274,37 @@ public class ClerkServlet extends HttpServlet {
 						response.setContentType("application/json");
 						response.getWriter().write(JsonString);
 					}
+		//TO DO!
+				//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
+				else if(path.equals("/js/doApplicationCompletion")){
+					int AID = 0;
+					String username;
+					try {
+						AID = Integer.parseInt(request.getParameter("aid"));
+					} catch (NumberFormatException e) {
+						log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+					}
+					username = request.getParameter("username");
+					//Prueft ob alle Dokumente abgegeben wurden.
+					//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+					//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+					//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+					if (clerk.checkAllDocFromApplicant(username, AID)) {
+						response.setContentType("test/url");
+					//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+					}
+					else {
+						response.setContentType("error/url");
+						
+					}
+					response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+				}
 				else {
 					log.write("ClerkServlet", "Unknown path <" + path + ">");
 				}
+		
+		
 		
 
 	}

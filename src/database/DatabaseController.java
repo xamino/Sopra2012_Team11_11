@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.Vector;
 
 import config.Configurator;
 
@@ -422,5 +423,37 @@ public class DatabaseController {
 				ret += ", ";
 		}
 		return ret;
+	}
+	
+	/**
+	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des uebergebenen Instituts
+	 * in Form eines Vectors des Datentyps HilfsDatenClerk zurueck.
+	 * 
+	 * @param institute
+	 * 		Filtert den zurueckgegebenen Datensatz (nur uebergebenes Institut)
+	 * @return
+	 * 		Vector mit Bewerbername und Angebotsname aller angenommenen Bewerbungen des uebergebenen Instituts
+	 */
+	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(int institute){
+		
+		String sel = "SELECT accounts.name, angebote.Name, accounts.benutzername, angebote.AID " +
+				"FROM bewerbungen JOIN angebote ON bewerbungen.AID = angebote.AID AND ausgewaehlt = 1 AND angebote.Institut = "+institute+
+				" JOIN accounts ON accounts.benutzername = bewerbungen.benutzername";
+		
+		ResultSet rs;
+		System.out.println(sel);
+		try {
+			rs = st.executeQuery(sel);
+			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
+			while(rs.next()){
+				System.out.println(rs.getString(1));
+				hdc.add(new HilfsDatenClerk(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+			}
+			return hdc;
+		} catch (SQLException e) {
+			log.write("DatabaseController", "SELECT error! <" + sel + ">");
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

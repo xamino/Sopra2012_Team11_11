@@ -63,7 +63,9 @@ function handleShowMyOffersResponse(mime, data) {
 	}
 }
 
-
+/**
+ * Function to edit a single offer.
+ */
 function editOneOffer() {
 	var aid = getURLParameter("AID");
 	alert(aid);
@@ -114,15 +116,25 @@ function handledocumentsFromOfferResponse(mime, data){
 
 /**
  * Function updates the 'Angebot pruefen' button by setting its onclick reference
- * to the AID of the last marked offer
+ * to the AID of the last marked offer (first if), or
+ *  Function updates the 'Bewerbung bearbeiten' button by setting its onclick reference
+ * to the name of the applicant of the last marked offer (second if).
  * 
  */
 function prepareButton()
 {
-	alert("preparing button");
-    document.getElementById("angebotpruefen").onclick = function(){
-        window.location='editoffer.jsp?AID='+selectedOffer;
-    };
+	alert("preparing button3");
+	if (document.getElementById("angebotpruefen") != null && selectedOffer != null){		//offermanagement.jsp --> editoffer.jsp, wenn etwas markiert ist
+	    document.getElementById("angebotpruefen").onclick = function(){
+	        window.location='editoffer.jsp?AID='+selectedOffer;
+	    };
+    }
+    alert("preparing button");
+    if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
+	    document.getElementById("editapplication").onclick = function(){
+	        window.location='editapplication.jsp?UserAID='+selectedOffer;
+	    };
+    }
 }
 
 function angebotbestaetigen(){
@@ -244,13 +256,65 @@ function handleAddDocumentResponse(mime, data) {
 	}
 }
 
-/* noch ohne Funktion */
+/**
+ * This function loads all the applicants of all offers from the clerk's institute in the system from the database and
+ * displays them.
+ */
 function showApplication(){
 	selectedOffer = null;
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 
+/**
+ * This function displays all the applicants of all offers from the clerk's institute in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+//Problem: zwei Daten schicken
 function handleShowApplicationResponse(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "showapplication/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table2 = document.getElementById("applicationTable");
+		// Write table – probably replaces old data!
+		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";		
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
+					+ JSONarray[i].bewerbername + "</td><td>"
+					+ JSONarray[i].angebotsname + "</td></tr>";
+		}
+	}
+}
+/**
+ * This function loads all the documents of the chosen application in the system from the database and
+ * displays them.
+ */
+//ohne Funktion
+function applicationDocuments(){
+	var UserAID = getURLParameter("UserAID");
+	alert("ergebnis= "+UserAID);
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/applicationDocuments","UserAID=" + UserAID, handleApplicationDocumentsResponse);
+}
+
+/**
+ * This function displays all the documents of the chosen application in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+//ohne Funktion
+function handleApplicationDocumentsResponse(mime, data) {
 
 	if (mime == "text/url") {
 		window.location = data;
@@ -260,15 +324,28 @@ function handleShowApplicationResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("applicationTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th><th>Fachsemester</th><th>Abschluss</th></tr>";
+		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].aid + "\');\"><td>" 
-					+ JSONarray[i].author + "</td><td>"
-					+ JSONarray[i].name + "</td><td>"
-					+ JSONarray[i].slots + "</td><td>"
-					+ JSONarray[i].hoursperweek + "</td></tr>";
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
+					+ JSONarray[i].bewerbername + "</td><td>"
+					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
 	}
+}
+/**
+ * This function checks if a applicant has delivered all of the rquired documents.
+ */
+
+function doApplicationCompletion(){
+	var user = getElementById(elementId);
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "UID"+user, handleApplicationCompletion);
+}
+
+function handleApplicationCompletion(mime,data){
+	if (mime == "text/url") {
+		window.location = data;
+	}
+	else{alert(data)};
 }
