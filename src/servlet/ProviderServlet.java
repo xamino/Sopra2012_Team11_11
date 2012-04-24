@@ -123,13 +123,12 @@ public class ProviderServlet extends HttpServlet {
 	// Creates an Vector with all applicants from the selected Offer
 	else if (path.equals("/js/applicantChoice")) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
-		System.out.println(aid);
+		//System.out.println(aid);
 		Vector<Application> app = ApplicationController.getInstance().getApplicationsByOffer(aid);
 		Vector<Account> acc = new Vector<Account>();
 		for(int i=0; i<app.size(); i++){
 			acc.add(AccountController.getInstance().getAccountByUsername(app.elementAt(i).getUsername()));
 		}
-		
 		//System.out.println("Ergebnis: "+docs2);
 		response.setContentType("showtheapplicants/json");
 		response.getWriter().write(gson.toJson(acc, acc.getClass()));
