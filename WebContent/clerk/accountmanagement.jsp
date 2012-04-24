@@ -53,7 +53,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<form class="listform">
+				<form id=datenAendern class="listform">
 					<input type="button" value="Änderungen übernehmen" /> <input
 						type="button" value="Änderungen verwerfen"
 						onclick="window.location='userindex.jsp'" />
@@ -65,29 +65,25 @@
 					<table class="sized">
 						<tr>
 							<td>Name:</td>
-							<td><input type="text" value="Max Mustermann" size="40" /></td>
+						 	<td><input id=name type="text"  size="40" /></td>
 						</tr>
-						<!-- TODO: username has a max size – use it here too -->
-						<tr>
-							<td>Benutzername:</td>
-							<td><input type="text" value="max_the_great" /></td>
-						</tr>
+				
 						<tr>
 							<td>Email:</td>
-							<td><input type="text" value="max.mustermann@uni-ulm.de"
+							<td><input id=email type="text" 
 								size="40" /></td>
 						</tr>
 						<tr>
 							<td>Passwort:</td>
-							<td><input type="password" value="********" /></td>
+							<td><input id=pw type="password"  /></td>
 						</tr>
 						<tr>
 							<td>Passwort bestätigen:</td>
-							<td><input type="password" value="********" /></td>
+							<td><input id=pwr type="password" /></td>
 						</tr>
 						<tr>
 							<td>Stellvertreter:</td>
-							<td><input type="text" value="null" /></td>
+							<td><input id=rep type="text"  /></td>
 						</tr>
 					</table>
 				</form>

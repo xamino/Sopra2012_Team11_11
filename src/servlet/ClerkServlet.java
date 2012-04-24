@@ -163,7 +163,7 @@ public class ClerkServlet extends HttpServlet {
 					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
 			
 		}	
-		/* noch nicht funktionsfähig */
+		/* noch nicht funktionsfï¿½hig */
 		else if (path.equals("/js/showApplication")) {
 			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class);
@@ -246,6 +246,47 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
+		// Delete own account:
+				else if (path.equals("/js/deleteAccount")) {
+					String name = clerk.getUserData().getUsername();
+					if(clerk.deleteOwnAccount()){
+						log.write("ApplicantServlet", name + " has deleted his account.");
+						// Simply now for debugging:
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_INDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Error while deleting account!");
+					}
+				}
+				// change  own account data
+				else if(path.equals("/js/changeAccount")){
+					String name = request.getParameter("name");
+					String email = request.getParameter("mail");
+					String pw = request.getParameter("pw");
+					if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
+					if(clerk.editOwnAccount(name, email, pw)){
+						log.write("ApplicantServlet", clerk.getUserData().getUsername() + " has modified his account.");
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_CLERK_USERINDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Fehler beim Ã¤ndern der Daten.");
+					}
+				}
+				else 	// Do loadAccount:
+					if (path.equals("/js/loadAccount")) {
+						String realName = clerk.getUserData().getName();
+						String email = clerk.getUserData().getEmail();
+						String rep = clerk.getRepresentant();
+						String JsonString = Helper.jsonAtor(new String[] { "realName",
+								"email" ,"rep"}, new String[] { realName, email , rep});
+						response.setContentType("application/json");
+						response.getWriter().write(JsonString);
+					}
+				else {
+					log.write("ClerkServlet", "Unknown path <" + path + ">");
+				}
 		
 
 	}
