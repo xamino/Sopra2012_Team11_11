@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -148,23 +149,33 @@ public class ClerkServlet extends HttpServlet {
 			int aid1 = Integer.parseInt(aid);
 			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
 			//String offername;
-			Vector<OfferDocument> documents = new Vector<OfferDocument>();
+			Vector<OfferDocument> offerdocuments = new Vector<OfferDocument>();
 			System.out.println("hier?");
 			for(int i=0; i<offersid.size(); i++){
 				if(aid1 == offersid.elementAt(i).getAid()){
-					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+					offerdocuments = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
 				}}
-					Vector<String> documentsname = new Vector<String>();
-					
-					for(int j=0; j<documents.size(); j++){
-						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
+					Vector<Document> documents = new Vector<Document>();
+					for(int i = 0; i<offerdocuments.size();i++){
+						documents.add(DocumentController.getInstance().getDocumentByUID(offerdocuments.elementAt(i).getDocumentid()));
 					}
-					System.out.println(documents);
-					System.out.println(documentsname);
 					response.setContentType("documentsoffer/json");
-					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+					response.getWriter().write(gson.toJson(documents, documents.getClass()));
 			
 		}	
+		
+		// Creates a Vector of Documents which can be added to an offer
+		else if(path.endsWith("/js/documentsToAddToOffer")){
+			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			Vector<Document> docsToAdd = DocumentController.getInstance().getDocumentsToAddToOffer(aid);
+			
+			for(int i = 0; i < docsToAdd.size(); i++)
+				System.out.println(docsToAdd.elementAt(i).getUid());
+			response.setContentType("documentstoaddoffer/json");
+			response.getWriter().write(gson.toJson(docsToAdd, docsToAdd.getClass()));
+		}
 
 		// Creates an Vector for the table in applicationmanagement.jsp
 
@@ -232,6 +243,26 @@ public class ClerkServlet extends HttpServlet {
 			clerk.delDoc(doc);
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			return;
+		}
+		
+		//Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
+		else if (path.equals("/js/deleteOfferDocument")) {
+
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("deleteOfferDocument: "+uid+" from offer: "+aid);
+			DocumentController.getInstance().deleteOfferDocument(new OfferDocument(aid,uid));
+			return;
+		}
+		
+		//Funktion zum hinzufuegen eines OfferDocuments des gewaehlten Offers
+		else if (path.equals("/js/addOfferDocument")) {
+
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("addOfferDocument: "+uid+" from offer: "+aid);
+			DocumentController.getInstance().createOfferDocument(new OfferDocument(aid,uid));
 			return;
 		}
 		

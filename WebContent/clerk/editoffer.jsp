@@ -126,23 +126,27 @@
 	<!-- Here are the popups -->
 	<!-- Document add popup -->
 	<div id="document_add" class="popup_hidden">
-		<form>
+		<form name="docSpeichernForm">
 			<h3>Dokument hinzufügen</h3>
 			<hr>
 			<div class="textblock">
 				Titel:<br> <input type="text" /><br>
 				<div class="hiddenerror"></div>
 			</div>
+			<select id="selectDocumentsToAdd" size="1">
+				<!-- <option value="wert1">Eintrag1</option>
+				<option value="wert2">Eintrag2</option> -->
+			</select>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" /> <input type="button"
+				<input type="button" value="Speichern" id="docSpeichern" onclick="addChosenDocument()" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
 	</div>
 	<!-- Document del popup -->
 	<div id="document_del" class="popup_hidden">
-		<form>
+		<form name="docLoeschenForm">
 			<h3>Bestätigung</h3>
 			<hr>
 			<div class="textblock">
@@ -150,7 +154,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" /> <input type="button"
+				<input type="button" value="Löschen" id="docLöschen" onclick="deleteChosenDocument();"  /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>

@@ -20,6 +20,11 @@ function handleExport(mime, data) {
 var selectedOffer;
 
 /**
+ * Stores the selected Document:
+ */
+var selectedDocument;
+
+/**
  * This function loads all the offers of the applicant in the system from the database and
  * displays them.
  */
@@ -96,7 +101,6 @@ function documentsFromOffer(){
 
 
 function handledocumentsFromOfferResponse(mime, data){
-	//alert("drin");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "documentsoffer/json") {
@@ -107,12 +111,37 @@ function handledocumentsFromOfferResponse(mime, data){
 		// Write table – probably replaces old data!
 		table.innerHTML = "<tr><th>Benoetigte Documente</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i]
-					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i] + "\');\"><td>" +    JSONarray[i]  + "</td><br></tr>";
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
+					+ "\" onclick=\"markDocumentSelected(\'"
+					+ JSONarray[i].uid + "\');\"><td>" +    JSONarray[i].name  + "</td><br></tr>";
 		}
+		
+		//Zum Laden des DropDown-Menues des Pop-Ups bei "Dokument Hinzufuegen"
+		var aid = getURLParameter("AID");
+		connect("/hiwi/Clerk/js/documentsToAddToOffer", "aid="+aid, handledocumentsToAddToOfferResponse);
+		
 	}
 }
+
+//Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer das
+//angezeigte Angebot benoetigt werden
+function handledocumentsToAddToOfferResponse(mime, data){
+
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "documentstoaddoffer/json") {
+		
+		var docs = eval("("+data+")");
+		
+		var select = document.getElementById("selectDocumentsToAdd");
+		select.innerHTML = "";
+		for ( var i = 0; i < docs.length; i++) {
+			select.innerHTML += "<option value=\""+docs[i].uid+"\">"+docs[i].name+"</option>";
+		}
+	}
+	
+}
+	
 
 /**
  * Function updates the 'Angebot pruefen' button by setting its onclick reference
@@ -123,19 +152,42 @@ function handledocumentsFromOfferResponse(mime, data){
  */
 function prepareButton()
 {
-	alert("preparing button3");
+
 	if (document.getElementById("angebotpruefen") != null && selectedOffer != null){		//offermanagement.jsp --> editoffer.jsp, wenn etwas markiert ist
 	    document.getElementById("angebotpruefen").onclick = function(){
 	        window.location='editoffer.jsp?AID='+selectedOffer;
 	    };
     }
-    alert("preparing button");
+
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
 	        window.location='editapplication.jsp?UserAID='+selectedOffer;
 	    };
     }
+
 }
+
+
+function deleteChosenDocument(){
+	var aid = getURLParameter("AID");
+	alert("delete Document: "+selectedDocument+" from Offer "+aid);
+	connect("/hiwi/Clerk/js/deleteOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
+	selectedDocument = null;
+	documentsFromOffer();
+}
+
+function addChosenDocument(){
+	var aid = getURLParameter("AID");
+	var selectedDocument = document.getElementById("selectDocumentsToAdd").value;
+	
+	alert(selectedDocument);
+	
+//	alert("add Document: "+selectedDocument+" from Offer "+aid);
+	connect("/hiwi/Clerk/js/addOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
+	selectedDocument=null;
+	documentsFromOffer();
+}
+
 
 function angebotbestaetigen(){
 	var aid = getURLParameter("AID");
@@ -149,11 +201,42 @@ function angebotablehnen(){
 	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, null);
 }
 
+
+
+/**
+ * Function remembers which document has been clicked.
+ * 
+ * @param id
+ *            The ID of the clicked entry.
+ */
+function markDocumentSelected(id) {
+	alert("alte docid: "+selectedDocument);
+	// Remove marking from previous selected, if applicable:
+	if (selectedDocument != null)
+		document.getElementById(selectedDocument).setAttribute("class", "");
+	// If clicked again, unselect:
+	if (selectedDocument == id) {
+		selectedDocument = null;
+		return;
+	}
+	// Else save & mark new one:
+	selectedDocument = id;
+
+	alert("aktuelle docid: "+selectedDocument);
+
+	document.getElementById(id).setAttribute("class", "selected");
+	
+	//updating 'Angebot pruefen' button
+	prepareButton();
+
+}
+
+
 /**
  * Function remembers which account has been clicked.
  * 
- * @param username
- *            The username ID of the clicked entry.
+ * @param id
+ *            The ID of the clicked entry.
  */
 function markOfferSelected(id) {
 	alert("alte id: "+selectedOffer);
