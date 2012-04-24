@@ -31,6 +31,7 @@ import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
@@ -168,19 +169,30 @@ public class ClerkServlet extends HttpServlet {
 
 
 		// Creates an Vector for the table in applicationmanagement.jsp
-
-		/* noch nicht funktionsfï¿½hig */
-
-
 		else if (path.equals("/js/showApplication")) {
-			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
-					Clerk.class);
-			String username = clerk2.getUserData().getUsername();
+			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
 			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
 			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
+			
+		}
+		// Creates an Vector for the table in editapplication.jsp 
+		else if (path.equals("/js/applicationDocuments")) {
+			String user = request.getParameter("User");
+			String aid = request.getParameter("Aid");
+			int aid1 = Integer.parseInt(aid);
+			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewählten User
+			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewählten User
+			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
+			Vector<Document> docs2 = new Vector<Document>();
+			for(int i = 0; i < docs.size(); i++){
+				docs2.add(DocumentController.getInstance().getDocumentByUID(docs.elementAt(i).getdID()));
+			}
+			//System.out.println("Ergebnis: "+docs2);
+			response.setContentType("showthedocuments/json");
+			response.getWriter().write(gson.toJson(docs2, docs2.getClass()));
 			
 		}
 		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).

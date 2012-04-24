@@ -132,7 +132,9 @@ function prepareButton()
     alert("preparing button");
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
-	        window.location='editapplication.jsp?UserAID='+selectedOffer;
+	    	var temp = selectedOffer.split("§%#%§");
+	    	alert(temp);
+	        window.location='editapplication.jsp?User='+temp[0]+"&AID="+temp[1];
 	    };
     }
 }
@@ -285,9 +287,9 @@ function handleShowApplicationResponse(mime, data) {
 		// Write table â€“ probably replaces old data!
 		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";		
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username +"§%#%§"+ JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
+					+ JSONarray[i].username +"§%#%§"+ JSONarray[i].aid+ "\');\"><td>" 
 					+ JSONarray[i].bewerbername + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
@@ -299,10 +301,10 @@ function handleShowApplicationResponse(mime, data) {
  */
 //ohne Funktion
 function applicationDocuments(){
-	var UserAID = getURLParameter("UserAID");
-	alert("ergebnis= "+UserAID);
+	var User = getURLParameter("User");
+	var Aid = getURLParameter("Aid");
 	selectedOffer = null;
-	connect("/hiwi/Clerk/js/applicationDocuments","UserAID=" + UserAID, handleApplicationDocumentsResponse);
+	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&Aid=" +Aid, handleApplicationDocumentsResponse);
 }
 
 /**
@@ -318,7 +320,7 @@ function handleApplicationDocumentsResponse(mime, data) {
 
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "showapplication/json") {
+	} else if (mime == "showthedocuments/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
 		// Get the table:
