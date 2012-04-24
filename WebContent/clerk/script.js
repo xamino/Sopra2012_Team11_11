@@ -320,7 +320,7 @@ function handleApplicationDocumentsResponse(mime, data) {
 
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "showapplication/json") {
+	} else if (mime == "showthedocuments/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
 		// Get the table:
