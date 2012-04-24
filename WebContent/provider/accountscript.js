@@ -125,7 +125,6 @@ function changeAccount(){
 	if (error)
 		return;
 	// As of here, send:
-	// alert("All okay!");
 	connect("/hiwi/Provider/js/changeAccount", "name=" + realName + "&mail="
 			+ email + "&pw=" + password,
 			handleChangeAccountResponse);

@@ -12,6 +12,8 @@
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <script type="text/javascript" src="/hiwi/provider/accountscript.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
+
 <title>Accountverwaltung | Hiwi Job Börse</title>
 </head>
 
