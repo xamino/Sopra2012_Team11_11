@@ -174,6 +174,7 @@ public class ApplicantServlet extends HttpServlet {
 				response.getWriter().write("Error while deleting account!");
 			}
 		}
+		// change  own account data
 		else if(path.equals("/js/changeAccount")){
 			String name = request.getParameter("name");
 			String email = request.getParameter("mail");

@@ -28,7 +28,10 @@ import file.ExcelExport;
  * Verwaltet alle Aufgaben und Daten eines Verwalters.
  */
 public class Clerk extends User {
-	
+	/**
+	 * Stellvertreter
+	 */
+	private String representant;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -178,6 +181,20 @@ public class Clerk extends User {
 	public String doExport() throws IOException, RowsExceededException, WriteException {
 		return ExcelExport.export(this.getUserData());
 
+	}
+/**
+ * Gibt den Stellvertreter zurueck
+ * @return Stellvertreter
+ */
+	public String getRepresentant() {
+		return representant;
+	}
+/**
+ * Setzt den Stellvertreter
+ * @param representant Stellvertreter
+ */
+	public void setRepresentant(String representant) {
+		this.representant = representant;
 	}
 	
 	/**

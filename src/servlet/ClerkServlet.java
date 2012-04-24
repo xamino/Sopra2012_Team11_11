@@ -166,6 +166,7 @@ public class ClerkServlet extends HttpServlet {
 			
 		}	
 
+
 		// Creates an Vector for the table in applicationmanagement.jsp
 		else if (path.equals("/js/showApplication")) {
 			String username = clerk.getUserData().getUsername();
@@ -242,33 +243,75 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
-		
+		// Delete own account:
+				else if (path.equals("/js/deleteAccount")) {
+					String name = clerk.getUserData().getUsername();
+					if(clerk.deleteOwnAccount()){
+						log.write("ApplicantServlet", name + " has deleted his account.");
+						// Simply now for debugging:
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_INDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Error while deleting account!");
+					}
+				}
+				// change  own account data
+				else if(path.equals("/js/changeAccount")){
+					String name = request.getParameter("name");
+					String email = request.getParameter("mail");
+					String pw = request.getParameter("pw");
+					if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
+					if(clerk.editOwnAccount(name, email, pw)){
+						log.write("ApplicantServlet", clerk.getUserData().getUsername() + " has modified his account.");
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_CLERK_USERINDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Fehler beim ändern der Daten.");
+					}
+				}
+				else 	// Do loadAccount:
+					if (path.equals("/js/loadAccount")) {
+						String realName = clerk.getUserData().getName();
+						String email = clerk.getUserData().getEmail();
+						String rep = clerk.getRepresentant();
+						String JsonString = Helper.jsonAtor(new String[] { "realName",
+								"email" ,"rep"}, new String[] { realName, email , rep});
+						response.setContentType("application/json");
+						response.getWriter().write(JsonString);
+					}
 		//TO DO!
-		//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
-		else if(path.equals("/js/doApplicationCompletion")){
-			int AID = 0;
-			String username;
-			try {
-				AID = Integer.parseInt(request.getParameter("aid"));
-			} catch (NumberFormatException e) {
-				log.write("ClerkServlet", "NumberFormatException while parsing URL!");
-			}
-			username = request.getParameter("username");
-			//Prueft ob alle Dokumente abgegeben wurden.
-			//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
-			//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
-			//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
-			if (clerk.checkAllDocFromApplicant(username, AID)) {
-				response.setContentType("test/url");
-			//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
-			//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
-			}
-			else {
-				response.setContentType("error/url");
-				
-			}
-			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-		}
+				//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
+				else if(path.equals("/js/doApplicationCompletion")){
+					int AID = 0;
+					String username;
+					try {
+						AID = Integer.parseInt(request.getParameter("aid"));
+					} catch (NumberFormatException e) {
+						log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+					}
+					username = request.getParameter("username");
+					//Prueft ob alle Dokumente abgegeben wurden.
+					//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+					//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+					//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+					if (clerk.checkAllDocFromApplicant(username, AID)) {
+						response.setContentType("test/url");
+					//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+					}
+					else {
+						response.setContentType("error/url");
+						
+					}
+					response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+				}
+				else {
+					log.write("ClerkServlet", "Unknown path <" + path + ">");
+				}
+		
+		
 		
 
 	}
