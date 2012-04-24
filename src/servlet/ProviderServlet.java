@@ -17,7 +17,13 @@ import logger.Log;
 
 import com.google.gson.Gson;
 
+import database.account.Account;
+import database.account.AccountController;
+import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
+import database.document.Document;
+import database.document.DocumentController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -114,5 +120,20 @@ public class ProviderServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
 		}
+	// Creates an Vector with all applicants from the selected Offer
+	else if (path.equals("/js/applicantChoice")) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		System.out.println(aid);
+		Vector<Application> app = ApplicationController.getInstance().getApplicationsByOffer(aid);
+		Vector<Account> acc = new Vector<Account>();
+		for(int i=0; i<app.size(); i++){
+			acc.add(AccountController.getInstance().getAccountByUsername(app.elementAt(i).getUsername()));
+		}
+		
+		//System.out.println("Ergebnis: "+docs2);
+		response.setContentType("showtheapplicants/json");
+		response.getWriter().write(gson.toJson(acc, acc.getClass()));
+				
 	}
+}
 }

@@ -213,7 +213,6 @@ public class ClerkServlet extends HttpServlet {
 			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplicationtable2/json");
 			response.getWriter().write(gson.toJson(datanamen, datanamen.getClass()));
-			
 		}
 		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/addDocument")) {
