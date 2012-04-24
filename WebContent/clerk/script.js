@@ -355,14 +355,11 @@ function showApplicationTable2(){
  *            The data.
  */
 function handleShowApplicationTable2Response(mime, data) {
-	alert("daten:"+data);
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showapplicationtable2/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
-		alert("1: "+JSONarray[0]);
-		alert("1: "+JSONarray[1]);
 		// Get the table:
 		var table2 = document.getElementById("applicantTable");
 		// Write table – probably replaces old data!
