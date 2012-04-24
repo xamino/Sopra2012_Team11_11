@@ -123,19 +123,19 @@ function handledocumentsFromOfferResponse(mime, data){
  */
 function prepareButton()
 {
-	alert("preparing button3");
+	//alert("preparing button3");
 	if (document.getElementById("angebotpruefen") != null && selectedOffer != null){		//offermanagement.jsp --> editoffer.jsp, wenn etwas markiert ist
 	    document.getElementById("angebotpruefen").onclick = function(){
 	        window.location='editoffer.jsp?AID='+selectedOffer;
 	    };
     }
-    alert("preparing button");
+    //alert("preparing button");
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
 	    	var temp = selectedOffer.split("§%#%§");
-	    	alert("1.:"+temp[0]);
-	    	alert("2.:"+temp[1]);
-	        window.location='editapplication.jsp?User='+temp[0]+'&AID='+temp[1];
+	    	var user = temp[0];
+	    	var aid = temp[1];
+	        window.location='editapplication.jsp?User='+user+"&AID="+aid;
 	    };
     }
 }
@@ -159,7 +159,7 @@ function angebotablehnen(){
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
-	alert("alte id: "+selectedOffer);
+	//alert("alte id: "+selectedOffer);
 	// Remove marking from previous selected, if applicable:
 	if (selectedOffer != null)
 		document.getElementById(selectedOffer).setAttribute("class", "");
@@ -171,7 +171,7 @@ function markOfferSelected(id) {
 	// Else save & mark new one:
 	selectedOffer = id;
 
-	alert("aktuelle id: "+selectedOffer);
+	//("aktuelle id: "+selectedOffer);
 
 	document.getElementById(id).setAttribute("class", "selected");
 	
@@ -261,7 +261,7 @@ function handleAddDocumentResponse(mime, data) {
 
 /**
  * This function loads all the applicants of all offers from the clerk's institute in the system from the database and
- * displays them.
+ * displays them. (applicationmanagement.jsp)
  */
 function showApplication(){
 	selectedOffer = null;
@@ -276,7 +276,6 @@ function showApplication(){
  * @param data
  *            The data.
  */
-//Problem: zwei Daten schicken
 function handleShowApplicationResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
@@ -295,18 +294,16 @@ function handleShowApplicationResponse(mime, data) {
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
 	}
-}
+} // --> preparing Button --> editapplication.jsp --> applicationDocuments()
 /**
  * This function loads all the documents of the chosen application in the system from the database and
- * displays them.
+ * displays them. (editapplication.jsp)
  */
-//ohne Funktion
 function applicationDocuments(){
 	var User = getURLParameter("User");
-	var Aid = getURLParameter("Aid");
+	var Aid = getURLParameter("AID");
 	selectedOffer = null;
-	alert("Aid:"+Aid);
-	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&Aid=" +Aid, handleApplicationDocumentsResponse);
+	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&AID=" +Aid, handleApplicationDocumentsResponse);
 }
 
 /**
@@ -317,9 +314,7 @@ function applicationDocuments(){
  * @param data
  *            The data.
  */
-//ohne Funktion
 function handleApplicationDocumentsResponse(mime, data) {
-	alert("es funzt2");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showthedocuments/json") {
