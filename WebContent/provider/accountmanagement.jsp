@@ -1,4 +1,4 @@
-<%@page import="servlet.Helper"%>
+ <%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -11,10 +11,11 @@
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
+<script type="text/javascript" src="/hiwi/provider/accountscript.js"></script>
 <title>Accountverwaltung | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadAccount()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -107,6 +108,22 @@
 
 	<div class="footer"></div>
 
+<div id="data_acc_del" class="popup_hidden">
+	<form>
+		<h3>Warnung</h3>
+		<hr>
+		<div class="textblock">
+			Wenn sie den Datenschutzbestimmungen <br>widerrufen wird ihr<br>
+			Account nun gelöscht.
+		</div>
+		<hr>
+		<div class="textblock">
+			<input type="button" value="Löschen" onclick="deleteAccount();" /> <input
+				type="button" value="Abbrechen"
+				onclick="togglePopup('data_acc_del', false);" />
+		</div>
+	</form>
+</div>
 </body>
 
 </html>
