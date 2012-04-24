@@ -123,18 +123,19 @@ function handledocumentsFromOfferResponse(mime, data){
  */
 function prepareButton()
 {
-	alert("preparing button3");
+	//alert("preparing button3");
 	if (document.getElementById("angebotpruefen") != null && selectedOffer != null){		//offermanagement.jsp --> editoffer.jsp, wenn etwas markiert ist
 	    document.getElementById("angebotpruefen").onclick = function(){
 	        window.location='editoffer.jsp?AID='+selectedOffer;
 	    };
     }
-    alert("preparing button");
+    //alert("preparing button");
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
 	    	var temp = selectedOffer.split("§%#%§");
-	    	alert(temp);
-	        window.location='editapplication.jsp?User='+temp[0]+"&AID="+temp[1];
+	    	var user = temp[0];
+	    	var aid = temp[1];
+	        window.location='editapplication.jsp?User='+user+"&AID="+aid;
 	    };
     }
 }
@@ -158,7 +159,7 @@ function angebotablehnen(){
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
-	alert("alte id: "+selectedOffer);
+	//alert("alte id: "+selectedOffer);
 	// Remove marking from previous selected, if applicable:
 	if (selectedOffer != null)
 		document.getElementById(selectedOffer).setAttribute("class", "");
@@ -170,7 +171,7 @@ function markOfferSelected(id) {
 	// Else save & mark new one:
 	selectedOffer = id;
 
-	alert("aktuelle id: "+selectedOffer);
+	//("aktuelle id: "+selectedOffer);
 
 	document.getElementById(id).setAttribute("class", "selected");
 	
@@ -260,7 +261,7 @@ function handleAddDocumentResponse(mime, data) {
 
 /**
  * This function loads all the applicants of all offers from the clerk's institute in the system from the database and
- * displays them.
+ * displays them. (applicationmanagement.jsp)
  */
 function showApplication(){
 	selectedOffer = null;
@@ -275,7 +276,6 @@ function showApplication(){
  * @param data
  *            The data.
  */
-//Problem: zwei Daten schicken
 function handleShowApplicationResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
@@ -294,17 +294,17 @@ function handleShowApplicationResponse(mime, data) {
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
 	}
-}
+} // --> preparing Button --> editapplication.jsp --> applicationDocuments()
+
 /**
  * This function loads all the documents of the chosen application in the system from the database and
- * displays them.
+ * displays them. (editapplication.jsp)
  */
-//ohne Funktion
 function applicationDocuments(){
 	var User = getURLParameter("User");
-	var Aid = getURLParameter("Aid");
+	var Aid = getURLParameter("AID");
 	selectedOffer = null;
-	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&Aid=" +Aid, handleApplicationDocumentsResponse);
+	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&AID=" +Aid, handleApplicationDocumentsResponse);
 }
 
 /**
@@ -315,27 +315,58 @@ function applicationDocuments(){
  * @param data
  *            The data.
  */
-//ohne Funktion
 function handleApplicationDocumentsResponse(mime, data) {
-
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showthedocuments/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
 		// Get the table:
-		var table2 = document.getElementById("applicationTable");
+		var table2 = document.getElementById("documentsTable");
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
+		table2.innerHTML = "<tr><th></th><th>Dokumente</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
-					+ JSONarray[i].bewerbername + "</td><td>"
-					+ JSONarray[i].angebotsname + "</td></tr>";
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td><input type=\"checkbox\" /></td><td>" 
+					+ JSONarray[i].name + "</td></tr>";
 		}
+		showApplicationTable2();
 	}
 }
+
+/**
+ * This function loads the applicantname and the offername in the system from the database and
+ * displays them. (editapplication.jsp)
+ */
+function showApplicationTable2(){
+	var User = getURLParameter("User");
+	var Aid = getURLParameter("AID");
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/showApplicationTable2", "User=" + User +"&AID=" +Aid, handleShowApplicationTable2Response);
+}
+
+/**
+ * This function displays the applicantname and the offername in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleShowApplicationTable2Response(mime, data) {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "showapplicationtable2/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		// Get the table:
+		var table2 = document.getElementById("applicantTable");
+		// Write table â€“ probably replaces old data!
+		table2.innerHTML = "<tr><td>Name:</td></tr><tr><td>"+JSONarray[0]+"</td></tr><tr><td>Beworben fuer:</td></tr><tr><td>"+JSONarray[1]+"</td></tr>";		
+	}
+} // --> from applicationDocuments()
+
 /**
  * This function checks if a applicant has delivered all of the rquired documents.
  */

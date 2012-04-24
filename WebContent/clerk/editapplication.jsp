@@ -56,8 +56,8 @@
 			<div class="textblock">
 			<div class="haupttext">
 				<div style="float: right;">
-					<table class="hidden">
-						<tr>
+					<table class="hidden" id="applicantTable">
+						<!-- <tr>
 							<td>Name:</td>
 							<td>Hans Marting</td>
 						</tr>
@@ -72,13 +72,13 @@
 						<tr>
 							<td>Abschluss:</td>
 							<td>Bachlor</td>
-						</tr>
+						</tr>-->
 					</table>
 					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
 				</div>
 				<form class="listform">
-					<table class="">
-						<tr>
+					<table class="" id="documentsTable">
+						<!-- <tr>
 							<th></th>
 							<th>Dokumente</th>
 						</tr>
@@ -113,7 +113,7 @@
 						<tr>
 							<td><input type="checkbox" /></td>
 							<td>Passbild</td>
-						</tr>
+						</tr>-->
 					</table>
 					<input type="button" value="Dokument hinzufügen"
 						onclick="togglePopup('document_add',true);" /> <input
