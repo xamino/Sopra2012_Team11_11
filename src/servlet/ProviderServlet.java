@@ -13,9 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import logger.Log;
+
 import com.google.gson.Gson;
 
+import database.account.Account;
+import database.account.AccountController;
+import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
+import database.document.Document;
+import database.document.DocumentController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -30,6 +38,10 @@ import user.Provider;
 
 @WebServlet("/Provider/*")
 public class ProviderServlet extends HttpServlet {
+	/**
+	 * Log instanz für Serverausgaben
+	 */
+	private Log log = Helper.log;
 	/**
 	 * Standard serialVersionUID.
 	 */
@@ -70,6 +82,57 @@ public class ProviderServlet extends HttpServlet {
 		Vector<Offer> myoffers = OfferController.getInstance().getOffersByProvider(provi); //Offer vom Provider geholt
 		response.setContentType("offer/json");
 		response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
-			}
 	}
+	// Delete own account:
+	else if (path.equals("/js/deleteAccount")) {
+		String name = provider.getUserData().getUsername();
+		if(provider.deleteOwnAccount()){
+			log.write("ApplicantServlet", name + " has deleted his account.");
+			// Simply now for debugging:
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+		}else{
+			response.setContentType("text/error");
+			response.getWriter().write("Error while deleting account!");
+		}
+	}
+	// change  own account data
+	else if(path.equals("/js/changeAccount")){
+		String name = request.getParameter("name");
+		String email = request.getParameter("mail");
+		String pw = request.getParameter("pw");
+		if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
+		if(provider.editOwnAccount(name, email, pw)){
+			log.write("ApplicantServlet", provider.getUserData().getUsername() + " has modified his account.");
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+		}else{
+			response.setContentType("text/error");
+			response.getWriter().write("Fehler beim ändern der Daten.");
+		}
+	}
+	else 	// Do loadAccount:
+		if (path.equals("/js/loadAccount")) {
+			String realName = provider.getUserData().getName();
+			String email = provider.getUserData().getEmail();
+			String JsonString = Helper.jsonAtor(new String[] { "realName",
+					"email" }, new String[] { realName, email});
+			response.setContentType("application/json");
+			response.getWriter().write(JsonString);
+		}
+	// Creates an Vector with all applicants from the selected Offer
+	else if (path.equals("/js/applicantChoice")) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		//System.out.println(aid);
+		Vector<Application> app = ApplicationController.getInstance().getApplicationsByOffer(aid);
+		Vector<Account> acc = new Vector<Account>();
+		for(int i=0; i<app.size(); i++){
+			acc.add(AccountController.getInstance().getAccountByUsername(app.elementAt(i).getUsername()));
+		}
+		//System.out.println("Ergebnis: "+docs2);
+		response.setContentType("showtheapplicants/json");
+		response.getWriter().write(gson.toJson(acc, acc.getClass()));
+				
+	}
+}
 }

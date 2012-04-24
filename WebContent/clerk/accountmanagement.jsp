@@ -8,10 +8,12 @@
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
+<script type="text/javascript" src="/hiwi/Clerk/accountscript.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadAccount()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -26,7 +28,8 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" onclick="doLogout();"/>
+					<input type="button" value="Abmelden" name="logout"
+						onclick="doLogout();" />
 				</p>
 			</form>
 		</div>
@@ -53,48 +56,90 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<form class="listform">
-					<input type="button" value="Änderungen übernehmen" /> <input
-						type="button" value="Änderungen verwerfen"
-						onclick="window.location='userindex.jsp'" />
-					<!-- Shouldn't there be a delete option here too? 
-					<input style="float: right;" type="button" value="Account löschen" />
-					-->
-					<br>
-					<hr>
-					<table class="sized">
-						<tr>
-							<td>Name:</td>
-							<td><input type="text" value="Max Mustermann" size="40" /></td>
-						</tr>
-						<!-- TODO: username has a max size – use it here too -->
-						<tr>
-							<td>Benutzername:</td>
-							<td><input type="text" value="max_the_great" /></td>
-						</tr>
-						<tr>
-							<td>Email:</td>
-							<td><input type="text" value="max.mustermann@uni-ulm.de"
-								size="40" /></td>
-						</tr>
-						<tr>
-							<td>Passwort:</td>
-							<td><input type="password" value="********" /></td>
-						</tr>
-						<tr>
-							<td>Passwort bestätigen:</td>
-							<td><input type="password" value="********" /></td>
-						</tr>
-						<tr>
-							<td>Stellvertreter:</td>
-							<td><input type="text" value="null" /></td>
-						</tr>
-					</table>
-				</form>
+				<div class="textblock">
+					<div class="haupttext">
+						<div class="aendern">
+							<form id="datenAendern" name="datenAendern">
+								<div class="breiteAendern">
+									<span> <label for="realName">Name:</label>
+									</span>
+									<div class="regform">
+										<input id="realName" type="text" name="realName" size="20"
+											maxlength="100" />
+										<div id="error_realName"></div>
+									</div>
+									<span> <label for="newemail">E-Mail</label>
+									</span>
+									<div class="regform">
+										<input id="newemail" type="text" name="newemail" size="20"
+											maxlength="100" />
+										<div id="error_email"></div>
+									</div>
+									<br> <br> <span> <label for="newpasswort">neues
+											Passwort</label>
+									</span>
+									<div class="regform">
+										<input id="newpasswort" type="password" name="newpasswort"
+											size="20" maxlength="100" />
+									</div>
+									<br> <span> <label for="newpasswortwdh">neuesPasswort
+											wiederholen</label>
+									</span>
+									<div class="regform">
+										<input id="newpasswortwdh" type="password"
+											name="newpasswortwdh" size="20" maxlength="100" />
+										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
+										<div id="error_unequalPasswords" class="hiddenerror"></div>
+									</div>
+									<br>
+									<span> <label for="stellvertreter">Stellvertreter: </label>
+									</span>
+									<div class="regform">
+										<input id="stellvertreter" type="text"
+											name="stellvertreter" size="20" maxlength="100" />
+										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
+										<div id="error_stellvertreter" class="hiddenerror"></div>
+									</div>
+									<br>
+								</div>
+								<div class="clear"></div>
+								<div class="abstand">
+									<input id="dataconfirm" type="checkbox" name="dataagreement"
+										value="dataAkzeptieren"> <a target="_blank"
+										href="<%=Helper.D_PUBLIC_DATAAGREEMENT%>"
+										title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a>
+									widerrufen
+								</div>
+								<br>
+								<p>
+									<input type="reset" value="Zurücksetzen"
+										onclick="loadAccount();" /> <input type="submit"
+										value="Ändern" onclick="check(); return false;" />
+								</p>
+							</form>
+
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="clear"></div>
-	<div class="footer"></div>
+		<div class="clear"></div>
+		<div class="footer"></div>
+		<div id="data_acc_del" class="popup_hidden">
+	<form>
+		<h3>Warnung</h3>
+		<hr>
+		<div class="textblock">
+			Wenn sie den Datenschutzbestimmungen <br>widerrufen wird ihr<br>
+			Account nun gelöscht.
+		</div>
+		<hr>
+		<div class="textblock">
+			<input type="button" value="Löschen" onclick="deleteAccount();" /> <input
+				type="button" value="Abbrechen"
+				onclick="togglePopup('data_acc_del', false);" />
+		</div>
+	</form>
+</div>
 </body>
 </html>

@@ -14,7 +14,7 @@
 <title>Bewerberliste | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="applicantChoice()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -48,9 +48,9 @@
 		<hr>
 				<div class="textblock">
 			<div class="haupttext">
-			<h4>Bewerbungen für: WOW-TUT</h4>
-				<table class="sized">
-					<tr>
+			<h4>Bewerbungen</h4>
+				<table class="sized" id="applicantsTable">
+					<!-- <tr>
 						<th></th>
 						<th>Name</th>
 						<th>Fachsemester</th>
@@ -63,12 +63,12 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<tr id="lalelu" onclick="">
+					<!-- <tr id="lalelu" onclick="">
 						<td><input type="checkbox" /></td>
 						<td>Herrrrrmann</td>
 						<td>100</td>
 						<td>nix</td>
-					</tr>
+					</tr>-->
 				</table>
 				<input type="button" value="Annehmen"
 						onclick="togglePopup('accept',true);" /> 

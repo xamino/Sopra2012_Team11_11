@@ -32,6 +32,7 @@ import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
@@ -177,20 +178,52 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
 
+
 		// Creates an Vector for the table in applicationmanagement.jsp
-
-		/* noch nicht funktionsfï¿½hig */
-
 		else if (path.equals("/js/showApplication")) {
-			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
-					Clerk.class);
-			String username = clerk2.getUserData().getUsername();
+			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
 			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
 			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			
+		}
+		// Creates an Vector for the table in editapplication.jsp 
+		else if (path.equals("/js/applicationDocuments")) {
+			String user = request.getParameter("User");
+			//System.out.println("User:"+user);
+			String aid = request.getParameter("AID");
+			//System.out.println("Aid:"+aid);
+			int aid1 = Integer.parseInt(aid);
+			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewählten User
+			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewählten User
+			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
+			Vector<Document> docs2 = new Vector<Document>();
+			for(int i = 0; i < docs.size(); i++){
+				docs2.add(DocumentController.getInstance().getDocumentByUID(docs.elementAt(i).getdID()));
+			}
+			//System.out.println("Ergebnis: "+docs2);
+			response.setContentType("showthedocuments/json");
+			response.getWriter().write(gson.toJson(docs2, docs2.getClass()));
+			
+		}
+		// Creates an String for the table in editapplication.jsp
+		else if (path.equals("/js/showApplicationTable2")) {
+			String user = request.getParameter("User");
+			//System.out.println("User:"+user);
+			String aid = request.getParameter("AID");
+			//System.out.println("Aid:"+aid);
+			int aid1 = Integer.parseInt(aid);
+			
+			String richtigername = AccountController.getInstance().getAccountByUsername(user).getName();
+			String angebotsname = OfferController.getInstance().getOfferById(aid1).getName();
+			
+			String[] datanamen = {richtigername, angebotsname, user, aid}; //= Name des bewebers, Angebotsname, Benutzername des Bewerbers, AngebotsID
+			
+			//System.out.println("Ergebnis: "+daten.size());
+			response.setContentType("showapplicationtable2/json");
+			response.getWriter().write(gson.toJson(datanamen, datanamen.getClass()));
 		}
 		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/addDocument")) {
@@ -245,7 +278,77 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
+		// Delete own account:
+				else if (path.equals("/js/deleteAccount")) {
+					String name = clerk.getUserData().getUsername();
+					if(clerk.deleteOwnAccount()){
+						log.write("ApplicantServlet", name + " has deleted his account.");
+						// Simply now for debugging:
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_INDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Error while deleting account!");
+					}
+				}
+				// change  own account data
+				else if(path.equals("/js/changeAccount")){
+					String name = request.getParameter("name");
+					String email = request.getParameter("mail");
+					String pw = request.getParameter("pw");
+					if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
+					if(clerk.editOwnAccount(name, email, pw)){
+						log.write("ApplicantServlet", clerk.getUserData().getUsername() + " has modified his account.");
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_CLERK_USERINDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Fehler beim Ã¤ndern der Daten.");
+					}
+				}
+				else 	// Do loadAccount:
+					if (path.equals("/js/loadAccount")) {
+						String realName = clerk.getUserData().getName();
+						String email = clerk.getUserData().getEmail();
+						String rep = clerk.getRepresentant();
+						String JsonString = Helper.jsonAtor(new String[] { "realName",
+								"email" ,"rep"}, new String[] { realName, email , rep});
+						response.setContentType("application/json");
+						response.getWriter().write(JsonString);
+					}
+		//TODO
+				//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
+				else if(path.equals("/js/doApplicationCompletion")){
+					int AID = 0;
+					String username;
+					try {
+						AID = Integer.parseInt(request.getParameter("aid"));
+					} catch (NumberFormatException e) {
+						log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+						response.setContentType("text/error");
+						response.getWriter().write("Error while parsing String into int");
+						return;
+					}
+					username = request.getParameter("username");
+					//Prueft ob alle Dokumente abgegeben wurden.
+					//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+					//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+					//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+					if (clerk.checkAllDocFromApplicant(username, AID)) {
+						response.setContentType("text/url");
+					//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewaehlt)
+					}
+					else {
+						response.setContentType("error/url");
+						
+					}
+					response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+				}
+
 		
+		
+
 		//Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/deleteOfferDocument")) {
 
@@ -292,7 +395,10 @@ public class ClerkServlet extends HttpServlet {
 			}
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 		}
-		
+
+		else {
+			log.write("ClerkServlet", "Unknown path <" + path + ">");
+		}
 
 	}
 	
