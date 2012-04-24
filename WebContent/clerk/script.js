@@ -132,7 +132,7 @@ function prepareButton()
     alert("preparing button");
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
-	        window.location='editapplication.jsp?AID='+selectedOffer;
+	        window.location='editapplication.jsp?UserAID='+selectedOffer;
 	    };
     }
 }
@@ -299,10 +299,10 @@ function handleShowApplicationResponse(mime, data) {
  */
 //ohne Funktion
 function applicationDocuments(){
-	var lala = getURLParameter("lala");
-	alert("ergebnis= "+lala);
+	var UserAID = getURLParameter("UserAID");
+	alert("ergebnis= "+UserAID);
 	selectedOffer = null;
-	connect("/hiwi/Clerk/js/applicationDocuments", "", handleApplicationDocumentsResponse);
+	connect("/hiwi/Clerk/js/applicationDocuments","UserAID=" + UserAID, handleApplicationDocumentsResponse);
 }
 
 /**
