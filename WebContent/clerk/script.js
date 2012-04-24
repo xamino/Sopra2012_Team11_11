@@ -295,6 +295,7 @@ function handleShowApplicationResponse(mime, data) {
 		}
 	}
 } // --> preparing Button --> editapplication.jsp --> applicationDocuments()
+
 /**
  * This function loads all the documents of the chosen application in the system from the database and
  * displays them. (editapplication.jsp)
@@ -330,8 +331,45 @@ function handleApplicationDocumentsResponse(mime, data) {
 					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td><input type=\"checkbox\" /></td><td>" 
 					+ JSONarray[i].name + "</td></tr>";
 		}
+		showApplicationTable2();
 	}
 }
+
+/**
+ * This function loads the applicantname and the offername in the system from the database and
+ * displays them. (editapplication.jsp)
+ */
+function showApplicationTable2(){
+	var User = getURLParameter("User");
+	var Aid = getURLParameter("AID");
+	selectedOffer = null;
+	connect("/hiwi/Clerk/js/showApplicationTable2", "User=" + User +"&AID=" +Aid, handleShowApplicationTable2Response);
+}
+
+/**
+ * This function displays the applicantname and the offername in the system.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleShowApplicationTable2Response(mime, data) {
+	alert("daten:"+data);
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "showapplicationtable2/json") {
+		// Erstelle Array aus JSON array:
+		var JSONarray = eval("("+data+")");
+		alert("1: "+JSONarray[0]);
+		alert("1: "+JSONarray[1]);
+		// Get the table:
+		var table2 = document.getElementById("applicantTable");
+		// Write table – probably replaces old data!
+		table2.innerHTML = "<tr><td>Name:</td></tr><tr><td>"+JSONarray[0]+"</td></tr><tr><td>Beworben fuer:</td></tr><tr><td>"+JSONarray[1]+"</td></tr>";		
+	}
+} // --> from applicationDocuments()
+
 /**
  * This function checks if a applicant has delivered all of the rquired documents.
  */

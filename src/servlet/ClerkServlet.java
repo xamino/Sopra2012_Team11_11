@@ -181,9 +181,9 @@ public class ClerkServlet extends HttpServlet {
 		// Creates an Vector for the table in editapplication.jsp 
 		else if (path.equals("/js/applicationDocuments")) {
 			String user = request.getParameter("User");
-			System.out.println("User:"+user);
+			//System.out.println("User:"+user);
 			String aid = request.getParameter("AID");
-			System.out.println("Aid:"+aid);
+			//System.out.println("Aid:"+aid);
 			int aid1 = Integer.parseInt(aid);
 			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewählten User
 			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewählten User
@@ -195,6 +195,24 @@ public class ClerkServlet extends HttpServlet {
 			//System.out.println("Ergebnis: "+docs2);
 			response.setContentType("showthedocuments/json");
 			response.getWriter().write(gson.toJson(docs2, docs2.getClass()));
+			
+		}
+		// Creates an String for the table in editapplication.jsp
+		else if (path.equals("/js/showApplicationTable2")) {
+			String user = request.getParameter("User");
+			//System.out.println("User:"+user);
+			String aid = request.getParameter("AID");
+			//System.out.println("Aid:"+aid);
+			int aid1 = Integer.parseInt(aid);
+			
+			String richtigername = AccountController.getInstance().getAccountByUsername(user).getName();
+			String angebotsname = OfferController.getInstance().getOfferById(aid1).getName();
+			
+			String[] datanamen = {richtigername, angebotsname, user, aid}; //= Name des bewebers, Angebotsname, Benutzername des Bewerbers, AngebotsID
+			
+			//System.out.println("Ergebnis: "+daten.size());
+			response.setContentType("showapplicationtable2/json");
+			response.getWriter().write(gson.toJson(datanamen, datanamen.getClass()));
 			
 		}
 		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
