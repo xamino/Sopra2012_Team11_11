@@ -167,10 +167,18 @@ public class ClerkServlet extends HttpServlet {
 		}	
 
 		// Creates an Vector for the table in applicationmanagement.jsp
-
-		/* noch nicht funktionsf�hig */
-
 		else if (path.equals("/js/showApplication")) {
+			String username = clerk.getUserData().getUsername();
+			Account clerka = AccountController.getInstance().getAccountByUsername(username);
+			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			//System.out.println("Ergebnis: "+daten.size());
+			response.setContentType("showapplication/json");
+			response.getWriter().write(gson.toJson(daten, daten.getClass()));
+			
+		}
+		// Creates an Vector for the table in editapplication.jsp 
+		//noch ohne Funktion
+		else if (path.equals("/js/applicationDocuments")) {
 			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class);
 			String username = clerk2.getUserData().getUsername();
