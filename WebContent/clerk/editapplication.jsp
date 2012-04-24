@@ -77,8 +77,8 @@
 					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
 				</div>
 				<form class="listform">
-					<table class="">
-						<tr>
+					<table class="" id="documentsTable">
+						<!-- <tr>
 							<th></th>
 							<th>Dokumente</th>
 						</tr>
@@ -113,7 +113,7 @@
 						<tr>
 							<td><input type="checkbox" /></td>
 							<td>Passbild</td>
-						</tr>
+						</tr>-->
 					</table>
 					<input type="button" value="Dokument hinzufügen"
 						onclick="togglePopup('document_add',true);" /> <input

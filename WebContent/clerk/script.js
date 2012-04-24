@@ -133,8 +133,9 @@ function prepareButton()
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
 	    	var temp = selectedOffer.split("§%#%§");
-	    	alert(temp);
-	        window.location='editapplication.jsp?User='+temp[0]+"&AID="+temp[1];
+	    	alert("1.:"+temp[0]);
+	    	alert("2.:"+temp[1]);
+	        window.location='editapplication.jsp?User='+temp[0]+'&AID='+temp[1];
 	    };
     }
 }
@@ -304,6 +305,7 @@ function applicationDocuments(){
 	var User = getURLParameter("User");
 	var Aid = getURLParameter("Aid");
 	selectedOffer = null;
+	alert("Aid:"+Aid);
 	connect("/hiwi/Clerk/js/applicationDocuments","User=" + User +"&Aid=" +Aid, handleApplicationDocumentsResponse);
 }
 
@@ -317,22 +319,21 @@ function applicationDocuments(){
  */
 //ohne Funktion
 function handleApplicationDocumentsResponse(mime, data) {
-
+	alert("es funzt2");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showthedocuments/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("("+data+")");
 		// Get the table:
-		var table2 = document.getElementById("applicationTable");
+		var table2 = document.getElementById("documentsTable");
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
+		table2.innerHTML = "<tr><th></th><th>Dokumente</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td>" 
-					+ JSONarray[i].bewerbername + "</td><td>"
-					+ JSONarray[i].angebotsname + "</td></tr>";
+					+ JSONarray[i].username + JSONarray[i].aid+ "\');\"><td><input type=\"checkbox\" /></td><td>" 
+					+ JSONarray[i].name + "</td></tr>";
 		}
 	}
 }
