@@ -8,10 +8,12 @@
 <link rel="stylesheet" type="text/css" href="../style.css" />
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
+<script type="text/javascript" src="/hiwi/Clerk/accountscript.js"></script>
+<script type="text/javascript" src="/hiwi/md5.js"></script>
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadAccount()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>

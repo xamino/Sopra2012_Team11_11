@@ -7,7 +7,8 @@
  * the data.
  */
 function loadAccount() {
-	connect("/hiwi/Provider/js/loadAccount", "", handleLoadAccountResponse);
+	alert("test");
+	connect("/hiwi/Clerk/js/loadAccount", "", handleLoadAccountResponse);
 	
 }
 
@@ -20,7 +21,7 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
-
+	alert(data);
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
@@ -29,6 +30,7 @@ function handleLoadAccountResponse(mime, data) {
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
 		document.getElementById("realName").value =JSONdata.realName;
+		document.getElementById("rep").value = JSONdata.rep;
 
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
@@ -40,7 +42,7 @@ function handleLoadAccountResponse(mime, data) {
  * Sends request to delete own account.
  */
 function deleteAccount() {
-	connect("/hiwi/Provider/js/deleteAccount", "", handleDeleteResponse);
+	connect("/hiwi/Clerk/js/deleteAccount", "", handleDeleteResponse);
 }
 
 /**
@@ -123,7 +125,7 @@ function changeAccount(){
 	if (error)
 		return;
 	// As of here, send:
-	connect("/hiwi/Provider/js/changeAccount", "name=" + realName + "&mail="
+	connect("/hiwi/Clerk/js/changeAccount", "name=" + realName + "&mail="
 			+ email + "&pw=" + password,
 			handleChangeAccountResponse);
 }
