@@ -77,12 +77,19 @@ public class OfferController {
 	 */
 	public void createOffer(Offer offer) {
 
+//		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
+//				offer.getNote(), offer.isChecked(), offer.getSlots(),
+//				offer.getHoursperweek(), offer.getDescription(),
+//				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+//				offer.getInstitute(), offer.getModificationdate() };
+
 		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-				offer.getInstitute(), offer.getModificationdate() };
-
+				"01.02.2012"/*offer.getStartdate()*/,"04.06.2012"/*offer.getEnddate()*/, offer.getWage(),
+				offer.getInstitute(), "08.02.2012"/*offer.getModificationdate()*/ };
+		
+		
 		dbc.insert(tableName, values);
 	}
 
