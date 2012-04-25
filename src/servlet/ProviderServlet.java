@@ -232,45 +232,26 @@ public class ProviderServlet extends HttpServlet {
 			}	
 		//Angebot zurueckziehen	
 		else if(path.equals("/js/deleteOffer")){
-			String name = request.getParameter("id");
-			System.out.println("DELETE OFFER by Name: "+name);
-			
-			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
-			for (int i=0;i<allOffers.size();i++){
-				if(allOffers.elementAt(i).getName().equals(name)){
-					
-					OfferController.getInstance().deleteOffer(allOffers.elementAt(i));
-					//System.out.println("Offer was deleted from db!");
-					response.setContentType("text/url");
-					response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
-					return;
-				}
-			}
-		
-			//OfferController.getInstance().deleteOffer(offer);
-			//Document doc = docController.getDocumentByUID(uid);
-			//admin.deleteDoc(doc);
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("DELETE OFFER by aid: "+aid);
+			Offer offtodel = OfferController.getInstance().getOfferById(aid);
+			OfferController.getInstance().deleteOffer(offtodel);
+
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+			return;
 			
 		}
 		
 		else if (path.equals("/js/getOffer")) {
 			
-			String name = request.getParameter("id");
-			Offer offerToUpdate ;
-			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("Update OFFER by aid: "+aid);
 			
-			//check in all offers to load the selected one
-			for (int i=0;i<allOffers.size();i++){
-				if(allOffers.elementAt(i).getName().equals(name)){
-					offerToUpdate= allOffers.elementAt(i);
-					System.out.println(allOffers.elementAt(i).getName());
-					
-					response.setContentType("offer/json");
-					response.getWriter().write(gson.toJson(offerToUpdate, Offer.class));
-					return;
-				}
-				
-			}
+			Offer offtoup = OfferController.getInstance().getOfferById(aid);
+			OfferController.getInstance().updateOffer(offtoup);
+
+			
 			//else response error
 			response.setContentType("text/error");
 			response.getWriter().write("Angebot existiert nicht in der DB!");

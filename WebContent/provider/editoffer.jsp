@@ -14,7 +14,7 @@
 <title>Angebot ändern | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadSelectedOfferEdit()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>

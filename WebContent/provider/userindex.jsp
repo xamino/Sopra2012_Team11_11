@@ -89,7 +89,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Zurückziehen" id="testversuch"
+				<input type="button" value="Zurückziehen" id="offerZurueckziehen"
 					onclick="deleteOffer(); togglePopup('offer_cancel', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('offer_cancel', false);" />

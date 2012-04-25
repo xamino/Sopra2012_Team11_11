@@ -15,6 +15,11 @@ var selectedOffer;
 var offerToDelete;
 
 /**
+ * Stores the Offer to update:
+ */
+var offerToUpdate;
+
+/**
  * This function loads all the offers in the system from the database and
  * displays them.
  */
@@ -45,8 +50,9 @@ function handleLoadOffersResponse(mime, data) {
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid+ "\"><td>"
 					+ JSONarray[i].name + "</td><td>hier fehlt die Anzahl!!<br><input id=\""+JSONarray[i].aid+"\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
-					+ JSONarray[i].aid + "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"window.location='editoffer.jsp'\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
-					+ JSONarray[i].aid + "\');\" id=\"openpopup\" /> </td></tr>";
+					+ JSONarray[i].aid + "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"prepareButtonUpdateOffer(\'"
+					+ JSONarray[i].aid + "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
+					+ JSONarray[i].aid + "\');\" /> </td></tr>";
 		}
 	}
 }
@@ -66,6 +72,19 @@ function prepareButton(id)
 			window.location='applicantlist.jsp?AID='+id;
 	    };
     }
+}
+
+/**
+ * Function updates the 'Bewerberauswahl' button by setting its onclick reference
+ * to the AID of the last marked offer.
+ * 
+ */
+function prepareButtonUpdateOffer(aid)
+{
+	offerToUpdate = aid;
+	alert(offerToUpdate);
+	window.location='editoffer.jsp';
+
 }
 
 /**
@@ -206,13 +225,13 @@ function addOffer(form) {
  */
 function deleteOffer() {
 	alert("delete Offer in progress");
-	if (selectedOffer == null) {
-		toggleWarning("error_selection", true, "Kein Angebot ausgewaehlt! ");
-		togglePopup("offer_del", false);
-		return;
-	}
-	alert("id="+id);
-	connect("/hiwi/Provider/js/deleteOffer", "id="+selectedOffer,
+//	if (selectedOffer == null) {
+//		toggleWarning("error_selection", true, "Kein Angebot ausgewaehlt! ");
+//		togglePopup("offer_del", false);
+//		return;
+//	}
+	alert("id="+offerToDelete);
+	connect("/hiwi/Provider/js/deleteOffer", "aid="+offerToDelete,
 			handleDeleteOfferResponse);
 }
 
@@ -236,11 +255,8 @@ function handleDeleteOfferResponse(mime, data) {
  * Loads the selected offer's data and displays it, if selection is valid.
  */
 function loadSelectedOfferEdit() {
-	if (selectedOfferDocument == null) {
-		toggleWarning("error_selection", true, "Kein Dokument ausgewaehlt! ");
-		return;
-	}
-	connect("/hiwi/Provider/js/getOffer", "id=" + selectedOffer,
+	
+	connect("/hiwi/Provider/js/getOffer", "aid=" + offerToUpdate,
 			handleLoadEditOfferResponse);
 }
 
