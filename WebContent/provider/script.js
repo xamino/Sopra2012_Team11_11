@@ -256,6 +256,8 @@ function handleDeleteOfferResponse(mime, data) {
  */
 function loadSelectedOfferEdit() {
 	
+	
+	
 	connect("/hiwi/Provider/js/getOffer", "aid=" + offerToUpdate,
 			handleLoadEditOfferResponse);
 }

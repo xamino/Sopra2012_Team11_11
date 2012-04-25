@@ -164,7 +164,7 @@ public class ProviderServlet extends HttpServlet {
 			} catch(NumberFormatException e){
 				System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim Parsen! Stellen INT Wert checken!");
+				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [INT Wert von 'Stellen' prüfen]");
 				return;
 			}
 			
@@ -175,7 +175,7 @@ public class ProviderServlet extends HttpServlet {
 			}catch (NumberFormatException e){
 				System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim Parsen! Std DOUBLE Wert checken!");
+				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [DOUBLE Wert von 'Std' prüfen]");
 				return;
 			}
 			
@@ -204,9 +204,15 @@ public class ProviderServlet extends HttpServlet {
 			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
 			for (int i=0;i<allOffers.size();i++){
 				if(allOffers.elementAt(i).getName().equals(name)){
-					//System.out.println("ANGEBOT EXSISTIERT BEREITS!");
+					//System.out.println("ANGEBOT EXSISTIERT BEREITS, NAME VORHANDEN!");
 					response.setContentType("text/error");
-					response.getWriter().write("Angebot ist bereits vorhanden!");
+					response.getWriter().write("Angebot ist bereits vorhanden (NAME)!");
+					return;
+				}
+				else if(allOffers.elementAt(i).getAid()==aid){
+					//System.out.println("ANGEBOT EXSISTIERT BEREITS, AID VORHANDEN!");
+					response.setContentType("text/error");
+					response.getWriter().write("Angebot ist bereits vorhanden (AID ist festgesetzt im Code)!");
 					return;
 				}
 			}
