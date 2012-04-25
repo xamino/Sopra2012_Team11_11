@@ -248,20 +248,29 @@ public class ProviderServlet extends HttpServlet {
 			return;
 			
 		}
-		
+		//Loads selected Offer into the Form elements
 		else if (path.equals("/js/getOffer")) {
 			
-			int aid = Integer.parseInt(request.getParameter("aid"));
+			String test= request.getParameter("aid");
+			System.out.println("TEST: "+test);
+			int aid;
+			try{
+			aid = Integer.parseInt(request.getParameter("aid"));
+			
+			}catch (NumberFormatException e){
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "+path.toString());
+				return;
+			}
 			System.out.println("Update OFFER by aid: "+aid);
 			
 			Offer offtoup = OfferController.getInstance().getOfferById(aid);
-			OfferController.getInstance().updateOffer(offtoup);
-
+			//OfferController.getInstance().updateOffer(offtoup);
 			
-			//else response error
-			response.setContentType("text/error");
-			response.getWriter().write("Angebot existiert nicht in der DB!");
+			response.setContentType("offer/json");
+			response.getWriter().write(gson.toJson(offtoup, Offer.class));
 			return;
+			
 		}
 	
 	

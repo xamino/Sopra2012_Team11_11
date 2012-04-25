@@ -54,12 +54,12 @@
     					<label for="titel">Titel</label>
 					</div>
 					<div class="float2">
-						<input type="text" name="titel" size="57" maxlength="100" />
+						<input type="text" id="titelFeld" name="titel" size="57" maxlength="100" />
 					</div>
 					<div class="clear"></div>
 					<div class="clear"></div>
 					<br>
-					<textarea name="beschreibung" cols="50" rows="10">Beschreibung</textarea> <br> <br>
+					<textarea name="beschreibung" id="beschreibungsFeld" cols="50" rows="10">Beschreibung</textarea> <br> <br>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
 						<input type="button" value="Angebot ändern"

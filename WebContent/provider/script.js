@@ -83,7 +83,7 @@ function prepareButtonUpdateOffer(aid)
 {
 	offerToUpdate = aid;
 	alert(offerToUpdate);
-	window.location='editoffer.jsp';
+	window.location='editoffer.jsp?aid='+aid;
 
 }
 
@@ -252,12 +252,12 @@ function handleDeleteOfferResponse(mime, data) {
 }
 
 /**
- * Loads the selected offer's data and displays it, if selection is valid.
+ * Loads the selected offer's data and displays it in editoffer.
  */
 function loadSelectedOfferEdit() {
 	
-	
-	
+	offerToUpdate= getURLParameter("aid");
+	alert(offerToUpdate);
 	connect("/hiwi/Provider/js/getOffer", "aid=" + offerToUpdate,
 			handleLoadEditOfferResponse);
 }
@@ -271,19 +271,16 @@ function loadSelectedOfferEdit() {
  *            The data.
  */
 function handleLoadEditOfferResponse(mime, data) {
-	alert("handleLoadEditOfferResponse");
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "text/error") {
+	//alert("handleLoadEditOfferResponse");
+	if (mime == "text/error") 
 		alert(data);
-	} else if (mime == "offer/json") {
-		//TODO write DB data in form
-//		var adminDocument = eval("(" + data + ")");
-//		editDocumentForm.uid.value = adminDocument.uid;
-//		editDocumentForm.title.value = adminDocument.name;
-//		editDocumentForm.description.value = adminDocument.description;
-//		togglePopup('document_edit', true);
-	}
+	else if (mime == "offer/json") {
+		var offer = eval("(" + data + ")");
+			// Set the values we have:
+			document.getElementById("titelFeld").value = offer.name;
+			document.getElementById("beschreibungsFeld").value = offer.description;
+			
+		}
 }
 
 
