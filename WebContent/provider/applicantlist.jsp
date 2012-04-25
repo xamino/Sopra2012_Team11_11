@@ -64,14 +64,14 @@
 					</tr> 
 					-->
 					<tr id="lalelu" onclick="">
-						<td><input type="checkbox" /></td>
+						<td><input id ="checker" type="checkbox" onclick="markOfferSelected(checker)" /></td>
 						<td>Herrrrrmann</td>
 						<td>100</td>
 						<td>nix</td>
 					</tr>
 				</table>
 				<input type="button" value="Annehmen"
-						onclick="togglePopup('accept',true);" /> 
+						onclick="togglePopup('checkCheckbox',true);" /> 
 				<!-- <input type="submit" value="Ausgewählte annehmen" />-->
 			</div>
 		</div>
@@ -94,9 +94,24 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Annehmen"
-					onclick="deleteSelectedAccount(); togglePopup('accept', false);" />
+					onclick="togglePopup('accept', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('accept', false);" />
+			</div>
+		</form>
+	</div>
+	<!-- Check if an applicant checkbox is seleceted -->
+	<div id="checkCheckbox" class="popup_hidden">
+		<form>
+			<h3>Hinweis</h3>
+			<hr>
+			<div class="textblock">
+				Bitte wählens Sie zuerst den/ die<br>Bewerber aus!
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="OK"
+					onclick="togglePopup('checkCheckbox', false);" />
 			</div>
 		</form>
 	</div>
