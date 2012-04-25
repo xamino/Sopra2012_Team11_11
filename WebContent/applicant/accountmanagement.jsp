@@ -53,30 +53,31 @@
 					<div class="aendern">
 						<form id="datenAendern" name="datenAendern">
 							<div class="breiteAendern">
+								<span> <label for="realName">Name:</label>
+								</span>
+								<div class="regform">
+									<input id="realName" type="text" name="realName"
+										size="20" maxlength="100" /><div id="error_realName"></div>
+								</div>
 								<span> <label for="newemail">E-Mail</label>
 								</span>
 								<div class="regform">
 									<input id="newemail" type="text" name="newemail" size="20"
-										maxlength="100" />
+										maxlength="100" /><div id="error_email"></div>
 								</div>
-								<br> <span> <label for="newnutzername">Benutzername</label>
-								</span>
-								<div class="regform">
-									<input id="newnutzername" type="text" name="newnutzername"
-										size="20" maxlength="100" />
-								</div>
+								<br> 
 								<br> <span> <label for="newpasswort">neues
 										Passwort</label>
 								</span>
 								<div class="regform">
-									<input id="newpasswort" type="text" name="newpasswort"
+									<input id="newpasswort" type="password" name="newpasswort"
 										size="20" maxlength="100" />
 								</div>
 								<br> <span> <label for="newpasswortwdh">neuesPasswort
 										wiederholen</label>
 								</span>
 								<div class="regform">
-									<input id="newpasswortwdh" type="text" name="newpasswortwdh"
+									<input id="newpasswortwdh" type="password" name="newpasswortwdh"
 										size="20" maxlength="100" />
 									<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 									<div id="error_unequalPasswords" class="hiddenerror"></div>

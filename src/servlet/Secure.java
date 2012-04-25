@@ -61,18 +61,6 @@ public class Secure extends HttpServlet {
 		// log.write("Secure", "Received request <" + path + ">.");
 		// If login is asked:
 		if (path.equals("/js/doLogin")) {
-
-			
-			//TESTBLOCK ZUM RAUSSCHMEISSEN
-			System.out.println("BEGIN---------------------------TESTBEREICH---------------------------");
-			
-//			Application appli = new Application();
-//			ApplicationController.getInstance().deleteApplication(appli);
-			
-			System.out.println("---------------------------TESTBEREICH-----------------------------END");
-			//TESTBLOCK ZUM RAUSSCHMEISSEN
-			
-			
 			String userName = request.getParameter("userName");
 			String userPassword = request.getParameter("userPassword");
 			log.write("Secure", "Checking login: <" + userName + ">:<"
@@ -130,7 +118,11 @@ public class Secure extends HttpServlet {
 			if (acc == null) {
 				acc = new Account(userName, password, 3, email, realName, 0,
 						null);
-				AccountController.getInstance().createAccount(acc);
+				if (!AccountController.getInstance().createAccount(acc)) {
+					response.setContentType("text/error");
+					response.getWriter().write("DB error on server on creation of account!");;
+					return;
+				}
 				log.write("Secure", "Registration successful.");
 				HttpSession session = request.getSession();
 				session.setAttribute("userName", new String(userName));

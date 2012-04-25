@@ -21,15 +21,7 @@ import database.application.Application;
  */
 public class Applicant extends User {
 
-	/**
-	 * Private Instanz des AccountController.
-	 */
-	private AccountController accountController;
 
-	/**
-	 * Private Instanz des Loggers.
-	 */
-	private Log log;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -59,7 +51,7 @@ public class Applicant extends User {
 	 */
 	public boolean editAccount(Account acc) {
 
-		if (!accountController.updateAccount(acc)) {
+		if (!acccon.updateAccount(acc)) {
 			log.write("Appllicant", "Error modifying account!");
 			return false;
 		}

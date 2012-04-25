@@ -90,7 +90,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Zurückziehen"
-					onclick="deleteOffer(); togglePopup('offer_cancel', false);" />
+					onclick="deleteSelectedAccount(); togglePopup('offer_cancel', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('offer_cancel', false);" />
 			</div>

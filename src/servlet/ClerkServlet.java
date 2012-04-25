@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,10 +26,13 @@ import user.Provider;
 
 import com.google.gson.Gson;
 
+import database.DatabaseController;
+import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
@@ -146,55 +150,82 @@ public class ClerkServlet extends HttpServlet {
 			int aid1 = Integer.parseInt(aid);
 			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
 			//String offername;
-			Vector<OfferDocument> documents = new Vector<OfferDocument>();
+			Vector<OfferDocument> offerdocuments = new Vector<OfferDocument>();
 			System.out.println("hier?");
 			for(int i=0; i<offersid.size(); i++){
 				if(aid1 == offersid.elementAt(i).getAid()){
-					documents = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
+					offerdocuments = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
 				}}
-					Vector<String> documentsname = new Vector<String>();
-					
-					for(int j=0; j<documents.size(); j++){
-						documentsname.add(DocumentController.getInstance().getDocumentByUID(documents.elementAt(j).getDocumentid()).getName());
+					Vector<Document> documents = new Vector<Document>();
+					for(int i = 0; i<offerdocuments.size();i++){
+						documents.add(DocumentController.getInstance().getDocumentByUID(offerdocuments.elementAt(i).getDocumentid()));
 					}
-					System.out.println(documents);
-					System.out.println(documentsname);
 					response.setContentType("documentsoffer/json");
-					response.getWriter().write(gson.toJson(documentsname, documentsname.getClass()));
+					response.getWriter().write(gson.toJson(documents, documents.getClass()));
 			
 		}	
-		/* noch nicht funktionsfähig */
+		
+		// Creates a Vector of Documents which can be added to an offer
+		else if(path.endsWith("/js/documentsToAddToOffer")){
+			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			
+			Vector<Document> docsToAdd = DocumentController.getInstance().getDocumentsToAddToOffer(aid);
+			
+			for(int i = 0; i < docsToAdd.size(); i++)
+				System.out.println(docsToAdd.elementAt(i).getUid());
+			response.setContentType("documentstoaddoffer/json");
+			response.getWriter().write(gson.toJson(docsToAdd, docsToAdd.getClass()));
+		}
+
+
+		// Creates an Vector for the table in applicationmanagement.jsp
 		else if (path.equals("/js/showApplication")) {
-			Clerk clerk2 = Helper.checkAuthenticity(request.getSession(),
-					Clerk.class);
-			String username = clerk2.getUserData().getUsername();
+			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
-			Vector<Account> provaccounts = AccountController.getInstance().getProviderAccountsByInstitute(clerka.getInstitute());
-			
-			Vector<Offer> alloffers = new Vector<Offer>(); //alle offers aller provider in provaccounts
-			Vector<Offer> currentoffers = new Vector<Offer>(); //alle offers eines providers in provaccounts
-			for(int i = 0; i < provaccounts.size(); i++){
-				currentoffers = OfferController.getInstance().getOffersByProvider(new Provider(provaccounts.elementAt(i).getUsername(), null, null, null));
-				for(int k = 0; k < currentoffers.size(); k++){
-					alloffers.add(currentoffers.elementAt(k));
-				}
-			}
-			System.out.println(alloffers);
-			
-			Vector<Application> allapplications = new Vector<Application>();
-			Vector<Application> currentapplications = new Vector<Application>();
-			
-			for(int l = 0; l < alloffers.size(); l++){
-				currentapplications = ApplicationController.getInstance().getApplicationsByOffer(alloffers.elementAt(l).getAid());
-				for(int q = 0; q < currentapplications.size(); q++){
-					allapplications.add(currentapplications.elementAt(q));
-				}
-			}
-			
+			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
-			response.getWriter().write(gson.toJson(alloffers, alloffers.getClass()));
+			response.getWriter().write(gson.toJson(daten, daten.getClass()));
 			
 		}
+		// Creates an Vector for the table in editapplication.jsp 
+		else if (path.equals("/js/applicationDocuments")) {
+			String user = request.getParameter("User");
+			//System.out.println("User:"+user);
+			String aid = request.getParameter("AID");
+			//System.out.println("Aid:"+aid);
+			int aid1 = Integer.parseInt(aid);
+			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewählten User
+			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewählten User
+			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
+			Vector<Document> docs2 = new Vector<Document>();
+			for(int i = 0; i < docs.size(); i++){
+				docs2.add(DocumentController.getInstance().getDocumentByUID(docs.elementAt(i).getdID()));
+			}
+			//System.out.println("Ergebnis: "+docs2);
+			response.setContentType("showthedocuments/json");
+			response.getWriter().write(gson.toJson(docs2, docs2.getClass()));
+			
+		}
+		// Creates an String for the table in editapplication.jsp
+		else if (path.equals("/js/showApplicationTable2")) {
+			String user = request.getParameter("User");
+			//System.out.println("User:"+user);
+			String aid = request.getParameter("AID");
+			//System.out.println("Aid:"+aid);
+			int aid1 = Integer.parseInt(aid);
+			
+			String richtigername = AccountController.getInstance().getAccountByUsername(user).getName();
+			String angebotsname = OfferController.getInstance().getOfferById(aid1).getName();
+			
+			String[] datanamen = {richtigername, angebotsname, user, aid}; //= Name des bewebers, Angebotsname, Benutzername des Bewerbers, AngebotsID
+			
+			//System.out.println("Ergebnis: "+daten.size());
+			response.setContentType("showapplicationtable2/json");
+			response.getWriter().write(gson.toJson(datanamen, datanamen.getClass()));
+		}
+		//Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/addDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
@@ -229,12 +260,13 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		
 		}
+		//Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
 			int uid = -1;
 			try {
 				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
-				log.write("AdminServlet",
+				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehlerhafte uid!");
@@ -246,7 +278,127 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
+		// Delete own account:
+				else if (path.equals("/js/deleteAccount")) {
+					String name = clerk.getUserData().getUsername();
+					if(clerk.deleteOwnAccount()){
+						log.write("ApplicantServlet", name + " has deleted his account.");
+						// Simply now for debugging:
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_INDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Error while deleting account!");
+					}
+				}
+				// change  own account data
+				else if(path.equals("/js/changeAccount")){
+					String name = request.getParameter("name");
+					String email = request.getParameter("mail");
+					String pw = request.getParameter("pw");
+					if(pw.equals(""))pw=null; //falls leeres pw-> null damit die editOwnAccount funktion das pw nicht auf "" setzt!
+					if(clerk.editOwnAccount(name, email, pw)){
+						log.write("ApplicantServlet", clerk.getUserData().getUsername() + " has modified his account.");
+						response.setContentType("text/url");
+						response.getWriter().write(Helper.D_CLERK_USERINDEX);
+					}else{
+						response.setContentType("text/error");
+						response.getWriter().write("Fehler beim Ã¤ndern der Daten.");
+					}
+				}
+				else 	// Do loadAccount:
+					if (path.equals("/js/loadAccount")) {
+						String realName = clerk.getUserData().getName();
+						String email = clerk.getUserData().getEmail();
+						String rep = clerk.getRepresentant();
+						String JsonString = Helper.jsonAtor(new String[] { "realName",
+								"email" ,"rep"}, new String[] { realName, email , rep});
+						response.setContentType("application/json");
+						response.getWriter().write(JsonString);
+					}
+		//TODO
+				//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
+				else if(path.equals("/js/doApplicationCompletion")){
+					int AID = 0;
+					String username;
+					try {
+						AID = Integer.parseInt(request.getParameter("aid"));
+					} catch (NumberFormatException e) {
+						log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+						response.setContentType("text/error");
+						response.getWriter().write("Error while parsing String into int");
+						return;
+					}
+					username = request.getParameter("username");
+					//Prueft ob alle Dokumente abgegeben wurden.
+					//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+					//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+					//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+					if (clerk.checkAllDocFromApplicant(username, AID)) {
+						response.setContentType("text/url");
+					//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+					//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewaehlt)
+					}
+					else {
+						response.setContentType("error/url");
+						
+					}
+					response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+				}
+
 		
+		
+
+		//Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
+		else if (path.equals("/js/deleteOfferDocument")) {
+
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("deleteOfferDocument: "+uid+" from offer: "+aid);
+			DocumentController.getInstance().deleteOfferDocument(new OfferDocument(aid,uid));
+			return;
+		}
+		
+		//Funktion zum hinzufuegen eines OfferDocuments des gewaehlten Offers
+		else if (path.equals("/js/addOfferDocument")) {
+
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			System.out.println("addOfferDocument: "+uid+" from offer: "+aid);
+			DocumentController.getInstance().createOfferDocument(new OfferDocument(aid,uid));
+			return;
+		}
+		
+		//TO DO!
+		//Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
+		else if(path.equals("/js/doApplicationCompletion")){
+			int AID = 0;
+			String username;
+			try {
+				AID = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet", "NumberFormatException while parsing URL!");
+			}
+			username = request.getParameter("username");
+			//Prueft ob alle Dokumente abgegeben wurden.
+			//Die einzige Bedingung die wir and den Vertragsabschluss-Button gestellt haben 
+			//war das er nur dann erfolgreich ist wen alles vorhanden ist und nicht das er 
+			//die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+			if (clerk.checkAllDocFromApplicant(username, AID)) {
+				response.setContentType("test/url");
+			//Soll jetzt ab hier den Bewerber als "angenommen" markiert werden oder wird das dan endgueltig vom
+			//Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+			}
+			else {
+				response.setContentType("error/url");
+				
+			}
+			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+		}
+
+		else {
+			log.write("ClerkServlet", "Unknown path <" + path + ">");
+		}
 
 	}
 	

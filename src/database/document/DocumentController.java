@@ -512,4 +512,38 @@ public class DocumentController {
 		 * updateAppDocument(AppDocument document) realisiert.
 		 */
 	}
+	
+	/**
+	 * Diese Methode gibt alle Dokumente zurueck, die ein Angebot nicht als Standartunterlagen angegeben hat
+	 * @param aid
+	 * 		AngebotsID des Angebots
+	 * @return
+	 * 		Dokumente, die ein Angebot nicht als Standartunterlagen angegeben hat
+	 */
+	public Vector<Document> getDocumentsToAddToOffer(int aid){
+		
+		System.out.println(tableNameU);
+		
+		
+		Vector<Document> docsToAdd = new Vector<Document>();
+
+
+		String[] select = { "*" };
+		String[] from = {tableNameU};
+		String where = "UID not in (Select UID FROM "+tableNameS+" WHERE AID = "+aid+")";
+
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while (rs.next()) {
+				docsToAdd.add(new Document(rs.getInt(1),rs.getString(2),rs.getString(3)));
+			}
+
+			rs.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return docsToAdd;
+	}
 }

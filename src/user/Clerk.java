@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.Vector;
 
 import jxl.write.*;
 import jxl.write.biff.RowsExceededException;
@@ -26,15 +28,10 @@ import file.ExcelExport;
  * Verwaltet alle Aufgaben und Daten eines Verwalters.
  */
 public class Clerk extends User {
-	
 	/**
-	 * Private Instanz des Loggers.
+	 * Stellvertreter
 	 */
-	private Log log;
-	/**
-	 * Private Instanz des AccountController.
-	 */
-	private AccountController accountController;
+	private String representant;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -63,7 +60,7 @@ public class Clerk extends User {
 	 */
 	public boolean editAccount(Account acc) {
 		
-		if (!accountController.updateAccount(acc)) {
+		if (!acccon.updateAccount(acc)) {
 			log.write("Clerk", "Error modifying account!");
 			return false;
 		}
@@ -184,6 +181,50 @@ public class Clerk extends User {
 	public String doExport() throws IOException, RowsExceededException, WriteException {
 		return ExcelExport.export(this.getUserData());
 
+	}
+/**
+ * Gibt den Stellvertreter zurueck
+ * @return Stellvertreter
+ */
+	public String getRepresentant() {
+		return representant;
+	}
+/**
+ * Setzt den Stellvertreter
+ * @param representant Stellvertreter
+ */
+	public void setRepresentant(String representant) {
+		this.representant = representant;
+	}
+	
+	/**
+	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
+	 * @return
+	 * 		True falls alles abgegeben wurde,
+	 * 		sonst False.
+	 */
+	public boolean checkAllDocFromApplicant(String username, int offerID){
+		Account acc = acccon.getAccountByUsername(username);
+		Offer off = offcon.getOfferById(offerID);
+		
+		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
+		
+		Iterator<AppDocument> it = vec.iterator();
+		
+		AppDocument aktuellesDokument;
+		int i = 0;
+		//Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
+		//Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss man keine weiteren Informationen 
+		//rauslesen (oder doch?)
+		while(it.hasNext()){
+			aktuellesDokument = vec.get(i);
+			if (!aktuellesDokument.getPresent()) {
+				return false;
+			}
+		}
+		
+		return true;
+		
 	}
 
 }
