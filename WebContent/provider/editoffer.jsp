@@ -49,17 +49,19 @@
 		<div class="textblock">
 			<div class="haupttext">
 				<div class="register">
-				<form name="angebotErstellen"> 
+				<form name="angebotErstellen" id="angebotErstellen"> 
     				<div class="regform2">
     					<label for="titel">Titel</label>
 					</div>
 					<div class="float2">
 						<input type="text" id="titelFeld" name="titel" size="57" maxlength="100" />
+						<div id="error_titelFeld" class="invisibleWarning"></div>
 					</div>
 					<div class="clear"></div>
 					<div class="clear"></div>
 					<br>
 					<textarea name="beschreibung" id="beschreibungsFeld" cols="50" rows="10">Beschreibung</textarea> <br> <br>
+					<div id="error_beschreibungsFeld" class="invisibleWarning"></div>
 					<p>
 						<input type="reset" value="Zurücksetzen" /> 
 						<input type="button" value="Angebot ändern"
@@ -89,7 +91,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Ändern"
-					onclick="deleteSelectedAccount(); togglePopup('edit_offer', false);" />
+					onclick="updateOfferChanges(angebotErstellen); togglePopup('edit_offer', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('edit_offer', false);" />
 			</div>

@@ -82,9 +82,9 @@ function prepareButton(id)
 function prepareButtonUpdateOffer(aid)
 {
 	offerToUpdate = aid;
-	alert(offerToUpdate);
+	alert("prepareButtonUpdateOffer "+offerToUpdate);
 	window.location='editoffer.jsp?aid='+aid;
-
+	
 }
 
 /**
@@ -299,6 +299,56 @@ function handleCreateOfferResponse(mime, data) {
 								// veranlasst nach dem Anlegen eines neues Offer
 								// Objekts die weiterleitung auf die hauptseite
 								// des providers
+		window.location = data;
+		return;
+	} else if (mime == "text/error") {
+		alert(data);
+		return;
+	}
+}
+
+/**
+ * This function works with the response of the ProviderServlet to update an offer.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+
+function updateOfferChanges(form) {
+	alert("UpdateOfferChanges aktiviert");
+	
+	offerToUpdate = getURLParameter("aid");
+	if (form == null)
+		return;
+	var error = false;
+	var titelFeld = form.titelFeld.value;
+	
+	if (titelFeld == null || titelFeld == "") {
+		toggleWarning("error_titelFeld", true, "Bitte ausfuellen!");
+		error = true;
+	} else
+		toggleWarning("error_titelFeld", false, "");
+	
+	var beschreibungsFeld = form.beschreibungsFeld.value;
+	
+	if (beschreibungsFeld == null || beschreibungsFeld == "") {
+		toggleWarning("error_beschreibungsFeld", true, "Bitte ausfuellen!");
+		error = true;
+	} else
+		toggleWarning("error_beschreibungsFeld", false, "");
+	if (error){
+		return;
+	}
+		
+	connect("/hiwi/Provider/js/updateOffer","aid="+offerToUpdate+ "&titel=" + titelFeld + "&beschreibung=" + beschreibungsFeld, handleUpdateOfferChangesResponse);
+	
+}
+
+function handleUpdateOfferChangesResponse(mime, data) {
+	alert("Servlet update response");
+	if (mime == "text/url") {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
