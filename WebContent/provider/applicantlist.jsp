@@ -94,7 +94,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Annehmen"
-					onclick="deleteSelectedAccount(); togglePopup('accept', false);" />
+					onclick="takeSelectedApplicant(); togglePopup('accept', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('accept', false);" />
 			</div>

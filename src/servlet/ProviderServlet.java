@@ -162,7 +162,7 @@ public class ProviderServlet extends HttpServlet {
 			try{ 
 			stellen = Integer.parseInt(request.getParameter("stellen"));
 			} catch(NumberFormatException e){
-				System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
+				//System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [INT Wert von 'Stellen' prüfen]");
 				return;
@@ -173,7 +173,7 @@ public class ProviderServlet extends HttpServlet {
 				
 			stunden = Double.parseDouble(request.getParameter("std")); // in der DB Std/Woche, in der HTML Std/Monat
 			}catch (NumberFormatException e){
-				System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
+				//System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [DOUBLE Wert von 'Std' prüfen]");
 				return;
@@ -239,7 +239,7 @@ public class ProviderServlet extends HttpServlet {
 		//Angebot zurueckziehen	
 		else if(path.equals("/js/deleteOffer")){
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			System.out.println("DELETE OFFER by aid: "+aid);
+			//System.out.println("DELETE OFFER by aid: "+aid);
 			Offer offtodel = OfferController.getInstance().getOfferById(aid);
 			OfferController.getInstance().deleteOffer(offtodel);
 
@@ -262,7 +262,7 @@ public class ProviderServlet extends HttpServlet {
 				response.getWriter().write("Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "+path.toString());
 				return;
 			}
-			System.out.println("LOAD OFFER by aid: "+aid);
+			//System.out.println("LOAD OFFER by aid: "+aid);
 			
 			Offer offtoup = OfferController.getInstance().getOfferById(aid);
 			//OfferController.getInstance().updateOffer(offtoup);
@@ -275,8 +275,8 @@ public class ProviderServlet extends HttpServlet {
 		//Saves changes from selected Offer and updates it in the db
 		else if (path.equals("/js/updateOffer")) {
 			
-			String test= request.getParameter("aid");
-			System.out.println("TEST: "+test);
+			//String test= request.getParameter("aid");
+			//System.out.println("TEST: "+test);
 			int aid;
 			try{
 			aid = Integer.parseInt(request.getParameter("aid"));
@@ -286,7 +286,7 @@ public class ProviderServlet extends HttpServlet {
 				response.getWriter().write("Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "+path.toString());
 				return;
 			}
-			System.out.println("Update OFFER by aid: "+aid);
+			//System.out.println("Update OFFER by aid: "+aid);
 			
 			Offer offUp = OfferController.getInstance().getOfferById(aid);
 			
@@ -301,8 +301,57 @@ public class ProviderServlet extends HttpServlet {
 			return;
 			
 		}	
-		
-	
+		//Sets the boolean value of "ausgewaehlt" in the db table "berwerbungen" to "true"
+		else if (path.equals("/js/takeSelectedApplicant")) {
+			
+			String username = request.getParameter("usernameTakenApplicant");
+			
+			int aid;
+			try{
+			aid = Integer.parseInt(request.getParameter("aid"));
+			
+			}catch (NumberFormatException e){
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "+path.toString());
+				return;
+			}
+			System.out.println("Applicant:"+username +" for OfferID= "+aid+" selected/taken");
+					
+			Vector <Application> appliVect = ApplicationController.getInstance().getApplicationsByOffer(aid);
+			Application applicationToChange;
+			
+			
+			for (int i=0;i<appliVect.size();i++){
+				
+				applicationToChange = appliVect.elementAt(i);
+				
+				//System.out.println("Bewerbername: "+applicationToChange.getUsername()+" AID="+applicationToChange.getAid());
+				
+				if ( (aid==applicationToChange.getAid()) && (username.equals(applicationToChange.getUsername())) ){
+					
+					//TODO geht nicht hier rein WAAAAARUUUUUUUUUUUUUUUUUUUUUUUUUUUMMMMM ???
+					System.out.println("IF LOOP FOR-----------------------------------");
+					if(applicationToChange.isChosen()==true){
+						response.setContentType("text/error");
+						response.getWriter().write("Bewerber wurde schon selektiert! //ERROR IN "+path.toString());
+						return;
+					}
+					else{
+						
+						applicationToChange.setChosen(true);
+						ApplicationController.getInstance().updateApplication(applicationToChange);
+					}
+						  
+				}
+				
+			}
+			
+			
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+			return;
+			
+		}
 	
 }
 }

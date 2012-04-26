@@ -20,9 +20,21 @@ var offerToDelete;
 var offerToUpdate;
 
 /**
+ * Stores the Offer to select to an applicant
+ */
+var offerToApplicant;
+
+/**
+ * Wird in function markOfferSelected(id) initialisiert und
+ * braucht man, damit man auf den username des bewerbers fuer die berwerberauswahl in function takeSelectedApplicant() zugreifen kann
+ */
+var tmpApplicantUserName;
+
+/**
  * This function loads all the offers in the system from the database and
  * displays them.
  */
+
 function loadOffers() {															//ohne alerts funktionierts nicht =( ... wieso??
 	// reset selectedID (account could have been deleted in meantime)
 	//selectedOffer = null;
@@ -82,7 +94,7 @@ function prepareButton(id)
 function prepareButtonUpdateOffer(aid)
 {
 	offerToUpdate = aid;
-	alert("prepareButtonUpdateOffer "+offerToUpdate);
+	//alert("prepareButtonUpdateOffer "+offerToUpdate);
 	window.location='editoffer.jsp?aid='+aid;
 	
 }
@@ -146,6 +158,9 @@ function handleApplicantChoiceResponse(mime, data) {
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
+	
+	tmpApplicantUserName =id; //braucht man, damit man auf den username des bewerbers fuer die berwerberauswahl in function takeSelectedApplicant() zugreifen kann
+	
 	//alert("alte id: "+selectedOffer);
 	// Remove marking from previous selected, if applicable:
 	if (selectedOffer != null)
@@ -257,7 +272,7 @@ function handleDeleteOfferResponse(mime, data) {
 function loadSelectedOfferEdit() {
 	
 	offerToUpdate= getURLParameter("aid");
-	alert(offerToUpdate);
+	//alert(offerToUpdate);
 	connect("/hiwi/Provider/js/getOffer", "aid=" + offerToUpdate,
 			handleLoadEditOfferResponse);
 }
@@ -308,16 +323,11 @@ function handleCreateOfferResponse(mime, data) {
 }
 
 /**
- * This function works with the response of the ProviderServlet to update an offer.
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
+ * This function updates an offer.
  */
 
 function updateOfferChanges(form) {
-	alert("UpdateOfferChanges aktiviert");
+	//alert("UpdateOfferChanges aktiviert");
 	
 	offerToUpdate = getURLParameter("aid");
 	if (form == null)
@@ -347,7 +357,41 @@ function updateOfferChanges(form) {
 }
 
 function handleUpdateOfferChangesResponse(mime, data) {
-	alert("Servlet update response");
+	//alert("Servlet update response");
+	if (mime == "text/url") {
+		window.location = data;
+		return;
+	} else if (mime == "text/error") {
+		alert(data);
+		return;
+	}
+}
+
+/**
+ * This function selects an applicant from the applicantlist as selected/taken. 
+ * Following operation in the Servlet changes the value to "true" in the db.      
+ */
+function takeSelectedApplicant() {
+	offerToApplicant = getURLParameter("AID");
+	
+	var username = tmpApplicantUserName; // wird in function markOfferSelected(id) initialisiert
+	
+	//alert("username: "+username);
+	
+	connect("/hiwi/Provider/js/takeSelectedApplicant","aid="+offerToApplicant+"&usernameTakenApplicant="+username, handleTakeSelectedApplicantResponse);
+	
+}
+
+/**
+ * This function works with the response of the ProviderServlet. Operation: select an applicant for an offer.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function handleTakeSelectedApplicantResponse(mime, data) {
+	//alert("Applicant selected funzt net weil ich net weiss, wie ich auf den Benutzernamen vom selektierten Bewerber zugreifen soll.");
 	if (mime == "text/url") {
 		window.location = data;
 		return;
