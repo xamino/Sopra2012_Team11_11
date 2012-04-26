@@ -87,7 +87,8 @@ public class ProviderServlet extends HttpServlet {
 	// Delete own account:
 	else if (path.equals("/js/deleteAccount")) {
 		String name = provider.getUserData().getUsername();
-		if(provider.deleteOwnAccount()){
+		int id = Integer.parseInt(request.getParameter("AID"));
+		if(provider.deleteOwnAccount(id)){
 			log.write("ApplicantServlet", name + " has deleted his account.");
 			// Simply now for debugging:
 			response.setContentType("text/url");
@@ -164,7 +165,7 @@ public class ProviderServlet extends HttpServlet {
 			} catch(NumberFormatException e){
 				//System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [INT Wert von 'Stellen' prüfen]");
+				response.getWriter().write("Fehler beim Parsen! Kein/ungï¿½ltiger Wert eingegeben [INT Wert von 'Stellen' prï¿½fen]");
 				return;
 			}
 			
@@ -175,7 +176,7 @@ public class ProviderServlet extends HttpServlet {
 			}catch (NumberFormatException e){
 				//System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim Parsen! Kein/ungültiger Wert eingegeben [DOUBLE Wert von 'Std' prüfen]");
+				response.getWriter().write("Fehler beim Parsen! Kein/ungï¿½ltiger Wert eingegeben [DOUBLE Wert von 'Std' prï¿½fen]");
 				return;
 			}
 			

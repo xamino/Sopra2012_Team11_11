@@ -267,7 +267,7 @@ public class OfferController {
 	 * Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param provider
-	 * 		   Parameter gibt den benötigten Provider an
+	 * 		   Parameter gibt den benï¿½tigten Provider an
 	 * 
 	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
 	 *         Datenbank zurueckgegeben. 

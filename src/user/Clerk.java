@@ -68,6 +68,22 @@ public class Clerk extends User {
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
+	
+	/**
+	 * Methode zum Löschen seines Accounts
+	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 */
+	public boolean deleteOwnAccount(){
+		String username = this.getUserData().getUsername();
+		Account acc = acccon.getAccountByUsername(username);
+		boolean check = true;
+		int i = 0;
+		check = acccon.deleteAccount(acc);
+		invalidate();
+		
+		return check;
+	}
 
 	/**
 	 * Methode zum bearbeiten von Bewerbungen.
@@ -153,8 +169,8 @@ public class Clerk extends User {
 	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
 	 * einzeln Dokumente entfernt werden.
 	 */
-	public void deleteAppDoc() {
-
+	public void deleteAppDoc(int ID) {
+		
 	}
 
 	/**

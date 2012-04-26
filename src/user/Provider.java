@@ -1,5 +1,8 @@
 package user;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import javax.servlet.http.HttpSession;
 
 import sun.util.calendar.BaseCalendar.Date;
@@ -7,6 +10,8 @@ import sun.util.calendar.BaseCalendar.Date;
 import logger.Log;
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
+import database.document.AppDocument;
 import database.offer.Offer;
 
 /**
@@ -75,5 +80,37 @@ public class Provider extends User {
 			String pDescription, Date pStartDate, Date pEndDate, double pWage,
 			int pInstitute, Date pModificationdate) {
 
+	}
+	
+	/**
+	 * Methode zum Löschen seines Accounts
+	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 */
+	public boolean deleteOwnAccount(int aid){
+		String username = this.getUserData().getUsername();
+		Account acc = acccon.getAccountByUsername(username);
+		boolean check = true;
+		int i = 0;
+		check = acccon.deleteAccount(acc);
+		invalidate();
+		
+		Vector<Offer> off = offcon.getOffersByProvider(this);
+		Iterator<Offer> it = off.iterator();
+		
+		while(it.hasNext()){
+			offcon.deleteOffer(off.elementAt(i));
+			i++;
+		}
+		
+		Vector<AppDocument> doc = doccon.getAppDocumentByOffer(aid);
+		Iterator<AppDocument> itp = doc.iterator();
+		i = 0;
+		while(it.hasNext()){
+			doccon.deleteAppDocument(doc.elementAt(i));
+			i++;
+		}
+		
+		return check;
 	}
 }

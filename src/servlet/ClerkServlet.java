@@ -196,8 +196,8 @@ public class ClerkServlet extends HttpServlet {
 			String aid = request.getParameter("AID");
 			//System.out.println("Aid:"+aid);
 			int aid1 = Integer.parseInt(aid);
-			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewählten User
-			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewählten User
+			Account acc = AccountController.getInstance().getAccountByUsername(user); //Account vom ausgewï¿½hlten User
+			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer des ausgewï¿½hlten User
 			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
 			Vector<Document> docs2 = new Vector<Document>();
 			for(int i = 0; i < docs.size(); i++){
@@ -280,7 +280,8 @@ public class ClerkServlet extends HttpServlet {
 		}
 		// Delete own account:
 				else if (path.equals("/js/deleteAccount")) {
-					String name = clerk.getUserData().getUsername();
+					String name = request.getParameter("name");
+					
 					if(clerk.deleteOwnAccount()){
 						log.write("ApplicantServlet", name + " has deleted his account.");
 						// Simply now for debugging:

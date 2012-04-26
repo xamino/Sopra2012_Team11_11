@@ -546,4 +546,33 @@ public class DocumentController {
 		}
 		return docsToAdd;
 	}
+	
+	/**
+	 * Die Methode liefert zu einem Username alle vorhandenen Dokumente.
+	 * @param benutzername
+	 * 				Username vom Bewerber.
+	 * @return
+	 */
+	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername){
+		String[] select = {"*"};
+		String[] from = {tableNameB};
+		String where = "benutzername="+benutzername;
+		Vector<AppDocument> appdoc = null;
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			while(rs.next()){
+				AppDocument temp;
+				temp = new AppDocument(rs.getString(0), rs .getInt(1), rs.getInt(2), rs.getBoolean(3));
+				appdoc.add(temp);
+				
+			}
+		} catch (SQLException e) {
+			log.write("DocumentController", "Error while select");
+			e.printStackTrace();
+			return null;
+		}
+		
+		return appdoc;
+		
+	}
 }

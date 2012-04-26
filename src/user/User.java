@@ -1,13 +1,19 @@
 package user;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
 
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
 import database.document.DocumentController;
+import database.offer.Offer;
 import database.offer.OfferController;
 
 /**
@@ -90,13 +96,7 @@ public abstract class User {
 	/**
 	 * Loescht den eigenen Account
 	 */
-	public boolean deleteOwnAccount() {
-		Account toDel = acccon.getAccountByUsername(uData.getUsername());
-		if (toDel == null)
-			return false;
-		invalidate();
-		return acccon.deleteAccount(toDel);
-	}
+	
 	
 	/**
 	 * Aendert die Daten des eigenen Accounts

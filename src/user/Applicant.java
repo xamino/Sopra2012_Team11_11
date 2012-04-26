@@ -8,6 +8,9 @@
  */
 package user;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
@@ -15,6 +18,7 @@ import logger.Log;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
+import database.document.AppDocument;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Bewerbers.
@@ -59,7 +63,39 @@ public class Applicant extends User {
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
-
+	
+	/**
+	 * Methode zum Löschen seines Accounts
+	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 */
+	public boolean deleteOwnAccount(){
+		String username = this.getUserData().getUsername();
+		Account acc = acccon.getAccountByUsername(username);
+		boolean check = true;
+		int i = 0;
+		check = acccon.deleteAccount(acc);
+		invalidate();
+		
+		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
+		Iterator<AppDocument> it = doc.iterator();
+		
+		while(it.hasNext()){
+			doccon.deleteAppDocument(doc.elementAt(i));
+			i++;
+		}
+		
+		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
+		Iterator<Application> itp = apps.iterator();
+		i = 0;
+		while(it.hasNext()){
+			appcon.deleteApplication(apps.elementAt(i));
+			i++;
+		}
+		
+		return check;
+	}
+	
 	/**
 	 * Bewerben auf ein Angebot
 	 * 

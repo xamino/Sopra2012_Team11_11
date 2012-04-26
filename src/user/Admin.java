@@ -66,6 +66,19 @@ public class Admin extends User {
 		acccon.deleteAccount(account);
 		return true;
 	}
+	
+	/**
+	 * Methode zum Löschen seines Accounts
+	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+	 */
+	public boolean deleteOwnAccount(){
+		String username = this.getUserData().getUsername();
+		Account acc = acccon.getAccountByUsername(username);
+		boolean check = acccon.deleteAccount(acc);
+		invalidate();
+		
+		return check;
+	}
 
 	/**
 	 * Erstellt einen Account.

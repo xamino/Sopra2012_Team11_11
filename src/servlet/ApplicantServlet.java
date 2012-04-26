@@ -163,7 +163,7 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
-			String name = applicant.getUserData().getUsername();
+			String name = request.getParameter("username");
 			if(applicant.deleteOwnAccount()){
 				log.write("ApplicantServlet", name + " has deleted his account.");
 				// Simply now for debugging:
