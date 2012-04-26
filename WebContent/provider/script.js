@@ -252,7 +252,7 @@ function handleDeleteOfferResponse(mime, data) {
 }
 
 /**
- * Loads the selected offer's data and displays it in editoffer.
+ * Loads the selected offer's data and displays it in editoffer.jsp?aid=....
  */
 function loadSelectedOfferEdit() {
 	
