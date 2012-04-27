@@ -203,6 +203,7 @@ public class ProviderServlet extends HttpServlet {
 			
 			// If already exists:
 			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
+			// TODO: for (Offer temp : allOffers) {...}
 			for (int i=0;i<allOffers.size();i++){
 				if(allOffers.elementAt(i).getName().equals(name)){
 					//System.out.println("ANGEBOT EXSISTIERT BEREITS, NAME VORHANDEN!");
