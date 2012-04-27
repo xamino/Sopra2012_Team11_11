@@ -148,10 +148,24 @@ public class ProviderServlet extends HttpServlet {
 		else if (path.equals("/js/addOffer")) {
 			// System.out.println("PROVIDER_SERVLET, PATH: ADD OFFER");
 
-			Provider provi = Helper.checkAuthenticity(request.getSession(),
-					Provider.class);
-			int aid = 456;
-
+			Provider provi = Helper.checkAuthenticity(request.getSession(),	Provider.class);
+			
+					
+			//Generating AID
+			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
+			
+			
+			double aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
+			int aid = (int)aidRandom;	
+			
+			for (int i = 0; i < allOffers.size(); i++) {			
+				if (allOffers.elementAt(i).getAid() == aid) {
+					aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
+					aid = (int)aidRandom;
+					i=0;
+				}
+			}
+			
 			/*
 			 * TODO Woher kommt die aid ? try { aid =
 			 * Integer.parseInt(request.getParameter("????????")); } catch
@@ -217,8 +231,8 @@ public class ProviderServlet extends HttpServlet {
 			 */
 
 			// If already exists:
-			Vector<Offer> allOffers = OfferController.getInstance()
-					.getAllOffers();
+//			Vector<Offer> allOffers = OfferController.getInstance()
+//					.getAllOffers();
 			// TODO: for (Offer temp : allOffers) {...}
 			for (int i = 0; i < allOffers.size(); i++) {
 				if (allOffers.elementAt(i).getName().equals(name)) {
