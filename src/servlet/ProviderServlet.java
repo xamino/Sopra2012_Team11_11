@@ -143,7 +143,7 @@ public class ProviderServlet extends HttpServlet {
 			//System.out.println("PROVIDER_SERVLET, PATH: ADD OFFER");
 			
 			Provider provi = Helper.checkAuthenticity(request.getSession(),Provider.class);
-			int aid = 789;
+			int aid = 456;
 			
 			/* TODO Woher kommt die aid ?
 			try {
