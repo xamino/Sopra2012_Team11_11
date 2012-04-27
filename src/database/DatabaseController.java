@@ -139,6 +139,7 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "UPDATE error! <" + update + ">");
+			e.printStackTrace();
 			return false;
 		}
 	}

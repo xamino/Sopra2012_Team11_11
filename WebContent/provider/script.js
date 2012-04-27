@@ -142,10 +142,19 @@ function handleApplicantChoiceResponse(mime, data) {
 		var table = document.getElementById("applicantsTable");
 		// Write table â€“ probably replaces old data!
 		table.innerHTML = "<tr><th>Name:</th><th>Hier fehlen weiter Daten (nicht in DB)</th></tr>";
-		for ( var i = 0; i < JSONarray.length; i++) {
+		/* orginal von lau lau:
+		 * for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].name
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].name + "\');\"><td>"
+					+ JSONarray[i].name + "</td></tr>";
+		brauche username für berwerber annehmen
+		}
+		 * */
+		for ( var i = 0; i < JSONarray.length; i++) {
+			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
+					+ "\" onclick=\"markOfferSelected(\'"
+					+ JSONarray[i].username + "\');\"><td>"
 					+ JSONarray[i].name + "</td></tr>";
 		}
 	}
@@ -173,7 +182,7 @@ function markOfferSelected(id) {
 	// Else save & mark new one:
 	selectedOffer = id;
 
-	//("aktuelle id: "+selectedOffer);
+	//alert("aktuelle id: "+selectedOffer);
 
 	document.getElementById(id).setAttribute("class", "selected");
 }

@@ -97,12 +97,12 @@ public class ApplicationController {
 	 */
 	public void updateApplication(Application application) {
 
-		String[] columns = { "benutzername", "status", "sachbearbeiter",
+		String[] columns = { /*"benutzername",*/ "status", "sachbearbeiter",
 				"ausgewaehlt" };
-		Object[] values = { application.getUsername(),
+		Object[] values = { /*application.getUsername(),*/
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
-		String where = "AID = " + application.getAid();
+		String where = "AID = " + application.getAid()+" AND benutzername='"+application.getUsername()+"'";
 
 		dbc.update(tableName, columns, values, where);
 
