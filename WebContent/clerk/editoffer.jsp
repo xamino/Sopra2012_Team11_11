@@ -79,7 +79,7 @@
 					</table>
 					<input type="button" value="Dokument hinzufügen"
 						onclick="togglePopup('document_add',true);" /> <input
-						type="button" value="Dokument löschen"
+						type="button" value="Dokument löschen" id="dokumentloeschenbutton"
 						onclick="togglePopup('document_del',true);" />
 				</div>
 				<table id="offerinfotable" class="hidden">

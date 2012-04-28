@@ -121,6 +121,8 @@ function handleEditOneOfferResponse(mime, data){
 		angebotbestaetigenbutton.disabled = angebotbestattribut;
 		angebotablehnenbutton.disabled = angebotablattribut;
 		
+		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+		
 		documentsFromOffer();
 	}
 }
@@ -224,7 +226,8 @@ function prepareButton()
 
 function deleteChosenDocument(){
 	var aid = getURLParameter("AID");
-//	alert("delete Document: "+selectedDocument+" from Offer "+aid);
+	togglePopup('document_del', false);
+	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 	connect("/hiwi/Clerk/js/deleteOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
 	selectedDocument = null;
 	documentsFromOffer();
@@ -234,9 +237,7 @@ function addChosenDocument(){
 	var aid = getURLParameter("AID");
 	var selectedDocument = document.getElementById("selectDocumentsToAdd").value;
 	
-//	alert(selectedDocument);
-	
-//	alert("add Document: "+selectedDocument+" from Offer "+aid);
+	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 	connect("/hiwi/Clerk/js/addOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
 	selectedDocument=null;
 	documentsFromOffer();
@@ -258,10 +259,13 @@ function markDocumentSelected(id) {
 	// If clicked again, unselect:
 	if (selectedDocument == id) {
 		selectedDocument = null;
+		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		return;
 	}
 	// Else save & mark new one:
 	selectedDocument = id;
+	
+	document.getElementById("dokumentloeschenbutton").disabled = "";
 
 //	alert("aktuelle docid: "+selectedDocument);
 
