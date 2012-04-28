@@ -112,38 +112,47 @@ public class ClerkServlet extends HttpServlet {
 		}
 		
 		else if (path.equals("/js/editOneOffer")){
-			System.out.println("pathequals editOneOffer");
 			
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			
-			System.out.println(aid);
-			
+			Offer offertoedit = OfferController.getInstance().getOfferById(aid);
 			response.setContentType("offers/json");
+			response.getWriter().write(gson.toJson(offertoedit, offertoedit.getClass()));
+			return;
 		}
 		else if(path.equals("/js/approveOffer")){
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			System.out.println("setting offer "+aid+" to true");
-			Offer offertoapprove = OfferController.getInstance().getOfferById(aid);
-			System.out.println("before: "+offertoapprove.isChecked());
-			offertoapprove.setChecked(true);
-			System.out.println("after: "+offertoapprove.isChecked());
-			OfferController.getInstance().updateOffer(offertoapprove);
 			
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			double hoursperweek = Double.parseDouble(request.getParameter("hoursperweek"));
+			double wage = Double.parseDouble(request.getParameter("wage"));
+			
+			Offer offertoapprove = OfferController.getInstance().getOfferById(aid);
+			offertoapprove.setChecked(true);
+			offertoapprove.setWage(wage);
+			offertoapprove.setHoursperweek(hoursperweek);
+			
+			OfferController.getInstance().updateOffer(offertoapprove);
 			//wir wollten doch einen String als date?
 //			OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+			
+			response.setContentType("offers/json");
+			response.getWriter().write(gson.toJson(offertoapprove, offertoapprove.getClass()));
+			return;
+			
 		}
 		else if(path.equals("/js/rejectOffer")){
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			System.out.println("setting offer "+aid+" to false");
 			
 			Offer offertoreject = OfferController.getInstance().getOfferById(aid);
-			System.out.println("before: "+offertoreject.isChecked());
 			offertoreject.setChecked(false);
-			System.out.println("after: "+offertoreject.isChecked());
-			OfferController.getInstance().updateOffer(offertoreject);
 			
+			OfferController.getInstance().updateOffer(offertoreject);
 			//wir wollten doch einen String als date?
 //			OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+			
+			response.setContentType("offers/json");
+			response.getWriter().write(gson.toJson(offertoreject, offertoreject.getClass()));
+			return;
 		}
 		else if (path.equals("/js/documentsFromOffer")) {
 			String aid = request.getParameter("aid");
@@ -151,7 +160,6 @@ public class ClerkServlet extends HttpServlet {
 			Vector<Offer> offersid = OfferController.getInstance().getAllOffers();
 			//String offername;
 			Vector<OfferDocument> offerdocuments = new Vector<OfferDocument>();
-			System.out.println("hier?");
 			for(int i=0; i<offersid.size(); i++){
 				if(aid1 == offersid.elementAt(i).getAid()){
 					offerdocuments = DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
@@ -171,9 +179,7 @@ public class ClerkServlet extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			
 			Vector<Document> docsToAdd = DocumentController.getInstance().getDocumentsToAddToOffer(aid);
-			
-			for(int i = 0; i < docsToAdd.size(); i++)
-				System.out.println(docsToAdd.elementAt(i).getUid());
+
 			response.setContentType("documentstoaddoffer/json");
 			response.getWriter().write(gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
@@ -355,7 +361,6 @@ public class ClerkServlet extends HttpServlet {
 
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			System.out.println("deleteOfferDocument: "+uid+" from offer: "+aid);
 			DocumentController.getInstance().deleteOfferDocument(new OfferDocument(aid,uid));
 			return;
 		}
@@ -365,7 +370,6 @@ public class ClerkServlet extends HttpServlet {
 
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			System.out.println("addOfferDocument: "+uid+" from offer: "+aid);
 			DocumentController.getInstance().createOfferDocument(new OfferDocument(aid,uid));
 			return;
 		}

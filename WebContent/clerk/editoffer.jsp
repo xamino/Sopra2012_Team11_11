@@ -82,8 +82,8 @@
 						type="button" value="Dokument löschen"
 						onclick="togglePopup('document_del',true);" />
 				</div>
-				<table class="hidden">
-					<tr>
+				<table id="offerinfotable" class="hidden">
+				<!--	<tr>
 						<td>Name des Veranstalters:</td>
 						<td>Prof. Doc. Gott</td>
 					</tr>
@@ -109,14 +109,14 @@
 							besprochen, hier das Angebot. Ich hoffe, diesmal stimmt alles. :D<br>
 							<br>Grüße,<br>Hr. Gott
 						</td>
-					</tr>
+					</tr> -->
 				</table>
 				<hr>
 					<div style="float: right;">
 						<input type="button" value="Mail an Anbieter" />
 					</div>
-					<input type="button" id="angebotbestaetigen" value="Angebot bestätigen" onclick="angebotbestaetigen()"/> <input
-						type="button" id="angebotablehnen" value="Angebot ablehnen" onclick="angebotablehnen()"/>
+					<input type="button" id="angebotbestaetigen" value="Angebot bestätigen" onclick="angebotbestaetigen()"/>
+					<input type="button" id="angebotablehnen" value="Angebot ablehnen" onclick="angebotablehnen()"/>
 			</div>
 			</div>
 		</div>

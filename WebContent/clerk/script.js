@@ -29,6 +29,7 @@ var selectedDocument;
  * displays them.
  */
 function showMyOffers() {
+
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	prepareButton();
@@ -73,30 +74,77 @@ function handleShowMyOffersResponse(mime, data) {
  */
 function editOneOffer() {
 	var aid = getURLParameter("AID");
-	alert(aid);
 	connect("/hiwi/Clerk/js/editOneOffer", "aid="+aid, handleEditOneOfferResponse);
 }
 
 
 function handleEditOneOfferResponse(mime, data){
-	var aid = getURLParameter("AID");
-	alert("handleEditOneOfferResponse "+aid);
-	
+
 	if (mime == "text/url") {
 		window.location = data;
 	}
 	else if (mime == "offers/json") {
-		/*
-		 * Attribute der Offers mit 'aid' anzeigen
-		 */ 
+		
+		var offer = eval("("+data+")");
+		var status;
+		var angebotbestattribut;
+		var angebotablattribut;
+		if(offer.checked){
+			status = "bestätigt";
+			angebotbestattribut = "disabled";
+			angebotablattribut = "";
+		}
+		else{
+			status = "abgelehnt";
+			angebotbestattribut = "";
+			angebotablattribut = "disabled";
+		}
+			
+		var offertable = document.getElementById("offerinfotable");
+		var angebotbestaetigenbutton = document.getElementById("angebotbestaetigen");
+		var angebotablehnenbutton = document.getElementById("angebotablehnen");
+		
+		offertable.innerHTML = "<tr><td>Name des Veranstalters:</td>"+
+								   "<td>"+offer.author+"</td></tr>"+
+								"<tr><td>Titel der Stelle:</td>"+
+									"<td>"+offer.name+"</td></tr>"+
+								"<tr><td>Plätze:</td>"+
+									"<td>"+offer.slots+"</td></tr>"+
+								"<tr><td>Stunden die Woche:</td>"+
+									"<td><input id=\"inputhoursperweek\" type=\"text\" value=\""+offer.hoursperweek+"\" /> std.</td></tr>"+
+								"<tr><td>Lohn:</td>"+
+									"<td><input id=\"inputwage\" type=\"text\" value=\""+offer.wage+"\" />€</td></tr>"+
+								"<tr><td>Anbieternotiz:</td>"+
+								"<td style=\"background-color: lightgray;\">"+offer.note+"</td></tr>"+
+								"<tr><td>Status:</td><td>"+status+"</td></tr>";
+		
+		angebotbestaetigenbutton.disabled = angebotbestattribut;
+		angebotablehnenbutton.disabled = angebotablattribut;
+		
 		documentsFromOffer();
 	}
 }
 
+
+function angebotbestaetigen(){
+	var aid = getURLParameter("AID");
+	var hoursperweek = document.getElementById("inputhoursperweek").value;
+	var wage = document.getElementById("inputwage").value;
+
+	connect("/hiwi/Clerk/js/approveOffer", "aid="+aid+"&hoursperweek="+hoursperweek+"&wage="+wage, handleEditOneOfferResponse);
+}
+
+function angebotablehnen(){
+	var aid = getURLParameter("AID");
+
+	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, handleEditOneOfferResponse);
+}
+
+
 function documentsFromOffer(){
 	var aid = getURLParameter("AID");
 	connect("/hiwi/Clerk/js/documentsFromOffer", "aid="+aid, handledocumentsFromOfferResponse);
-	alert("ohne alert funzt es ned =( ");
+//	alert("ohne alert funzt es ned =( ");
 }
 
 
@@ -176,7 +224,7 @@ function prepareButton()
 
 function deleteChosenDocument(){
 	var aid = getURLParameter("AID");
-	alert("delete Document: "+selectedDocument+" from Offer "+aid);
+//	alert("delete Document: "+selectedDocument+" from Offer "+aid);
 	connect("/hiwi/Clerk/js/deleteOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
 	selectedDocument = null;
 	documentsFromOffer();
@@ -186,25 +234,12 @@ function addChosenDocument(){
 	var aid = getURLParameter("AID");
 	var selectedDocument = document.getElementById("selectDocumentsToAdd").value;
 	
-	alert(selectedDocument);
+//	alert(selectedDocument);
 	
 //	alert("add Document: "+selectedDocument+" from Offer "+aid);
 	connect("/hiwi/Clerk/js/addOfferDocument", "uid="+selectedDocument+"&aid="+aid, null);
 	selectedDocument=null;
 	documentsFromOffer();
-}
-
-
-function angebotbestaetigen(){
-	var aid = getURLParameter("AID");
-	alert("Angebot "+aid+" bestaetigen");
-	connect("/hiwi/Clerk/js/approveOffer", "aid="+aid, null);
-}
-
-function angebotablehnen(){
-	var aid = getURLParameter("AID");
-	alert("Angebot "+aid+" ablehnen");
-	connect("/hiwi/Clerk/js/rejectOffer", "aid="+aid, null);
 }
 
 
@@ -216,7 +251,7 @@ function angebotablehnen(){
  *            The ID of the clicked entry.
  */
 function markDocumentSelected(id) {
-	alert("alte docid: "+selectedDocument);
+//	alert("alte docid: "+selectedDocument);
 	// Remove marking from previous selected, if applicable:
 	if (selectedDocument != null)
 		document.getElementById(selectedDocument).setAttribute("class", "");
@@ -228,7 +263,7 @@ function markDocumentSelected(id) {
 	// Else save & mark new one:
 	selectedDocument = id;
 
-	alert("aktuelle docid: "+selectedDocument);
+//	alert("aktuelle docid: "+selectedDocument);
 
 	document.getElementById(id).setAttribute("class", "selected");
 	
