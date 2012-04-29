@@ -15,10 +15,8 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import logger.Log;
-import user.Clerk;
 import user.Provider;
 import database.DatabaseController;
-import database.account.Account;
 import database.application.Application;
 
 public class OfferController {
@@ -64,8 +62,8 @@ public class OfferController {
 	 * Datenbankzugang benoetigt.
 	 */
 	private DatabaseController dbc;
-	
-	final static String tableName = "Angebote";//tabellenname
+
+	final static String tableName = "Angebote";// tabellenname
 
 	/**
 	 * Diese Methode erstellt ein neues Jobangebot in der Datenbank mit Daten
@@ -77,19 +75,27 @@ public class OfferController {
 	 */
 	public void createOffer(Offer offer) {
 
-//		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
-//				offer.getNote(), offer.isChecked(), offer.getSlots(),
-//				offer.getHoursperweek(), offer.getDescription(),
-//				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-//				offer.getInstitute(), offer.getModificationdate() };
+		// Object[] values = { offer.getAid(), offer.getAuthor(),
+		// offer.getName(),
+		// offer.getNote(), offer.isChecked(), offer.getSlots(),
+		// offer.getHoursperweek(), offer.getDescription(),
+		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+		// offer.getInstitute(), offer.getModificationdate() };
 
 		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				"01.02.2012"/*offer.getStartdate()*/,"04.06.2012"/*offer.getEnddate()*/, offer.getWage(),
-				offer.getInstitute(), "08.02.2012"/*offer.getModificationdate()*/ };
-		
-		
+				"01.02.2012"/* offer.getStartdate() */, "04.06.2012"/*
+																	 * offer.
+																	 * getEnddate
+																	 * ()
+																	 */,
+				offer.getWage(), offer.getInstitute(), "08.02.2012"/*
+																	 * offer.
+																	 * getModificationdate
+																	 * ()
+																	 */};
+
 		dbc.insert(tableName, values);
 	}
 
@@ -118,29 +124,28 @@ public class OfferController {
 	 */
 	public void updateOffer(Offer offer) {
 
-		//Dates entfernt, da problematisch
-		
-//		String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-//				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-//				"Stundenlohn", "Institut", "aenderungsdatum" };
-//
-//		Object[] values = offer.getAuthor(), offer.getName(),
-//				offer.getNote(), offer.isChecked(), offer.getSlots(),
-//				offer.getHoursperweek(), offer.getDescription(),
-//				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-//				offer.getInstitute(), offer.getModificationdate() };
-//
-//		
-		String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-				"Plaetze", "Stundenprowoche", "Beschreibung",
-				"Stundenlohn", "Institut"};
+		// Dates entfernt, da problematisch
 
-		Object[] values = {offer.getAuthor(), offer.getName(),
+		// String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
+		// "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+		// "Stundenlohn", "Institut", "aenderungsdatum" };
+		//
+		// Object[] values = offer.getAuthor(), offer.getName(),
+		// offer.getNote(), offer.isChecked(), offer.getSlots(),
+		// offer.getHoursperweek(), offer.getDescription(),
+		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+		// offer.getInstitute(), offer.getModificationdate() };
+		//
+		//
+		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
+				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
+				"Institut" };
+
+		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute()};
+				offer.getWage(), offer.getInstitute() };
 
-		
 		String where = "AID = " + offer.getAid();
 
 		dbc.update(tableName, columns, values, where);
@@ -196,14 +201,11 @@ public class OfferController {
 	 * @return Alle Jobangebote in der Datenbank, die dem Wert von "checked"
 	 *         entsprechen werden in Form eines Vectors zurueckgegeben.
 	 */
-	public Vector<Offer> getOffersByCheck(Offer offer) {
-
-		Vector<Offer> offervec = new Vector<Offer>(50, 10);
-
+	public Vector<Offer> getCheckedOffers() {
+		Vector<Offer> offervec = new Vector<Offer>();
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "Geprueft = '" + offer.isChecked() + "'";
-
+		String where = "Geprueft = 1";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -213,19 +215,14 @@ public class OfferController {
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
 						rs.getInt(12), rs.getDate(13));
-
 				offervec.add(currentoff);
 			}
-
 			rs.close();
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.write("OfferController", "Error retrieving all checked offers!");
+			return null;
 		}
-
 		return offervec;
-
 	}
 
 	/**
@@ -260,23 +257,23 @@ public class OfferController {
 		}
 		return offervec;
 	}
-	
-	
+
 	/**
-	 * Diese Methode sammelt alle Jobangebote eines Providers aus der
-	 * Datenbank und speichert diese in einem Vector.
+	 * Diese Methode sammelt alle Jobangebote eines Providers aus der Datenbank
+	 * und speichert diese in einem Vector.
 	 * 
 	 * @param provider
-	 * 		   Parameter gibt den ben�tigten Provider an
+	 *            Parameter gibt den ben�tigten Provider an
 	 * 
 	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
-	 *         Datenbank zurueckgegeben. 
+	 *         Datenbank zurueckgegeben.
 	 */
 	public Vector<Offer> getOffersByProvider(Provider provider) {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "Ersteller = '"+provider.getUserData().getUsername()+"'";
+		String where = "Ersteller = '" + provider.getUserData().getUsername()
+				+ "'";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -295,7 +292,7 @@ public class OfferController {
 		}
 		return offervec;
 	}
-	
+
 	/**
 	 * Diese Methode sammelt alle Jobangebote, fuer die Sich ein Bewerber
 	 * beworben hat, aus der Datenbank und speichert diese in einem Vector.
@@ -340,29 +337,30 @@ public class OfferController {
 
 		return offervec;
 	}
-	
+
 	/**
 	 * 
 	 * @param ID
-	 * 			ID des Angebots
-	 * @return
-	 * 			Gibt das gesuchte Angebot zurueck
+	 *            ID des Angebots
+	 * @return Gibt das gesuchte Angebot zurueck
 	 * @throws SQLException
 	 */
-	public Offer getOfferById(int ID){
-		String[] select = {"*"};
-		String[] from = {tableName};
-		String where = "AID = "+ID;
-		
+	public Offer getOfferById(int ID) {
+		String[] select = { "*" };
+		String[] from = { tableName };
+		String where = "AID = " + ID;
+
 		ResultSet rs = dbc.select(select, from, where);
-		
+
 		try {
-			if (rs.next()){		
-				Offer off = new Offer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5), rs.getInt(6), 
-						rs.getDouble(7), rs.getString(8), rs.getDate(9), rs.getDate(10), rs.getDouble(11), rs.getInt(12), rs.getDate(13));
+			if (rs.next()) {
+				Offer off = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13));
 				return off;
-			}
-			else
+			} else
 				return null;
 		} catch (SQLException e) {
 			logger.Log.getInstance().write("OfferController",
