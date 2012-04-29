@@ -172,12 +172,12 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * Methode zum aktualisieren des Berwerbungs-Status.
+	 * Methode zum beenden des Berwerbungsvorgangs.
 	 * @param AID
 	 * 			ID der Bewerbung
 	 * @throws SQLException 
 	 */
-	public void updateStatus(int AID) throws SQLException {
+	public void finishApplication(int AID) throws SQLException {
 		Application app = appcon.getApplicationById(AID);
 		app.setFinished(true);
 		appcon.updateApplication(app);

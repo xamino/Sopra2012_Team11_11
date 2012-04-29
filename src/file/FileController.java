@@ -12,34 +12,29 @@ import java.io.File;
 
 public abstract class FileController {
 
-
-	/**
-	 * Diese Methode entfernt alle erstellten Dateien die zum Download zur
-	 * Verfuegung gestellt wurden.
-	 * 
-	 * @param sessionId
-	 *            Parameter "sessionId" identifiziert die zu loeschenden
-	 *            Download-Dateien. Dabei besteht die sessionId aus einem Teil
-	 *            des Session-Namens und einem zufaellig generierten Teil.
-	 */
-	public static void deleteAllFilesBySession(String sessionId) {
-
+/**
+ * Diese Methode loescht die Export Datei des Angegebenen Users.
+ * @param username Username des Users dessen Datei geloescht werden soll
+ * @return Wahrheitswert ob der Vorgang erfolgreich war
+ */
+	public static boolean deleteFile(String username){
+		return false;
+		
 	}
 
 	/**
-	 * Diese Methode erstellt eine Download-Datei bei uebergebener Session-Id
-	 * und der jeweiligen Download-Datei.
+	 * Diese Methode erstellt eine Download-Datei mit angegebenen Nutzernamen
+	 * und der jeweiligen Download-Datei. Sollte bereits eine Datei existieren wird diese ueberschrieben.
 	 * 
-	 * @param sessionId
-	 *            Parameter "sessionId" identifiziert die zu loeschenden
-	 *            Download-Dateien. Dabei besteht die sessionId aus einem Teil
-	 *            des Session-Namens und einem zufaellig generierten Teil.
+	 * @param username
+	 *            Parameter "username" identifiziert die zu loeschenden
+	 *            Download-Dateien. 
 	 * @param file
 	 *            Parameter "file" ist die jeweilige Download-Datei, die zum
 	 *            Donwload verfuegbar sein soll.
 	 * @return Zurueckgegeben wird der Pfad des erstellten Download-Datei.
 	 */
-	public static String createFile(String sessionId, File file) {
+	public static String createFile(String username, File file) {
 		return null;
 
 	}
