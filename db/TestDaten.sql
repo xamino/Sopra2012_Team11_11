@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 04/29/2012 17:55:46 PM
+ Date: 04/29/2012 18:11:03 PM
 */
 
 SET NAMES utf8;
@@ -66,7 +66,7 @@ CREATE TABLE `Angebote` (
 --  Records of `Angebote`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Angebote` VALUES ('1', 'provider1', 'Tutorium FGdI', 'Ich benötige folgende Prüfungsbescheinigung: FGdI', '1', '10', '10', 'Tutorium im Fach FGdI', '2012-05-15', '2012-07-13', '8.4', '1', '2012-04-29'), ('2', 'provider1', 'Tutorium Logik', null, '0', '10', '10', 'Tutorium im Fach Logik', '2012-05-15', '2012-09-28', '8.36', '1', '2012-04-29'), ('3', 'provider2', 'Tutorium Medienpsychologie', 'Benötige Superheldenbescheinigung', '1', '10', '10', 'Tutorium im Fach Medienpsychologie', '2012-05-15', '2012-08-12', '5.35', '2', '2012-04-29'), ('4', 'provider2', 'Tutorium Psychokram', 'Benötige Superheldenbescheinigung', '0', '10', '10', 'Tutorium im Fach Psychokram', '2012-05-15', '2012-06-13', '10.3', '2', '2012-04-29'), ('5', 'provider2', 'Korrektur Psychokram', null, '1', '10', '10', 'Korrektur der Übunbgsblätter aus \"Psychokram\"', '2012-05-15', '2012-07-06', '15.9', '2', '2012-04-29');
+INSERT INTO `Angebote` VALUES ('1', 'provider', 'Tutorium FGdI', 'Ich benötige folgende Prüfungsbescheinigung: FGdI', '1', '10', '10', 'Tutorium im Fach FGdI', '2012-05-15', '2012-07-13', '8.4', '1', '2012-04-29'), ('2', 'provider', 'Tutorium Logik', null, '0', '10', '10', 'Tutorium im Fach Logik', '2012-05-15', '2012-09-28', '8.36', '1', '2012-04-29'), ('3', 'provider2', 'Tutorium Medienpsychologie', 'Benötige Superheldenbescheinigung', '1', '10', '10', 'Tutorium im Fach Medienpsychologie', '2012-05-15', '2012-08-12', '5.35', '2', '2012-04-29'), ('4', 'provider2', 'Tutorium Psychokram', 'Benötige Superheldenbescheinigung', '0', '10', '10', 'Tutorium im Fach Psychokram', '2012-05-15', '2012-06-13', '10.3', '2', '2012-04-29'), ('5', 'provider2', 'Korrektur Psychokram', null, '1', '10', '10', 'Korrektur der Übunbgsblätter aus \"Psychokram\"', '2012-05-15', '2012-07-06', '15.9', '2', '2012-04-29');
 COMMIT;
 
 -- ----------------------------

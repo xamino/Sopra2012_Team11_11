@@ -137,7 +137,8 @@ public class Clerk extends User {
 					+ "> added document <" + doc.getName() + ">.");
 			return true;
 		}
-	}
+	} 
+	// Nur der Admin kann Unterlagen erstellen
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
@@ -146,18 +147,20 @@ public class Clerk extends User {
 		
 		doccon.deleteDocument(doc);
 	}
+//Siehe oben
 
-	/**
-	 * Methode zum annehmen eines Bewerbers.
-	 * @param AID
-	 * 			ID der Bewerbung
-	 * @throws SQLException 
-	 */
-	public void acceptApplication(int AID) throws SQLException {
-		Application app = appcon.getApplicationById(AID);
-		app.setChosen(true);
-		appcon.updateApplication(app);
-	}
+//	/**
+//	 * Methode zum annehmen eines Bewerbers.
+//	 * @param AID
+//	 * 			ID der Bewerbung
+//	 * @throws SQLException 
+//	 */
+//	public void acceptApplication(int AID) throws SQLException {
+//		Application app = appcon.getApplicationById(AID);
+//		app.setChosen(true);
+//		appcon.updateApplication(app);
+//	}
+// Der Provider nimmt bewerbungen an
 
 	/**
 	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber

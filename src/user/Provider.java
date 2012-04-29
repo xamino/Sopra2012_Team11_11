@@ -1,5 +1,6 @@
 package user;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -58,13 +59,18 @@ public class Provider extends User {
 		return true;
 	}
 
+
 	/**
-	 * Methode zur Annahme von Bewerbern auf ein Angebot.
+	 * Methode zum annehmen eines Bewerbers.
+	 * @param AID
+	 * 			ID der Bewerbung
+	 * @throws SQLException 
 	 */
-	public void acceptApplicants(int AId) {
-
+	public void acceptApplication(int AID) throws SQLException {
+		Application app = appcon.getApplicationById(AID);
+		app.setChosen(true);
+		appcon.updateApplication(app);
 	}
-
 	/**
 	 * Loescht ein Angebot aus dem System.
 	 */
