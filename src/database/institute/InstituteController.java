@@ -101,4 +101,18 @@ public class InstituteController {
 	public boolean deleteInstitute(Institute institute) {
 		return dbc.delete(tableName, "IID=" + institute.getIID());
 	}
+
+	public Institute getInstituteByIID(int IID) {
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { tableName }, "IID=" + IID);
+		try {
+			if (rs.next()) {
+				return new Institute(rs.getInt("IID"), rs.getString("Name"));
+			}
+			return null;
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			return null;
+		}
+	}
 }

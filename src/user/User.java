@@ -13,6 +13,7 @@ import database.application.Application;
 import database.application.ApplicationController;
 import database.document.AppDocument;
 import database.document.DocumentController;
+import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -29,6 +30,7 @@ public abstract class User {
 	 * Private Instanz des Loggers.
 	 */
 	protected Log log;
+
 	/**
 	 * Gibt das Userdata Objekt zurueck
 	 * 
@@ -64,7 +66,10 @@ public abstract class User {
 	 * OfferController fuer den Datenbankzugriff auf angebotsbezogene Daten.
 	 */
 	protected OfferController offcon;
-
+	/**
+	 * InstituteController fuer den Datenbankzugriff auf Institute.
+	 */
+	protected InstituteController instcon;
 
 	/**
 	 * Konstruktor
@@ -83,7 +88,8 @@ public abstract class User {
 		acccon = AccountController.getInstance();
 		appcon = ApplicationController.getInstance();
 		doccon = DocumentController.getInstance();
-		offcon= OfferController.getInstance();
+		offcon = OfferController.getInstance();
+		instcon = InstituteController.getInstance();
 	}
 
 	/**
@@ -96,29 +102,35 @@ public abstract class User {
 	/**
 	 * Loescht den eigenen Account
 	 */
-	
-	
+
 	/**
 	 * Aendert die Daten des eigenen Accounts
-	 * @param name Neuer Name
-	 * @param email Neue Email
-	 * @param pw Neues Passwort (gehashed!)
+	 * 
+	 * @param name
+	 *            Neuer Name
+	 * @param email
+	 *            Neue Email
+	 * @param pw
+	 *            Neues Passwort (gehashed!)
 	 * @return Wahrheitswert ob erfolgreich
 	 */
-	public boolean editOwnAccount(String name, String email , String pw){
+	public boolean editOwnAccount(String name, String email, String pw) {
 		Account own = acccon.getAccountByUsername(uData.getUsername());
-		if(email!=null){
+		if (email != null) {
 			own.setEmail(email);
 			uData.setEmail(email);
 		}
-		if(pw!=null)own.setPasswordhash(pw);
-		if(name!=null){
+		if (pw != null)
+			own.setPasswordhash(pw);
+		if (name != null) {
 			own.setName(name);
 			uData.setName(name);
 		}
-		if(acccon.updateAccount(own))return true;
+		if (acccon.updateAccount(own))
+			return true;
 		return false;
 	}
+
 	/**
 	 * Standard toString()
 	 * 

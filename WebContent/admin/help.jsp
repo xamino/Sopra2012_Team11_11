@@ -21,7 +21,7 @@
 	<div class="right">
 		<div class="angemeldet">
 			Sie sind als Administrator angemeldet. <br> <input type="submit"
-				value="Logout" onclick="doLogout();"/>
+				value="Logout" onclick="doLogout();" />
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
@@ -32,6 +32,8 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
 				Hilfe <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
 			</div>

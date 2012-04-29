@@ -40,6 +40,8 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
 				Account bearbeiten
@@ -101,7 +103,7 @@
 						<tr>
 							<td>Institut:</td>
 							<td><select id="institute" name="institute"></select>
-							<div id="error_institute" class="invisibleWarning"></div></td>
+								<div id="error_institute" class="invisibleWarning"></div></td>
 						</tr>
 						<!-- TODO: rename name... -->
 						<!-- <tr>

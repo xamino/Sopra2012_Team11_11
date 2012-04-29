@@ -56,7 +56,7 @@ function handleShowMyOffersResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("clerkTable");
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Zustï¿½ndigen</th><th>Angebot</th><th>Plï¿½tze</th><th>Stunden pro Woche</th></tr>";
+		table2.innerHTML = "<tr><th>Name des ZustÃ¤ndigen</th><th>Angebot</th><th>PlÃ¤tze</th><th>Stunden pro Woche</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
@@ -90,7 +90,7 @@ function handleEditOneOfferResponse(mime, data){
 		var angebotbestattribut;
 		var angebotablattribut;
 		if(offer.checked){
-			status = "bestätigt";
+			status = "bestï¿½tigt";
 			angebotbestattribut = "disabled";
 			angebotablattribut = "";
 		}
@@ -108,12 +108,12 @@ function handleEditOneOfferResponse(mime, data){
 								   "<td>"+offer.author+"</td></tr>"+
 								"<tr><td>Titel der Stelle:</td>"+
 									"<td>"+offer.name+"</td></tr>"+
-								"<tr><td>Plätze:</td>"+
+								"<tr><td>Plï¿½tze:</td>"+
 									"<td>"+offer.slots+"</td></tr>"+
 								"<tr><td>Stunden die Woche:</td>"+
 									"<td><input id=\"inputhoursperweek\" type=\"text\" value=\""+offer.hoursperweek+"\" /> std.</td></tr>"+
 								"<tr><td>Lohn:</td>"+
-									"<td><input id=\"inputwage\" type=\"text\" value=\""+offer.wage+"\" />€</td></tr>"+
+									"<td><input id=\"inputwage\" type=\"text\" value=\""+offer.wage+"\" />ï¿½</td></tr>"+
 								"<tr><td>Anbieternotiz:</td>"+
 								"<td style=\"background-color: lightgray;\">"+offer.note+"</td></tr>"+
 								"<tr><td>Status:</td><td>"+status+"</td></tr>";
@@ -214,7 +214,7 @@ function prepareButton()
 
     if(document.getElementById("editapplication")!=null && selectedOffer != null){	//applicationmanagement.jsp --> editapplication.jsp, wenn etwas markiert ist
 	    document.getElementById("editapplication").onclick = function(){
-	    	var temp = selectedOffer.split("§%#%§");
+	    	var temp = selectedOffer.split("ï¿½%#%ï¿½");
 	    	var user = temp[0];
 	    	var aid = temp[1];
 	        window.location='editapplication.jsp?User='+user+"&AID="+aid;
@@ -412,9 +412,9 @@ function handleShowApplicationResponse(mime, data) {
 		// Write table â€“ probably replaces old data!
 		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";		
 		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username +"§%#%§"+ JSONarray[i].aid
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username +"ï¿½%#%ï¿½"+ JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username +"§%#%§"+ JSONarray[i].aid+ "\');\"><td>" 
+					+ JSONarray[i].username +"ï¿½%#%ï¿½"+ JSONarray[i].aid+ "\');\"><td>" 
 					+ JSONarray[i].bewerbername + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
