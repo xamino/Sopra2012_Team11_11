@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import file.FileController;
+
 import user.User;
 
 import logger.Log;
@@ -135,6 +137,7 @@ public abstract class LoggedInUsers {
 			return;
 		}
 		userMap.remove(id);
+		FileController.deleteFile(name);
 		log.write("LoggedInUsers", name+ " has logged out.");
 	}
 }
