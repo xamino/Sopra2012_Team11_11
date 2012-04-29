@@ -7,16 +7,14 @@ package servlet;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +50,6 @@ public class ClerkServlet extends HttpServlet {
 	 * Standard serialVersionUID.
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int buffersize = 16384;
 	/**
 	 * Variable zum speicher der Log Instanz.
 	 */
@@ -418,45 +415,70 @@ public class ClerkServlet extends HttpServlet {
 				response.setContentType("error/url");
 				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
+		} else {
+			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}
-		else if (path.equals("/js/doExcelExport")) {
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// Check authenticity:
+		Clerk clerk = Helper.checkAuthenticity(request.getSession(),
+				Clerk.class);
+		if (clerk == null) {
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_INDEX);
+			return;
+		}
+		String path = request.getPathInfo();
+		if (path.equals("/js/doExcelExport")) {
 			File file = null;
 			try {
 				file = clerk.doExport();
 			} catch (RowsExceededException e) {
-				// TODO Auto-generated catch block
-				response.setContentType("error/url");
-				e.printStackTrace();
+				response.setContentType("text/error");
+				response.getWriter().write("RowsExceededExcetion!");
 			} catch (WriteException e) {
-				response.setContentType("error/url");
+				response.setContentType("text/error");
 				response.getWriter().write("Error while writing File");
 			}
-			response.setContentLength((int) file.length());
-
-			OutputStream os = response.getOutputStream();
-			FileInputStream fis = new FileInputStream(file);
-			byte[] buffer = new byte[20000];
-			// Random Zahl (ausm Beispiel von Manu) da ich keine Ahnung
-			// hab wie ich die length bekomme.
-			int bytesRead = 0;
-			while (true) {
-				bytesRead = fis.read(buffer);
-				if (bytesRead == -1) {
-					// FileInputStream.read gibt -1 zurück falls keine Daten zum
-					// lesen mehr da sind.
-					break;
-				}
+			FileInputStream fileToDownload = new FileInputStream(file);
+			ServletOutputStream output = response.getOutputStream();
+			response.setContentType("application/msexcel");
+			response.setHeader("Content-Disposition",
+					"attachment; filename=excelExport.xls");
+			response.setContentLength(fileToDownload.available());
+			int c;
+			while ((c = fileToDownload.read()) != -1) {
+				output.write(c);
 			}
-			os.flush();
-			fis.close();
-
-			response.setContentType("text/url");
+			output.flush();
+			output.close();
+			fileToDownload.close();
+			// // Set correct parameters:
+			// response.setContentType("application/excel");
+			// response.setContentLength((int) file.length());
+			//
+			// OutputStream os = response.getOutputStream();
+			// FileInputStream fis = new FileInputStream(file);
+			// byte[] buffer = new byte[(int) file.length()];
+			// // Random Zahl (ausm Beispiel von Manu) da ich keine Ahnung
+			// // hab wie ich die length bekomme. <Tamino> file.length wird in
+			// den
+			// // Bsp benutzt.
+			// int bytesRead = 0;
+			// while (true) {
+			// bytesRead = fis.read(buffer);
+			// if (bytesRead == -1) {
+			// // FileInputStream.read gibt -1 zurück falls keine Daten zum
+			// // lesen mehr da sind.
+			// break;
+			// }
+			// }
+			// os.flush();
+			// fis.close();
+			// return;
 		}
-
-		else {
-			log.write("ClerkServlet", "Unknown path <" + path + ">");
-		}
-
 	}
 
 	private String getDateTime() {

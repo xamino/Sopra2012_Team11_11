@@ -5,13 +5,15 @@
 
 // !!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd
 // wieso??!!!!!!!!!!!!
-function doExcelExport() {
-	connect("/hiwi/Clerk/js/doExcelExport", "", handleExport);
-}
 
-function handleExport(mime, data) {
-	if (mime == "text/url")
-		window.location = data;
+/**
+ * Fragt mich nicht, warum das so funktioniert... :P
+ */
+function doExcelExport() {
+	var elemIF = document.createElement("iframe");
+	elemIF.src = "/hiwi/Clerk/js/doExcelExport";
+	elemIF.style.display = "none";
+	document.body.appendChild(elemIF);
 }
 
 /**
