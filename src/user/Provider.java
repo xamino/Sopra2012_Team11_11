@@ -68,7 +68,8 @@ public class Provider extends User {
 	/**
 	 * Loescht ein Angebot aus dem System.
 	 */
-	public void deleteOffer(int pOfferId) {
+	public void deleteOffer(Offer offer) {
+		offcon.deleteOffer(offer);
 
 	}
 

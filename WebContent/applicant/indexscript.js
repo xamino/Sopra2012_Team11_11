@@ -5,7 +5,7 @@
  */
 
 
-//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiß jmd wieso??!!!!!!!!!!!!
+//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... weiï¿½ jmd wieso??!!!!!!!!!!!!
 
 /**
  * Stores the selected Offer:
@@ -88,7 +88,7 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ JSONarray[i].startdate + "\');\"><td>"
 					+ JSONarray[i].startdate + "</td><td>" + JSONarray[i].name
 					+ "</td><td><div class=\"float2\">"+ JSONarray[i].description + "</div><div class=\"float\"><input type=\"submit\" value=\"Bewerbung ansehen\" id=\"" + JSONarray[i].aid+ "\"onclick=\"selectApplication2(\'" + JSONarray[i].aid + "\');\" \></div><div class=\"clear\"></div></td></tr>";
-		} //über die onclick methode wird mit der id zur status.jsp weiter geleitet
+		} //ï¿½ber die onclick methode wird mit der id zur status.jsp weiter geleitet
 		loadOffers();
 	}
 }
@@ -203,4 +203,14 @@ function markOfferSelected(id) {
 	selectedOffer = id;
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
+}
+
+function deleteApplication(){
+	alert("deleteApplication");
+	connect("/hiwi/Applicant/js/deleteApplication", "UID="+UID+"AND AID="+AID, callback)
+	
+}
+
+function dandleDeleteApplication(mime,data){
+	
 }
