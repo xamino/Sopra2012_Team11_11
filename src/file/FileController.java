@@ -22,19 +22,12 @@ public abstract class FileController {
 		
 	}
 
-	/**
-	 * Diese Methode erstellt eine Download-Datei mit angegebenen Nutzernamen
-	 * und der jeweiligen Download-Datei. Sollte bereits eine Datei existieren wird diese ueberschrieben.
-	 * 
-	 * @param username
-	 *            Parameter "username" identifiziert die zu loeschenden
-	 *            Download-Dateien. 
-	 * @param file
-	 *            Parameter "file" ist die jeweilige Download-Datei, die zum
-	 *            Donwload verfuegbar sein soll.
-	 * @return Zurueckgegeben wird der Pfad des erstellten Download-Datei.
-	 */
-	public static String createFile(String username, File file) {
+/**
+ * Erstellt eine neue beschreibbare Excel Datei.
+ * @param username Benutzername des Dateibesitzers
+ * @return Datei zum weiterverarbeiten fuer den ExcelExport
+ */
+	public static File createFile(String username) {
 		return null;
 
 	}

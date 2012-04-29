@@ -30,10 +30,7 @@ public abstract class ExcelExport {
 	
 	/**
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
-	 * Verwalters und gibt den Link dazu zurueck. Dem uebergebenen
-	 * UserData-Objekt werden der Benutzername und die Session entnommen um
-	 * diese dann mittels dem FileController zum Download zur verfügung zu
-	 * stellen.
+	 * Verwalters und gibt den Link dazu zurueck.
 	 * 
 	 * @param data
 	 *            UserData Objekt des Benutzers.
@@ -45,7 +42,7 @@ public abstract class ExcelExport {
 		String clerkname = data.getUsername(); 
 		Vector<Application> appvec = appcon.getApprovedApplicationsByClerk(clerkname);
 		
-		WritableWorkbook ww = Workbook.createWorkbook(new File("ExcelExport.xls"));
+		WritableWorkbook ww = Workbook.createWorkbook(FileController.createFile(data.getUsername()));
 		WritableSheet sh = ww.createSheet("All Applications by "+clerkname, 0);
 		
 		Label Name = new Label(0,0,"Name");
