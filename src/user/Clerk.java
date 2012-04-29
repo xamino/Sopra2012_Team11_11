@@ -75,14 +75,8 @@ public class Clerk extends User {
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
 	public boolean deleteOwnAccount(){
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = true;
-		int i = 0;
-		check = acccon.deleteAccount(acc);
 		invalidate();
-		
-		return check;
+		return acccon.deleteClerkAccount(this);
 	}
 
 	/**

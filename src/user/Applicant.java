@@ -71,7 +71,8 @@ public class Applicant extends User {
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
 	public boolean deleteOwnAccount(){
-		return appcon.deleteApplicantAccount(this);
+		invalidate();
+		return acccon.deleteApplicantAccount(this);
 	}
 	
 	/**

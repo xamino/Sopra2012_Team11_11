@@ -88,10 +88,9 @@ public class ProviderServlet extends HttpServlet {
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
-			String name = provider.getUserData().getUsername();
-			int id = Integer.parseInt(request.getParameter("AID"));
-			if (provider.deleteOwnAccount(id)) {
-				log.write("ApplicantServlet", name
+			String username = provider.getUserData().getUsername();
+			if (provider.deleteOwnAccount()) {
+				log.write("ApplicantServlet", username
 						+ " has deleted his account.");
 				// Simply now for debugging:
 				response.setContentType("text/url");

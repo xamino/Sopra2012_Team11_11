@@ -118,31 +118,7 @@ public class ApplicationController {
 		dbc.update(tableName, columns, values, where);
 	}
 	
-	public boolean deleteApplicantAccount(Applicant applicant){
-		String username = applicant.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		int i = 0;
-		
-		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
-		Iterator<AppDocument> it = doc.iterator();
-		
-		while(it.hasNext()){
-			doccon.deleteAppDocument(doc.elementAt(i));
-			i++;
-		}
-		
-		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
-		Iterator<Application> itp = apps.iterator();
-		i = 0;
-		while(it.hasNext()){
-			appcon.deleteApplication(apps.elementAt(i));
-			i++;
-		}
-		 
-		applicant.invalidate();
-		
-		return acccon.deleteAccount(acc);
-	}
+	
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen aus der Datenbank und speichert
