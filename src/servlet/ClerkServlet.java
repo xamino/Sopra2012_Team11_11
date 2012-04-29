@@ -190,6 +190,11 @@ public class ClerkServlet extends HttpServlet {
 			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance().getAccountByUsername(username);
 			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance().getChosenApplicationDataByInstitute(clerka.getInstitute());
+			if (daten == null || daten.isEmpty()) {
+				response.setContentType("text/error");
+				response.getWriter().write("Keine Einträge in der DB!");
+				return;
+			}
 			//System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));

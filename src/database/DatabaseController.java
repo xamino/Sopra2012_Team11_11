@@ -437,9 +437,9 @@ public class DatabaseController {
 	 */
 	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(int institute){
 		
-		String sel = "SELECT accounts.name, angebote.Name, accounts.benutzername, angebote.AID " +
-				"FROM bewerbungen JOIN angebote ON bewerbungen.AID = angebote.AID AND ausgewaehlt = 1 AND angebote.Institut = "+institute+
-				" JOIN accounts ON accounts.benutzername = bewerbungen.benutzername";
+		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID " +
+				"FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "+institute+
+				" JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
 		
 		ResultSet rs;
 		System.out.println(sel);
