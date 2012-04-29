@@ -163,7 +163,7 @@ function handledocumentsFromOfferResponse(mime, data){
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
 					+ "\" onclick=\"markDocumentSelected(\'"
-					+ JSONarray[i].uid + "\');\"><td>" +    JSONarray[i].name  + "</td><br></tr>";
+					+ JSONarray[i].uid + "\');\"><td>" +    JSONarray[i].name  + "</td></tr>";
 		}
 		
 		//Zum Laden des DropDown-Menues des Pop-Ups bei "Dokument Hinzufuegen"
