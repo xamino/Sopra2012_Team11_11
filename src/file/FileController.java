@@ -52,6 +52,9 @@ public abstract class FileController {
 		if(f.exists()){
 			f.delete();
 			f.createNewFile();
+			
+		}else {
+			f.createNewFile();
 		}
 		} catch (Exception e) {
 			Helper.log.write("FileController", "Error while creating File("+"path"+")");
