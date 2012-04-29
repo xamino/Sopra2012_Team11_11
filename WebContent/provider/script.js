@@ -61,7 +61,7 @@ function handleLoadOffersResponse(mime, data) {
 		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber/Stelle</th><th>Aendern</th><th>Widerrufen</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid+ "\"><td>"
-					+ JSONarray[i].name + "</td><td>hier fehlt die Anzahl!!<br><input id=\""+JSONarray[i].aid+"\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
+					+ JSONarray[i].name + "</td><td>Anzahl:"+JSONarray[i].slots+"<br><input id=\""+JSONarray[i].aid+"\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
 					+ JSONarray[i].aid + "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"prepareButtonUpdateOffer(\'"
 					+ JSONarray[i].aid + "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
 					+ JSONarray[i].aid + "\');\" /> </td></tr>";
