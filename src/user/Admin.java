@@ -1,5 +1,3 @@
-
-
 package user;
 
 import javax.servlet.http.HttpSession;
@@ -9,15 +7,13 @@ import logger.Log;
 import userManagement.LoggedInUsers;
 
 import database.account.Account;
-import database.account.AccountController;
 import database.document.Document;
-import database.document.DocumentController;
+import database.institute.Institute;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.
  */
 public class Admin extends User {
-
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -66,17 +62,18 @@ public class Admin extends User {
 		acccon.deleteAccount(account);
 		return true;
 	}
-	
+
 	/**
 	 * Methode zum Löschen seines Accounts
-	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+	 * 
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
 	 */
-	public boolean deleteOwnAccount(){
+	public boolean deleteOwnAccount() {
 		String username = this.getUserData().getUsername();
 		Account acc = acccon.getAccountByUsername(username);
 		boolean check = acccon.deleteAccount(acc);
 		invalidate();
-		
+
 		return check;
 	}
 
@@ -168,6 +165,33 @@ public class Admin extends User {
 		} else {
 			log.write("Admin", "<" + getUserData().getUsername()
 					+ "> modified document <" + doc.getName() + ">.");
+			return true;
+		}
+	}
+
+	/**
+	 * 
+	 * @param institute
+	 * @return
+	 */
+	public boolean addInstitute(Institute institute) {
+		if (!instcon.addInstitute(institute)) {
+			log.write("Admin", "Error creating institute!");
+			return false;
+		} else {
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> added institute <" + institute.getName() + ">.");
+			return true;
+		}
+	}
+	
+	public boolean deleteInstitute(Institute institute) {
+		if (!instcon.deleteInstitute(institute)) {
+			log.write("Admin", "Error deleting institute!");
+			return false;
+		} else {
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> deleted institute <" + institute.getName() + ">.");
 			return true;
 		}
 	}
