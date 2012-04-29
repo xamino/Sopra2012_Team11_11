@@ -38,11 +38,11 @@ public abstract class ExcelExport {
 	 * @throws WriteException 
 	 * @throws RowsExceededException 
 	 */
-	public static String export(final UserData data) throws IOException, RowsExceededException, WriteException {
+	public static File export(final UserData data) throws IOException, RowsExceededException, WriteException {
 		String clerkname = data.getUsername(); 
 		Vector<Application> appvec = appcon.getApprovedApplicationsByClerk(clerkname);
-		
-		WritableWorkbook ww = Workbook.createWorkbook(FileController.createFile(data.getUsername()));
+		File file = FileController.createFile(data.getUsername());
+		WritableWorkbook ww = Workbook.createWorkbook(file);
 		WritableSheet sh = ww.createSheet("All Applications by "+clerkname, 0);
 		
 		Label Name = new Label(0,0,"Name");
@@ -60,7 +60,7 @@ public abstract class ExcelExport {
 		
 		ww.write();
 		ww.close();
-		return "Excel Tabelle erstellt. Download noch nicht bereit";
+		return file;
 
 	}
 

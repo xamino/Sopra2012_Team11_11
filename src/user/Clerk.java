@@ -6,6 +6,7 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -192,7 +193,7 @@ public class Clerk extends User {
 	 * @throws RowsExceededException 
 	 */
 
-	public String doExport() throws IOException, RowsExceededException, WriteException {
+	public File doExport() throws IOException, RowsExceededException, WriteException {
 		return ExcelExport.export(this.getUserData());
 
 	}
