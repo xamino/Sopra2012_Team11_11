@@ -90,7 +90,7 @@ function handleEditOneOfferResponse(mime, data){
 		var angebotbestattribut;
 		var angebotablattribut;
 		if(offer.checked){
-			status = "best�tigt";
+			status = "bestätigt";
 			angebotbestattribut = "disabled";
 			angebotablattribut = "";
 		}
@@ -108,12 +108,12 @@ function handleEditOneOfferResponse(mime, data){
 								   "<td>"+offer.author+"</td></tr>"+
 								"<tr><td>Titel der Stelle:</td>"+
 									"<td>"+offer.name+"</td></tr>"+
-								"<tr><td>Pl�tze:</td>"+
+								"<tr><td>Plätze:</td>"+
 									"<td>"+offer.slots+"</td></tr>"+
 								"<tr><td>Stunden die Woche:</td>"+
 									"<td><input id=\"inputhoursperweek\" type=\"text\" value=\""+offer.hoursperweek+"\" /> std.</td></tr>"+
 								"<tr><td>Lohn:</td>"+
-									"<td><input id=\"inputwage\" type=\"text\" value=\""+offer.wage+"\" />�</td></tr>"+
+									"<td><input id=\"inputwage\" type=\"text\" value=\""+offer.wage+"\" />€</td></tr>"+
 								"<tr><td>Anbieternotiz:</td>"+
 								"<td style=\"background-color: lightgray;\">"+offer.note+"</td></tr>"+
 								"<tr><td>Status:</td><td>"+status+"</td></tr>";

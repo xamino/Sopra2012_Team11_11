@@ -187,7 +187,7 @@ public class Clerk extends User {
 	/**
 	 * Export fuer die Excel-File
 	 * 
-	 * @return Die URL zu den Download des Excel-Files.
+	 * @return Fileobjekt des ExcelFiles
 	 * @throws IOException 
 	 * @throws WriteException 
 	 * @throws RowsExceededException 
