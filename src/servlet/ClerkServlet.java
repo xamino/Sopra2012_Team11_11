@@ -103,15 +103,10 @@ public class ClerkServlet extends HttpServlet {
 		String path = request.getPathInfo();
 		log.write("ClerkServlet", "Received request: " + path);
 		System.out.println(path);
-		if (path.equals("/js/doExcelExport")) {
-			log.write("ClerkServlet", "Excel export requested.");
-			// For now, simply redirect to userindex:
-			response.setContentType("text/url");
-			response.getWriter().write(Helper.D_CLERK_USERINDEX);
-		}
+		
 
 		// Load the offers of the clerk:
-		else if (path.equals("/js/showMyOffers")) {
+		if (path.equals("/js/showMyOffers")) {
 			Clerk clerk1 = Helper.checkAuthenticity(request.getSession(),
 					Clerk.class); // wie wird definiert welche Angebote welcher
 									// clerk hat??
@@ -455,7 +450,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 		}
 		
-		else if (path.equals("/js/download")) {
+		else if (path.equals("/js/doExcelExport")) {
 			File file = null;
 			try {
 				file = clerk.doExport();
