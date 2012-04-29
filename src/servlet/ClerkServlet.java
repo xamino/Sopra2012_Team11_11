@@ -14,10 +14,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +27,6 @@ import jxl.write.biff.RowsExceededException;
 
 import logger.Log;
 import user.Clerk;
-import user.Provider;
 
 import com.google.gson.Gson;
 
@@ -37,14 +34,10 @@ import database.DatabaseController;
 import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
-import database.application.Application;
-import database.application.ApplicationController;
 import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
-import database.institute.Institute;
-import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -84,14 +77,11 @@ public class ClerkServlet extends HttpServlet {
 		gson = new Gson();
 	}
 
-	private int offerid;
-
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
 		// Check authenticity:
 		Clerk clerk = Helper.checkAuthenticity(request.getSession(),
 				Clerk.class);
@@ -102,25 +92,15 @@ public class ClerkServlet extends HttpServlet {
 		}
 		String path = request.getPathInfo();
 		log.write("ClerkServlet", "Received request: " + path);
-		System.out.println(path);
-		
-
 		// Load the offers of the clerk:
 		if (path.equals("/js/showMyOffers")) {
-			Clerk clerk1 = Helper.checkAuthenticity(request.getSession(),
-					Clerk.class); // wie wird definiert welche Angebote welcher
-									// clerk hat??
 			Vector<Offer> myoffers = OfferController.getInstance()
 					.getAllOffers(); // Offer vom User geholt
 			response.setContentType("offers/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
-		}
-
-		else if (path.equals("/js/editOneOffer")) {
-
+		} else if (path.equals("/js/editOneOffer")) {
 			int aid = Integer.parseInt(request.getParameter("aid"));
-
 			Offer offertoedit = OfferController.getInstance().getOfferById(aid);
 			response.setContentType("offers/json");
 			response.getWriter().write(
@@ -141,13 +121,15 @@ public class ClerkServlet extends HttpServlet {
 
 			OfferController.getInstance().updateOffer(offertoapprove);
 			// wir wollten doch einen String als date?
+			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
+			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
+			// da was schief.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
 
 			response.setContentType("offers/json");
 			response.getWriter().write(
 					gson.toJson(offertoapprove, offertoapprove.getClass()));
 			return;
-
 		} else if (path.equals("/js/rejectOffer")) {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 
@@ -156,7 +138,7 @@ public class ClerkServlet extends HttpServlet {
 			offertoreject.setChecked(false);
 
 			OfferController.getInstance().updateOffer(offertoreject);
-			// wir wollten doch einen String als date?
+			// wir wollten doch einen String als date? -> s.o.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
 
 			response.setContentType("offers/json");
@@ -255,18 +237,9 @@ public class ClerkServlet extends HttpServlet {
 					.getAccountByUsername(user).getName();
 			String angebotsname = OfferController.getInstance()
 					.getOfferById(aid1).getName();
-
-			String[] datanamen = { richtigername, angebotsname, user, aid }; // =
-																				// Name
-																				// des
-																				// bewebers,
-																				// Angebotsname,
-																				// Benutzername
-																				// des
-																				// Bewerbers,
-																				// AngebotsID
-
-			// System.out.println("Ergebnis: "+daten.size());
+			// = Name des bewebers, Angebotsname, Benutzername des Bewerbers,
+			// AngebotsID
+			String[] datanamen = { richtigername, angebotsname, user, aid };
 			response.setContentType("showapplicationtable2/json");
 			response.getWriter().write(
 					gson.toJson(datanamen, datanamen.getClass()));
@@ -304,7 +277,6 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
-
 		}
 		// Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
@@ -356,8 +328,9 @@ public class ClerkServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim ändern der Daten.");
 			}
-		} else // Do loadAccount:
-		if (path.equals("/js/loadAccount")) {
+		}
+		// Do loadAccount:
+		else if (path.equals("/js/loadAccount")) {
 			String realName = clerk.getUserData().getName();
 			String email = clerk.getUserData().getEmail();
 			String rep = clerk.getRepresentant();
@@ -395,11 +368,9 @@ public class ClerkServlet extends HttpServlet {
 				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewaehlt)
 			} else {
 				response.setContentType("error/url");
-
+				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
-			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 		}
-
 		// Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/deleteOfferDocument")) {
 
@@ -445,11 +416,9 @@ public class ClerkServlet extends HttpServlet {
 				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
 			} else {
 				response.setContentType("error/url");
-
+				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
-			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 		}
-		
 		else if (path.equals("/js/doExcelExport")) {
 			File file = null;
 			try {
@@ -463,23 +432,24 @@ public class ClerkServlet extends HttpServlet {
 				response.getWriter().write("Error while writing File");
 			}
 			response.setContentLength((int) file.length());
-			
+
 			OutputStream os = response.getOutputStream();
 			FileInputStream fis = new FileInputStream(file);
-			byte[] buffer = new byte[20000]; 
-			//Random Zahl (ausm Beispiel von Manu) da ich keine Ahnung 
-			//hab wie ich die length bekomme.
+			byte[] buffer = new byte[20000];
+			// Random Zahl (ausm Beispiel von Manu) da ich keine Ahnung
+			// hab wie ich die length bekomme.
 			int bytesRead = 0;
-			while(true){
+			while (true) {
 				bytesRead = fis.read(buffer);
-				if (bytesRead == -1) { 
-				//FileInputStream.read gibt -1 zurück falls keine Daten zum lesen mehr da sind.
+				if (bytesRead == -1) {
+					// FileInputStream.read gibt -1 zurück falls keine Daten zum
+					// lesen mehr da sind.
 					break;
 				}
 			}
 			os.flush();
 			fis.close();
-			
+
 			response.setContentType("text/url");
 		}
 
