@@ -79,20 +79,17 @@ public class ProviderServlet extends HttpServlet {
 		String path = request.getPathInfo();
 		// Load my offers:
 		if (path.equals("/js/loadOffers")) {
-			Provider provi = Helper.checkAuthenticity(request.getSession(),
-					Provider.class);
 			Vector<Offer> myoffers = OfferController.getInstance()
-					.getOffersByProvider(provi); // Offer vom Provider geholt
+					.getOffersByProvider(provider); // Offer vom Provider geholt
 			response.setContentType("offer/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
-			String name = provider.getUserData().getUsername();
-			int id = Integer.parseInt(request.getParameter("AID"));
-			if (provider.deleteOwnAccount(id)) {
-				log.write("ApplicantServlet", name
+			String username = provider.getUserData().getUsername();
+			if (provider.deleteOwnAccount()) {
+				log.write("ApplicantServlet", username
 						+ " has deleted his account.");
 				// Simply now for debugging:
 				response.setContentType("text/url");
@@ -149,7 +146,7 @@ public class ProviderServlet extends HttpServlet {
 		else if (path.equals("/js/addOffer")) {
 			// System.out.println("PROVIDER_SERVLET, PATH: ADD OFFER");
 
-			Provider provi = Helper.checkAuthenticity(request.getSession(),	Provider.class);
+			//Provider provi = Helper.checkAuthenticity(request.getSession(),Provider.class);   --> provider von oben benutzen!!
 			
 					
 			//Generating AID
@@ -177,7 +174,7 @@ public class ProviderServlet extends HttpServlet {
 			 * ("Fehler beim Parsen! AutragsID checken!"); return; }
 			 */
 
-			String ersteller = provi.getUserData().getUsername();
+			String ersteller = provider.getUserData().getUsername();
 			String name = request.getParameter("titel");
 			String notiz = request.getParameter("notiz");
 			boolean checked = false;

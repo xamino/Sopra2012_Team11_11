@@ -26,7 +26,8 @@
 				</p>
 				<br>
 				<p>
-					<input type="button" value="Abmelden" name="logout" onclick="doLogout();"/>
+					<input type="button" value="Abmelden" name="logout"
+						onclick="doLogout();" />
 				</p>
 			</form>
 		</div>
@@ -58,66 +59,29 @@
 			</div>
 			<hr>
 			<div class="textblock">
-			<div class="haupttext">
-				<div class="bordered_float" >
-					<table class="" id="documentsTable">
-						<!-- <tr>
-							<th>Benötigte Dokumente:</th>
-						</tr>
-						<tr>
-							<td>Bewerbung</td>
-						</tr>
-						<tr>
-							<td>Normvertrag</td>
-						</tr>
-						<tr>
-							<td>Glaubensbescheinigung</td>
-						</tr>
-						<tr>
-							<td>Sonderbescheid</td>
-						</tr>-->
+				<div class="haupttext">
+					<div class="bordered_float">
+						<table id="documentsTable">
+							<!-- This table holds the documents attached to the offer. -->
+						</table>
+						<input type="button" value="Dokument hinzufügen"
+							onclick="togglePopup('document_add',true);" /> <input
+							type="button" value="Dokument löschen"
+							id="dokumentloeschenbutton"
+							onclick="togglePopup('document_del',true);" />
+					</div>
+					<table id="offerinfotable" class="hidden">
+						<!-- This table holds all the information of the offer. -->
 					</table>
-					<input type="button" value="Dokument hinzufügen"
-						onclick="togglePopup('document_add',true);" /> <input
-						type="button" value="Dokument löschen" id="dokumentloeschenbutton"
-						onclick="togglePopup('document_del',true);" />
-				</div>
-				<table id="offerinfotable" class="hidden">
-				<!--	<tr>
-						<td>Name des Veranstalters:</td>
-						<td>Prof. Doc. Gott</td>
-					</tr>
-					<tr>
-						<td>Titel der Stelle:</td>
-						<td>Tutorium Lebensphilosophie</td>
-					</tr>
-					<tr>
-						<td>Plätze:</td>
-						<td>20</td>
-					</tr>
-					<tr>
-						<td>Stunden die Woche:</td>
-						<td><input type="text" /> std.</td>
-					</tr>
-					<tr>
-						<td>Lohn:</td>
-						<td><input type="text" />€</td>
-					</tr>
-					<tr>
-						<td>Anbieternotiz:</td>
-						<td style="background-color: lightgray;">Hallo!<br> <br>Wie
-							besprochen, hier das Angebot. Ich hoffe, diesmal stimmt alles. :D<br>
-							<br>Grüße,<br>Hr. Gott
-						</td>
-					</tr> -->
-				</table>
-				<hr>
+					<hr>
 					<div style="float: right;">
 						<input type="button" value="Mail an Anbieter" />
 					</div>
-					<input type="button" id="angebotbestaetigen" value="Angebot bestätigen" onclick="angebotbestaetigen()"/>
-					<input type="button" id="angebotablehnen" value="Angebot ablehnen" onclick="angebotablehnen()"/>
-			</div>
+					<input type="button" id="angebotbestaetigen"
+						value="Angebot bestätigen" onclick="angebotbestaetigen()" /> <input
+						type="button" id="angebotablehnen" value="Angebot ablehnen"
+						onclick="angebotablehnen()" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -129,17 +93,14 @@
 		<form name="docSpeichernForm">
 			<h3>Dokument hinzufügen</h3>
 			<hr>
-			<div class="textblock">
-				Titel:<br> <input type="text" /><br>
-				<div class="hiddenerror"></div>
-			</div>
 			<select id="selectDocumentsToAdd" size="1">
 				<!-- <option value="wert1">Eintrag1</option>
 				<option value="wert2">Eintrag2</option> -->
 			</select>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" id="docSpeichern" onclick="addChosenDocument()" /> <input type="button"
+				<input type="button" value="Speichern" id="docSpeichern"
+					onclick="addChosenDocument();" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
@@ -154,7 +115,8 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" id="docLöschen" onclick="deleteChosenDocument();"  /> <input type="button"
+				<input type="button" value="Löschen" id="docLöschen"
+					onclick="deleteChosenDocument();" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>

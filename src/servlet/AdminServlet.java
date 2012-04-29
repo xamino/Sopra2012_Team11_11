@@ -329,7 +329,9 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;
-		} else if (path.equals("/js/loadInstitutes")) {
+		}
+		// Load institutes as JSON data string:
+		else if (path.equals("/js/loadInstitutes")) {
 			Vector<Institute> inst = instController.getAllInstitutes();
 			if (inst == null) {
 				response.setContentType("text/error");
@@ -341,7 +343,65 @@ public class AdminServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(inst, inst.getClass()));
 			return;
-		} else {
+		}
+		// Add an institute to the DB:
+		else if (path.equals("/js/addInstitute")) {
+			String name = request.getParameter("name");
+			int IID = -1;
+			try {
+				IID = Integer.parseInt(request.getParameter("IID"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die IID.");
+				return;
+			}
+			if (name == null || name.isEmpty() || IID < 0) {
+				log.write("AdminServlet", "Error in parameters!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe des Institutes! Fehlende Eingaben.");
+				return;
+			}
+			// all okay... continue:
+			if (!admin.addInstitute(new Institute(IID, name))) {
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim erstellen des Instituts! Ist die IID eineindeutig?");
+				return;
+			}
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_ADMIN_INSTITUTESMANAGMENT);
+			return;
+		}
+		// Delete an institute from the DB:
+		else if (path.equals("/js/deleteInstitute")) {
+			int IID = -1;
+			try {
+				IID = Integer.parseInt(request.getParameter("IID"));
+			} catch (NumberFormatException e) {
+				log.write("AdminServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehlerhafte IID!");
+				return;
+			}
+			Institute institute = InstituteController.getInstance()
+					.getInstituteByIID(IID);
+			if (!admin.deleteInstitute(institute)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim löschen! Stimmt die IID?");
+				return;
+			}
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_ADMIN_INSTITUTESMANAGMENT);
+			return;
+		}
+		// Unknown:
+		else {
 			log.write("AdminServlet", "Unknown path <" + path + ">");
 		}
 	}

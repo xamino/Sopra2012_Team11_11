@@ -106,7 +106,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Wiederrufen"
-					onclick="deleteSelectedAccount(); togglePopup('application_cancel', false);" />
+					onclick="deleteApplication(); togglePopup('application_cancel', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('application_cancel', false);" />
 			</div>

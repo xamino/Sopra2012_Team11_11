@@ -66,18 +66,39 @@ public class Servlet extends HttpServlet {
 		path = (path == null) ? "" : path;
 		log.write("Servlet", "Received request <" + path + ">.");
 		if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = offController.getOffersWithFreeSlots();
-			if (offers == null || offers.isEmpty()) {
+			Vector<Offer> offers = offController.getCheckedOffers();
+			// On error:
+			if (offers == null) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler in der Datenbank!");
+				return;
+			}
+			// On empty:
+			if ( offers.isEmpty()) {
 				// If no offers are in the DB:
 				response.setContentType("text/plain");
 				response.getWriter().write("null");
 				return;
 			}
+			// On filled:
 			// TODO: what information do we have to filter here? Can/should it
 			// all be transmitted?
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 			return;
+		} else {
+			response.sendRedirect(Helper.D_INDEX);
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		try {
+			response.sendRedirect(Helper.D_INDEX);
+		} catch (IOException e) {
+			// TODO WTF?! Warum kann hier ein IO Fehler auftauchen?!
+			e.printStackTrace();
 		}
 	}
 }

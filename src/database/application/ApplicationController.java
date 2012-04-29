@@ -12,12 +12,23 @@ package database.application;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Vector;
 
+import user.Applicant;
+
 import database.DatabaseController;
+import database.account.Account;
+import database.account.AccountController;
+import database.document.AppDocument;
+import database.document.DocumentController;
 
 public class ApplicationController {
 
+	AccountController acccon;
+	DocumentController doccon;
+	ApplicationController appcon;
+	
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
 	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
@@ -84,6 +95,13 @@ public class ApplicationController {
 
 	public boolean deleteApplication(Application application) {
 		String where = "AID = "+application.getAid()+"AND benutzername = '"+application.getUsername()+"'";
+		
+		Vector<AppDocument> docs = doccon.getAllAppDocsByApplicant(application.getUsername());
+		Iterator<AppDocument> it = docs.iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			doccon.deleteAppDocument(docs.elementAt(i));
+		}
+		
 		return dbc.delete(tableName, where);
 	}
 
@@ -105,8 +123,9 @@ public class ApplicationController {
 		String where = "AID = " + application.getAid()+" AND benutzername='"+application.getUsername()+"'";
 
 		dbc.update(tableName, columns, values, where);
-
 	}
+	
+	
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen aus der Datenbank und speichert

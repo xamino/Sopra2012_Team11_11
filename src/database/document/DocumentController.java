@@ -398,8 +398,8 @@ public class DocumentController {
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
 	 */
-	public void deleteAppDocument(AppDocument document) { // checked
-		dbc.delete(tableNameB,
+	public boolean deleteAppDocument(AppDocument document) { // checked
+		return dbc.delete(tableNameB,
 				"benutzername='" + document.getUsername() + "' AND AID="
 						+ document.getoID() + " AND UID=" + document.getdID());
 	}

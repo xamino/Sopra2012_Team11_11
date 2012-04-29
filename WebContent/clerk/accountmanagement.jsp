@@ -6,9 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
-<script type="text/javascript" src="/hiwi/Clerk/accountscript.js"></script>
+<script type="text/javascript" src="/hiwi/clerk/accountscript.js"></script>
 <script type="text/javascript" src="/hiwi/md5.js"></script>
 <title>Account Bearbeiten | Hiwi Job Börse</title>
 </head>
@@ -91,12 +90,12 @@
 										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 										<div id="error_unequalPasswords" class="hiddenerror"></div>
 									</div>
-									<br>
-									<span> <label for="stellvertreter">Stellvertreter: </label>
+									<br> <span> <label for="stellvertreter">Stellvertreter:
+									</label>
 									</span>
 									<div class="regform">
-										<input id="stellvertreter" type="text"
-											name="stellvertreter" size="20" maxlength="100" />
+										<input id="stellvertreter" type="text" name="stellvertreter"
+											size="20" maxlength="100" />
 										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 										<div id="error_stellvertreter" class="hiddenerror"></div>
 									</div>
@@ -123,23 +122,24 @@
 				</div>
 			</div>
 		</div>
-		<div class="clear"></div>
-		<div class="footer"></div>
-		<div id="data_acc_del" class="popup_hidden">
-	<form>
-		<h3>Warnung</h3>
-		<hr>
-		<div class="textblock">
-			Wenn sie den Datenschutzbestimmungen <br>widerrufen wird ihr<br>
-			Account nun gelöscht.
-		</div>
-		<hr>
-		<div class="textblock">
-			<input type="button" value="Löschen" onclick="deleteAccount();" /> <input
-				type="button" value="Abbrechen"
-				onclick="togglePopup('data_acc_del', false);" />
-		</div>
-	</form>
-</div>
+	</div>
+	<div class="clear"></div>
+	<div class="footer"></div>
+	<div id="data_acc_del" class="popup_hidden">
+		<form>
+			<h3>Warnung</h3>
+			<hr>
+			<div class="textblock">
+				Wenn sie den Datenschutzbestimmungen <br>widerrufen wird ihr<br>
+				Account nun gelöscht.
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Löschen" onclick="deleteAccount();" />
+				<input type="button" value="Abbrechen"
+					onclick="togglePopup('data_acc_del', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>

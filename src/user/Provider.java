@@ -1,5 +1,6 @@
 package user;
 
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -58,17 +59,23 @@ public class Provider extends User {
 		return true;
 	}
 
+
 	/**
-	 * Methode zur Annahme von Bewerbern auf ein Angebot.
+	 * Methode zum annehmen eines Bewerbers.
+	 * @param AID
+	 * 			ID der Bewerbung
+	 * @throws SQLException 
 	 */
-	public void acceptApplicants(int AId) {
-
+	public void acceptApplication(int AID) throws SQLException {
+		Application app = appcon.getApplicationById(AID);
+		app.setChosen(true);
+		appcon.updateApplication(app);
 	}
-
 	/**
 	 * Loescht ein Angebot aus dem System.
 	 */
-	public void deleteOffer(int pOfferId) {
+	public void deleteOffer(Offer offer) {
+		offcon.deleteOffer(offer);
 
 	}
 
@@ -87,30 +94,8 @@ public class Provider extends User {
 	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
-	public boolean deleteOwnAccount(int aid){
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = true;
-		int i = 0;
-		check = acccon.deleteAccount(acc);
+	public boolean deleteOwnAccount(){
 		invalidate();
-		
-		Vector<Offer> off = offcon.getOffersByProvider(this);
-		Iterator<Offer> it = off.iterator();
-		
-		while(it.hasNext()){
-			offcon.deleteOffer(off.elementAt(i));
-			i++;
-		}
-		
-		Vector<AppDocument> doc = doccon.getAppDocumentByOffer(aid);
-		Iterator<AppDocument> itp = doc.iterator();
-		i = 0;
-		while(it.hasNext()){
-			doccon.deleteAppDocument(doc.elementAt(i));
-			i++;
-		}
-		
-		return check;
+		return acccon.deleteProviderAccount(this);
 	}
 }

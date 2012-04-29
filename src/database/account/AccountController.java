@@ -10,9 +10,22 @@ package database.account;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Vector;
 
+import user.Applicant;
+import user.Clerk;
+import user.Provider;
+
 import database.DatabaseController;
+import database.application.Application;
+import database.application.ApplicationController;
+import database.document.AppDocument;
+import database.document.DocumentController;
+import database.institute.Institute;
+import database.institute.InstituteController;
+import database.offer.Offer;
+import database.offer.OfferController;
 
 /**
  * Der Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
@@ -20,6 +33,11 @@ import database.DatabaseController;
  */
 
 public class AccountController {
+	
+	private ApplicationController appcon;
+	private DocumentController doccon;
+	private InstituteController instcon;
+	private OfferController offcon;
 
 	/**
 	 * Klassenattribut "acccontr" beinhaltet eine AccountController-Instanz,
@@ -77,6 +95,81 @@ public class AccountController {
 				account.getRepresentative() };
 
 		return dbc.insert(tableName, values);
+	}
+	
+	
+	/**
+	 * Methode zum löschen eines ApplicantAccounts.
+	 * @param applicant
+	 * 			Applicant-Objekt
+	 * @return
+	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */	
+	public boolean deleteApplicantAccount(Applicant applicant){
+		String username = applicant.getUserData().getUsername();
+		Account acc = getAccountByUsername(username);
+		
+		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
+		Iterator<AppDocument> it = doc.iterator();
+		
+		for (int j = 0; it.hasNext(); j++) {
+			doccon.deleteAppDocument(doc.elementAt(j));
+		}
+		
+		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
+		Iterator<Application> itp = apps.iterator();
+		
+		for (int i = 0; itp.hasNext(); i++) {
+			appcon.deleteApplication(apps.elementAt(i));
+		}
+
+		return deleteAccount(acc);
+	}
+	/**
+	 * Methode zum löschen eines ClerkAccounts
+	 * @param clerk
+	 * 			Clerk-Objekt
+	 * @return
+	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */			
+	
+	public boolean deleteClerkAccount(Clerk clerk){
+		String username = clerk.getUserData().getUsername();
+		Account acc = getAccountByUsername(username);
+
+		Institute inst = instcon.getInstituteByIID(acc.getInstitute());
+		instcon.deleteInstitute(inst);
+		return deleteAccount(acc);
+		
+	}
+	
+	/**
+	 * Methode zum löschen eines ProviderAccounts
+	 * @param provider
+	 * 			Provider-Objekt
+	 * @return
+	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */	
+	public boolean deleteProviderAccount(Provider provider){
+		String username = provider.getUserData().getUsername();
+		Account acc = getAccountByUsername(username);
+		
+		Vector<Offer> off = offcon.getOffersByProvider(provider);
+		Iterator<Offer> it = off.iterator();
+		
+		for (int i = 0; it.hasNext(); i++) {
+			Offer temp = off.elementAt(i);
+			
+			offcon.deleteOffer(temp);
+			
+			Vector<AppDocument> doc = doccon.getAppDocumentByOffer(temp.getAid());
+			Iterator<AppDocument> itp = doc.iterator();
+		
+			for (int j = 0; itp.hasNext(); j++) {
+				doccon.deleteAppDocument(doc.elementAt(j));
+			}
+		}
+		return deleteAccount(acc);
 	}
 
 	/**

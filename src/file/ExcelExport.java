@@ -30,22 +30,20 @@ public abstract class ExcelExport {
 	
 	/**
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
-	 * Verwalters und gibt den Link dazu zurueck. Dem uebergebenen
-	 * UserData-Objekt werden der Benutzername und die Session entnommen um
-	 * diese dann mittels dem FileController zum Download zur verfügung zu
-	 * stellen.
+	 * Verwalters und gibt ein File objekt zurück.
 	 * 
 	 * @param data
 	 *            UserData Objekt des Benutzers.
+	 *           @return File objekt das gestreamt werden kann. 
 	 * @throws IOException 
 	 * @throws WriteException 
 	 * @throws RowsExceededException 
 	 */
-	public static String export(final UserData data) throws IOException, RowsExceededException, WriteException {
+	public static File export(final UserData data) throws IOException, RowsExceededException, WriteException {
 		String clerkname = data.getUsername(); 
 		Vector<Application> appvec = appcon.getApprovedApplicationsByClerk(clerkname);
-		
-		WritableWorkbook ww = Workbook.createWorkbook(new File("ExcelExport.xls"));
+		File file = FileController.createFile(data.getUsername());
+		WritableWorkbook ww = Workbook.createWorkbook(file);
 		WritableSheet sh = ww.createSheet("All Applications by "+clerkname, 0);
 		
 		Label Name = new Label(0,0,"Name");
@@ -63,7 +61,7 @@ public abstract class ExcelExport {
 		
 		ww.write();
 		ww.close();
-		return "Excel Tabelle erstellt. Download noch nicht bereit";
+		return file;
 
 	}
 

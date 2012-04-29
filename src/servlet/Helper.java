@@ -67,6 +67,10 @@ public final class Helper {
 	 */
 	public static final String D_ADMIN_HELP = "/hiwi/admin/help.jsp";
 	/**
+	 * Pfad zu /hiwi/admin/institutesmanagement.jsp.
+	 */
+	public static final String D_ADMIN_INSTITUTESMANAGMENT = "/hiwi/admin/institutesmanagement.jsp";
+	/**
 	 * Pfad zu /hiwi/clerk/userindex.jsp.
 	 */
 	public static final String D_CLERK_USERINDEX = "/hiwi/clerk/userindex.jsp";

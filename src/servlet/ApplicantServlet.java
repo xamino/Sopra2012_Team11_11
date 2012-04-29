@@ -81,10 +81,12 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Delete an application:
 		else if (path.equals("/js/deleteApplication")) {
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			if (!applicant.deleteApplication(aid)) {
+			int aid = Integer.parseInt(request.getParameter("AID"));
+			int uid = Integer.parseInt(request.getParameter("UID"));
+			
+			if (!applicant.deleteApplication(uid,aid)) {
 				response.setContentType("text/text");
-				response.getWriter().write("deleted");
+				response.getWriter().write("Application "+aid+"/"+uid+" deleted");
 				return;
 			}
 			response.setContentType("text/error");
@@ -93,18 +95,15 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Load my offers:
 		else if (path.equals("/js/loadMyOffers")) {
-			Applicant appli = Helper.checkAuthenticity(request.getSession(),
-					Applicant.class);
-			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli.getUserData().getUsername())); //Offer vom User geholt
+			Vector<Offer> myoffers = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(applicant.getUserData().getUsername())); //Offer vom User geholt
 			response.setContentType("myapplication/json");
 			response.getWriter().write(gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = OfferController.getInstance().getAllOffers();
+			Vector<Offer> offers = OfferController.getInstance().getCheckedOffers(); 	//nur geprüfte Angebote
 			//bereits beworbene Stellen entfernen
-			Applicant appli1 = Helper.checkAuthenticity(request.getSession(),Applicant.class);
-			Vector<Offer> myoffers1 = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(appli1.getUserData().getUsername())); //Offer vom User geholt
+			Vector<Offer> myoffers1 = OfferController.getInstance().getOffersByApplicatiot(ApplicationController.getInstance().getApplicationsByApplicant(applicant.getUserData().getUsername())); //Offer vom User geholt
 			boolean entfernen;
 			for(int i = 0; i < offers.size(); i++){
 				entfernen = false;

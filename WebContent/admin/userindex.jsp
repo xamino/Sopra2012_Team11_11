@@ -37,6 +37,8 @@
 				&rarr; Startseite<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
 			</div>
 		</div>

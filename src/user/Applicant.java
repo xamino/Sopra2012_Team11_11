@@ -19,6 +19,7 @@ import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
 import database.document.AppDocument;
+import database.offer.Offer;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Bewerbers.
@@ -70,30 +71,8 @@ public class Applicant extends User {
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
 	public boolean deleteOwnAccount(){
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = true;
-		int i = 0;
-		check = acccon.deleteAccount(acc);
 		invalidate();
-		
-		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
-		Iterator<AppDocument> it = doc.iterator();
-		
-		while(it.hasNext()){
-			doccon.deleteAppDocument(doc.elementAt(i));
-			i++;
-		}
-		
-		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
-		Iterator<Application> itp = apps.iterator();
-		i = 0;
-		while(it.hasNext()){
-			appcon.deleteApplication(apps.elementAt(i));
-			i++;
-		}
-		
-		return check;
+		return acccon.deleteApplicantAccount(this);
 	}
 	
 	/**
@@ -109,9 +88,19 @@ public class Applicant extends User {
 
 	}
 
-	public boolean deleteApplication(int applicationID) {
+	public boolean deleteApplication(int applicationID, int offerID) {
 		Application app = new Application(this.getUserData().getUsername(),
 				applicationID, false, "", false);
+		Account account = new Account(this.getUserData().getUsername(), "", 0, "", "", 0, "");
+		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null);
+		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(account, offer);
+		Iterator<AppDocument> it = vec.iterator();
+		
+		int i = 0;
+		while(it.hasNext()){
+			doccon.deleteAppDocument(vec.elementAt(i));
+		}
+		
 		return appcon.deleteApplication(app);
 	}
 }

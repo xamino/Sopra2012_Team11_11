@@ -5,6 +5,10 @@ package file;
 
 import java.io.File;
 
+import servlet.Helper;
+
+import config.Configurator;
+
 /**
  * Klasse erstellt und entfernt Dateien zum downloaden zur jeweiligen Session.
  * 
@@ -12,35 +16,47 @@ import java.io.File;
 
 public abstract class FileController {
 
-
-	/**
-	 * Diese Methode entfernt alle erstellten Dateien die zum Download zur
-	 * Verfuegung gestellt wurden.
-	 * 
-	 * @param sessionId
-	 *            Parameter "sessionId" identifiziert die zu loeschenden
-	 *            Download-Dateien. Dabei besteht die sessionId aus einem Teil
-	 *            des Session-Namens und einem zufaellig generierten Teil.
-	 */
-	public static void deleteAllFilesBySession(String sessionId) {
-
+/**
+ * Diese Methode loescht die Export Datei des Angegebenen Users.
+ * @param username Username des Users dessen Datei geloescht werden soll
+ * @return Wahrheitswert ob der Vorgang erfolgreich war
+ */
+	public static boolean deleteFile(String username){
+		String path = "";
+		try{
+			path=Configurator.getInstance().getPath("excel")+System.getProperty("file.separator")+username+".xls";
+			File f = new File(path);
+			if(f.exists()){
+				f.delete();
+				Helper.log.write("FileController", "Successfully deleted exportfiles of User: "+username);
+			}
+			return true;
+		}catch(Exception e){
+		Helper.log.write("FileController", "Error while deleting File("+path+")");
+		}
+		return false;
+		
 	}
 
-	/**
-	 * Diese Methode erstellt eine Download-Datei bei uebergebener Session-Id
-	 * und der jeweiligen Download-Datei.
-	 * 
-	 * @param sessionId
-	 *            Parameter "sessionId" identifiziert die zu loeschenden
-	 *            Download-Dateien. Dabei besteht die sessionId aus einem Teil
-	 *            des Session-Namens und einem zufaellig generierten Teil.
-	 * @param file
-	 *            Parameter "file" ist die jeweilige Download-Datei, die zum
-	 *            Donwload verfuegbar sein soll.
-	 * @return Zurueckgegeben wird der Pfad des erstellten Download-Datei.
-	 */
-	public static String createFile(String sessionId, File file) {
-		return null;
+/**
+ * Erstellt eine neue beschreibbare Excel Datei.
+ * @param username Benutzername des Dateibesitzers
+ * @return Datei zum weiterverarbeiten fuer den ExcelExport
+ */
+	public static File createFile(String username) {
+		File f = null;
+		String path = "";
+		try {
+		path = Configurator.getInstance().getPath("excel")+System.getProperty("file.separator")+username+".xls";
+		f= new File(path);
+		if(f.exists()){
+			f.delete();
+			f.createNewFile();
+		}
+		} catch (Exception e) {
+			Helper.log.write("FileController", "Error while creating File("+"path"+")");
+		}
+		return f;
 
 	}
 

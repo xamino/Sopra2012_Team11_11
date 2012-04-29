@@ -6,6 +6,7 @@ package user;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,14 +76,8 @@ public class Clerk extends User {
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
 	public boolean deleteOwnAccount(){
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = true;
-		int i = 0;
-		check = acccon.deleteAccount(acc);
 		invalidate();
-		
-		return check;
+		return acccon.deleteClerkAccount(this);
 	}
 
 	/**
@@ -143,7 +138,8 @@ public class Clerk extends User {
 					+ "> added document <" + doc.getName() + ">.");
 			return true;
 		}
-	}
+	} 
+	// Nur der Admin kann Unterlagen erstellen
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
@@ -152,34 +148,37 @@ public class Clerk extends User {
 		
 		doccon.deleteDocument(doc);
 	}
+//Siehe oben
 
-	/**
-	 * Methode zum annehmen eines Bewerbers.
-	 * @param AID
-	 * 			ID der Bewerbung
-	 * @throws SQLException 
-	 */
-	public void acceptApplication(int AID) throws SQLException {
-		Application app = appcon.getApplicationById(AID);
-		app.setChosen(true);
-		appcon.updateApplication(app);
-	}
+//	/**
+//	 * Methode zum annehmen eines Bewerbers.
+//	 * @param AID
+//	 * 			ID der Bewerbung
+//	 * @throws SQLException 
+//	 */
+//	public void acceptApplication(int AID) throws SQLException {
+//		Application app = appcon.getApplicationById(AID);
+//		app.setChosen(true);
+//		appcon.updateApplication(app);
+//	}
+// Der Provider nimmt bewerbungen an
 
 	/**
 	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
 	 * einzeln Dokumente entfernt werden.
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
 	 */
-	public void deleteAppDoc(int ID) {
-		
+	public boolean deleteAppDoc(AppDocument doc) {
+		return doccon.deleteAppDocument(doc);
 	}
 
 	/**
-	 * Methode zum aktualisieren des Berwerbungs-Status.
+	 * Methode zum beenden des Berwerbungsvorgangs.
 	 * @param AID
 	 * 			ID der Bewerbung
 	 * @throws SQLException 
 	 */
-	public void updateStatus(int AID) throws SQLException {
+	public void finishApplication(int AID) throws SQLException {
 		Application app = appcon.getApplicationById(AID);
 		app.setFinished(true);
 		appcon.updateApplication(app);
@@ -188,13 +187,13 @@ public class Clerk extends User {
 	/**
 	 * Export fuer die Excel-File
 	 * 
-	 * @return Die URL zu den Download des Excel-Files.
+	 * @return Fileobjekt des ExcelFiles
 	 * @throws IOException 
 	 * @throws WriteException 
 	 * @throws RowsExceededException 
 	 */
 
-	public String doExport() throws IOException, RowsExceededException, WriteException {
+	public File doExport() throws IOException, RowsExceededException, WriteException {
 		return ExcelExport.export(this.getUserData());
 
 	}
