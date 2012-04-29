@@ -168,9 +168,10 @@ public class Clerk extends User {
 	/**
 	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
 	 * einzeln Dokumente entfernt werden.
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
 	 */
-	public void deleteAppDoc(int ID) {
-		
+	public boolean deleteAppDoc(AppDocument doc) {
+		return doccon.deleteAppDocument(doc);
 	}
 
 	/**
