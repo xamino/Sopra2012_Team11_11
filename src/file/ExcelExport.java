@@ -30,10 +30,11 @@ public abstract class ExcelExport {
 	
 	/**
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
-	 * Verwalters und gibt den Link dazu zurueck.
+	 * Verwalters und gibt ein File objekt zurück.
 	 * 
 	 * @param data
 	 *            UserData Objekt des Benutzers.
+	 *           @return File objekt das gestreamt werden kann. 
 	 * @throws IOException 
 	 * @throws WriteException 
 	 * @throws RowsExceededException 
