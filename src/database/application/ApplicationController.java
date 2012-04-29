@@ -95,6 +95,13 @@ public class ApplicationController {
 
 	public boolean deleteApplication(Application application) {
 		String where = "AID = "+application.getAid()+"AND benutzername = '"+application.getUsername()+"'";
+		
+		Vector<AppDocument> docs = doccon.getAllAppDocsByApplicant(application.getUsername());
+		Iterator<AppDocument> it = docs.iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			doccon.deleteAppDocument(docs.elementAt(i));
+		}
+		
 		return dbc.delete(tableName, where);
 	}
 
