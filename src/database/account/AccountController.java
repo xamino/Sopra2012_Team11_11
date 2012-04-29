@@ -108,26 +108,21 @@ public class AccountController {
 	public boolean deleteApplicantAccount(Applicant applicant){
 		String username = applicant.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
-		int i = 0;
 		
 		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
 		Iterator<AppDocument> it = doc.iterator();
 		
-		while(it.hasNext()){
-			doccon.deleteAppDocument(doc.elementAt(i));
-			i++;
+		for (int j = 0; it.hasNext(); j++) {
+			doccon.deleteAppDocument(doc.elementAt(j));
 		}
 		
 		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
 		Iterator<Application> itp = apps.iterator();
-		i = 0;
-		while(it.hasNext()){
-			appcon.deleteApplication(apps.elementAt(i));
-			i++;
-		}
-		 
-		applicant.invalidate();
 		
+		for (int i = 0; itp.hasNext(); i++) {
+			appcon.deleteApplication(apps.elementAt(i));
+		}
+
 		return deleteAccount(acc);
 	}
 	/**
