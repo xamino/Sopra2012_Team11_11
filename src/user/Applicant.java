@@ -71,30 +71,7 @@ public class Applicant extends User {
 	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
 	 */
 	public boolean deleteOwnAccount(){
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = true;
-		int i = 0;
-		
-		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
-		Iterator<AppDocument> it = doc.iterator();
-		
-		while(it.hasNext()){
-			doccon.deleteAppDocument(doc.elementAt(i));
-			i++;
-		}
-		
-		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
-		Iterator<Application> itp = apps.iterator();
-		i = 0;
-		while(it.hasNext()){
-			appcon.deleteApplication(apps.elementAt(i));
-			i++;
-		}
-		check = acccon.deleteAccount(acc);
-		invalidate();
-		
-		return check;
+		return appcon.deleteApplicantAccount(this);
 	}
 	
 	/**

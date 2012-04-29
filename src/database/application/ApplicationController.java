@@ -12,12 +12,23 @@ package database.application;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Vector;
 
+import user.Applicant;
+
 import database.DatabaseController;
+import database.account.Account;
+import database.account.AccountController;
+import database.document.AppDocument;
+import database.document.DocumentController;
 
 public class ApplicationController {
 
+	AccountController acccon;
+	DocumentController doccon;
+	ApplicationController appcon;
+	
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
 	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
@@ -105,7 +116,32 @@ public class ApplicationController {
 		String where = "AID = " + application.getAid()+" AND benutzername='"+application.getUsername()+"'";
 
 		dbc.update(tableName, columns, values, where);
-
+	}
+	
+	public boolean deleteApplicantAccount(Applicant applicant){
+		String username = applicant.getUserData().getUsername();
+		Account acc = acccon.getAccountByUsername(username);
+		int i = 0;
+		
+		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
+		Iterator<AppDocument> it = doc.iterator();
+		
+		while(it.hasNext()){
+			doccon.deleteAppDocument(doc.elementAt(i));
+			i++;
+		}
+		
+		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
+		Iterator<Application> itp = apps.iterator();
+		i = 0;
+		while(it.hasNext()){
+			appcon.deleteApplication(apps.elementAt(i));
+			i++;
+		}
+		 
+		applicant.invalidate();
+		
+		return acccon.deleteAccount(acc);
 	}
 
 	/**
