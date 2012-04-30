@@ -269,7 +269,7 @@ function deleteOffer() {
  *            The data.
  */
 function handleDeleteOfferResponse(mime, data) {
-	alert("handledeleteOfferResponse!");
+	//alert("handledeleteOfferResponse!");
 	if (mime == "text/error")
 		alert(data);
 	else if (mime == "text/url")

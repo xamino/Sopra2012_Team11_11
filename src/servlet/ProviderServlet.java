@@ -95,6 +95,7 @@ public class ProviderServlet extends HttpServlet {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 			} else {
+				log.write("ApplicantServlet","There was an error while deleting account with username:"+ username);
 				response.setContentType("text/error");
 				response.getWriter().write("Error while deleting account!");
 			}
@@ -113,6 +114,7 @@ public class ProviderServlet extends HttpServlet {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			} else {
+				log.write("ApplicantServlet","There was an error while modifying account with username:"+ provider.getUserData().getUsername());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim ändern der Daten.");
 			}
@@ -137,6 +139,7 @@ public class ProviderServlet extends HttpServlet {
 						app.elementAt(i).getUsername()));
 			}
 			// System.out.println("Ergebnis: "+docs2);
+			log.write("ProviderServlet","Creating vector with all applicants from selected offer in progress...");
 			response.setContentType("showtheapplicants/json");
 			response.getWriter().write(gson.toJson(acc, acc.getClass()));
 
@@ -145,35 +148,23 @@ public class ProviderServlet extends HttpServlet {
 		// Creating a new Offer
 		else if (path.equals("/js/addOffer")) {
 			// System.out.println("PROVIDER_SERVLET, PATH: ADD OFFER");
-
 			//Provider provi = Helper.checkAuthenticity(request.getSession(),Provider.class);   --> provider von oben benutzen!!
-			
-					
+								
 			//Generating AID
 			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
-			
-			
+						
 			double aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
 			int aid = (int)aidRandom;	
 			
+			//check if AID is already existing
 			for (int i = 0; i < allOffers.size(); i++) {			
 				if (allOffers.elementAt(i).getAid() == aid) {
 					aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
 					aid = (int)aidRandom;
-					i=0;
+					i=0;//restart checking
 				}
 			}
-			
-			/*
-			 * TODO Woher kommt die aid ? try { aid =
-			 * Integer.parseInt(request.getParameter("????????")); } catch
-			 * (NumberFormatException e) {
-			 * //log.write("AdminServlet","NumberFormatException while parsing URL!"
-			 * ); response.setContentType("text/error");
-			 * response.getWriter().write
-			 * ("Fehler beim Parsen! AutragsID checken!"); return; }
-			 */
-
+			//Getting the data from delivered connection content to save it as a new offer-object in the db.
 			String ersteller = provider.getUserData().getUsername();
 			String name = request.getParameter("titel");
 			String notiz = request.getParameter("notiz");
@@ -183,28 +174,24 @@ public class ProviderServlet extends HttpServlet {
 				stellen = Integer.parseInt(request.getParameter("stellen"));
 			} catch (NumberFormatException e) {
 				// System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
+				log.write("ProviderServlet","There was an error while PARSING double-value(stellen) in: "+path.toString());
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler beim Parsen! Kein/ung�ltiger Wert eingegeben [INT Wert von 'Stellen' pr�fen]");
+						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [INT Wert von 'Stellen' pruefen]");
 				return;
 			}
 
 			double stunden;
 			try {
-
-				stunden = Double.parseDouble(request.getParameter("std")); // in
-																			// der
-																			// DB
-																			// Std/Woche,
-																			// in
-																			// der
-																			// HTML
-																			// Std/Monat
+				// in der DB Std/Woche, in der HTML Std/Monat
+				stunden = Double.parseDouble(request.getParameter("std")); 
+				
 			} catch (NumberFormatException e) {
 				// System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
+				log.write("ProviderServlet","There was an error while PARSING double-value(std) in: "+path.toString());
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler beim Parsen! Kein/ung�ltiger Wert eingegeben [DOUBLE Wert von 'Std' pr�fen]");
+						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [DOUBLE Wert von 'Std' pruefen]");
 				return;
 			}
 
@@ -217,53 +204,42 @@ public class ProviderServlet extends HttpServlet {
 			double lohn = 10.7;// TODO
 
 			int institut = 0; // TODO
-
-			/*
-			 * in log schreiben noetig hier? if (titel == null ||
-			 * titel.isEmpty() || std == null || std.isEmpty() || stellen ==
-			 * null || stellen.isEmpty() || beschreibung.isEmpty()||
-			 * beschreibung==null || notiz == null || notiz.isEmpty() ) {
-			 * log.write("AdminServlet", "Error in parameters!");
-			 * response.setContentType("text/error");
-			 * response.getWriter().write("Werte illegal!"); return; }
-			 */
+			
+			//in log schreiben 
+			if (name== null ||
+			  name.isEmpty() || stunden == 0 || stellen ==0 || beschreibung.isEmpty()||
+			  beschreibung==null || notiz == null || notiz.isEmpty() ||startdatum == null || 
+			  enddatum==null || aenderungsdatum==null ||lohn == 0 || institut<0 ) 
+			{
+			  log.write("ProviderServlet", "Error in parameters!Path: "+path.toString());
+			  response.setContentType("text/error");
+			  response.getWriter().write("Werte illegal!"); return; }
+			 
 
 			// If already exists:
-//			Vector<Offer> allOffers = OfferController.getInstance()
-//					.getAllOffers();
-			// TODO: for (Offer temp : allOffers) {...}
+			//Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
+
 			for (int i = 0; i < allOffers.size(); i++) {
 				if (allOffers.elementAt(i).getName().equals(name)) {
 					// System.out.println("ANGEBOT EXSISTIERT BEREITS, NAME VORHANDEN!");
+					log.write("ProviderServlet", "Error while creating new offer! -->Offer (name) is already exisitng! PATH: "+path.toString());
 					response.setContentType("text/error");
-					response.getWriter().write(
-							"Angebot ist bereits vorhanden (NAME)!");
+					response.getWriter().write("Angebot ist bereits vorhanden (NAME)!");
 					return;
 				} else if (allOffers.elementAt(i).getAid() == aid) {
 					// System.out.println("ANGEBOT EXSISTIERT BEREITS, AID VORHANDEN!");
+					log.write("ProviderServlet", "Error while creating new offer! -->Offer (AID) is already exisitng! PATH: "+path.toString());
 					response.setContentType("text/error");
-					response.getWriter()
-							.write("Angebot ist bereits vorhanden (AID ist festgesetzt im Code)!");
+					response.getWriter().write("Angebot ist bereits vorhanden!");
 					return;
 				}
 			}
-
-			/*
-			 * TODO log.write("ProviderServlet",
-			 * "Error creating offer. Offer already exists!");
-			 * response.setContentType("text/error");
-			 * response.getWriter().write("Jobangebot ist bereits vorhanden!");
-			 * 
-			 * int aid, String author, String name, String note, boolean
-			 * checked, int slots, double hoursperweek, String description, Date
-			 * startdate, Date enddate, double wage, int institute, Date
-			 * modificationdate
-			 */
 
 			// Save new Offer in the DB and response
 			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
 					stellen, stunden, beschreibung, startdatum, enddatum, lohn,
 					institut, aenderungsdatum);
+			log.write("ProviderServlet", "Creating new offer in progress...");
 			OfferController.getInstance().createOffer(offer);
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
@@ -271,9 +247,20 @@ public class ProviderServlet extends HttpServlet {
 		}
 		// Angebot zurueckziehen
 		else if (path.equals("/js/deleteOffer")) {
-			int aid = Integer.parseInt(request.getParameter("aid"));
+			int aid;
+			
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+
+			} catch (NumberFormatException e){
+				log.write("ProviderServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID!");
+				return;
+			}
 			// System.out.println("DELETE OFFER by aid: "+aid);
 			Offer offtodel = OfferController.getInstance().getOfferById(aid);
+			log.write("ProviderServlet","Deleting offer in progress...");
 			OfferController.getInstance().deleteOffer(offtodel);
 
 			response.setContentType("text/url");
@@ -291,10 +278,9 @@ public class ProviderServlet extends HttpServlet {
 				aid = Integer.parseInt(request.getParameter("aid"));
 
 			} catch (NumberFormatException e) {
+				log.write("ProviderServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
 				response.setContentType("text/error");
-				response.getWriter().write(
-						"Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "
-								+ path.toString());
+				response.getWriter().write(	"Fehler beim Parsen der AID!");
 				return;
 			}
 			// System.out.println("LOAD OFFER by aid: "+aid);
@@ -317,10 +303,9 @@ public class ProviderServlet extends HttpServlet {
 				aid = Integer.parseInt(request.getParameter("aid"));
 
 			} catch (NumberFormatException e) {
+				log.write("ProviderServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
 				response.setContentType("text/error");
-				response.getWriter().write(
-						"Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "
-								+ path.toString());
+				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
 			// System.out.println("Update OFFER by aid: "+aid);
@@ -329,9 +314,8 @@ public class ProviderServlet extends HttpServlet {
 
 			offUp.setName(request.getParameter("titel"));
 			offUp.setDescription(request.getParameter("beschreibung"));
+			log.write("ProviderServlet","Updating offer in progress...");
 			OfferController.getInstance().updateOffer(offUp);
-
-			// OfferController.getInstance().updateOffer(offtoup);
 
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
@@ -349,10 +333,9 @@ public class ProviderServlet extends HttpServlet {
 				aid = Integer.parseInt(request.getParameter("aid"));
 
 			} catch (NumberFormatException e) {
+				log.write("ProviderServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
 				response.setContentType("text/error");
-				response.getWriter().write(
-						"Fehler beim Parsen der AID! \nFehlerPfad im Servlet: ERROR IN "
-								+ path.toString());
+				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
 			System.out.println("Applicant:" + username + " for OfferID = " + aid
@@ -372,14 +355,13 @@ public class ProviderServlet extends HttpServlet {
 				if ((aid == applicationToChange.getAid()) && (username.equals(applicationToChange.getUsername()))) {
 					System.out.println("Bewerbername: "+applicationToChange.getUsername()+" AID="+applicationToChange.getAid());
 					if (applicationToChange.isChosen() == true) {
+						log.write("ProviderServlet","ERROR: This applicant is already selected/taken! PATH: "+path.toString());
 						response.setContentType("text/error");
-						response.getWriter().write(
-								"Bewerber wurde schon selektiert! //ERROR IN "
-										+ path.toString());
+						response.getWriter().write("Bewerber wurde schon selektiert!");
 						return;
 					} else {
-
 						applicationToChange.setChosen(true);
+						log.write("ProviderServlet","'Bewerber annehmen' in progress...");
 						ApplicationController.getInstance().updateApplication(applicationToChange);
 					}
 
