@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import logger.Log;
-
 import database.DatabaseController;
 import database.account.Account;
 import database.offer.Offer;
@@ -25,10 +24,10 @@ public class DocumentController {
 	 * Private Instanz des DatabaseController.
 	 */
 	private DatabaseController dbc;
-	
-	final static String tableNameS = "Standardunterlagen";//tabellenname
-	final static String tableNameB = "Bewerbungsunterlagen";//tabellenname
-	final static String tableNameU = "Unterlagen";//tabellenname
+
+	final static String tableNameS = "Standardunterlagen";// tabellenname
+	final static String tableNameB = "Bewerbungsunterlagen";// tabellenname
+	final static String tableNameU = "Unterlagen";// tabellenname
 
 	/**
 	 * Beinhaltet die ApplicationController-Instanz. Diese wird, falls keine
@@ -108,10 +107,9 @@ public class DocumentController {
 	 * @return Gibt an, ob das Update erfolgreich war.
 	 */
 	public boolean updateDocument(Document document) { // checked
-		return dbc.update(tableNameU,
-				new String[] { "Name", "Beschreibung" }, new Object[] {
-						document.getName(), document.getDescription() }, "UID="
-						+ document.getUid());
+		return dbc.update(tableNameU, new String[] { "Name", "Beschreibung" },
+				new Object[] { document.getName(), document.getDescription() },
+				"UID=" + document.getUid());
 	}
 
 	public Document getDocumentByUID(int uid) {
@@ -271,11 +269,11 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots
 		// und Accounts bei gegebenem Account und Angebot
 		Vector<AppDocument> userOffDocVect = new Vector<AppDocument>();
-		ResultSet rs = dbc
-				.select(new String[] { "*" },
-						new String[] { tableNameB },
-						"benutzername='" + account.getUsername() + "' AND AID="
-								+ offer.getAid());
+		ResultSet rs = dbc.select(
+				new String[] { "*" },
+				new String[] { tableNameB },
+				"benutzername='" + account.getUsername() + "' AND AID="
+						+ offer.getAid());
 
 		try {
 			while (rs.next()) {
@@ -445,8 +443,9 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void createOfferDocument(OfferDocument document) { // checked
-		dbc.insert(tableNameS, new Object[] { document.getOfferID(),
-				document.getDocumentid() });
+		dbc.insert(
+				tableNameS,
+				new Object[] { document.getOfferID(), document.getDocumentid() });
 	}
 
 	/**
@@ -459,8 +458,8 @@ public class DocumentController {
 	 */
 	public void deleteOfferDocument(OfferDocument document) { // checked
 
-		dbc.delete(tableNameS, "AID=" + document.getOfferID()
-				+ " AND UID=" + document.getDocumentid());
+		dbc.delete(tableNameS, "AID=" + document.getOfferID() + " AND UID="
+				+ document.getDocumentid());
 	}
 
 	/**
@@ -471,7 +470,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
-	
+
 	public void updateOfferDocument(OfferDocument document/* , int newDocumentId */) { // checked:
 																						// PROBLEM
 		/*
@@ -512,30 +511,32 @@ public class DocumentController {
 		 * updateAppDocument(AppDocument document) realisiert.
 		 */
 	}
-	
+
 	/**
-	 * Diese Methode gibt alle Dokumente zurueck, die ein Angebot nicht als Standartunterlagen angegeben hat
+	 * Diese Methode gibt alle Dokumente zurueck, die ein Angebot nicht als
+	 * Standartunterlagen angegeben hat
+	 * 
 	 * @param aid
-	 * 		AngebotsID des Angebots
-	 * @return
-	 * 		Dokumente, die ein Angebot nicht als Standartunterlagen angegeben hat
+	 *            AngebotsID des Angebots
+	 * @return Dokumente, die ein Angebot nicht als Standartunterlagen angegeben
+	 *         hat
 	 */
-	public Vector<Document> getDocumentsToAddToOffer(int aid){
-		
+	public Vector<Document> getDocumentsToAddToOffer(int aid) {
+
 		System.out.println(tableNameU);
-		
-		
+
 		Vector<Document> docsToAdd = new Vector<Document>();
 
-
 		String[] select = { "*" };
-		String[] from = {tableNameU};
-		String where = "UID not in (Select UID FROM "+tableNameS+" WHERE AID = "+aid+")";
+		String[] from = { tableNameU };
+		String where = "UID not in (Select UID FROM " + tableNameS
+				+ " WHERE AID = " + aid + ")";
 
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {
-				docsToAdd.add(new Document(rs.getInt(1),rs.getString(2),rs.getString(3)));
+				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
+						.getString(3)));
 			}
 
 			rs.close();
@@ -546,33 +547,62 @@ public class DocumentController {
 		}
 		return docsToAdd;
 	}
-	
+
 	/**
 	 * Die Methode liefert zu einem Username alle vorhandenen Dokumente.
+	 * 
 	 * @param benutzername
-	 * 				Username vom Bewerber.
+	 *            Username vom Bewerber.
 	 * @return
 	 */
-	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername){
-		String[] select = {"*"};
-		String[] from = {tableNameB};
-		String where = "benutzername="+benutzername;
+	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername) {
+		String[] select = { "*" };
+		String[] from = { tableNameB };
+		String where = "benutzername=" + benutzername;
 		Vector<AppDocument> appdoc = null;
 		ResultSet rs = dbc.select(select, from, where);
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				AppDocument temp;
-				temp = new AppDocument(rs.getString(0), rs .getInt(1), rs.getInt(2), rs.getBoolean(3));
+				temp = new AppDocument(rs.getString(0), rs.getInt(1),
+						rs.getInt(2), rs.getBoolean(3));
 				appdoc.add(temp);
-				
+
 			}
 		} catch (SQLException e) {
 			log.write("DocumentController", "Error while select");
 			e.printStackTrace();
 			return null;
 		}
-		
+
 		return appdoc;
-		
+
+	}
+
+	/**
+	 * Holt eine einzelne Bewerbungsunterlage anhand der UID aus der Datenbank.
+	 * 
+	 * @param UID
+	 *            Die UID.
+	 * @return Die Bewerbungsunterlage. <code>Null</code> wenn Fehler.
+	 */
+	public AppDocument getAppDocumentByUID(final int UID) {
+		String[] select = { "*" };
+		String[] from = { tableNameB };
+		String where = "UID=" + UID;
+		AppDocument appdoc;
+		ResultSet rs = dbc.select(select, from, where);
+		try {
+			if (rs.next()) {
+				appdoc = new AppDocument(rs.getString("benutzername"),
+						rs.getInt("AID"), rs.getInt("UID"),
+						rs.getBoolean("status"));
+				return appdoc;
+			}
+			return null;
+		} catch (SQLException e) {
+			log.write("DocumentController", "Error in getAppDocumentByUID()!");
+			return null;
+		}
 	}
 }

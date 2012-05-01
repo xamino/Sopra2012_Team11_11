@@ -22,71 +22,61 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind als Bewerber angemeldet. <br>
-			<input type="submit" value="Logout" onclick="doLogout();"/>
-		</div>				
-			<div id="error_login" class="hiddenerror"></div>
+			Sie sind als Bewerber angemeldet. <br> <input type="submit"
+				value="Logout" onclick="doLogout();" />
+		</div>
+		<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
 			<h3>Navigation</h3>
-				<div class="text">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_APPLICANT_USERINDEX %>" title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
-					&rarr; Bewerbungen 
+			<div class="text">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_USERINDEX%>"
+					title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
+					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
+				&rarr; Bewerbungen
 			</div>
 		</div>
 	</div>
 	<div class="content">
-	<div class="rightborder">
-		<div class="textblock">
-			<h2>Bewerbungen</h2>
-			<div class="text">
-			Hier finden Sie den Bearbeitungsstatus Ihrer Bewerbungen.
+		<div class="rightborder">
+			<div class="textblock">
+				<h2>Bewerbungen</h2>
+				<div class="text">Hier finden Sie den Bearbeitungsstatus Ihrer
+					Bewerbungen.</div>
 			</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<div class="haupttext" >
-				<div id="applications">
-				</div>
-				<!-- <h4>Bewerbung für: WOW-TUT</h4>-->
-				<form class="listform">
-					<table id="applicationsTable">
-						<!-- <tr>
-							<td><input type="checkbox" /></td>
-							<td>Superheldenbescheingung</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Bewerbungsnormvertrag</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Kündigungsnormvertrag</td>
-						</tr>-->
-					</table>
-				</form>
-				<hr>
-				<div class="float">
-				<form method="post" action="mailto:email@email.com">
-					<input type="submit" value="Verwalter kontaktieren" />
-				</form>
-				</div>
-				<div class="float">
-				<form method="post" action="mailto:email@email.com">
-					<input type="submit" value="Anbieter kontaktieren" />
-				</form>
-				</div>
-				<div class="float">
-				<form name="stornieren">
-					<input type="button" value="Bewerbung wiederrufen"
-						onclick="togglePopup('application_cancel',true);" /> 
-					<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
-				</form>
+			<hr>
+			<div class="textblock">
+				<div class="haupttext">
+					<div id="applications">
+						<!-- <h4>Bewerbung für: WOW-TUT</h4>-->
+					</div>
+					<form class="listform">
+						<table id="applicationsTable">
+							<!-- Here come the documents -->
+						</table>
+					</form>
+					<hr>
+					<div class="float">
+						<form method="post" action="mailto:email@email.com">
+							<input type="submit" value="Verwalter kontaktieren" />
+						</form>
+					</div>
+					<div class="float">
+						<form method="post" action="mailto:email@email.com">
+							<input type="submit" value="Anbieter kontaktieren" />
+						</form>
+					</div>
+					<div class="float">
+						<form name="stornieren">
+							<input type="button" value="Bewerbung wiederrufen"
+								onclick="togglePopup('application_cancel',true);" />
+							<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 
