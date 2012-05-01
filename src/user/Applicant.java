@@ -13,10 +13,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
-import logger.Log;
-
 import database.account.Account;
-import database.account.AccountController;
 import database.application.Application;
 import database.document.AppDocument;
 import database.offer.Offer;
@@ -43,7 +40,7 @@ public class Applicant extends User {
 	 */
 	public Applicant(String username, String email, String name,
 			HttpSession session) {
-		super(username, email, name, session);
+		super(username, email, name, null,session);
 		userManagement.LoggedInUsers.addUser(this);
 	}
 

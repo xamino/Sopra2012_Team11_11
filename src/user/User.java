@@ -73,12 +73,15 @@ public abstract class User {
 	 *            E-Mail Adresse
 	 * @param name
 	 *            Realer Name
+	 * @param representative
+	 *            Name des representative.
 	 * @param session
 	 *            Session des Benutzers
 	 */
-	public User(String username, String email, String name, HttpSession session) {
+	public User(String username, String email, String name,
+			String representative, HttpSession session) {
 		log = Log.getInstance();
-		uData = new UserData(username, email, name, session);
+		uData = new UserData(username, email, name, representative, session);
 		acccon = AccountController.getInstance();
 		appcon = ApplicationController.getInstance();
 		doccon = DocumentController.getInstance();
@@ -106,9 +109,11 @@ public abstract class User {
 	 *            Neue Email
 	 * @param pw
 	 *            Neues Passwort (gehashed!)
+	 * @param rep
 	 * @return Wahrheitswert ob erfolgreich
 	 */
-	public boolean editOwnAccount(String name, String email, String pw) {
+	public boolean editOwnAccount(String name, String email, String pw,
+			String rep) {
 		Account own = acccon.getAccountByUsername(uData.getUsername());
 		if (email != null) {
 			own.setEmail(email);
@@ -119,6 +124,10 @@ public abstract class User {
 		if (name != null) {
 			own.setName(name);
 			uData.setName(name);
+		}
+		if (rep != null) {
+			own.setRepresentative(rep);
+			uData.setRepresentant(rep);
 		}
 		if (acccon.updateAccount(own))
 			return true;

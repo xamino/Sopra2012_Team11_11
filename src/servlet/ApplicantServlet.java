@@ -211,7 +211,7 @@ public class ApplicantServlet extends HttpServlet {
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
-			if (applicant.editOwnAccount(name, email, pw)) {
+			if (applicant.editOwnAccount(name, email, pw, null)) {
 				log.write("ApplicantServlet", applicant.getUserData()
 						.getUsername() + " has modified his account.");
 				response.setContentType("text/url");

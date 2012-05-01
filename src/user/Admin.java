@@ -29,7 +29,7 @@ public class Admin extends User {
 	 *            Session des Benutzers.
 	 */
 	public Admin(String username, String email, String name, HttpSession session) {
-		super(username, email, name, session);
+		super(username, email, name, null,session);
 		userManagement.LoggedInUsers.addUser(this);
 		this.log = Log.getInstance();
 	}

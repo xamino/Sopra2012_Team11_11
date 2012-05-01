@@ -25,10 +25,6 @@ import file.ExcelExport;
  * Verwaltet alle Aufgaben und Daten eines Verwalters.
  */
 public class Clerk extends User {
-	/**
-	 * Stellvertreter
-	 */
-	private String representant;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -40,11 +36,14 @@ public class Clerk extends User {
 	 *            E-Mail Adresse
 	 * @param name
 	 *            Realer Name
+	 * @param representative
+	 *            Name des Repraesentanten.
 	 * @param session
 	 *            Session des Benutzers
 	 */
-	public Clerk(String username, String email, String name, HttpSession session) {
-		super(username, email, name, session);
+	public Clerk(String username, String email, String name,
+			String representative, HttpSession session) {
+		super(username, email, name, representative, session);
 		userManagement.LoggedInUsers.addUser(this);
 	}
 
@@ -56,7 +55,6 @@ public class Clerk extends User {
 	 *            geaenderter Account
 	 */
 	public boolean editAccount(Account acc) {
-
 		if (!acccon.updateAccount(acc)) {
 			log.write("Clerk", "Error modifying account!");
 			return false;
@@ -207,25 +205,6 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * Gibt den Stellvertreter zurueck
-	 * 
-	 * @return Stellvertreter
-	 */
-	public String getRepresentant() {
-		return representant;
-	}
-
-	/**
-	 * Setzt den Stellvertreter
-	 * 
-	 * @param representant
-	 *            Stellvertreter
-	 */
-	public void setRepresentant(String representant) {
-		this.representant = representant;
-	}
-
-	/**
 	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
 	 * 
 	 * @return True falls alles abgegeben wurde, sonst False.
@@ -265,21 +244,19 @@ public class Clerk extends User {
 	 */
 	public Vector<Offer> getAllUncheckedOffers() {
 		Vector<Offer> offers = new Vector<Offer>();
-		String representative = getRepresentant();
+		Account rep = acccon.getRepresentativeAccount(this.getUserData().getUsername());
 		// Check if field is used:
-		if (representative != null && !representative.isEmpty()) {
-			Account rep = acccon.getAccountByUsername(representative);
+		if (rep != null) {
 			// Cancel if rep is null (error somewhere), wrong accounttype, or is
 			// own name.
 			if (rep == null || rep.getAccounttype() != Account.VERWALTER
 					|| rep.getUsername() == getUserData().getUsername()) {
-				log.write("Clerk", "ERROR getting representative <"
-						+ representative + ">, is the value valid?");
+				log.write("Clerk", "ERROR getting representative, is the value valid?");
 			} else {
-				log.write("Clerk", "<" + getUserData().getUsername()
-						+ "> has representative <" + rep.getUsername()
+				log.write("Clerk", "<" + this.getUserData().getUsername()
+						+ "> is representative for <" + rep.getUsername()
 						+ ">, allowing cross-editing of offers.");
-				offcon.getUncheckedOffersByClerk(rep);
+				offers = offcon.getUncheckedOffersByClerk(rep);
 			}
 		}
 		// Load own offers:

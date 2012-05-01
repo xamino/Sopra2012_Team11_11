@@ -233,6 +233,7 @@ public class DatabaseController {
 		if (where != null)
 			sel += " WHERE " + where;
 		ResultSet rs;
+		// System.out.println(sel);
 		try {
 			rs = st.executeQuery(sel);
 			return rs;

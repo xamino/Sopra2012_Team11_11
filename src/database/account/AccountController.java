@@ -33,7 +33,7 @@ import database.offer.OfferController;
  */
 
 public class AccountController {
-	
+
 	private ApplicationController appcon;
 	private DocumentController doccon;
 	private InstituteController instcon;
@@ -46,8 +46,8 @@ public class AccountController {
 	 * AccountController. existiert.
 	 */
 	private static AccountController acccontr;
-	
-	final static String tableName = "Accounts";//tabellenname
+
+	final static String tableName = "Accounts";// tabellenname
 
 	/**
 	 * Diese Methode prueft ob ein AccountController-Objekt existiert. Falls
@@ -87,7 +87,7 @@ public class AccountController {
 	 *            noetigen Attribute enthaelt.
 	 * @return Gibt an, ob das erstellen des Accounts erfolgreich war.
 	 */
-	public boolean createAccount(Account account) { //checked
+	public boolean createAccount(Account account) { // checked
 
 		Object[] values = { account.getUsername(), account.getPasswordhash(),
 				account.getAccounttype(), account.getEmail(),
@@ -96,75 +96,76 @@ public class AccountController {
 
 		return dbc.insert(tableName, values);
 	}
-	
-	
+
 	/**
 	 * Methode zum löschen eines ApplicantAccounts.
+	 * 
 	 * @param applicant
-	 * 			Applicant-Objekt
-	 * @return
-	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
-	 */	
-	public boolean deleteApplicantAccount(Applicant applicant){
+	 *            Applicant-Objekt
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */
+	public boolean deleteApplicantAccount(Applicant applicant) {
 		String username = applicant.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
-		
+
 		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
 		Iterator<AppDocument> it = doc.iterator();
-		
+
 		for (int j = 0; it.hasNext(); j++) {
 			doccon.deleteAppDocument(doc.elementAt(j));
 		}
-		
+
 		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
 		Iterator<Application> itp = apps.iterator();
-		
+
 		for (int i = 0; itp.hasNext(); i++) {
 			appcon.deleteApplication(apps.elementAt(i));
 		}
 
 		return deleteAccount(acc);
 	}
+
 	/**
 	 * Methode zum löschen eines ClerkAccounts
+	 * 
 	 * @param clerk
-	 * 			Clerk-Objekt
-	 * @return
-	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
-	 */			
-	
-	public boolean deleteClerkAccount(Clerk clerk){
+	 *            Clerk-Objekt
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */
+
+	public boolean deleteClerkAccount(Clerk clerk) {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
 		Institute inst = instcon.getInstituteByIID(acc.getInstitute());
 		instcon.deleteInstitute(inst);
 		return deleteAccount(acc);
-		
+
 	}
-	
+
 	/**
 	 * Methode zum löschen eines ProviderAccounts
+	 * 
 	 * @param provider
-	 * 			Provider-Objekt
-	 * @return
-	 * 			TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
-	 */	
-	public boolean deleteProviderAccount(Provider provider){
+	 *            Provider-Objekt
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */
+	public boolean deleteProviderAccount(Provider provider) {
 		String username = provider.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
-		
+
 		Vector<Offer> off = offcon.getOffersByProvider(provider);
 		Iterator<Offer> it = off.iterator();
-		
+
 		for (int i = 0; it.hasNext(); i++) {
 			Offer temp = off.elementAt(i);
-			
+
 			offcon.deleteOffer(temp);
-			
-			Vector<AppDocument> doc = doccon.getAppDocumentByOffer(temp.getAid());
+
+			Vector<AppDocument> doc = doccon.getAppDocumentByOffer(temp
+					.getAid());
 			Iterator<AppDocument> itp = doc.iterator();
-		
+
 			for (int j = 0; itp.hasNext(); j++) {
 				doccon.deleteAppDocument(doc.elementAt(j));
 			}
@@ -179,9 +180,9 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return 
+	 * @return
 	 */
-	public boolean deleteAccount(Account account) { //checked
+	public boolean deleteAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
 		return dbc.delete("Accounts", where);
 	}
@@ -195,7 +196,7 @@ public class AccountController {
 	 *            noetigen Attribute enthaelt.
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
-	public boolean updateAccount(Account account) { //checked
+	public boolean updateAccount(Account account) { // checked
 
 		String where = "benutzername = '" + account.getUsername() + "'";
 
@@ -226,7 +227,7 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
 	 *         existent <code>null</code>.
 	 */
-	public Vector<Account> getAllAccounts() { //checked
+	public Vector<Account> getAllAccounts() { // checked
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { tableName }, null);
 		Vector<Account> accounts = new Vector<Account>();
@@ -253,15 +254,15 @@ public class AccountController {
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
 	 *         existent <code>null</code>.
 	 */
-	public Account getAccountByUsername(String username) { //checked
-		ResultSet rs = dbc.select(new String[] { "*" },new String[] { tableName }, "benutzername='" + username + "'");
+	public Account getAccountByUsername(String username) { // checked
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { tableName }, "benutzername='" + username + "'");
 		try {
-			if (rs.next()){	
+			if (rs.next()) {
 				return new Account(rs.getString(1), rs.getString(2),
 						rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getString(7));
-			}
-			else{
+			} else {
 				return null;
 			}
 		} catch (SQLException e) {
@@ -282,7 +283,7 @@ public class AccountController {
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem
 	 *         Accounttyp.
 	 */
-	public Vector<Account> getAccountsByAccounttype(int accounttype) { //checked
+	public Vector<Account> getAccountsByAccounttype(int accounttype) { // checked
 
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
@@ -313,14 +314,15 @@ public class AccountController {
 	}
 
 	/**
-	 * Diese Methode selektiert alle Verwalter Accounts mit uebergebenem Institut.
+	 * Diese Methode selektiert alle Verwalter Accounts mit uebergebenem
+	 * Institut.
 	 * 
 	 * @param id
 	 *            Id ist der Primaerschluessel in der Institute-DB.
 	 * @return Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
-	public Vector<Account> getAccountsByInstitute(int id) { //checked
+	public Vector<Account> getAccountsByInstitute(int id) { // checked
 
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
@@ -349,16 +351,17 @@ public class AccountController {
 		return accountvec;
 
 	}
-	
+
 	/**
-	 * Diese Methode selektiert alle Provider Accounts mit uebergebenem Institut.
+	 * Diese Methode selektiert alle Provider Accounts mit uebergebenem
+	 * Institut.
 	 * 
 	 * @param id
 	 *            Id ist der Primaerschluessel in der Institute-DB.
 	 * @return Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte
 	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut.
 	 */
-	public Vector<Account> getProviderAccountsByInstitute(int id) { //checked
+	public Vector<Account> getProviderAccountsByInstitute(int id) { // checked
 
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
 
@@ -396,19 +399,46 @@ public class AccountController {
 	 *            Name des Accounts.
 	 * @return Gibt den Namen des Stellvertreters zurueck.
 	 */
-	public String getRepresentative(String name) { //checked
+	public String getRepresentative(String name) { // checked
 
 		ResultSet rs = dbc.select(new String[] { "stellvertreter" },
 				new String[] { "accounts" }, "benutzername = '" + name + "'");
 		try {
-			if (rs.next()){
+			if (rs.next()) {
 				return rs.getString(1);
-			}
-			else
+			} else
 				return null;
 		} catch (SQLException e) {
 			logger.Log.getInstance().write("AccountController",
 					"Error while reading Account from Database");
+		}
+		return null;
+	}
+
+	/**
+	 * Gibt den Account des Stellvertreters zurueck. Gegeben wird der EINGENE Bentuzername!
+	 * 
+	 * @param userName
+	 *            Der Benutzername des Accounts, fuer den wir delegierte Angebote suchen.
+	 * @return Den Account des Stellvertreters.
+	 */
+	public Account getRepresentativeAccount(String userName) {
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { "Accounts" }, "stellvertreter= '" + userName
+						+ "'");
+		try {
+			if (rs.next()) {
+				return new Account(rs.getString("benutzername"),
+						rs.getString("passworthash"), rs.getInt("accounttyp"),
+						rs.getString("email"), rs.getString("name"),
+						rs.getInt("institut"), rs.getString("stellvertreter"));
+			} else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write(
+					"AccountController",
+					"Error while reading Account from Database for <"
+							+ userName + ">.");
 		}
 		return null;
 	}
@@ -420,11 +450,11 @@ public class AccountController {
 	 *            Der Name des Stellvertreters.
 	 */
 
-	public void setRepresentative(String name, String newrepresentative) { //checked
-		String[] columns = {"stellvertreter"};
-		Object[] values = {newrepresentative};
-		String where = "benutzername = '"+name+"'";
-		
+	public void setRepresentative(String name, String newrepresentative) { // checked
+		String[] columns = { "stellvertreter" };
+		Object[] values = { newrepresentative };
+		String where = "benutzername = '" + name + "'";
+
 		dbc.update("accounts", columns, values, where);
 	}
 

@@ -11,10 +11,11 @@ import javax.servlet.http.HttpSession;
 public class UserData {
 
 	public UserData(String username, String email, String name,
-			HttpSession session) {
+			String representative, HttpSession session) {
 		this.username = username;
 		this.email = email;
 		this.name = name;
+		this.representant = representative;
 		this.session = session;
 	}
 
@@ -27,6 +28,10 @@ public class UserData {
 	 * E-Mail Adresse des Benutzers
 	 */
 	private String email;
+	/**
+	 * Stellvertreter
+	 */
+	private String representant;
 	/**
 	 * Session des Benutzers
 	 */
@@ -87,6 +92,25 @@ public class UserData {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * Gibt den Stellvertreter zurueck
+	 * 
+	 * @return Stellvertreter
+	 */
+	public String getRepresentant() {
+		return representant;
+	}
+
+	/**
+	 * Setzt den Stellvertreter
+	 * 
+	 * @param representant
+	 *            Stellvertreter
+	 */
+	public void setRepresentant(String representant) {
+		this.representant = representant;
 	}
 
 	/**

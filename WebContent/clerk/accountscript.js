@@ -19,7 +19,7 @@ function doExcelExport() {
 function loadAccount() {
 	alert("test");
 	connect("/hiwi/Clerk/js/loadAccount", "", handleLoadAccountResponse);
-	
+
 }
 
 /**
@@ -39,8 +39,8 @@ function handleLoadAccountResponse(mime, data) {
 		var JSONdata = eval("(" + data + ")");
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
-		document.getElementById("realName").value =JSONdata.realName;
-		document.getElementById("rep").value = JSONdata.rep;
+		document.getElementById("realName").value = JSONdata.realName;
+		document.getElementById("stellvertreter").value = JSONdata.rep;
 
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
@@ -106,13 +106,13 @@ function check() {
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
-	}else if(pw==pww){
+	} else if (pw == pww) {
 		changeAccount();
 	}
 
 }
 
-function changeAccount(){
+function changeAccount() {
 	var form = datenAendern;
 	var error = false;
 	var realName = form.realName.value;
@@ -132,15 +132,19 @@ function changeAccount(){
 		password = b64_md5(password);
 	} else
 		password = "";
+	var rep = form.stellvertreter.value;
+	if (rep == null)
+		rep = "";
 	if (error)
 		return;
 	// As of here, send:
 	connect("/hiwi/Clerk/js/changeAccount", "name=" + realName + "&mail="
-			+ email + "&pw=" + password,
-			handleChangeAccountResponse);
+			+ email + "&pw=" + "&rep=" + rep, handleChangeAccountResponse);
 }
 
-function handleChangeAccountResponse(mime, data){
-	if(mime=="text/error")alert(data);
-	if(mime=="text/url")window.location=data;
+function handleChangeAccountResponse(mime, data) {
+	if (mime == "text/error")
+		alert(data);
+	if (mime == "text/url")
+		window.location = data;
 }

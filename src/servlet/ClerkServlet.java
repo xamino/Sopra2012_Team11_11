@@ -312,10 +312,13 @@ public class ClerkServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
+			String rep = request.getParameter("rep");
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
-			if (clerk.editOwnAccount(name, email, pw)) {
+			if (rep == null)
+				rep = "";
+			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ApplicantServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
 				response.setContentType("text/url");
@@ -329,7 +332,7 @@ public class ClerkServlet extends HttpServlet {
 		else if (path.equals("/js/loadAccount")) {
 			String realName = clerk.getUserData().getName();
 			String email = clerk.getUserData().getEmail();
-			String rep = clerk.getRepresentant();
+			String rep = clerk.getUserData().getRepresentant();
 			String JsonString = Helper.jsonAtor(new String[] { "realName",
 					"email", "rep" }, new String[] { realName, email, rep });
 			response.setContentType("application/json");
@@ -454,29 +457,6 @@ public class ClerkServlet extends HttpServlet {
 			output.flush();
 			output.close();
 			fileToDownload.close();
-			// // Set correct parameters:
-			// response.setContentType("application/excel");
-			// response.setContentLength((int) file.length());
-			//
-			// OutputStream os = response.getOutputStream();
-			// FileInputStream fis = new FileInputStream(file);
-			// byte[] buffer = new byte[(int) file.length()];
-			// // Random Zahl (ausm Beispiel von Manu) da ich keine Ahnung
-			// // hab wie ich die length bekomme. <Tamino> file.length wird in
-			// den
-			// // Bsp benutzt.
-			// int bytesRead = 0;
-			// while (true) {
-			// bytesRead = fis.read(buffer);
-			// if (bytesRead == -1) {
-			// // FileInputStream.read gibt -1 zurück falls keine Daten zum
-			// // lesen mehr da sind.
-			// break;
-			// }
-			// }
-			// os.flush();
-			// fis.close();
-			// return;
 		}
 	}
 

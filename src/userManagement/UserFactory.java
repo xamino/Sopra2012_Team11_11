@@ -7,9 +7,6 @@ import user.Applicant;
 import user.Clerk;
 import user.Provider;
 import user.User;
-
-import logger.Log;
-
 import database.account.Account;
 
 /**
@@ -30,14 +27,19 @@ public class UserFactory {
 	 */
 	public static User getUserInstance(Account acc, HttpSession session) {
 		int type = acc.getAccounttype();
-		if(type==0){
-			return new Admin(acc.getUsername(),acc.getEmail(),acc.getName(),session);
-		}else if(type==1){
-			return new Provider(acc.getUsername(),acc.getEmail(),acc.getName(),session);
-		}else if(type==2){
-			return new Clerk(acc.getUsername(),acc.getEmail(),acc.getName(),session);
-		}else if(type==3){
-			return new Applicant(acc.getUsername(),acc.getEmail(),acc.getName(),session);
-		}else return null;
+		if (type == 0) {
+			return new Admin(acc.getUsername(), acc.getEmail(), acc.getName(),
+					session);
+		} else if (type == 1) {
+			return new Provider(acc.getUsername(), acc.getEmail(),
+					acc.getName(), session);
+		} else if (type == 2) {
+			return new Clerk(acc.getUsername(), acc.getEmail(), acc.getName(),
+					acc.getRepresentative(), session);
+		} else if (type == 3) {
+			return new Applicant(acc.getUsername(), acc.getEmail(),
+					acc.getName(), session);
+		} else
+			return null;
 	}
 }

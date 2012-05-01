@@ -108,7 +108,7 @@ public class ProviderServlet extends HttpServlet {
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
-			if (provider.editOwnAccount(name, email, pw)) {
+			if (provider.editOwnAccount(name, email, pw, null)) {
 				log.write("ApplicantServlet", provider.getUserData()
 						.getUsername() + " has modified his account.");
 				response.setContentType("text/url");

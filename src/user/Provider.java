@@ -1,25 +1,18 @@
 package user;
 
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
 import sun.util.calendar.BaseCalendar.Date;
-
-import logger.Log;
 import database.account.Account;
-import database.account.AccountController;
 import database.application.Application;
-import database.document.AppDocument;
 import database.offer.Offer;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Anbieters.
  */
 public class Provider extends User {
-
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der
@@ -36,7 +29,7 @@ public class Provider extends User {
 	 */
 	public Provider(String username, String email, String name,
 			HttpSession session) {
-		super(username, email, name, session);
+		super(username, email, name, null, session);
 		userManagement.LoggedInUsers.addUser(this);
 
 	}
@@ -59,18 +52,19 @@ public class Provider extends User {
 		return true;
 	}
 
-
 	/**
 	 * Methode zum annehmen eines Bewerbers.
+	 * 
 	 * @param AID
-	 * 			ID der Bewerbung
-	 * @throws SQLException 
+	 *            ID der Bewerbung
+	 * @throws SQLException
 	 */
 	public void acceptApplication(int AID) throws SQLException {
 		Application app = appcon.getApplicationById(AID);
 		app.setChosen(true);
 		appcon.updateApplication(app);
 	}
+
 	/**
 	 * Loescht ein Angebot aus dem System.
 	 */
@@ -88,13 +82,15 @@ public class Provider extends User {
 			int pInstitute, Date pModificationdate) {
 
 	}
-	
+
 	/**
 	 * Methode zum Löschen seines Accounts
-	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 * 
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
+	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
+	 *         zurückgegeben.
 	 */
-	public boolean deleteOwnAccount(){
+	public boolean deleteOwnAccount() {
 		invalidate();
 		return acccon.deleteProviderAccount(this);
 	}

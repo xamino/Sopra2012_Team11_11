@@ -393,10 +393,10 @@ public class OfferController {
 		ResultSet rs;
 		if (account.getInstitute() == 0)
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"Geprueft = 0");
+					"Geprueft=0");
 		else
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"Geprueft = 0 AND Institut =" + account.getInstitute());
+					"Geprueft=0 AND Institut=" + account.getInstitute());
 		try {
 			while (rs.next()) {
 				offers.add(new Offer(rs.getInt("AID"), rs
