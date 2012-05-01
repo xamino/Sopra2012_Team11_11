@@ -3,6 +3,16 @@
  */
 
 /**
+ * Fragt mich nicht, warum das so funktioniert... :P
+ */
+function doExcelExport() {
+	var elemIF = document.createElement("iframe");
+	elemIF.src = "/hiwi/Clerk/js/doExcelExport";
+	elemIF.style.display = "none";
+	document.body.appendChild(elemIF);
+}
+
+/**
  * This function loads the account in the system from the database and displays
  * the data.
  */
