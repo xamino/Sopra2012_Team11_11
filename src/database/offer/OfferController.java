@@ -17,6 +17,7 @@ import java.util.Vector;
 import logger.Log;
 import user.Provider;
 import database.DatabaseController;
+import database.account.Account;
 import database.application.Application;
 
 public class OfferController {
@@ -367,5 +368,51 @@ public class OfferController {
 					"Error while reading Offer from Database");
 		}
 		return null;
+	}
+
+	/**
+	 * Liest alle zugehoerigen Angebote eines Clerk accounts aus der DB. Ist der
+	 * Clerk dem Institut 0 Default zugeordnet, werden ALLE ungeprueften
+	 * Angebote unabhaengig des Instituts ausgelesen.
+	 * 
+	 * @param account
+	 *            Der account wessen angebote gelesen werden sollen. Ist
+	 *            accounttyp != 3 (Clerk) wird null zurueckgeben!
+	 * @return Alle ungeprueften Angebote des entsprechenden Instituts.
+	 */
+	// DONE: Institut = 0 universal already implemented!
+	public Vector<Offer> getUncheckedOffersByClerk(Account account) {
+		// If not clerk:
+		System.out.println(account.getAccounttype());
+		if (account.getAccounttype() != Account.VERWALTER) {
+			log.write("OfferController",
+					"Illegal access tried in getUncheckedOffersByClerk()!");
+			return null;
+		}
+		Vector<Offer> offers = new Vector<Offer>();
+		// Implement that institut 0 is universal:
+		ResultSet rs;
+		if (account.getInstitute() == 0)
+			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
+					"Geprueft = 0");
+		else
+			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
+					"Geprueft = 0 AND Institut =" + account.getInstitute());
+		try {
+			while (rs.next()) {
+				offers.add(new Offer(rs.getInt("AID"), rs
+						.getString("Ersteller"), rs.getString("Name"), rs
+						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
+						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
+						.getString("Beschreibung"), rs.getDate("Beginn"), rs
+						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
+						.getInt("Institut"), rs.getDate("aenderungsdatum")));
+			}
+			return offers;
+		} catch (SQLException e) {
+			log.write("OfferController",
+					"Error reading ResultSet in getUncheckedOffersByClerk()!");
+			return null;
+		}
 	}
 }

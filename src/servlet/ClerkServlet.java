@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-
 import logger.Log;
 import user.Clerk;
 
@@ -91,8 +90,8 @@ public class ClerkServlet extends HttpServlet {
 		log.write("ClerkServlet", "Received request: " + path);
 		// Load the offers of the clerk:
 		if (path.equals("/js/showMyOffers")) {
-			Vector<Offer> myoffers = OfferController.getInstance()
-					.getAllOffers(); // Offer vom User geholt
+			// Load all correct offers:
+			Vector<Offer> myoffers = clerk.getAllUncheckedOffers();
 			response.setContentType("offers/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));

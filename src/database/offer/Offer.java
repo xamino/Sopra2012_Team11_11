@@ -377,6 +377,13 @@ public class Offer {
 	}
 
 
+	@Override
+	public String toString() {
+		return "Offer [name=" + name + ", checked=" + checked + ", institute="
+				+ institute + "]";
+	}
+
+
 	
 	
 	

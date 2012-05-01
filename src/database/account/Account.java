@@ -28,6 +28,11 @@ public class Account {
 	 * - Bewerber
 	 */
 	private int accounttype;
+	// Constants for easy access:
+	public static final int ADMIN = 0;
+	public static final int ANBIETER = 1;
+	public static final int VERWALTER = 2;
+	public static final int BEWERBER = 3;
 	/**
 	 * Email Adresse des Benutzers.
 	 */

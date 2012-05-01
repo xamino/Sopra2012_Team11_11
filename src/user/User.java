@@ -1,20 +1,13 @@
 package user;
 
-import java.util.Iterator;
-import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
-
 import database.account.Account;
 import database.account.AccountController;
-import database.application.Application;
 import database.application.ApplicationController;
-import database.document.AppDocument;
 import database.document.DocumentController;
 import database.institute.InstituteController;
-import database.offer.Offer;
 import database.offer.OfferController;
 
 /**
@@ -84,6 +77,7 @@ public abstract class User {
 	 *            Session des Benutzers
 	 */
 	public User(String username, String email, String name, HttpSession session) {
+		log = Log.getInstance();
 		uData = new UserData(username, email, name, session);
 		acccon = AccountController.getInstance();
 		appcon = ApplicationController.getInstance();

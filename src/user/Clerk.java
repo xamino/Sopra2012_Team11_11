@@ -4,24 +4,20 @@
 
 package user;
 
-import javax.servlet.http.HttpSession;
-
 import java.io.File;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 
-import jxl.write.*;
+import javax.servlet.http.HttpSession;
+
+import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-import logger.Log;
-import database.document.Document;
 import database.account.Account;
-import database.account.AccountController;
 import database.application.Application;
 import database.document.AppDocument;
-import database.document.OfferDocument;
+import database.document.Document;
 import database.offer.Offer;
 import file.ExcelExport;
 
@@ -60,7 +56,7 @@ public class Clerk extends User {
 	 *            geaenderter Account
 	 */
 	public boolean editAccount(Account acc) {
-		
+
 		if (!acccon.updateAccount(acc)) {
 			log.write("Clerk", "Error modifying account!");
 			return false;
@@ -69,13 +65,15 @@ public class Clerk extends User {
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
-	
+
 	/**
 	 * Methode zum Löschen seines Accounts
-	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 * 
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
+	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
+	 *         zurückgegeben.
 	 */
-	public boolean deleteOwnAccount(){
+	public boolean deleteOwnAccount() {
 		invalidate();
 		return acccon.deleteClerkAccount(this);
 	}
@@ -89,12 +87,14 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum ablehnen eines Angebots.
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
 	public void rejectOffer(int offerID) throws SQLException {
 		Offer off = offcon.getOfferById(offerID);
 		offcon.deleteOffer(off);
-		//TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert werden.
+		// TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert
+		// werden.
 
 	}
 
@@ -109,10 +109,12 @@ public class Clerk extends User {
 	/**
 	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
 	 * Bewerber einzeln Dokumente hinzugefuegt werden.
+	 * 
 	 * @param username
-	 * 			Benutzername wird zur eindeutigen Zuordnung des Dokuments benoetigt.
+	 *            Benutzername wird zur eindeutigen Zuordnung des Dokuments
+	 *            benoetigt.
 	 * @param aID
-	 * 			ID des Bewerbers
+	 *            ID des Bewerbers
 	 */
 	public void addAppDoc(String username, int aID, int uID, boolean present) {
 		AppDocument doc = new AppDocument(username, aID, uID, present);
@@ -122,12 +124,13 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum hinzufuegen von Dokumenten.
+	 * 
 	 * @param UID
-	 * 			ID der Unterlage
+	 *            ID der Unterlage
 	 * @param name
-	 * 			Name der Unterlage
+	 *            Name der Unterlage
 	 * @param description
-	 * 			Beschreibung zur Unterlage
+	 *            Beschreibung zur Unterlage
 	 */
 	public boolean addDoc(Document doc) {
 		if (!doccon.createDocument(doc)) {
@@ -138,34 +141,37 @@ public class Clerk extends User {
 					+ "> added document <" + doc.getName() + ">.");
 			return true;
 		}
-	} 
+	}
+
 	// Nur der Admin kann Unterlagen erstellen
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
 	 */
 	public void delDoc(Document doc) {
-		
+
 		doccon.deleteDocument(doc);
 	}
-//Siehe oben
 
-//	/**
-//	 * Methode zum annehmen eines Bewerbers.
-//	 * @param AID
-//	 * 			ID der Bewerbung
-//	 * @throws SQLException 
-//	 */
-//	public void acceptApplication(int AID) throws SQLException {
-//		Application app = appcon.getApplicationById(AID);
-//		app.setChosen(true);
-//		appcon.updateApplication(app);
-//	}
-// Der Provider nimmt bewerbungen an
+	// Siehe oben
+
+	// /**
+	// * Methode zum annehmen eines Bewerbers.
+	// * @param AID
+	// * ID der Bewerbung
+	// * @throws SQLException
+	// */
+	// public void acceptApplication(int AID) throws SQLException {
+	// Application app = appcon.getApplicationById(AID);
+	// app.setChosen(true);
+	// appcon.updateApplication(app);
+	// }
+	// Der Provider nimmt bewerbungen an
 
 	/**
 	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
 	 * einzeln Dokumente entfernt werden.
+	 * 
 	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
 	 */
 	public boolean deleteAppDoc(AppDocument doc) {
@@ -174,9 +180,10 @@ public class Clerk extends User {
 
 	/**
 	 * Methode zum beenden des Berwerbungsvorgangs.
+	 * 
 	 * @param AID
-	 * 			ID der Bewerbung
-	 * @throws SQLException 
+	 *            ID der Bewerbung
+	 * @throws SQLException
 	 */
 	public void finishApplication(int AID) throws SQLException {
 		Application app = appcon.getApplicationById(AID);
@@ -188,58 +195,99 @@ public class Clerk extends User {
 	 * Export fuer die Excel-File
 	 * 
 	 * @return Fileobjekt des ExcelFiles
-	 * @throws IOException 
-	 * @throws WriteException 
-	 * @throws RowsExceededException 
+	 * @throws IOException
+	 * @throws WriteException
+	 * @throws RowsExceededException
 	 */
 
-	public File doExport() throws IOException, RowsExceededException, WriteException {
+	public File doExport() throws IOException, RowsExceededException,
+			WriteException {
 		return ExcelExport.export(this.getUserData());
 
 	}
-/**
- * Gibt den Stellvertreter zurueck
- * @return Stellvertreter
- */
+
+	/**
+	 * Gibt den Stellvertreter zurueck
+	 * 
+	 * @return Stellvertreter
+	 */
 	public String getRepresentant() {
 		return representant;
 	}
-/**
- * Setzt den Stellvertreter
- * @param representant Stellvertreter
- */
+
+	/**
+	 * Setzt den Stellvertreter
+	 * 
+	 * @param representant
+	 *            Stellvertreter
+	 */
 	public void setRepresentant(String representant) {
 		this.representant = representant;
 	}
-	
+
 	/**
 	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
-	 * @return
-	 * 		True falls alles abgegeben wurde,
-	 * 		sonst False.
+	 * 
+	 * @return True falls alles abgegeben wurde, sonst False.
 	 */
-	public boolean checkAllDocFromApplicant(String username, int offerID){
+	public boolean checkAllDocFromApplicant(String username, int offerID) {
 		Account acc = acccon.getAccountByUsername(username);
 		Offer off = offcon.getOfferById(offerID);
-		
+
 		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
-		
+
 		Iterator<AppDocument> it = vec.iterator();
-		
+
 		AppDocument aktuellesDokument;
 		int i = 0;
-		//Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
-		//Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss man keine weiteren Informationen 
-		//rauslesen (oder doch?)
-		while(it.hasNext()){
+		// Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
+		// Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss
+		// man keine weiteren Informationen
+		// rauslesen (oder doch?)
+		while (it.hasNext()) {
 			aktuellesDokument = vec.get(i);
 			if (!aktuellesDokument.getPresent()) {
 				return false;
 			}
 		}
-		
+
 		return true;
-		
+
 	}
 
+	/**
+	 * Diese Methode holt alle ungeprueften Angebote aus der Datenbank und gibt
+	 * sie als Vector<Offer> zurueck. Dabei werden nur die aus dem
+	 * entsprechenden Institut geholt und eventuell die des Stellvertreters
+	 * auch, wenn einer eingetragen ist.
+	 * 
+	 * @return Denn Vector<Offer> mit den entsprechenden Angeboten.
+	 */
+	public Vector<Offer> getAllUncheckedOffers() {
+		Vector<Offer> offers = new Vector<Offer>();
+		String representative = getRepresentant();
+		// Check if field is used:
+		if (representative != null && !representative.isEmpty()) {
+			Account rep = acccon.getAccountByUsername(representative);
+			// Cancel if rep is null (error somewhere), wrong accounttype, or is
+			// own name.
+			if (rep == null || rep.getAccounttype() != Account.VERWALTER
+					|| rep.getUsername() == getUserData().getUsername()) {
+				log.write("Clerk", "ERROR getting representative <"
+						+ representative + ">, is the value valid?");
+			} else {
+				log.write("Clerk", "<" + getUserData().getUsername()
+						+ "> has representative <" + rep.getUsername()
+						+ ">, allowing cross-editing of offers.");
+				offcon.getUncheckedOffersByClerk(rep);
+			}
+		}
+		// Load own offers:
+		log.write("Clerk", "Getting unchecked offers applyable to <"
+				+ this.getUserData().getUsername() + ">.");
+		Account ownAccount = acccon.getAccountByUsername(this.getUserData()
+				.getUsername());
+		offers.addAll(offcon.getUncheckedOffersByClerk(ownAccount));
+		return offers;
+	}
 }
