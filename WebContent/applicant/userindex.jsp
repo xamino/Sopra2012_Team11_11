@@ -22,34 +22,35 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind als Bewerber angemeldet. <br>
-			<input type="submit" value="Logout" onclick="doLogout();"/>
-		</div>				
-			<div id="error_login" class="hiddenerror"></div>
+			Sie sind als Bewerber angemeldet. <br> <input type="submit"
+				value="Logout" onclick="doLogout();" />
+		</div>
+		<div id="error_login" class="hiddenerror"></div>
 		<div class="nav">
 			<h3>Navigation</h3>
-				<div class="text">
-					&rarr; Startseite <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_APPLICANT_STATUS %>" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
-				</div>
+			<div class="text">
+				&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
+					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+			</div>
 		</div>
 	</div>
 	<div class="content">
-	<div class="rightborder">
-		<div class="textblock">
-			<h2>Startseite</h2>
-			<div class="text">Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene Stellen.<br>
-			Hilfe finden Sie <a	href="<%=Helper.D_APPLICANT_HELP %>" title="Hilfe"> hier</a>.</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<div class="haupttext">
-				<h4>Beworben:</h4>
-				<table class="sized" id="myofferTable">
-					<!-- <tr>
+		<div class="rightborder">
+			<div class="textblock">
+				<h2>Startseite</h2>
+				<div class="text">
+					Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene
+					Stellen.<br> Hilfe finden Sie <a
+						href="<%=Helper.D_APPLICANT_HELP%>" title="Hilfe"> hier</a>.
+				</div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<div class="haupttext">
+					<h4>Beworben:</h4>
+					<table class="sized" id="myofferTable">
+						<!-- <tr>
 						<th>Datum</th>
 						<th>Bezeichnung</th>
 						<th>Beschreibung</th>
@@ -61,16 +62,16 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<!-- <tr id="mhhh" onclick="">
+						<!-- <tr id="mhhh" onclick="">
 						<td>01.01.2001</td>
 						<td>La le lu Tut</td>
 						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerbung ansehen" onclick="window.location='status.jsp'" /></div><div class="clear"></div></td>
 					</tr>-->
-				</table>
-				<hr>
-				<h4>Offene Stellen:</h4>
-				<table class="sized" id="offerTable">
-					<!-- <tr>
+					</table>
+					<hr>
+					<h4>Offene Stellen:</h4>
+					<table class="sized" id="offerTable">
+						<!-- <tr>
 						<th>Datum</th>
 						<th>Bezeichnung</th>
 						<th>Beschreibung</th>
@@ -82,16 +83,16 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<!-- <tr id="lala" onclick="">
+						<!-- <tr id="lala" onclick="">
 						<td>01.01.2001</td>
 						<td>La le lu Tut</td>
 						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="button" value="Bewerben"
 						onclick="togglePopup('application',true);" /> </div><div class="clear"></div></td>
 					</tr>-->
-				</table>
+					</table>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<div class="clear"></div>

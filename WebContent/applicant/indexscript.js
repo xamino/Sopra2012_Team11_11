@@ -5,10 +5,6 @@
  */
 
 //!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd wieso??!!!!!!!!!!!!
-/**
- * Stores the selected Offer:
- */
-var selectedOffer;
 
 /**
  * This function loads all the offers in the system from the database and
@@ -89,9 +85,7 @@ function handleLoadMyOffersResponse(mime, data) {
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\""
 					+ JSONarray[i].startdate
-					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].startdate
-					+ "\');\"><td>"
+					+ "\"><td>"
 					+ JSONarray[i].startdate
 					+ "</td><td>"
 					+ JSONarray[i].name
@@ -207,27 +201,6 @@ function handleselectDocumentsResponse(mime, data) {
 					+ JSONarray[i].name + "</td>";
 		}
 	}
-}
-
-/**
- * Function remembers which account has been clicked.
- * 
- * @param username
- *            The username ID of the clicked entry.
- */
-function markOfferSelected(id) {
-	// Remove marking from previous selected, if applicable:
-	if (selectedOffer != null)
-		document.getElementById(selectedOffer).setAttribute("class", "");
-	// If clicked again, unselect:
-	if (selectedOffer == id) {
-		selectedOffer = null;
-		return;
-	}
-	// Else save & mark new one:
-	selectedOffer = id;
-	document.getElementById(id).setAttribute("class", "selected");
-	// alert(selectedID + " is selected.");
 }
 
 function deleteApplication() {

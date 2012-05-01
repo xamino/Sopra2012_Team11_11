@@ -20,20 +20,20 @@
 	</div>
 	<div class="right">
 		<div class="angemeldet">
-			Sie sind als Bewerber angemeldet. <br>
-			<input type="submit" value="Logout" onclick="doLogout();"/>
+			Sie sind als Bewerber angemeldet. <br> <input type="submit"
+				value="Logout" onclick="doLogout();" />
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
-				<div class="text">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="<%=Helper.D_APPLICANT_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_STATUS %>" title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
-				</div>
+			<div class="text">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a
+					href="<%=Helper.D_APPLICANT_USERINDEX%>"
+					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
+				Hilfe <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
+					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+			</div>
 		</div>
 	</div>
 	<div class="content">

@@ -33,9 +33,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_APPLICANT_USERINDEX%>"
 					title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
-				&rarr; Accountverwaltung <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_STATUS%>"
-					title="Hier finden Sie Ihre Bewerbungen">Bewerbungen</a>
+				&rarr; Accountverwaltung
 			</div>
 		</div>
 	</div>
@@ -56,17 +54,18 @@
 								<span> <label for="realName">Name:</label>
 								</span>
 								<div class="regform">
-									<input id="realName" type="text" name="realName"
-										size="20" maxlength="100" /><div id="error_realName"></div>
+									<input id="realName" type="text" name="realName" size="20"
+										maxlength="100" />
+									<div id="error_realName"></div>
 								</div>
 								<span> <label for="newemail">E-Mail</label>
 								</span>
 								<div class="regform">
 									<input id="newemail" type="text" name="newemail" size="20"
-										maxlength="100" /><div id="error_email"></div>
+										maxlength="100" />
+									<div id="error_email"></div>
 								</div>
-								<br> 
-								<br> <span> <label for="newpasswort">neues
+								<br> <br> <span> <label for="newpasswort">neues
 										Passwort</label>
 								</span>
 								<div class="regform">
@@ -77,8 +76,8 @@
 										wiederholen</label>
 								</span>
 								<div class="regform">
-									<input id="newpasswortwdh" type="password" name="newpasswortwdh"
-										size="20" maxlength="100" />
+									<input id="newpasswortwdh" type="password"
+										name="newpasswortwdh" size="20" maxlength="100" />
 									<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 									<div id="error_unequalPasswords" class="hiddenerror"></div>
 								</div>
