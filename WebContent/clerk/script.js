@@ -5,7 +5,6 @@
 
 // !!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd
 // wieso??!!!!!!!!!!!!
-
 /**
  * Fragt mich nicht, warum das so funktioniert... :P
  */
@@ -102,6 +101,8 @@ function handleEditOneOfferResponse(mime, data) {
 		var angebotablehnenbutton = document.getElementById("angebotablehnen");
 		// TODO: Wieso wird hier die gesamte Tabelle in Strings gebaut wenn wir
 		// einfach die Werte setzen könnten?
+		var anbieternotiz = (offer.note == null || offer.note == "") ? "[Keine Notiz vorhanden.]"
+				: offer.note;
 		offertable.innerHTML = "<tr><td>Name des Veranstalters:</td>" + "<td>"
 				+ offer.author + "</td></tr>"
 				+ "<tr><td>Titel der Stelle:</td>" + "<td>" + offer.name
@@ -113,7 +114,7 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "<td><input id=\"inputwage\" type=\"text\" value=\""
 				+ offer.wage + "\" />€</td></tr>"
 				+ "<tr><td>Anbieternotiz:</td>"
-				+ "<td style=\"background-color: lightgray;\">" + offer.note
+				+ "<td style=\"background-color: lightgray;\">" + anbieternotiz
 				+ "</td></tr>" + "<tr><td>Status:</td><td>" + status
 				+ "</td></tr>";
 

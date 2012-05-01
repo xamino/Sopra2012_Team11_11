@@ -383,7 +383,6 @@ public class OfferController {
 	// DONE: Institut = 0 universal already implemented!
 	public Vector<Offer> getUncheckedOffersByClerk(Account account) {
 		// If not clerk:
-		System.out.println(account.getAccounttype());
 		if (account.getAccounttype() != Account.VERWALTER) {
 			log.write("OfferController",
 					"Illegal access tried in getUncheckedOffersByClerk()!");
