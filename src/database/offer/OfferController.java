@@ -109,9 +109,12 @@ public class OfferController {
 	 *            Attributen. Uebergebene Instanz wird komplett vom System
 	 *            entfernt.
 	 */
-	public boolean deleteOffer(Offer offer) {
+	public void deleteOffer(Offer offer) {
 
-		return dbc.delete(tableName, "AID = " + offer.getAid());
+		dbc.delete(tableName, "AID = " + offer.getAid());
+		dbc.delete("Bewerbungen","AID = " + offer.getAid());
+		dbc.delete("Standardunterlagen", "AID = " + offer.getAid());
+		dbc.delete("Bewerbungsunterlagen", "AID = " + offer.getAid());
 
 	}
 
