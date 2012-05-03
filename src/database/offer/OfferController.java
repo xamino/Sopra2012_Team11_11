@@ -111,10 +111,10 @@ public class OfferController {
 	 */
 	public void deleteOffer(Offer offer) {
 
-		dbc.delete(tableName, "AID = " + offer.getAid());
-		dbc.delete("Bewerbungen","AID = " + offer.getAid());
-		dbc.delete("Standardunterlagen", "AID = " + offer.getAid());
-		dbc.delete("Bewerbungsunterlagen", "AID = " + offer.getAid());
+		dbc.delete(tableName, "AID=" + offer.getAid());
+		dbc.delete("Bewerbungen", "AID=" + offer.getAid());
+		dbc.delete("Standardunterlagen", "AID=" + offer.getAid());
+		dbc.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
 
 	}
 
@@ -343,11 +343,11 @@ public class OfferController {
 	}
 
 	/**
+	 * Liest ein Angebot anhand der AID aus der Datenbank aus.
 	 * 
 	 * @param ID
 	 *            ID des Angebots
 	 * @return Gibt das gesuchte Angebot zurueck
-	 * @throws SQLException
 	 */
 	public Offer getOfferById(int ID) {
 		String[] select = { "*" };
@@ -394,12 +394,16 @@ public class OfferController {
 		Vector<Offer> offers = new Vector<Offer>();
 		// Implement that institut 0 is universal:
 		ResultSet rs;
-		if (account.getInstitute() == 0)
+		if (account.getInstitute() == 0) {
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
 					"Geprueft=0");
-		else
+		} else {
+			// Institut in (accountInstitut, 0) secures that Offers of Institut
+			// 0 are universally seeable.
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"Geprueft=0 AND Institut=" + account.getInstitute());
+					"Geprueft=0 AND Institut IN (" + account.getInstitute()
+							+ ",0)");
+		}
 		try {
 			while (rs.next()) {
 				offers.add(new Offer(rs.getInt("AID"), rs

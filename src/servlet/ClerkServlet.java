@@ -87,7 +87,8 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		}
 		String path = request.getPathInfo();
-		log.write("ClerkServlet", "Received request: " + path);
+		path = (path == null) ? "" : path;
+		// log.write("ClerkServlet", "Received request: " + path);
 		// Load the offers of the clerk:
 		if (path.equals("/js/showMyOffers")) {
 			// Load all correct offers:
@@ -382,9 +383,16 @@ public class ClerkServlet extends HttpServlet {
 
 		// Funktion zum hinzufuegen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/addOfferDocument")) {
-
-			int uid = Integer.parseInt(request.getParameter("uid"));
-			int aid = Integer.parseInt(request.getParameter("aid"));
+			int uid;
+			int aid;
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet",
+						"Error add offer document! UID or AID invalid!");
+				return;
+			}
 			DocumentController.getInstance().createOfferDocument(
 					new OfferDocument(aid, uid));
 			return;
