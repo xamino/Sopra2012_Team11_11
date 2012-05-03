@@ -111,10 +111,10 @@ public class OfferController {
 	 */
 	public void deleteOffer(Offer offer) {
 
-		dbc.delete(tableName, "AID=" + offer.getAid());
-		dbc.delete("Bewerbungen", "AID=" + offer.getAid());
-		dbc.delete("Standardunterlagen", "AID=" + offer.getAid());
 		dbc.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
+		dbc.delete("Standardunterlagen", "AID=" + offer.getAid());
+		dbc.delete("Bewerbungen", "AID=" + offer.getAid());
+		dbc.delete(tableName, "AID=" + offer.getAid());
 
 	}
 
