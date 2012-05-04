@@ -127,6 +127,29 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertoapprove, offertoapprove.getClass()));
 			return;
+		} else if (path.equals("/js/saveOffer")) {
+
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			double hoursperweek = Double.parseDouble(request
+					.getParameter("hoursperweek"));
+			double wage = Double.parseDouble(request.getParameter("wage"));
+
+			Offer offertosave = OfferController.getInstance().getOfferById(
+					aid);
+			offertosave.setWage(wage);
+			offertosave.setHoursperweek(hoursperweek);
+
+			OfferController.getInstance().updateOffer(offertosave);
+			// wir wollten doch einen String als date?
+			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
+			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
+			// da was schief.
+			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
+
+			response.setContentType("offers/json");
+			response.getWriter().write(
+					gson.toJson(offertosave, offertosave.getClass()));
+			return;
 		} else if (path.equals("/js/rejectOffer")) {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 

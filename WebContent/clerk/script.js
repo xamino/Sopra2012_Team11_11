@@ -136,6 +136,16 @@ function angebotbestaetigen() {
 			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
 }
 
+function angebotspeichern() {
+	var aid = getURLParameter("AID");
+	var hoursperweek = document.getElementById("inputhoursperweek").value;
+	var wage = document.getElementById("inputwage").value;
+
+	alert("Angebot aktualisiert:"+'\n'+"Stunden/Woche: "+hoursperweek+'\n'+"Lohn: "+wage);
+	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
+			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
+}
+
 function angebotablehnen() {
 	var aid = getURLParameter("AID");
 

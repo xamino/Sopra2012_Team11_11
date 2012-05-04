@@ -78,9 +78,13 @@
 						<input type="button" value="Mail an Anbieter" />
 					</div>
 					<input type="button" id="angebotbestaetigen"
-						value="Angebot bestätigen" onclick="angebotbestaetigen()" /> <input
+						value="Angebot bestätigen" onclick="angebotbestaetigen()" /> 
+					<input
 						type="button" id="angebotablehnen" value="Angebot ablehnen"
 						onclick="angebotablehnen()" />
+					<input
+						type="button" id="angebotspeichern" value="Angebot Speichern"
+						onclick="angebotspeichern()" />
 				</div>
 			</div>
 		</div>
