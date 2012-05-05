@@ -6,7 +6,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.Date;
+//import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -14,6 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import jxl.write.DateFormat;
+import jxl.write.DateFormats;
 
 import logger.Log;
 
@@ -65,6 +68,7 @@ public class ProviderServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
+	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
@@ -196,12 +200,21 @@ public class ProviderServlet extends HttpServlet {
 			}
 
 			String beschreibung = request.getParameter("beschreibung");
-
-			Date startdatum, enddatum, aenderungsdatum; // TODO
-			startdatum = new Date();
-			enddatum = new Date();
-			aenderungsdatum = new Date();
+		
+			java.util.Date startdatum_1 = new java.util.Date();
+			java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
+			
+			java.util.Date enddatum_1 = new java.util.Date();
+			//enddatum is in default settings 6 months after startdatum
+			enddatum_1.setMonth(startdatum_1.getMonth()+6);
+			java.sql.Date enddatum = new java.sql.Date(enddatum_1.getTime());
+			
+			java.util.Date aenderungsdatum_1 = new java.util.Date();
+			java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
+				
+			
 			double lohn = 10.7;// TODO
+			
 
 			int institut = 0; // TODO
 			
@@ -234,6 +247,9 @@ public class ProviderServlet extends HttpServlet {
 					return;
 				}
 			}
+			
+			//NOt tested yet... TODO
+			//institut = AccountController.getInstance().getAccountByUsername(provider.getUserData().getName()).getInstitute();
 
 			// Save new Offer in the DB and response
 			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
@@ -312,8 +328,13 @@ public class ProviderServlet extends HttpServlet {
 
 			Offer offUp = OfferController.getInstance().getOfferById(aid);
 
+			//set modificationdate to current date
+			java.util.Date aenderungsdatum_1 = new java.util.Date();
+			java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
+			
 			offUp.setName(request.getParameter("titel"));
 			offUp.setDescription(request.getParameter("beschreibung"));
+			offUp.setModificationdate(aenderungsdatum);
 			log.write("ProviderServlet","Updating offer in progress...");
 			OfferController.getInstance().updateOffer(offUp);
 
