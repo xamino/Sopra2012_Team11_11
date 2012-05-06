@@ -161,6 +161,7 @@ public class OfferController {
 
 		String[] select = { "*" };
 		String[] from = { tableName };
+		
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -299,7 +300,7 @@ public class OfferController {
 	 * @return Es wird ein Vector mit allen Jobangeboten zurueckgegeben, auf die
 	 *         sich ein Bewerber beworben hat.
 	 */
-	public Vector<Offer> getOffersByApplicatiot(Vector<Application> applications) {
+	public Vector<Offer> getOffersByApplicant(Vector<Application> applications) {
 
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
