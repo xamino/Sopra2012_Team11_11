@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import database.DatabaseController;
+import database.account.Account;
+import database.account.AccountController;
 
 public class InstituteController {
 
@@ -12,6 +14,10 @@ public class InstituteController {
 	 * Variable für die Instanz der Klasse.
 	 */
 	private static InstituteController instController;
+	/**
+	 * AccountController Instanz um beim Loeschen die Institute der Account Tabelle zu updaten
+	 */
+	private static AccountController acccon;
 
 	/**
 	 * Gibt eine Instanz des InstituteContoller zurück.
@@ -92,13 +98,18 @@ public class InstituteController {
 	}
 
 	/**
-	 * Deletes an institute from the database.
+	 * Deletes an institute from the database. All accounts with said Institute will have institute set to 0.
 	 * 
 	 * @param institute
 	 *            The institute to delete.
 	 * @return A flag whether the operation was successful.
 	 */
 	public boolean deleteInstitute(Institute institute) {
+		Vector<Account>accs = acccon.getAccountsByInstitute(institute.getIID());
+		for(Account a : accs){
+			a.setInstitute(0);
+			acccon.updateAccount(a);
+		}
 		return dbc.delete(tableName, "IID=" + institute.getIID());
 	}
 
