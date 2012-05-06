@@ -89,7 +89,7 @@ public class Applicant extends User {
 		Application app = new Application(this.getUserData().getUsername(),
 				applicationID, false, "", false);
 		Account account = new Account(this.getUserData().getUsername(), "", 0, "", "", 0, "");
-		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null);
+		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null,false);
 		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(account, offer);
 		Iterator<AppDocument> it = vec.iterator();
 		

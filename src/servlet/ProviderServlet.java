@@ -254,7 +254,7 @@ public class ProviderServlet extends HttpServlet {
 			// Save new Offer in the DB and response
 			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
 					stellen, stunden, beschreibung, startdatum, enddatum, lohn,
-					institut, aenderungsdatum);
+					institut, aenderungsdatum,false);
 			log.write("ProviderServlet", "Creating new offer in progress...");
 			OfferController.getInstance().createOffer(offer);
 			response.setContentType("text/url");

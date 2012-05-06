@@ -170,7 +170,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 
 				offervec.add(currentoff);
 			}
@@ -210,7 +210,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -243,7 +243,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -278,7 +278,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -318,7 +318,7 @@ public class OfferController {
 							rs.getString(3), rs.getString(4), rs.getBoolean(5),
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-							rs.getInt(12), rs.getDate(13));
+							rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 
 					offervec.add(currentoff);
 				}
@@ -354,7 +354,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				return off;
 			} else
 				return null;
@@ -404,7 +404,7 @@ public class OfferController {
 						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
 						.getString("Beschreibung"), rs.getDate("Beginn"), rs
 						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum")));
+						.getInt("Institut"), rs.getDate("aenderungsdatum"),rs.getBoolean("abgeschlossen")));
 			}
 			return offers;
 		} catch (SQLException e) {

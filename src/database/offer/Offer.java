@@ -77,6 +77,10 @@ public class Offer {
 	 * Das letzte Datum, an dem das Angebot bearbeitet wurde.
 	 */
 	private Date modificationdate;
+	/**
+	 * Wahrheitswert ob das Angebot abgeschlossen ist.
+	 */
+	private boolean finished;
 
 	
 	/**
@@ -107,11 +111,13 @@ public class Offer {
 	 * 		Das Institut des Angebots.
 	 * @param modificationdate
 	 * 		Das letzte Datum, an dem das Angebot bearbeitet wurde.
+	 * @param finished
+	 * 		Ob das Angebot schon abgeschlossen ist.
 	 */
 	public Offer(int aid, String author, String name, String note,
 			boolean checked, int slots, double hoursperweek,
 			String description, Date startdate, Date enddate, double wage,
-			int institute, Date modificationdate) {
+			int institute, Date modificationdate, boolean finished) {
 		super();
 		this.aid = aid;
 		this.author = author;
@@ -126,9 +132,26 @@ public class Offer {
 		this.wage = wage;
 		this.institute = institute;
 		this.modificationdate = modificationdate;
+		this.finished=finished;
 	}
 	
-	
+	/**
+	 * Gibt zurueck ob das Angebot beendet ist.
+	 * @return boolean ob das Angebot beendet ist.
+	 */
+	public boolean isFinished() {
+		return finished;
+	}
+
+	/**
+	 * Setzt, ob das Angebot beendet ist.
+	 * @param finished Wahrheitswert ob beendet.
+	 */
+	public void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+
+
 	/**
 	 * Gibt die id des Angebots zurueck.
 	 * 
