@@ -136,12 +136,15 @@ public class OfferController {
 		
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut","abgeschlossen"};
+				"Institut"/*,"aenderungsdatum"*/, "abgeschlossen"};
+		
+//		java.util.Date aenderungsdatum_1 = new java.util.Date();
+//		java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute(),offer.isFinished() };
+				offer.getWage(), offer.getInstitute()/*,offer.getModificationdate() */,offer.isFinished() };
 
 
 		String where = "AID = " + offer.getAid();
