@@ -63,7 +63,7 @@
 					<textarea name="beschreibung" id="beschreibungsFeld" cols="50" rows="10">Beschreibung</textarea> <br> <br>
 					<div id="error_beschreibungsFeld" class="invisibleWarning"></div>
 					<p>
-						<input type="reset" value="Zurücksetzen" /> 
+						<input type="reset" value="Zurücksetzen" onclick="loadSelectedOfferEdit()"/> 
 						<input type="button" value="Angebot ändern"
 						onclick="togglePopup('edit_offer',true);" /> 
 						<!-- <input type="submit" value="Angebot ändern" />-->
