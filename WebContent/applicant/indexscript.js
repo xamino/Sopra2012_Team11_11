@@ -213,8 +213,23 @@ function deleteApplication() {
 function handleDeleteApplication(mime, data) {
 
 }
-
-function apply(){
+/**
+ * Funktion zum Bewerben auf ein Angebot
+ * @param aid AngebotsID
+ */
+function apply(aid){
+	connect("/hiwi/Applicant/js/apply","aid="+aid,handleApply);
+}
+/**
+ * Callback funktion von apply
+ * @param mime MimeType der Antwort
+ * @param data Antwortdaten
+ */
+function handleApply(mime,data){
+	if(mime=="text/url")
+		window.location=data;
+	else 
+		alert("Es ist ein Fehler beim Bewerben aufgetreten!");
 	
 }
 
