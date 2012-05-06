@@ -235,10 +235,11 @@ public class ClerkServlet extends HttpServlet {
 																			// User
 			Vector<AppDocument> docs = DocumentController.getInstance()
 					.getDocumentsByUserAndOffer(acc, off);
-			Vector<Document> docs2 = new Vector<Document>();
+			Vector<AppDocument> docs2 = new Vector<AppDocument>();
 			for (int i = 0; i < docs.size(); i++) {
-				docs2.add(DocumentController.getInstance().getDocumentByUID(
+				docs2.add(DocumentController.getInstance().getAppDocumentByUID(
 						docs.elementAt(i).getdID()));
+				
 			}
 			// System.out.println("Ergebnis: "+docs2);
 			response.setContentType("showthedocuments/json");
@@ -448,7 +449,11 @@ public class ClerkServlet extends HttpServlet {
 				response.setContentType("error/url");
 				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
-		} else {
+			
+		}else if (path.equals("/js/loadInfo")){
+			
+		}
+		else {
 			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}
 	}

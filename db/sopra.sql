@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 02/13/2012 15:32:15 PM
+ Date: 05/06/2012 14:44:35 PM
 */
 
 SET NAMES utf8;
@@ -52,6 +52,7 @@ CREATE TABLE `Angebote` (
   `Stundenlohn` double DEFAULT NULL,
   `Institut` int(11) DEFAULT NULL,
   `aenderungsdatum` date NOT NULL,
+  `abgeschlossen` tinyint(4) NOT NULL,
   PRIMARY KEY (`AID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

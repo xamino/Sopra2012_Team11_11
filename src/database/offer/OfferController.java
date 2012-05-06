@@ -88,7 +88,7 @@ public class OfferController {
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
 				offer.getStartdate(), offer.getEnddate(),
-				offer.getWage(), offer.getInstitute(), offer.getModificationdate()};
+				offer.getWage(), offer.getInstitute(), offer.getModificationdate(),offer.isFinished()};
 																	
 		dbc.insert(tableName, values);
 	}
@@ -136,12 +136,13 @@ public class OfferController {
 		
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut"/*,"aenderungsdatum"*/};
+				"Institut","abgeschlossen"};
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute()/*, offer.getModificationdate()*/};
+				offer.getWage(), offer.getInstitute(),offer.isFinished() };
+
 
 		String where = "AID = " + offer.getAid();
 
@@ -162,6 +163,7 @@ public class OfferController {
 
 		String[] select = { "*" };
 		String[] from = { tableName };
+		
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -171,7 +173,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 
 				offervec.add(currentoff);
 			}
@@ -211,7 +213,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -244,7 +246,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -279,7 +281,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -300,7 +302,7 @@ public class OfferController {
 	 * @return Es wird ein Vector mit allen Jobangeboten zurueckgegeben, auf die
 	 *         sich ein Bewerber beworben hat.
 	 */
-	public Vector<Offer> getOffersByApplicatiot(Vector<Application> applications) {
+	public Vector<Offer> getOffersByApplicant(Vector<Application> applications) {
 
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
@@ -319,7 +321,7 @@ public class OfferController {
 							rs.getString(3), rs.getString(4), rs.getBoolean(5),
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-							rs.getInt(12), rs.getDate(13));
+							rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 
 					offervec.add(currentoff);
 				}
@@ -355,7 +357,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13));
+						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
 				return off;
 			} else
 				return null;
@@ -405,7 +407,7 @@ public class OfferController {
 						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
 						.getString("Beschreibung"), rs.getDate("Beginn"), rs
 						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum")));
+						.getInt("Institut"), rs.getDate("aenderungsdatum"),rs.getBoolean("abgeschlossen")));
 			}
 			return offers;
 		} catch (SQLException e) {

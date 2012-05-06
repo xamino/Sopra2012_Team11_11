@@ -95,7 +95,7 @@ public class ApplicantServlet extends HttpServlet {
 		else if (path.equals("/js/loadMyOffers")) {
 			// Offer vom User geholt
 			Vector<Offer> myoffers = OfferController.getInstance()
-					.getOffersByApplicatiot(
+					.getOffersByApplicant(
 							ApplicationController.getInstance()
 									.getApplicationsByApplicant(
 											applicant.getUserData()
@@ -111,7 +111,7 @@ public class ApplicantServlet extends HttpServlet {
 			// bereits beworbene Stellen entfernen
 			// Offer vom User geholt
 			Vector<Offer> myoffers1 = OfferController.getInstance()
-					.getOffersByApplicatiot(
+					.getOffersByApplicant(
 							ApplicationController.getInstance()
 									.getApplicationsByApplicant(
 											applicant.getUserData()
