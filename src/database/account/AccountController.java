@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import servlet.Helper;
 import user.Applicant;
 import user.Clerk;
 import user.Provider;
@@ -493,6 +494,22 @@ public class AccountController {
 		String where = "benutzername = '" + name + "'";
 
 		dbc.update("accounts", columns, values, where);
+	}
+	/**
+	 * Gibt die Namen aller User zurueck die von diesem User vertreten werden
+	 * @param username Eigener Nutzername
+	 * @return Namen aller vertrenenen User
+	 */
+	public Vector<String> represents(String username){
+		Vector<String>ret =new Vector<String>();
+		ResultSet rs = dbc.select(new String[]{"benutzername"},new String[]{tableName}, "stellvertreter='"+username+"'");
+		try {
+			while(rs.next())
+					ret.add(rs.getString(1));
+		} catch (SQLException e) {
+			Helper.log.write("AccountController", "Error getting representing names");
+		}
+		return ret;
 	}
 
 }

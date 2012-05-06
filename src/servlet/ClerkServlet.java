@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -31,10 +32,13 @@ import database.DatabaseController;
 import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
+import database.application.Application;
+import database.application.ApplicationController;
 import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
+import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -60,6 +64,25 @@ public class ClerkServlet extends HttpServlet {
 	private DocumentController doccon;
 
 	/**
+	 * Variable zum speichern einer Instanz vom ApplicationController;
+	 */
+	private ApplicationController appcon;
+
+	/**
+	 * Variable zum speichern einer Instanz vom OfferController;
+	 */
+	private OfferController offcon;
+	/**
+	 * Variable zum speichern einer Instanz vom AccountController
+	 */
+	private AccountController acccon;
+
+	/**
+	 * Variable zum speichern einer Instanz vom InstituteController
+	 */
+	private InstituteController instcon;
+	
+	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
@@ -71,6 +94,11 @@ public class ClerkServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 		gson = new Gson();
+		doccon = DocumentController.getInstance();
+		appcon = ApplicationController.getInstance();
+		acccon = AccountController.getInstance();
+		offcon = OfferController.getInstance();
+		instcon=InstituteController.getInstance();
 	}
 
 	/**
@@ -134,8 +162,7 @@ public class ClerkServlet extends HttpServlet {
 					.getParameter("hoursperweek"));
 			double wage = Double.parseDouble(request.getParameter("wage"));
 
-			Offer offertosave = OfferController.getInstance().getOfferById(
-					aid);
+			Offer offertosave = OfferController.getInstance().getOfferById(aid);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
 
@@ -449,11 +476,30 @@ public class ClerkServlet extends HttpServlet {
 				response.setContentType("error/url");
 				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
-			
-		}else if (path.equals("/js/loadInfo")){
-			
-		}
-		else {
+
+		} else if (path.equals("/js/loadInfo")) {
+			Vector<Offer> off = new Vector<Offer>();
+			Vector<Integer>institutes= instcon.getAllRepresentingInstitutes(clerk.getUserData().getUsername());
+			institutes.add(0);
+			for(Integer i:institutes)off.addAll(offcon.getUncheckedOffersByInstitute(i));
+			int unchecked = off.size();
+			int apps = 0;
+			for (Offer o : off) {
+				if (!o.isFinished()) {
+					Vector<Application> aps = appcon.getApplicationsByOffer(o
+							.getAid());
+					for (Application a : aps) {
+						if (a.isChosen() && !a.isFinished())
+							apps++;
+					}
+				}
+			}
+			String gsonny = Helper.jsonAtor(new String[] { "offers", "apps" },
+					new Object[] { unchecked, apps });
+			response.setContentType("application/json");
+			response.getWriter().write(gsonny);
+			return;
+		} else {
 			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}
 	}

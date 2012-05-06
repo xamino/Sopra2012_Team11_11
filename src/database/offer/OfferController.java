@@ -87,9 +87,10 @@ public class OfferController {
 		Object[] values = { offer.getAid(), offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getStartdate(), offer.getEnddate(),
-				offer.getWage(), offer.getInstitute(), offer.getModificationdate(),offer.isFinished()};
-																	
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate(),
+				offer.isFinished() };
+
 		dbc.insert(tableName, values);
 	}
 
@@ -141,6 +142,7 @@ public class OfferController {
 //		java.util.Date aenderungsdatum_1 = new java.util.Date();
 //		java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
 
+
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
@@ -166,7 +168,6 @@ public class OfferController {
 
 		String[] select = { "*" };
 		String[] from = { tableName };
-		
 
 		ResultSet rs = dbc.select(select, from, null);
 		try {
@@ -176,7 +177,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 
 				offervec.add(currentoff);
 			}
@@ -216,7 +217,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -249,7 +250,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -284,7 +285,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 				offervec.add(currentoff);
 			}
 			rs.close();
@@ -324,7 +325,7 @@ public class OfferController {
 							rs.getString(3), rs.getString(4), rs.getBoolean(5),
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-							rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+							rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 
 					offervec.add(currentoff);
 				}
@@ -360,7 +361,7 @@ public class OfferController {
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13),rs.getBoolean(14));
+						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
 				return off;
 			} else
 				return null;
@@ -389,18 +390,24 @@ public class OfferController {
 					"Illegal access tried in getUncheckedOffersByClerk()!");
 			return null;
 		}
+
 		Vector<Offer> offers = new Vector<Offer>();
 		// Implement that institut 0 is universal:
 		ResultSet rs;
+
 		if (account.getInstitute() == 0) {
+
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
 					"Geprueft=0");
+
 		} else {
 			// Institut in (accountInstitut, 0) secures that Offers of Institut
 			// 0 are universally seeable.
+
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
 					"Geprueft=0 AND Institut IN (" + account.getInstitute()
 							+ ",0)");
+
 		}
 		try {
 			while (rs.next()) {
@@ -410,7 +417,42 @@ public class OfferController {
 						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
 						.getString("Beschreibung"), rs.getDate("Beginn"), rs
 						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum"),rs.getBoolean("abgeschlossen")));
+						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
+						.getBoolean("abgeschlossen")));
+			}
+			return offers;
+		} catch (SQLException e) {
+			log.write("OfferController",
+					"Error reading ResultSet in getUncheckedOffersByClerk()!");
+			return null;
+		}
+	}
+
+	/**
+	 * Liest alle zugehoerigen Angebote eines Institutes aus der DB.
+	 * 
+	 * @param institut
+	 *            nummer des Instituts
+	 * @return Alle ungeprueften Angebote des entsprechenden Instituts.
+	 */
+	public Vector<Offer> getUncheckedOffersByInstitute(int institute) {
+
+		Vector<Offer> offers = new Vector<Offer>();
+		ResultSet rs;
+
+		rs = dbc.select(new String[] { "*" }, new String[] { tableName },
+				"Geprueft=0 AND Institut =" + institute);
+
+		try {
+			while (rs.next()) {
+				offers.add(new Offer(rs.getInt("AID"), rs
+						.getString("Ersteller"), rs.getString("Name"), rs
+						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
+						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
+						.getString("Beschreibung"), rs.getDate("Beginn"), rs
+						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
+						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
+						.getBoolean("abgeschlossen")));
 			}
 			return offers;
 		} catch (SQLException e) {

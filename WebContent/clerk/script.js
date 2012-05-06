@@ -14,6 +14,23 @@ function doExcelExport() {
 	elemIF.style.display = "none";
 	document.body.appendChild(elemIF);
 }
+/**
+ * laedt die Informationen für die userindex seite
+ */
+function loadInfo(){
+	connect("/hiwi/Clerk/js/loadInfo", "", handleLoadInfo);
+}
+/**
+ * zeigt die Informationen an 
+ */
+function handleLoadInfo(mime, data){
+	if(mime=="application/json"){
+		var json = eval("("+data+")")
+		document.getElementById("offers").innerHTML=""+json.offers;
+		document.getElementById("apps").innerHTML=""+json.apps;
+	}else
+		alert("oh oh es ist ein fehler aufgetreten");
+}
 
 /**
  * Stores the selected Offer:

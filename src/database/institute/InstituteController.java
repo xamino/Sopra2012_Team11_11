@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import servlet.Helper;
+
 import database.DatabaseController;
 import database.account.Account;
 import database.account.AccountController;
@@ -126,5 +128,22 @@ public class InstituteController {
 			// e.printStackTrace();
 			return null;
 		}
+	}
+	/**
+	 * Gibt alle Institute zurueck die ein Clerk repraesentiert
+	 * @param username Username des Clerks
+	 * @return Alle Institutsnummern in einem Vector
+	 */
+	public Vector<Integer> getAllRepresentingInstitutes(String username){
+		Vector<Integer> ret = new Vector<Integer>();
+		ResultSet rs=dbc.select(new String[]{"DISTINCT IID"}, new String[]{tableName, "Accounts"}, "Institute.IID=Accounts.institut AND (Accounts.benutzername='"+username+"' OR Accounts.stellvertreter='+"+username+"')");
+		try {
+			while(rs.next()){
+				ret.add(rs.getInt(1));
+			}
+		} catch (Exception e) {
+			Helper.log.write("InstituteController", "Error getting representing Institutes");
+		}
+		return ret;
 	}
 }

@@ -11,7 +11,7 @@
 <title>Sachbearbeiter Startseite | Hiwi Job Börse</title>
 </head>
 
-<body>
+<body onload="loadInfo()">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -57,11 +57,11 @@
 				<table class="hidden">
 					<tr>
 						<td>Ungeprüfte Angebote:</td>
-						<td>3</td>
+						<td id=offers></td>
 					</tr>
 					<tr>
 						<td>Offene Bewerbungen:</td>
-						<td>42</td>
+						<td id=apps></td>
 					</tr>
 				</table>
 			</div>
