@@ -33,6 +33,7 @@ public class InstituteController {
 
 	private InstituteController() {
 		dbc = DatabaseController.getInstance();
+		acccon= AccountController.getInstance();
 		logger.Log.getInstance().write("InstituteController",
 				"Instance created.");
 	}

@@ -46,7 +46,9 @@ public class Account {
 	 * Institutszugehoerigkeit (nur relevant fuer Anbieter und Verwalter).
 	 */
 	private int institute;
-
+	/**
+	 * Repraesentant
+	 */
 	private String representative;
 
 	/**
