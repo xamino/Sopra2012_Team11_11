@@ -111,7 +111,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Bewerben"
-					onclick="deleteSelectedAccount(); togglePopup('application', false);" />
+					onclick="apply(); togglePopup('application', false);" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('application', false);" />
 			</div>

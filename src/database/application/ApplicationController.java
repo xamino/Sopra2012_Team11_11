@@ -22,6 +22,8 @@ import database.account.Account;
 import database.account.AccountController;
 import database.document.AppDocument;
 import database.document.DocumentController;
+import database.document.OfferDocument;
+import database.offer.Offer;
 
 public class ApplicationController {
 
@@ -78,10 +80,17 @@ public class ApplicationController {
 	 *            dazugehoerigen Attributen.
 	 */
 	public boolean createApplication(Application application) { //checked
+		Vector<Boolean>check= new Vector<Boolean>();
 		Object[] values = { application.getUsername(), application.getAid(),
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
-		return dbc.insert(tableName, values);
+		check.add( dbc.insert(tableName, values));
+		Vector<OfferDocument>offs = doccon.getDocumentsByOffer(application.getAid());
+		for(OfferDocument o:offs){
+			check.add(dbc.insert("Bewerbungsunterlagen",new Object[]{application.getUsername(),application.getAid(),o.getDocumentid(),false}));
+		}
+		for(Boolean b:check)if(!b)return false;
+		return true;
 	}
 
 	/**

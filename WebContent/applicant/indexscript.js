@@ -14,7 +14,7 @@ function loadOffers() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
-	alert("ohne alert funzt es ned =( 2");
+	//alert("ohne alert funzt es ned =( 2");
 }
 
 /**
@@ -72,7 +72,7 @@ function loadMyOffers() {
  *            The data.
  */
 function handleLoadMyOffersResponse(mime, data) {
-	alert("ohne alert funzt es ned =(");
+	//alert("ohne alert funzt es ned =(");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "myapplication/json") {
@@ -206,10 +206,15 @@ function handleselectDocumentsResponse(mime, data) {
 function deleteApplication() {
 	alert("deleteApplication");
 	connect("/hiwi/Applicant/js/deleteApplication", "UID=" + UID + "AND AID="
-			+ AID, callback)
+			+ AID, handleDeleteApplication);
 
 }
 
-function dandleDeleteApplication(mime, data) {
+function handleDeleteApplication(mime, data) {
 
 }
+
+function apply(){
+	
+}
+

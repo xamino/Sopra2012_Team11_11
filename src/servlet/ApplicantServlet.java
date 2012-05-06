@@ -220,7 +220,17 @@ public class ApplicantServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim ändern der Daten.");
 			}
-		} else {
+		}else if(path.equals("/js/apply")){
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			if(applicant.apply(aid)){
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
+			}else{
+				response.setContentType("text/error");
+				response.getWriter().write("error");
+			}
+		}
+		else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 	}

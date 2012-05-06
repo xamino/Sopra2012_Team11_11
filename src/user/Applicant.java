@@ -77,11 +77,12 @@ public class Applicant extends User {
 	 * 
 	 * @param offerID
 	 *            ID des Angebots
+	 * @return 
 	 */
-	public void apply(int offerID) {
-		Application app = new Application(getUserData().getName(), offerID,
+	public boolean apply(int offerID) {
+		Application app = new Application(getUserData().getUsername(), offerID,
 				false, null, false);
-		appcon.updateApplication(app);
+		return appcon.createApplication(app);
 
 	}
 
