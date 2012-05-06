@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import jxl.Cell;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
+import database.offer.OfferController;
 import user.UserData;
 
 /**
@@ -24,9 +27,18 @@ import user.UserData;
  */
 public abstract class ExcelExport {
 	/**
-	 * 
+	 * ApplicationController fuer Exportinformationen
 	 */
 	private static ApplicationController appcon=ApplicationController.getInstance();
+	/**
+	 * AccountController fuer Exportinformationen
+	 */
+	private static AccountController acccon = AccountController.getInstance();
+	
+	/**
+	 * OfferController fuer Exportinformationen
+	 */
+	private static OfferController offcon = OfferController.getInstance();
 	
 	/**
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
@@ -46,18 +58,24 @@ public abstract class ExcelExport {
 		WritableWorkbook ww = Workbook.createWorkbook(file);
 		WritableSheet sh = ww.createSheet("All Applications by "+clerkname, 0);
 		
-		Label Name = new Label(0,0,"Name");
-		Label id = new Label(0,1,"ID");
+		Label uName = new Label(0,0,"Username");
+		Label Name = new Label(1,0,"Realer Name");
+		Label id = new Label(2,0,"Angebot");
 		sh.addCell(Name);
 		sh.addCell(id);
+		sh.addCell(uName);
 		
-		for (int i = 0; i < appvec.size(); i++) {
-			
-			Label aID = new Label(i,1,""+appvec.get(i).getAid());
-			Label aName = new Label(i,0,""+appvec.get(i).getUsername());
+		for (int i = 1; i <= appvec.size(); i++) {
+			Label aID = new Label(2,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getName());
+			Label aName= new Label(1,i,""+acccon.getAccountByUsername(appvec.get(i-1).getUsername()).getName());
+			Label auName = new Label(0,i,""+appvec.get(i-1).getUsername());
 			sh.addCell(aID);
+			sh.addCell(auName);
 			sh.addCell(aName);
+			
 		}
+		
+		
 		
 		ww.write();
 		ww.close();
