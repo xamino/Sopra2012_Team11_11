@@ -4,9 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
+import org.apache.catalina.startup.SetContextPropertiesRule;
+
 import jxl.Cell;
+import jxl.CellFormat;
 import jxl.Workbook;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.write.Label;
+import jxl.write.WritableCellFeatures;
+import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -57,14 +64,17 @@ public abstract class ExcelExport {
 		File file = FileController.createFile(data.getUsername());
 		WritableWorkbook ww = Workbook.createWorkbook(file);
 		WritableSheet sh = ww.createSheet("All Applications by "+clerkname, 0);
-		
+		sh.setColumnView(0, 25);
+		sh.setColumnView(1, 25);
+		sh.setColumnView(2, 40);
+
 		Label uName = new Label(0,0,"Username");
 		Label Name = new Label(1,0,"Realer Name");
 		Label id = new Label(2,0,"Angebot");
 		sh.addCell(Name);
 		sh.addCell(id);
 		sh.addCell(uName);
-		
+
 		for (int i = 1; i <= appvec.size(); i++) {
 			Label aID = new Label(2,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getName());
 			Label aName= new Label(1,i,""+acccon.getAccountByUsername(appvec.get(i-1).getUsername()).getName());
@@ -74,9 +84,6 @@ public abstract class ExcelExport {
 			sh.addCell(aName);
 			
 		}
-		
-		
-		
 		ww.write();
 		ww.close();
 		return file;
