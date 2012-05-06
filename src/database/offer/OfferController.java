@@ -10,6 +10,7 @@ package database.offer;
 /**
  * Verwaltet alle Datenbankzugriffe auf Angebots-bezogene Daten.
  */
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -118,33 +119,33 @@ public class OfferController {
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void updateOffer(Offer offer) {
+	public boolean updateOffer(Offer offer) {
 
 		// Dates entfernt, da problematisch
 
-		// String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-		// "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-		// "Stundenlohn", "Institut", "aenderungsdatum" };
-		//
-		// Object[] values = offer.getAuthor(), offer.getName(),
-		// offer.getNote(), offer.isChecked(), offer.getSlots(),
-		// offer.getHoursperweek(), offer.getDescription(),
-		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-		// offer.getInstitute(), offer.getModificationdate() };
-		//
-		//
+//		 String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
+//		 "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+//		 "Stundenlohn", "Institut", "aenderungsdatum" };
+//		
+//		 Object[] values ={ offer.getAuthor(), offer.getName(),
+//		 offer.getNote(), offer.isChecked(), offer.getSlots(),
+//		 offer.getHoursperweek(), offer.getDescription(),
+//		 offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+//		 offer.getInstitute(), offer.getModificationdate() };
+		
+		
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut" };
+				"Institut"/*,"aenderungsdatum"*/};
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute() };
+				offer.getWage(), offer.getInstitute()/*, offer.getModificationdate()*/};
 
 		String where = "AID = " + offer.getAid();
 
-		dbc.update(tableName, columns, values, where);
+		return (dbc.update(tableName, columns, values, where));
 
 	}
 
