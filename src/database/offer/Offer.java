@@ -2,6 +2,7 @@
  * @author Manuel Guentzel
  * @author Tamino Hartmann
  * @author Patryk Boczon
+ * @author Oemer Sahin
  */
 
 package database.offer;

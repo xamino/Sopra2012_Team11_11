@@ -329,12 +329,13 @@ public class ProviderServlet extends HttpServlet {
 			Offer offUp = OfferController.getInstance().getOfferById(aid);
 
 			//set modificationdate to current date
-			java.util.Date aenderungsdatum_1 = new java.util.Date();
-			java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
-			
+			java.util.Date aenderungsdatum_2 = new java.util.Date();
+			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(aenderungsdatum_2.getTime());
+						
 			offUp.setName(request.getParameter("titel"));
 			offUp.setDescription(request.getParameter("beschreibung"));
-			offUp.setModificationdate(aenderungsdatum);
+			//TODO doesn't work, was deactivated in OfferController
+			offUp.setModificationdate(aenderungsdatum_toUp);
 			log.write("ProviderServlet","Updating offer in progress...");
 			OfferController.getInstance().updateOffer(offUp);
 
