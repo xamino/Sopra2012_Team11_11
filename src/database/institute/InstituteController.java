@@ -136,7 +136,7 @@ public class InstituteController {
 	 */
 	public Vector<Integer> getAllRepresentingInstitutes(String username){
 		Vector<Integer> ret = new Vector<Integer>();
-		ResultSet rs=dbc.select(new String[]{"DISTINCT IID"}, new String[]{tableName, "Accounts"}, "Institute.IID=Accounts.institut AND (Accounts.benutzername='"+username+"' OR Accounts.stellvertreter='+"+username+"')");
+		ResultSet rs=dbc.select(new String[]{"DISTINCT IID"}, new String[]{tableName, "Accounts"}, "Institute.IID=Accounts.institut AND (Accounts.benutzername='"+username+"' OR Accounts.stellvertreter='"+username+"')");
 		try {
 			while(rs.next()){
 				ret.add(rs.getInt(1));

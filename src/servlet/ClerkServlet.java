@@ -484,7 +484,7 @@ public class ClerkServlet extends HttpServlet {
 			for(Integer i:institutes)off.addAll(offcon.getUncheckedOffersByInstitute(i));
 			int unchecked = off.size();
 			int apps = 0;
-			for (Offer o : off) {
+			for (Offer o : offcon.getCheckedOffers()) {
 				if (!o.isFinished()) {
 					Vector<Application> aps = appcon.getApplicationsByOffer(o
 							.getAid());
