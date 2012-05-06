@@ -448,7 +448,11 @@ public class ClerkServlet extends HttpServlet {
 				response.setContentType("error/url");
 				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			}
-		} else {
+			
+		}else if (path.equals("/js/loadInfo")){
+			
+		}
+		else {
 			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}
 	}

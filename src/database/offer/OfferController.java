@@ -87,7 +87,7 @@ public class OfferController {
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
 				offer.getStartdate(), offer.getEnddate(),
-				offer.getWage(), offer.getInstitute(), offer.getModificationdate()};
+				offer.getWage(), offer.getInstitute(), offer.getModificationdate(),offer.isFinished()};
 																	
 		dbc.insert(tableName, values);
 	}
@@ -135,12 +135,12 @@ public class OfferController {
 		//
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut" };
+				"Institut","abgeschlossen"};
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute() };
+				offer.getWage(), offer.getInstitute(),offer.isFinished() };
 
 		String where = "AID = " + offer.getAid();
 
