@@ -18,7 +18,6 @@ import user.Applicant;
 
 import com.google.gson.Gson;
 
-
 import database.document.DocumentController;
 import database.document.OfferDocument;
 import database.offer.Offer;
@@ -45,7 +44,7 @@ public class ApplicantServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-	
+
 	private OfferController offcon;
 
 	public ApplicantServlet() {
@@ -97,20 +96,20 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my offers:
 		else if (path.equals("/js/loadMyOffers")) {
 			// Offer vom User geholt
-			Vector<Offer> myoffers = offcon
-					.getOffersByApplicant(applicant.getUserData().getUsername());
+			Vector<Offer> myoffers = offcon.getOffersByApplicant(applicant
+					.getUserData().getUsername());
 			response.setContentType("myapplication/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = offcon
-					.getCheckedOffers(); // nur gepr�fte Angebote
+			Vector<Offer> offers = offcon.getCheckedOffers(); // nur gepr�fte
+																// Angebote
 			// bereits beworbene Stellen entfernen
 			// Offer vom User geholt
-			Vector<Offer> myoffers1 = offcon
-					.getOffersByApplicant(applicant.getUserData().getUsername());
+			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant
+					.getUserData().getUsername());
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
 				entfernen = false;
@@ -130,31 +129,19 @@ public class ApplicantServlet extends HttpServlet {
 
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
-			String aid = request.getParameter("id");
-			int aid1 = Integer.parseInt(request.getParameter("id"));
-			Vector<Offer> offersid = offcon
-					.getAllOffers();
-			String offername;
-			// Vector<OfferDocument> documents;
-			for (int i = 0; i < offersid.size(); i++) {
-				if (aid1 == offersid.elementAt(i).getAid()) {
-					offername = offersid.elementAt(i).getName();
-					// documents =
-					// DocumentController.getInstance().getDocumentsByOffer(Integer.parseInt(aid));
-					// System.out.println(documents);
-					response.setContentType("offer/json");
-					response.getWriter().write(
-							gson.toJson(offername, offername.getClass()));
-					return;
-				}
-			}
+			int aid = Integer.parseInt(request.getParameter("id"));
+			String offername = offcon.getOfferById(aid).getName();
+			response.setContentType("offer/json");
+			response.getWriter().write(
+					gson.toJson(offername, offername.getClass()));
+			return;
+
 		}
 		// Load my information about one application(documents):
 		else if (path.equals("/js/selectDocuments")) {
 			String aid = request.getParameter("id");
 			int aid1 = Integer.parseInt(request.getParameter("id"));
-			Vector<Offer> offersid = offcon
-					.getAllOffers();
+			Vector<Offer> offersid = offcon.getAllOffers();
 			// String offername;
 			Vector<OfferDocument> documents = null;
 			// System.out.println("hier?");
@@ -215,17 +202,16 @@ public class ApplicantServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim ändern der Daten.");
 			}
-		}else if(path.equals("/js/apply")){
+		} else if (path.equals("/js/apply")) {
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			if(applicant.apply(aid)){
+			if (applicant.apply(aid)) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
-			}else{
+			} else {
 				response.setContentType("text/error");
 				response.getWriter().write("error");
 			}
-		}
-		else {
+		} else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 	}
