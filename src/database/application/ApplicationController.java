@@ -13,6 +13,7 @@ package database.application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Vector;
 
 import user.Applicant;
@@ -27,9 +28,17 @@ import database.offer.Offer;
 
 public class ApplicationController {
 
-	AccountController acccon;
-	DocumentController doccon;
-	ApplicationController appcon;
+	/**
+	 * Klassenattribut "appcon" beinhaltet eine ApplicationController-Instanz,
+	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
+	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
+	 * ApplicationController existiert.
+	 * Das selbe gilt auch fuer die anderen Controller. 
+	 */
+	private static ApplicationController appcon;
+	private static AccountController acccon;
+	private static DocumentController doccon;
+	private static DatabaseController db;
 	
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
@@ -41,9 +50,9 @@ public class ApplicationController {
 	 * @return Es wird die Instanz zurueckgegeben.
 	 */
 	public static ApplicationController getInstance() {
-		if (appcontr == null)
-			appcontr = new ApplicationController();
-		return appcontr;
+		if (appcon == null)
+			appcon = new ApplicationController();
+		return appcon;
 
 	}
 
@@ -51,23 +60,10 @@ public class ApplicationController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private ApplicationController() {
-		dbc = DatabaseController.getInstance();
+		db = DatabaseController.getInstance();
 		logger.Log.getInstance().write("ApplicationController",
 				"Instance created.");
 	}
-
-	/**
-	 * Klassenattribut "appcontr" beinhaltet eine ApplicationController-Instanz,
-	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
-	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
-	 * ApplicationController existiert.
-	 */
-	private static ApplicationController appcontr;
-
-	/**
-	 * Diese Instanz dient zum Zugang in die Datenbank.
-	 */
-	public DatabaseController dbc;
 	
 	final static String tableName = "Bewerbungen";//tabellenname
 
@@ -84,10 +80,10 @@ public class ApplicationController {
 		Object[] values = { application.getUsername(), application.getAid(),
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
-		check.add( dbc.insert(tableName, values));
+		check.add( db.insert(tableName, values));
 		Vector<OfferDocument>offs = doccon.getDocumentsByOffer(application.getAid());
 		for(OfferDocument o:offs){
-			check.add(dbc.insert("Bewerbungsunterlagen",new Object[]{application.getUsername(),application.getAid(),o.getDocumentid(),false}));
+			check.add(db.insert("Bewerbungsunterlagen",new Object[]{application.getUsername(),application.getAid(),o.getDocumentid(),false}));
 		}
 		for(Boolean b:check)if(!b)return false;
 		return true;
@@ -111,7 +107,7 @@ public class ApplicationController {
 			doccon.deleteAppDocument(docs.elementAt(i));
 		}
 		
-		return dbc.delete(tableName, where);
+		return db.delete(tableName, where);
 	}
 
 	/**
@@ -131,7 +127,7 @@ public class ApplicationController {
 				application.isChosen() };
 		String where = "AID = " + application.getAid()+" AND benutzername='"+application.getUsername()+"'";
 
-		dbc.update(tableName, columns, values, where);
+		db.update(tableName, columns, values, where);
 	}
 	
 	
@@ -150,7 +146,7 @@ public class ApplicationController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 
-		ResultSet rs = dbc.select(select, from, null);
+		ResultSet rs = db.select(select, from, null);
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -190,7 +186,7 @@ public class ApplicationController {
 		String where = "benutzername = '" + username + "'";
 
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -229,7 +225,7 @@ public class ApplicationController {
 		String[] from = { tableName };
 		String where = "AID = " + aid;
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -268,7 +264,7 @@ public class ApplicationController {
 		String where = "sachbearbeiter = '" + clerkname + "'";
 
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -300,10 +296,39 @@ public class ApplicationController {
 		String[] from = { tableName };
 		String where = null;
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		Application app = new Application(rs.getString(1), rs.getInt(2),
 				rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
 		return app;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getNewAppID(String tablename){
+		int newID = 0;
+		boolean check = false;
+		while(!check){
+			newID = generateRandomNr(1, 9999);
+			Object[] data = {"TempApp", newID, false, null, false};
+			
+			check =  db.insert(tablename, data );
+		}
+		db.delete(tablename, "AID= "+newID);
+		return newID;
+	}
+	
+	private int generateRandomNr(int aStart, int aEnd){
+		
+		    Random random = new Random();
+		    //get the range, casting to long to avoid overflow problems
+		    long range = (long)aEnd - (long)aStart + 1;
+		    // compute a fraction of the range, 0 <= frac < range
+		    long fraction = (long)(range * random.nextDouble());
+		    int randomNumber =  (int)(fraction + aStart);
+		    return randomNumber;
+		  }
+	}
 
-}
+
