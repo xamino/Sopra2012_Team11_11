@@ -209,7 +209,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>();
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "Geprueft = 1";
+		String where = "Geprueft = 1 and abgeschlossen=0";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -277,7 +277,7 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "Ersteller = '" + provider.getUserData().getUsername()
+		String where = "abgeschlossen=0 and Ersteller = '" + provider.getUserData().getUsername()
 				+ "'";
 		ResultSet rs = dbc.select(select, from, where);
 		try {
@@ -320,7 +320,7 @@ public class OfferController {
 
 		for (int i = 0; i < applications.size(); i++) {
 
-			where = "AID = " + applications.elementAt(i).getAid();
+			where = "abgeschlossen = 0 and AID = " + applications.elementAt(i).getAid();
 
 			ResultSet rs = dbc.select(select, from, where);
 			try {
@@ -404,14 +404,14 @@ public class OfferController {
 		if (account.getInstitute() == 0) {
 
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"Geprueft=0");
+					"abgeschlossen=0 and Geprueft=0");
 
 		} else {
 			// Institut in (accountInstitut, 0) secures that Offers of Institut
 			// 0 are universally seeable.
 
 			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"Geprueft=0 AND Institut IN (" + account.getInstitute()
+					"abgeschlossen = 0 and Geprueft=0 AND Institut IN (" + account.getInstitute()
 							+ ",0)");
 
 		}
