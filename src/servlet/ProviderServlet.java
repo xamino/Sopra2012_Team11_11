@@ -56,13 +56,18 @@ public class ProviderServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-
+	
+	/**
+	 * OfferController instanz
+	 */
+	private OfferController offcon;
 	/**
 	 * Konstruktor.
 	 */
 	public ProviderServlet() {
 		super();
 		gson = new Gson();
+		offcon=OfferController.getInstance();
 	}
 
 	/**
@@ -155,19 +160,7 @@ public class ProviderServlet extends HttpServlet {
 			//Provider provi = Helper.checkAuthenticity(request.getSession(),Provider.class);   --> provider von oben benutzen!!
 								
 			//Generating AID
-			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
-						
-			double aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
-			int aid = (int)aidRandom;	
-			
-			//check if AID is already existing
-			for (int i = 0; i < allOffers.size(); i++) {			
-				if (allOffers.elementAt(i).getAid() == aid) {
-					aidRandom = 100+Math.random()*( Math.pow(999, Math.random())+100);
-					aid = (int)aidRandom;
-					i=0;//restart checking
-				}
-			}
+			int aid = offcon.getNewOffID("Angebote");
 			//Getting the data from delivered connection content to save it as a new offer-object in the db.
 			String ersteller = provider.getUserData().getUsername();
 			String name = request.getParameter("titel");
@@ -230,7 +223,7 @@ public class ProviderServlet extends HttpServlet {
 			 
 
 			// If already exists:
-			//Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
+			Vector<Offer> allOffers = OfferController.getInstance().getAllOffers();
 
 			for (int i = 0; i < allOffers.size(); i++) {
 				if (allOffers.elementAt(i).getName().equals(name)) {

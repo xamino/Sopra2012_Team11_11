@@ -80,7 +80,7 @@ function handleLoadOffersResponse(mime, data) {
 function prepareButton(id)
 {
 	//alert("preparing button3");
-	if (document.getElementById(id) != null){		//userindex.jsp --> applicantlist.jsp, wenn Button gedrückt wurde
+	if (document.getElementById(id) != null){		//userindex.jsp --> applicantlist.jsp, wenn Button gedrï¿½ckt wurde
 		//alert("idneuneu= "+id);
 		document.getElementById(id).onclick = function(){
 			window.location='applicantlist.jsp?AID='+id;
@@ -150,7 +150,7 @@ function handleApplicantChoiceResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].name + "\');\"><td>"
 					+ JSONarray[i].name + "</td></tr>";
-		brauche username für berwerber annehmen
+		brauche username fï¿½r berwerber annehmen
 		}
 		 * */
 		for ( var i = 0; i < JSONarray.length; i++) {
@@ -240,7 +240,7 @@ function addOffer(form) {
 			toggleWarning("error_notiz", false, "");
 
 	}
-	connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
+	is(!error)connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
 			+ "&stellen=" + stellen + "&beschreibung=" + beschreibung
 			+ "&notiz=" + notiz, handleCreateOfferResponse);
 }
@@ -328,7 +328,8 @@ function handleCreateOfferResponse(mime, data) {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		alert(data);
+		// hier fehler als html errormessage einbauen
+		alert("TODO: HTML ERRORMESSAGE fÃ¼r die falscheingabe fehler!");
 		return;
 	}
 }

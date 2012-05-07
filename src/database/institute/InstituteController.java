@@ -2,6 +2,7 @@ package database.institute;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.Vector;
 
 import servlet.Helper;
@@ -34,7 +35,7 @@ public class InstituteController {
 	}
 
 	private InstituteController() {
-		dbc = DatabaseController.getInstance();
+		db = DatabaseController.getInstance();
 		acccon= AccountController.getInstance();
 		logger.Log.getInstance().write("InstituteController",
 				"Instance created.");
@@ -43,7 +44,7 @@ public class InstituteController {
 	/**
 	 * Diese Instanz dient zum Zugang in die Datenbank.
 	 */
-	public DatabaseController dbc;
+	public DatabaseController db;
 
 	final static String tableName = "Institute";// tabellenname
 
@@ -55,7 +56,7 @@ public class InstituteController {
 	 * @return Zurueckgegeben wird der Name des Institutes.
 	 */
 	public String getInstituteNameById(int id) {
-		ResultSet rs = dbc.select(new String[] { "Name" },
+		ResultSet rs = db.select(new String[] { "Name" },
 				new String[] { tableName }, "IID=" + id);
 		try {
 			if (rs.next()) {
@@ -74,7 +75,7 @@ public class InstituteController {
 	 * @return A vector with all the institutes.
 	 */
 	public Vector<Institute> getAllInstitutes() {
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableName }, null);
 		Vector<Institute> inst = new Vector<Institute>();
 		try {
@@ -96,7 +97,7 @@ public class InstituteController {
 	 * @return A boolean flag showing if the action was successful.
 	 */
 	public boolean addInstitute(Institute institute) {
-		return dbc.insert(tableName, new Object[] { institute.getIID(),
+		return db.insert(tableName, new Object[] { institute.getIID(),
 				institute.getName() });
 	}
 
@@ -113,11 +114,11 @@ public class InstituteController {
 			a.setInstitute(0);
 			acccon.updateAccount(a);
 		}
-		return dbc.delete(tableName, "IID=" + institute.getIID());
+		return db.delete(tableName, "IID=" + institute.getIID());
 	}
 
 	public Institute getInstituteByIID(int IID) {
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableName }, "IID=" + IID);
 		try {
 			if (rs.next()) {
@@ -136,7 +137,7 @@ public class InstituteController {
 	 */
 	public Vector<Integer> getAllRepresentingInstitutes(String username){
 		Vector<Integer> ret = new Vector<Integer>();
-		ResultSet rs=dbc.select(new String[]{"DISTINCT IID"}, new String[]{tableName, "Accounts"}, "Institute.IID=Accounts.institut AND (Accounts.benutzername='"+username+"' OR Accounts.stellvertreter='"+username+"')");
+		ResultSet rs=db.select(new String[]{"DISTINCT IID"}, new String[]{tableName, "Accounts"}, "Institute.IID=Accounts.institut AND (Accounts.benutzername='"+username+"' OR Accounts.stellvertreter='"+username+"')");
 		try {
 			while(rs.next()){
 				ret.add(rs.getInt(1));
@@ -146,4 +147,40 @@ public class InstituteController {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Generate a new ID.
+	 * @return
+	 *			generated ID
+	 */
+	public int getNewInstID(String tablename){
+		int newID = 0;
+		boolean check = false;
+		while(!check){
+			newID = generateRandomNr(1, 9999);
+			Object[] data = {newID, ""};
+			check =  db.insert(tablename, data );
+		}
+		db.delete(tablename, "IID= "+newID);
+		return newID;
+	}
+	/**
+	 * Generate a random number.
+	 * @param aStart
+	 * 			Start of the number.
+	 * @param aEnd
+	 * 			End of the number.
+	 * @return
+	 * 		  generated number.
+	 */
+	private int generateRandomNr(int aStart, int aEnd){
+		
+		    Random random = new Random();
+		    //get the range, casting to long to avoid overflow problems
+		    long range = (long)aEnd - (long)aStart + 1;
+		    // compute a fraction of the range, 0 <= frac < range
+		    long fraction = (long)(range * random.nextDouble());
+		    int randomNumber =  (int)(fraction + aStart);
+		    return randomNumber;
+		  }
 }

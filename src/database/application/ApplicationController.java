@@ -301,34 +301,6 @@ public class ApplicationController {
 				rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
 		return app;
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getNewAppID(String tablename){
-		int newID = 0;
-		boolean check = false;
-		while(!check){
-			newID = generateRandomNr(1, 9999);
-			Object[] data = {"TempApp", newID, false, null, false};
-			
-			check =  db.insert(tablename, data );
-		}
-		db.delete(tablename, "AID= "+newID);
-		return newID;
-	}
-	
-	private int generateRandomNr(int aStart, int aEnd){
-		
-		    Random random = new Random();
-		    //get the range, casting to long to avoid overflow problems
-		    long range = (long)aEnd - (long)aStart + 1;
-		    // compute a fraction of the range, 0 <= frac < range
-		    long fraction = (long)(range * random.nextDouble());
-		    int randomNumber =  (int)(fraction + aStart);
-		    return randomNumber;
-		  }
-	}
+}
 
 

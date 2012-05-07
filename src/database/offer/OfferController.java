@@ -13,6 +13,7 @@ package database.offer;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.Vector;
 
 import logger.Log;
@@ -47,7 +48,7 @@ public class OfferController {
 	 * Privater Konstruktor, da die Klasse selbst ein Singleton ist.
 	 */
 	private OfferController() {
-		dbc = DatabaseController.getInstance();
+		db = DatabaseController.getInstance();
 		log = Log.getInstance();
 		log.write("OfferController", "Instance created.");
 	}
@@ -64,7 +65,7 @@ public class OfferController {
 	 * Attribut dbc ist eine DatabaseController Instanz und wird fuer den
 	 * Datenbankzugang benoetigt.
 	 */
-	private DatabaseController dbc;
+	private DatabaseController db;
 
 	final static String tableName = "Angebote";// tabellenname
 
@@ -92,7 +93,7 @@ public class OfferController {
 				offer.getInstitute(), offer.getModificationdate(),
 				offer.isFinished() };
 
-		dbc.insert(tableName, values);
+		db.insert(tableName, values);
 	}
 
 	/**
@@ -106,10 +107,10 @@ public class OfferController {
 	 */
 	public void deleteOffer(Offer offer) {
 
-		dbc.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
-		dbc.delete("Standardunterlagen", "AID=" + offer.getAid());
-		dbc.delete("Bewerbungen", "AID=" + offer.getAid());
-		dbc.delete(tableName, "AID=" + offer.getAid());
+		db.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
+		db.delete("Standardunterlagen", "AID=" + offer.getAid());
+		db.delete("Bewerbungen", "AID=" + offer.getAid());
+		db.delete(tableName, "AID=" + offer.getAid());
 
 	}
 
@@ -125,34 +126,33 @@ public class OfferController {
 
 		// Dates entfernt, da problematisch
 
-//		 String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-//		 "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-//		 "Stundenlohn", "Institut", "aenderungsdatum" };
-//		
-//		 Object[] values ={ offer.getAuthor(), offer.getName(),
-//		 offer.getNote(), offer.isChecked(), offer.getSlots(),
-//		 offer.getHoursperweek(), offer.getDescription(),
-//		 offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-//		 offer.getInstitute(), offer.getModificationdate() };
-		
-		
+		// String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
+		// "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+		// "Stundenlohn", "Institut", "aenderungsdatum" };
+		//
+		// Object[] values ={ offer.getAuthor(), offer.getName(),
+		// offer.getNote(), offer.isChecked(), offer.getSlots(),
+		// offer.getHoursperweek(), offer.getDescription(),
+		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+		// offer.getInstitute(), offer.getModificationdate() };
+
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut","aenderungsdatum", "abgeschlossen"};
-		
-//		java.util.Date aenderungsdatum_1 = new java.util.Date();
-//		java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
+				"Institut", "aenderungsdatum", "abgeschlossen" };
 
+		// java.util.Date aenderungsdatum_1 = new java.util.Date();
+		// java.sql.Date aenderungsdatum = new
+		// java.sql.Date(aenderungsdatum_1.getTime());
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute(),offer.getModificationdate(),offer.isFinished() };
-
+				offer.getWage(), offer.getInstitute(),
+				offer.getModificationdate(), offer.isFinished() };
 
 		String where = "AID = " + offer.getAid();
 
-		return (dbc.update(tableName, columns, values, where));
+		return (db.update(tableName, columns, values, where));
 
 	}
 
@@ -170,7 +170,8 @@ public class OfferController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 
-		ResultSet rs = dbc.select(select, from, "abgeschlossen=0");
+		ResultSet rs = db.select(select, from, null);
+
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -210,17 +211,18 @@ public class OfferController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "Geprueft = 1 and abgeschlossen=0";
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Offer currentoff;
-				boolean check=rs.getBoolean(14);
+				boolean check = rs.getBoolean(14);
 				currentoff = new Offer(rs.getInt(1), rs.getString(2),
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
 						rs.getInt(12), rs.getDate(13), check);
-				if(!check)offervec.add(currentoff);
+				if (!check)
+					offervec.add(currentoff);
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -244,7 +246,7 @@ public class OfferController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "Plaetze > 0";
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -277,9 +279,9 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "abgeschlossen=0 and Ersteller = '" + provider.getUserData().getUsername()
-				+ "'";
-		ResultSet rs = dbc.select(select, from, where);
+		String where = "abgeschlossen=0 and Ersteller = '"
+				+ provider.getUserData().getUsername() + "'";
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -299,20 +301,20 @@ public class OfferController {
 	}
 
 	/**
-	 * Diese Methode sammelt alle nicht abgeschlossenen Jobangebote, fuer die Sich ein Bewerber
-	 * beworben hat, aus der Datenbank und speichert diese in einem Vector.
+	 * Diese Methode sammelt alle nicht abgeschlossenen Jobangebote, fuer die
+	 * Sich ein Bewerber beworben hat, aus der Datenbank und speichert diese in
+	 * einem Vector.
 	 * 
 	 * @param applications
 	 *            Parameter "applications" ist ein Vector aus
 	 *            Application-Objekten (Bewerbungen) von einem Bewerber
-	 * @return Es wird ein Vector mit allen nicht abgeschlossenen Jobangeboten zurueckgegeben, auf die
-	 *         sich ein Bewerber beworben hat.
+	 * @return Es wird ein Vector mit allen nicht abgeschlossenen Jobangeboten
+	 *         zurueckgegeben, auf die sich ein Bewerber beworben hat.
 	 */
 	public Vector<Offer> getOffersByApplicant(String username) {
 
-		Vector<Application> applications =
-		ApplicationController.getInstance()
-		.getApplicationsByApplicant(username);
+		Vector<Application> applications = ApplicationController.getInstance()
+				.getApplicationsByApplicant(username);
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
@@ -320,20 +322,22 @@ public class OfferController {
 
 		for (int i = 0; i < applications.size(); i++) {
 
-			where = "abgeschlossen = 0 and AID = " + applications.elementAt(i).getAid();
+			where = "abgeschlossen = 0 and AID = "
+					+ applications.elementAt(i).getAid();
 
-			ResultSet rs = dbc.select(select, from, where);
+			ResultSet rs = db.select(select, from, where);
 			try {
 				while (rs.next()) {
 					Offer currentoff;
-					boolean check =rs.getBoolean(14);
+					boolean check = rs.getBoolean(14);
 					currentoff = new Offer(rs.getInt(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getBoolean(5),
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
 							rs.getInt(12), rs.getDate(13), check);
 
-					if(!check)offervec.add(currentoff);
+					if (!check)
+						offervec.add(currentoff);
 				}
 
 				rs.close();
@@ -359,7 +363,7 @@ public class OfferController {
 		String[] from = { tableName };
 		String where = "AID = " + ID;
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 
 		try {
 			if (rs.next()) {
@@ -403,16 +407,16 @@ public class OfferController {
 
 		if (account.getInstitute() == 0) {
 
-			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
+			rs = db.select(new String[] { "*" }, new String[] { tableName },
 					"abgeschlossen=0 and Geprueft=0");
 
 		} else {
 			// Institut in (accountInstitut, 0) secures that Offers of Institut
 			// 0 are universally seeable.
 
-			rs = dbc.select(new String[] { "*" }, new String[] { tableName },
-					"abgeschlossen = 0 and Geprueft=0 AND Institut IN (" + account.getInstitute()
-							+ ",0)");
+			rs = db.select(new String[] { "*" }, new String[] { tableName },
+					"abgeschlossen = 0 and Geprueft=0 AND Institut IN ("
+							+ account.getInstitute() + ",0)");
 
 		}
 		try {
@@ -446,7 +450,7 @@ public class OfferController {
 		Vector<Offer> offers = new Vector<Offer>();
 		ResultSet rs;
 
-		rs = dbc.select(new String[] { "*" }, new String[] { tableName },
+		rs = db.select(new String[] { "*" }, new String[] { tableName },
 				"Geprueft=0 AND Institut =" + institute);
 
 		try {
@@ -467,4 +471,43 @@ public class OfferController {
 			return null;
 		}
 	}
+
+	/**
+	 * Generate a new ID.
+	 * 
+	 * @return generated ID
+	 */
+	public int getNewOffID(String tablename) {
+		int newID = 0;
+		boolean check = false;
+		while (!check) {
+			newID = generateRandomNr(1, 9999);
+			Object[] data = { newID, "", "", "", false, 0, 0, "", null, null,
+					0, 0, null };
+			check = db.insert(tablename, data);
+		}
+		db.delete(tablename, "AID= " + newID);
+		return newID;
+	}
+
+	/**
+	 * Generate a random number.
+	 * 
+	 * @param aStart
+	 *            Start of the number.
+	 * @param aEnd
+	 *            End of the number.
+	 * @return generated number.
+	 */
+	private int generateRandomNr(int aStart, int aEnd) {
+
+		Random random = new Random();
+		// get the range, casting to long to avoid overflow problems
+		long range = (long) aEnd - (long) aStart + 1;
+		// compute a fraction of the range, 0 <= frac < range
+		long fraction = (long) (range * random.nextDouble());
+		int randomNumber = (int) (fraction + aStart);
+		return randomNumber;
+	}
+
 }
