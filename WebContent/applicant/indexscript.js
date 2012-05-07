@@ -218,6 +218,7 @@ function handleDeleteApplication(mime, data) {
  * @param aid AngebotsID
  */
 function apply(aid){
+	alert(aid);
 	connect("/hiwi/Applicant/js/apply","aid="+aid,handleApply);
 }
 /**

@@ -21,6 +21,7 @@ import user.Provider;
 import database.DatabaseController;
 import database.account.Account;
 import database.application.Application;
+import database.application.ApplicationController;
 
 public class OfferController {
 
@@ -147,7 +148,7 @@ public class OfferController {
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute(),offer.getModificationdate().toString(),offer.isFinished() };
+				offer.getWage(), offer.getInstitute(),offer.getModificationdate(),offer.isFinished() };
 
 
 		String where = "AID = " + offer.getAid();
@@ -171,6 +172,7 @@ public class OfferController {
 		String[] from = { tableName };
 
 		ResultSet rs = db.select(select, from, null);
+
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -214,12 +216,13 @@ public class OfferController {
 		try {
 			while (rs.next()) {
 				Offer currentoff;
+				boolean check=rs.getBoolean(14);
 				currentoff = new Offer(rs.getInt(1), rs.getString(2),
 						rs.getString(3), rs.getString(4), rs.getBoolean(5),
 						rs.getInt(6), rs.getDouble(7), rs.getString(8),
 						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
-				offervec.add(currentoff);
+						rs.getInt(12), rs.getDate(13), check);
+				if(!check)offervec.add(currentoff);
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -298,17 +301,20 @@ public class OfferController {
 	}
 
 	/**
-	 * Diese Methode sammelt alle Jobangebote, fuer die Sich ein Bewerber
+	 * Diese Methode sammelt alle nicht abgeschlossenen Jobangebote, fuer die Sich ein Bewerber
 	 * beworben hat, aus der Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param applications
 	 *            Parameter "applications" ist ein Vector aus
 	 *            Application-Objekten (Bewerbungen) von einem Bewerber
-	 * @return Es wird ein Vector mit allen Jobangeboten zurueckgegeben, auf die
+	 * @return Es wird ein Vector mit allen nicht abgeschlossenen Jobangeboten zurueckgegeben, auf die
 	 *         sich ein Bewerber beworben hat.
 	 */
-	public Vector<Offer> getOffersByApplicant(Vector<Application> applications) {
+	public Vector<Offer> getOffersByApplicant(String username) {
 
+		Vector<Application> applications =
+		ApplicationController.getInstance()
+		.getApplicationsByApplicant(username);
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
@@ -322,13 +328,14 @@ public class OfferController {
 			try {
 				while (rs.next()) {
 					Offer currentoff;
+					boolean check =rs.getBoolean(14);
 					currentoff = new Offer(rs.getInt(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getBoolean(5),
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-							rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
+							rs.getInt(12), rs.getDate(13), check);
 
-					offervec.add(currentoff);
+					if(!check)offervec.add(currentoff);
 				}
 
 				rs.close();
