@@ -18,7 +18,7 @@ import user.Applicant;
 
 import com.google.gson.Gson;
 
-import database.application.ApplicationController;
+
 import database.document.DocumentController;
 import database.document.OfferDocument;
 import database.offer.Offer;
@@ -45,10 +45,13 @@ public class ApplicantServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
+	
+	private OfferController offcon;
 
 	public ApplicantServlet() {
 		super();
 		gson = new Gson();
+		offcon = OfferController.getInstance();
 	}
 
 	/**
@@ -94,28 +97,20 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my offers:
 		else if (path.equals("/js/loadMyOffers")) {
 			// Offer vom User geholt
-			Vector<Offer> myoffers = OfferController.getInstance()
-					.getOffersByApplicant(
-							ApplicationController.getInstance()
-									.getApplicationsByApplicant(
-											applicant.getUserData()
-													.getUsername()));
+			Vector<Offer> myoffers = offcon
+					.getOffersByApplicant(applicant.getUserData().getUsername());
 			response.setContentType("myapplication/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = OfferController.getInstance()
+			Vector<Offer> offers = offcon
 					.getCheckedOffers(); // nur gepr�fte Angebote
 			// bereits beworbene Stellen entfernen
 			// Offer vom User geholt
-			Vector<Offer> myoffers1 = OfferController.getInstance()
-					.getOffersByApplicant(
-							ApplicationController.getInstance()
-									.getApplicationsByApplicant(
-											applicant.getUserData()
-													.getUsername()));
+			Vector<Offer> myoffers1 = offcon
+					.getOffersByApplicant(applicant.getUserData().getUsername());
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
 				entfernen = false;
@@ -137,7 +132,7 @@ public class ApplicantServlet extends HttpServlet {
 		else if (path.equals("/js/selectApplication")) {
 			String aid = request.getParameter("id");
 			int aid1 = Integer.parseInt(request.getParameter("id"));
-			Vector<Offer> offersid = OfferController.getInstance()
+			Vector<Offer> offersid = offcon
 					.getAllOffers();
 			String offername;
 			// Vector<OfferDocument> documents;
@@ -158,7 +153,7 @@ public class ApplicantServlet extends HttpServlet {
 		else if (path.equals("/js/selectDocuments")) {
 			String aid = request.getParameter("id");
 			int aid1 = Integer.parseInt(request.getParameter("id"));
-			Vector<Offer> offersid = OfferController.getInstance()
+			Vector<Offer> offersid = offcon
 					.getAllOffers();
 			// String offername;
 			Vector<OfferDocument> documents = null;

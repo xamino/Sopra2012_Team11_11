@@ -419,6 +419,11 @@ public class DatabaseController {
 			ret += name[i] + "=";
 			if (value[i] instanceof String)
 				ret += "'" + value[i] + "'";
+			else if (value[i] instanceof Date) {
+				// Correctly parse & enter dates:
+				ret += "'" + new java.sql.Date(((Date) value[i]).getTime())
+						+ "'";
+			}
 			else
 				ret += value[i];
 			if (i != (name.length - 1))
