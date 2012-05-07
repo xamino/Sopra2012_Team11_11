@@ -170,7 +170,7 @@ public class OfferController {
 		String[] select = { "*" };
 		String[] from = { tableName };
 
-		ResultSet rs = dbc.select(select, from, null);
+		ResultSet rs = dbc.select(select, from, "abgeschlossen=0");
 		try {
 			while (rs.next()) {
 				Offer currentoff;
