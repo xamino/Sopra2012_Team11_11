@@ -11,6 +11,7 @@ package database.document;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.Vector;
 
 import logger.Log;
@@ -23,7 +24,7 @@ public class DocumentController {
 	/**
 	 * Private Instanz des DatabaseController.
 	 */
-	private DatabaseController dbc;
+	private DatabaseController db;
 
 	final static String tableNameS = "Standardunterlagen";// tabellenname
 	final static String tableNameB = "Bewerbungsunterlagen";// tabellenname
@@ -59,7 +60,7 @@ public class DocumentController {
 	 * wird ueber <code>getInstance()</code> aufgerufen.
 	 */
 	private DocumentController() {
-		dbc = DatabaseController.getInstance();
+		db = DatabaseController.getInstance();
 		log = Log.getInstance();
 		log.write("DocumentController", "Instance created.");
 	}
@@ -74,7 +75,7 @@ public class DocumentController {
 	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
 	public boolean createDocument(Document document) { // checked
-		return dbc.insert(tableNameU, new Object[] { document.getUid(),
+		return db.insert(tableNameU, new Object[] { document.getUid(),
 				document.getName(), document.getDescription() });
 	}
 
@@ -92,9 +93,9 @@ public class DocumentController {
 		 * sondern auch in "Standardunterlagen" und "Bewerbungsunterlagen"
 		 * geloescht werden, da diese nicht mehr existiert.
 		 */
-		return dbc.delete(tableNameB, "UID=" + document.getUid())
-				&& dbc.delete(tableNameS, "UID=" + document.getUid())
-				&& dbc.delete(tableNameU, "UID=" + document.getUid());
+		return db.delete(tableNameB, "UID=" + document.getUid())
+				&& db.delete(tableNameS, "UID=" + document.getUid())
+				&& db.delete(tableNameU, "UID=" + document.getUid());
 	}
 
 	/**
@@ -107,14 +108,14 @@ public class DocumentController {
 	 * @return Gibt an, ob das Update erfolgreich war.
 	 */
 	public boolean updateDocument(Document document) { // checked
-		return dbc.update(tableNameU, new String[] { "Name", "Beschreibung" },
+		return db.update(tableNameU, new String[] { "Name", "Beschreibung" },
 				new Object[] { document.getName(), document.getDescription() },
 				"UID=" + document.getUid());
 	}
 
 	public Document getDocumentByUID(int uid) {
 		Document doc = null;
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, "UID=" + uid);
 		try {
 			if (rs.next()) {
@@ -151,7 +152,7 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots
 		// bei gegebener Angebots-ID
 		Vector<OfferDocument> docVect = new Vector<OfferDocument>();
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameS }, "AID=" + aid);
 
 		try {
@@ -206,7 +207,7 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe der Bewerbungsunterlagen eines bestimmten
 		// Angebots bei gegebener Angebots-ID
 		Vector<AppDocument> appDocVect = new Vector<AppDocument>();
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameB }, "AID=" + aid);
 
 		try {
@@ -269,7 +270,7 @@ public class DocumentController {
 		// Vector fuer die Rueckgabe der Unterlagen eines bestimmten Angebots
 		// und Accounts bei gegebenem Account und Angebot
 		Vector<AppDocument> userOffDocVect = new Vector<AppDocument>();
-		ResultSet rs = dbc.select(
+		ResultSet rs = db.select(
 				new String[] { "*" },
 				new String[] { tableNameB },
 				"benutzername='" + account.getUsername() + "' AND AID="
@@ -334,7 +335,7 @@ public class DocumentController {
 
 		// Vector fuer die Rueckgabe aller vorhandenen Unterlagen
 		Vector<Document> allDocVect = new Vector<Document>();
-		ResultSet rs = dbc.select(new String[] { "*" },
+		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, null);
 
 		try {
@@ -382,7 +383,7 @@ public class DocumentController {
 	 *            allen dazugehoerigen Attributen.
 	 */
 	public void createAppDocument(AppDocument document) { // checked
-		dbc.insert(tableNameB,
+		db.insert(tableNameB,
 				new Object[] { document.getUsername(), document.getoID(),
 						document.getdID(), document.getPresent() });
 	}
@@ -397,7 +398,7 @@ public class DocumentController {
 	 *            Attributen.
 	 */
 	public boolean deleteAppDocument(AppDocument document) { // checked
-		return dbc.delete(tableNameB,
+		return db.delete(tableNameB,
 				"benutzername='" + document.getUsername() + "' AND AID="
 						+ document.getoID() + " AND UID=" + document.getdID());
 	}
@@ -430,7 +431,7 @@ public class DocumentController {
 		 * Aenderungen am System. Es sieht aus, als ob das System nichts machen
 		 * wuerde.
 		 */
-		dbc.update(tableNameB, columns, values, where);
+		db.update(tableNameB, columns, values, where);
 	}
 
 	/**
@@ -443,7 +444,7 @@ public class DocumentController {
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
 	 */
 	public void createOfferDocument(OfferDocument document) { // checked
-		dbc.insert(
+		db.insert(
 				tableNameS,
 				new Object[] { document.getOfferID(), document.getDocumentid() });
 	}
@@ -458,7 +459,7 @@ public class DocumentController {
 	 */
 	public void deleteOfferDocument(OfferDocument document) { // checked
 
-		dbc.delete(tableNameS, "AID=" + document.getOfferID() + " AND UID="
+		db.delete(tableNameS, "AID=" + document.getOfferID() + " AND UID="
 				+ document.getDocumentid());
 	}
 
@@ -498,7 +499,7 @@ public class DocumentController {
 				document.getDocumentid() };
 		// Object[] values = new Object[]{document.getOfferID(),newDocumentId};
 
-		dbc.update(tableNameS, columns, values, where);
+		db.update(tableNameS, columns, values, where);
 	}
 
 	/**
@@ -532,7 +533,7 @@ public class DocumentController {
 		String where = "UID not in (Select UID FROM " + tableNameS
 				+ " WHERE AID = " + aid + ")";
 
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
@@ -560,7 +561,7 @@ public class DocumentController {
 		String[] from = { tableNameB };
 		String where = "benutzername=" + benutzername;
 		Vector<AppDocument> appdoc = null;
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
 				AppDocument temp;
@@ -591,7 +592,7 @@ public class DocumentController {
 		String[] from = { tableNameB };
 		String where = "UID=" + UID;
 		AppDocument appdoc;
-		ResultSet rs = dbc.select(select, from, where);
+		ResultSet rs = db.select(select, from, where);
 		try {
 			if (rs.next()) {
 				appdoc = new AppDocument(rs.getString("benutzername"),
@@ -605,4 +606,40 @@ public class DocumentController {
 			return null;
 		}
 	}
+	
+	/**
+	 * Generate a new ID.
+	 * @return
+	 *			generated ID
+	 */
+	public int getNewDocID(String tablename){
+		int newID = 0;
+		boolean check = false;
+		while(!check){
+			newID = generateRandomNr(1, 9999);
+			Object[] data = {newID, "TempName", "TempText"};
+			check =  db.insert(tablename, data );
+		}
+		db.delete(tablename, "UID= "+newID);
+		return newID;
+	}
+	/**
+	 * Generate a random number.
+	 * @param aStart
+	 * 			Start of the number.
+	 * @param aEnd
+	 * 			End of the number.
+	 * @return
+	 * 		  generated number.
+	 */
+	private int generateRandomNr(int aStart, int aEnd){
+		
+		    Random random = new Random();
+		    //get the range, casting to long to avoid overflow problems
+		    long range = (long)aEnd - (long)aStart + 1;
+		    // compute a fraction of the range, 0 <= frac < range
+		    long fraction = (long)(range * random.nextDouble());
+		    int randomNumber =  (int)(fraction + aStart);
+		    return randomNumber;
+		  }
 }
