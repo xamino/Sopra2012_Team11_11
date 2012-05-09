@@ -270,7 +270,7 @@ public class OfferController {
 	 * und speichert diese in einem Vector.
 	 * 
 	 * @param provider
-	 *            Parameter gibt den ben�tigten Provider an
+	 *            Parameter gibt den benoetigten Provider an
 	 * 
 	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
 	 *         Datenbank zurueckgegeben.
@@ -471,6 +471,59 @@ public class OfferController {
 			return null;
 		}
 	}
+	
+	
+//	/**
+//	 * Aktualisiert die freien Plaetze eines Angebots
+//	 * 
+//	 * @param offer
+//	 *            Angebotsobjekt
+//	 * .
+//	 */
+//	public void refreshOfferSlots(Offer offer) {
+//
+//		int oldSlotNumber = offer.getSlots();
+//		int takenSlots = db.count(new String[]{" Bewerbungen"}," AID="+offer.getAid()+" AND ausgewaehlt="+true);
+//		
+//		int newSlotNumber = oldSlotNumber-takenSlots;
+//		System.out.println("Offernam="+offer.getName()+"takenSlots"+" oldslot="+oldSlotNumber+" takenslots="+takenSlots+" newSlotNUmber="+newSlotNumber);
+//				
+//		ResultSet rs = db.select(new String[]{"*"}, new String[]{" Angebote"}," AID="+offer.getAid()+" AND Geprueft=true");
+//
+//		try {
+//			while (rs.next()) {
+//				
+//				if(oldSlotNumber<0){
+//					log.write("OfferController","Error free slot number is invalid!");
+//					return;
+//				}
+//				else if(takenSlots<0){
+//					takenSlots= takenSlots*(-1);
+//					return;
+//				}
+//				else if(newSlotNumber<0){
+//					log.write("OfferController","There are no more free Slots for offer "+offer.getName());
+//					return;
+//				}
+//				else{
+//					offer.setSlots(newSlotNumber);
+//					db.update("Angebote", new String[]{"Plaetze"}, new Object[]{newSlotNumber}, " AID="+offer.getAid());
+//					log.write("OfferController","Slot has been refreshed for "+offer.getName());
+//				}
+//				
+//			}
+//			
+//			rs.close();
+//			
+//			
+//		} catch (SQLException e) {
+//			log.write("OfferController",
+//					"Error reading ResultSet in refreshOfferSlots()!");
+//			e.printStackTrace();
+//			
+//		}
+//	}
+	
 
 	/**
 	 * Generate a new ID.
@@ -509,5 +562,7 @@ public class OfferController {
 		int randomNumber = (int) (fraction + aStart);
 		return randomNumber;
 	}
+	
+	
 
 }

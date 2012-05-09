@@ -376,6 +376,13 @@ public class ProviderServlet extends HttpServlet {
 						return;
 					} else {
 						applicationToChange.setChosen(true);
+						
+						Offer offertoSetSlots = OfferController.getInstance().getOfferById(aid);
+						int freeSlots = offertoSetSlots.getSlots();
+						
+						log.write("ProviderServlet"," Setting free slots for offer in progress...");
+						offertoSetSlots.setSlots(freeSlots-1);
+						OfferController.getInstance().updateOffer(offertoSetSlots);
 						log.write("ProviderServlet","'Bewerber annehmen' in progress...");
 						ApplicationController.getInstance().updateApplication(applicationToChange);
 					}
@@ -389,6 +396,6 @@ public class ProviderServlet extends HttpServlet {
 			return;
 
 		}
-
+		
 	}
 }

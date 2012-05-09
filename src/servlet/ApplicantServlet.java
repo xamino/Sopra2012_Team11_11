@@ -112,7 +112,7 @@ public class ApplicantServlet extends HttpServlet {
 					.getUserData().getUsername());
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
-				entfernen = false;
+				entfernen = false;				
 				for (int j = 0; j < myoffers1.size(); j++) {
 					if (offers.elementAt(i).getAid() == myoffers1.elementAt(j)
 							.getAid()) {

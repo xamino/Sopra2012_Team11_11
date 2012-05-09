@@ -80,7 +80,7 @@ function handleLoadOffersResponse(mime, data) {
 function prepareButton(id)
 {
 	//alert("preparing button3");
-	if (document.getElementById(id) != null){		//userindex.jsp --> applicantlist.jsp, wenn Button gedr�ckt wurde
+	if (document.getElementById(id) != null){		//userindex.jsp --> applicantlist.jsp, wenn Button gedrueckt wurde
 		//alert("idneuneu= "+id);
 		document.getElementById(id).onclick = function(){
 			window.location='applicantlist.jsp?AID='+id;
@@ -411,6 +411,18 @@ function handleTakeSelectedApplicantResponse(mime, data) {
 		alert(data);
 		return;
 	}
+}
+
+/**
+ * This function refreshs the number of free slots for an offer
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
+function refreshOfferSlots() {
+	//TODO
 }
 
 

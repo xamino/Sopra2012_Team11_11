@@ -66,7 +66,7 @@ public class Servlet extends HttpServlet {
 		path = (path == null) ? "" : path;
 		log.write("Servlet", "Received request <" + path + ">.");
 		if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = offController.getCheckedOffers();
+			Vector<Offer> offers = offController.getCheckedOffers();			
 			// On error:
 			if (offers == null) {
 				response.setContentType("text/error");
