@@ -381,8 +381,19 @@ public class ProviderServlet extends HttpServlet {
 						int freeSlots = offertoSetSlots.getSlots();
 						
 						log.write("ProviderServlet"," Setting free slots for offer in progress...");
+						
+						//No free slots
+						if(freeSlots<=0){
+							log.write("ProviderServlet","No free slots available for: "+offertoSetSlots.getName());
+							response.setContentType("text/error");
+							response.getWriter().write("Keine freien PLaetze mehr!");
+							return;
+						}
+						//reduce freeSlots and update it
+						else{
 						offertoSetSlots.setSlots(freeSlots-1);
 						OfferController.getInstance().updateOffer(offertoSetSlots);
+						}
 						log.write("ProviderServlet","'Bewerber annehmen' in progress...");
 						ApplicationController.getInstance().updateApplication(applicationToChange);
 					}

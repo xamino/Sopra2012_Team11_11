@@ -96,7 +96,6 @@ function prepareButton(id)
 function prepareButtonUpdateOffer(aid)
 {
 	offerToUpdate = aid;
-	//alert("prepareButtonUpdateOffer "+offerToUpdate);
 	window.location='editoffer.jsp?aid='+aid;
 	
 }
@@ -109,7 +108,6 @@ function prepareButtonUpdateOffer(aid)
 function prepareButtonDeleteOffer(aid)
 {
 	offerToDelete = aid;
-	alert(offerToDelete);
 	togglePopup('offer_cancel',true);
 
 }
@@ -157,7 +155,7 @@ function handleApplicantChoiceResponse(mime, data) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].username + "\');\"><td>"
-					+ JSONarray[i].name + "</td></tr>";
+					+ JSONarray[i].username + "</td></tr>";
 		}
 	}
 }
@@ -250,13 +248,6 @@ function addOffer(form) {
  * Deletes an offer if one is selected.
  */
 function deleteOffer() {
-	alert("delete Offer in progress");
-//	if (selectedOffer == null) {
-//		toggleWarning("error_selection", true, "Kein Angebot ausgewaehlt! ");
-//		togglePopup("offer_del", false);
-//		return;
-//	}
-	alert("id="+offerToDelete);
 	connect("/hiwi/Provider/js/deleteOffer", "aid="+offerToDelete,
 			handleDeleteOfferResponse);
 }
@@ -412,17 +403,4 @@ function handleTakeSelectedApplicantResponse(mime, data) {
 		return;
 	}
 }
-
-/**
- * This function refreshs the number of free slots for an offer
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
- */
-function refreshOfferSlots() {
-	//TODO
-}
-
 
