@@ -494,13 +494,18 @@ function handleApplicationDocumentsResponse(mime, data) {
 		var JSONarray = eval("(" + data + ")");
 		// Get the table:
 		var table2 = document.getElementById("documentsTable");
+		// Betweensaves the 'present' value of the AppDocument element
+		var checked;
 		// Write table – probably replaces old data!
 		table2.innerHTML = "<tr><th></th><th>Dokumente</th></tr>";
-		for ( var i = 0; i < JSONarray.length; i++) {
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
-					+ JSONarray[i].aid + "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username + JSONarray[i].aid
-					+ "\');\"><td><input type=\"checkbox\" /></td><td>"
+		for ( var i = 0; i < JSONarray.length; i=i+2) {
+			if(JSONarray[i+1].present){
+				checked = "checked";
+			}else{
+				checked = "";
+			}
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid+ "\" onclick=\"markDocumentSelected(\'"
+					+ JSONarray[i].uid 	+ "\');\"><td><input type=\"checkbox\" / "+checked+"></td><td>"
 					+ JSONarray[i].name + "</td></tr>";
 		}
 		showApplicationTable2();

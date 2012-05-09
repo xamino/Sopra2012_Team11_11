@@ -260,17 +260,23 @@ public class ClerkServlet extends HttpServlet {
 																			// des
 																			// ausgewï¿½hlten
 																			// User
-			Vector<AppDocument> docs = DocumentController.getInstance()
-					.getDocumentsByUserAndOffer(acc, off);
-			Vector<AppDocument> docs2 = new Vector<AppDocument>();
+			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
+			Vector<Document> docs2 = new Vector<Document>(docs.size());
+			
+			//dieser Vector enthält bei geraden Indizes ein Element vom Typ Document, bei dem
+			//jeweiligen darauffolgenden, ungeraden Index das Pendant zu diesem, in Form eines AppDocument
+			Vector<Object> customDocs = new Vector<Object>(docs.size()*2);
+			
 			for (int i = 0; i < docs.size(); i++) {
-				docs2.add(DocumentController.getInstance().getAppDocumentByUID(
-						docs.elementAt(i).getdID()));
+				docs2.add(DocumentController.getInstance().getDocumentByUID(docs.elementAt(i).getdID()));
 				
+				customDocs.add(docs2.elementAt(i));
+				customDocs.add(docs.elementAt(i));
 			}
-			// System.out.println("Ergebnis: "+docs2);
+			
+//			System.out.println("Ergebnis: "+docs2);
 			response.setContentType("showthedocuments/json");
-			response.getWriter().write(gson.toJson(docs2, docs2.getClass()));
+			response.getWriter().write(gson.toJson(customDocs, customDocs.getClass()));
 
 		}
 		// Creates an String for the table in editapplication.jsp
