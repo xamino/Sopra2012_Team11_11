@@ -505,11 +505,22 @@ function handleApplicationDocumentsResponse(mime, data) {
 				checked = "";
 			}
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid+ "\" onclick=\"markDocumentSelected(\'"
-					+ JSONarray[i].uid 	+ "\');\"><td><input type=\"checkbox\" / "+checked+"></td><td>"
+					+ JSONarray[i].uid 	+ "\');\"><td><input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+JSONarray[i+1].offerID+")\" "+checked+"></td><td>"
 					+ JSONarray[i].name + "</td></tr>";
 		}
 		showApplicationTable2();
 	}
+}
+
+/**
+ * This function forwards the parameters values to the ClerkServlet, where
+ * the AppDocument, linked to those values, will be overwritten 
+ * @param username
+ * @param docid
+ * @param offerid
+ */
+function setDocCheck(username, docid, offerid){
+	connect("/hiwi/Clerk/js/setDocCheck", "username=" + username + "&docid="+ docid +"&offerid="+offerid, null);
 }
 
 /**

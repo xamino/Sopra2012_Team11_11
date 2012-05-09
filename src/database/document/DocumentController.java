@@ -433,6 +433,26 @@ public class DocumentController {
 		 */
 		db.update(tableNameB, columns, values, where);
 	}
+	
+	public AppDocument getDocumentByUsernameAIDandUID(String username, int aid, int uid){
+		String[] select = { "*" };
+		String[] from = { tableNameB };
+		String where = "benutzername = '"+username+"' AND AID ="+aid+" AND UID ="+uid;
+
+		ResultSet rs = db.select(select, from, where);
+
+		try {
+			if (rs.next()) {
+				AppDocument doc = new AppDocument(rs.getString("benutzername"), rs.getInt("AID"), rs.getInt("UID"), rs.getBoolean("status"));
+				return doc;
+			} else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("DocumentController",
+					"Error while reading AppDocument from Database");
+		}
+		return null;
+	}
 
 	/**
 	 * Diese Methode erstellt ein Angebotsunterlagen-Objekt

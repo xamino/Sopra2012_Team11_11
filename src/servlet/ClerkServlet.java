@@ -279,6 +279,21 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(gson.toJson(customDocs, customDocs.getClass()));
 
 		}
+		// Updates the status of an AppDocument
+		else if(path.equals("/js/setDocCheck")){
+			String username = request.getParameter("username");
+			int offerid = Integer.parseInt(request.getParameter("offerid"));
+			int docid = Integer.parseInt(request.getParameter("docid"));
+			
+			AppDocument appdoc = DocumentController.getInstance().getDocumentByUsernameAIDandUID(username, offerid, docid);
+			if(appdoc.getPresent()){
+				appdoc.setPresent(false);
+			}else{
+				appdoc.setPresent(true);
+			}
+			DocumentController.getInstance().updateAppDocument(appdoc);
+			return;
+		}
 		// Creates an String for the table in editapplication.jsp
 		else if (path.equals("/js/showApplicationTable2")) {
 			String user = request.getParameter("User");
