@@ -533,10 +533,14 @@ public class OfferController {
 	public int getNewOffID(String tablename) {
 		int newID = 0;
 		boolean check = false;
+		
+		java.util.Date startdatum_1 = new java.util.Date();
+		java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
+		
 		while (!check) {
 			newID = generateRandomNr(1, 9999);
-			Object[] data = { newID, "", "", "", false, 0, 0, "", null, null,
-					0, 0, null };
+			Object[] data = { newID, "", "", "", false, 0, 0, "",startdatum, startdatum,
+					0, 0, startdatum, false };
 			check = db.insert(tablename, data);
 		}
 		db.delete(tablename, "AID= " + newID);
