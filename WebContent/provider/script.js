@@ -240,7 +240,7 @@ function addOffer(form) {
 			toggleWarning("error_notiz", false, "");
 
 	}
-	is(!error)connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
+	/*is(!error)*/connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
 			+ "&stellen=" + stellen + "&beschreibung=" + beschreibung
 			+ "&notiz=" + notiz, handleCreateOfferResponse);
 }
