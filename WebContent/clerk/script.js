@@ -38,6 +38,16 @@ function handleLoadInfo(mime, data){
 var selectedOffer;
 
 /**
+ * Stores the User in editapplication:
+ */
+var User;
+
+/**
+ * Stores the Offer in editapplication:
+ */
+var Aid;
+
+/**
  * Stores the selected Document:
  */
 var selectedDocument;
@@ -294,6 +304,7 @@ function handleDocumentChangeResponse(mime, data) {
  *            The ID of the clicked entry.
  */
 function markDocumentSelected(id) {
+
 	// alert("alte docid: "+selectedDocument);
 	// Remove marking from previous selected, if applicable:
 	if (selectedDocument != null)
@@ -307,12 +318,16 @@ function markDocumentSelected(id) {
 	// Else save & mark new one:
 	selectedDocument = id;
 
+	alert("selected:" + selectedDocument);
+	
 	document.getElementById("dokumentloeschenbutton").disabled = "";
 
 	// alert("aktuelle docid: "+selectedDocument);
 
 	document.getElementById(id).setAttribute("class", "selected");
 
+
+	
 	// updating 'Angebot pruefen' button
 	prepareButton();
 
@@ -369,6 +384,24 @@ function deleteDocument() {
 	// alert("/hiwi/Admin/js/deleteDocument?uid=" + selectedDocument);
 	connect("/hiwi/Clerk/js/deleteDocument", "uid=" + selectedDocument,
 			handleDeleteDocumentResponse);
+}
+
+/**
+ * Deletes a document from an application
+ */
+function deleteAppDocument(){
+	if(selectedDocument != null){
+		alert("to delete: "+selectedDocument);
+		togglePopup('document_del', false);
+		connect("/hiwi/Clerk/js/deleteAppDocument","uid=" + selectedDocument + "&user="+User+"&aid="+Aid, deleteAppDocumentResponse);
+	}
+	
+}
+
+function deleteAppDocumentResponse(){
+	selectedDocument = null;
+	applicationDocuments();
+	//TODO Dokument löschen button ausgrauen
 }
 
 /**
@@ -470,8 +503,8 @@ function handleShowApplicationResponse(mime, data) {
  * from the database and displays them. (editapplication.jsp)
  */
 function applicationDocuments() {
-	var User = getURLParameter("User");
-	var Aid = getURLParameter("AID");
+	User = getURLParameter("User");
+	Aid = getURLParameter("AID");
 	selectedOffer = null;
 	connect("/hiwi/Clerk/js/applicationDocuments", "User=" + User + "&AID="
 			+ Aid, handleApplicationDocumentsResponse);

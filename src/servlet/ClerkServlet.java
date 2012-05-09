@@ -347,6 +347,18 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
 		}
+		else if(path.equals("/js/deleteAppDocument")){
+			int uid = Integer.parseInt(request.getParameter("uid"));
+			String username = request.getParameter("user");
+			int aid = Integer.parseInt(request.getParameter("aid"));
+			AppDocument appdoc = DocumentController.getInstance().getDocumentByUsernameAIDandUID(username, aid, uid);
+			
+			DocumentController.getInstance().deleteAppDocument(appdoc);
+//			response.setContentType("text/url");
+//			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			return;
+			
+		}
 		// Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
 			int uid = -1;

@@ -160,7 +160,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Löschen" onclick="deleteDocument();" />
+				<input type="button" value="Löschen" onclick="deleteAppDocument();" />
 				<input type="button" value="Abbrechen"
 					onclick="togglePopup('document_del', false);" />
 			</div>
