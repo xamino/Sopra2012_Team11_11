@@ -206,7 +206,7 @@ public class ProviderServlet extends HttpServlet {
 			java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
 				
 			
-			double lohn = 10.7;// TODO
+			double lohn = 0.0;// wird vom clerk gesetzt defaultwert ist 0.0
 			
 
 			int institut = AccountController.getInstance().getAccountByUsername(ersteller).getInstitute(); // TODO
@@ -215,7 +215,7 @@ public class ProviderServlet extends HttpServlet {
 			if (name== null ||
 			  name.isEmpty() || stunden == 0 || stellen ==0 || beschreibung.isEmpty()||
 			  beschreibung==null || notiz == null || notiz.isEmpty() ||startdatum == null || 
-			  enddatum==null || aenderungsdatum==null ||lohn == 0 || institut<0 ) 
+			  enddatum==null || aenderungsdatum==null ||/*lohn == 0 ||*/ institut<0 ) 
 			{
 			  log.write("ProviderServlet", "Error in parameters!Path: "+path.toString());
 			  response.setContentType("text/error");
