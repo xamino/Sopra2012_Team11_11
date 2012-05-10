@@ -334,7 +334,7 @@ public class ProviderServlet extends HttpServlet {
 						
 			offUp.setName(request.getParameter("titel"));
 			offUp.setDescription(request.getParameter("beschreibung"));
-			//TODO doesn't work, was deactivated in OfferController
+			//sets modificationdate and updates it
 			offUp.setModificationdate(aenderungsdatum_toUp);
 			log.write("ProviderServlet","Updating offer in progress...");
 			OfferController.getInstance().updateOffer(offUp);

@@ -140,9 +140,9 @@ public class OfferController {
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
 				"Institut", "aenderungsdatum", "abgeschlossen" };
 
-		// java.util.Date aenderungsdatum_1 = new java.util.Date();
-		// java.sql.Date aenderungsdatum = new
-		// java.sql.Date(aenderungsdatum_1.getTime());
+		 java.util.Date aenderungsdatum_1 = new java.util.Date();
+		 java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
+		 offer.setModificationdate(aenderungsdatum);
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
