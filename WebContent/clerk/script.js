@@ -313,15 +313,15 @@ function markDocumentSelected(id) {
 	if (selectedDocument == id) {
 		selectedDocument = null;
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+		document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
 		return;
 	}
 	// Else save & mark new one:
 	selectedDocument = id;
 
-	alert("selected:" + selectedDocument);
 	
 	document.getElementById("dokumentloeschenbutton").disabled = "";
-
+	document.getElementById("dokumentHinzufuegenButton").disabled = "";
 	// alert("aktuelle docid: "+selectedDocument);
 
 	document.getElementById(id).setAttribute("class", "selected");
@@ -379,6 +379,7 @@ function deleteDocument() {
 	if (selectedDocument == null) {
 		toggleWarning("error_selection", true, "Kein Dokument ausgewÃ¤hlt! ");
 		togglePopup("document_del", false);
+		
 		return;
 	}
 	// alert("/hiwi/Admin/js/deleteDocument?uid=" + selectedDocument);
@@ -399,6 +400,7 @@ function deleteAppDocument(){
 }
 
 function deleteAppDocumentResponse(){
+	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 	selectedDocument = null;
 	applicationDocuments();
 	//TODO Dokument löschen button ausgrauen
@@ -523,6 +525,9 @@ function handleApplicationDocumentsResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showthedocuments/json") {
+		
+		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+		
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("(" + data + ")");
 		// Get the table:
