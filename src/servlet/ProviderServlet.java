@@ -161,6 +161,13 @@ public class ProviderServlet extends HttpServlet {
 								
 			//Generating AID
 			int aid = offcon.getNewOffID("Angebote");
+			if (aid<0){
+				log.write("ProviderServlet","The received AID from generator was invalid after several attempts. Loop has been interrupted!");
+				response.setContentType("text/error");
+				response.getWriter().write("Bei der AID-Generierung ist ein Problem aufgetreten.");
+				return;
+			}
+				
 			//Getting the data from delivered connection content to save it as a new offer-object in the db.
 			String ersteller = provider.getUserData().getUsername();
 			String name = request.getParameter("titel");

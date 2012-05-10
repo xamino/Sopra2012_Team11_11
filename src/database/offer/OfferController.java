@@ -533,15 +533,22 @@ public class OfferController {
 	public int getNewOffID(String tablename) {
 		int newID = 0;
 		boolean check = false;
+		int count = 0;// um endlosschleife zu vermeiden
 		
 		java.util.Date startdatum_1 = new java.util.Date();
 		java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
 		
 		while (!check) {
+			if(count==100){
+				log.write("OfferController","Error while generating random AID after "+count+ " attempts. Process was aborted...");
+				return -1;
+			}
+				
 			newID = generateRandomNr(1, 9999);
 			Object[] data = { newID, "", "", "", false, 0, 0, "",startdatum, startdatum,
 					0, 0, startdatum, false };
 			check = db.insert(tablename, data);
+			count++;
 		}
 		db.delete(tablename, "AID= " + newID);
 		return newID;
