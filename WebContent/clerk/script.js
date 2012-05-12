@@ -422,16 +422,17 @@ function handleDeleteDocumentResponse(mime, data) {
 }
 
 function createDocument() {
-	var form = FormAddDocument;
+	
+	var form = document.getElementById("adddocform");
 	if (form == null)
 		return;
 	var error = false;
-	var uid = form.uid.value;
-	if (uid == null || uid == "") {
-		toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
-		error = true;
-	} else
-		toggleWarning("error_addDocument_uid", false, "");
+//	var uid = form.uid.value;
+//	if (uid == null || uid == "") {
+//		toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
+//		error = true;
+//	} else
+//		toggleWarning("error_addDocument_uid", false, "");
 	var title = form.title.value;
 	if (title == null || title == "") {
 		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
@@ -446,14 +447,11 @@ function createDocument() {
 		toggleWarning("error_addDocument_descr", false, "");
 	if (error)
 		return;
-	// alert("All okay!");
-	connect("/hiwi/Clerk/js/createDocument", "uid=" + uid + "&title=" + title
-			+ "&description=" + description, handleCreateDocumentResponse);
+	
+	connect("/hiwi/Clerk/js/createDocument", /*"uid=" + uid + "&*/"title=" + title
+			+ "&description=" + description, applicationDocuments);
 }
 
-function handleCreateDocumentResponse(mime, data) {
-
-}
 
 
 function addDocument(){
@@ -572,10 +570,9 @@ function handleApplicationDocumentsResponse(mime, data) {
 //angezeigte Bewerbung benoetigt werden
 function handledocumentsToAddToAppResponse(mime, data) {
 
-	alert(data);
-//	if (mime == "text/url") {
-//		window.location = data;
-//	} else if (mime == "docstoaddtoapp/json") {
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "docstoaddtoapp/json") {
 
 		var docs = eval("(" + data + ")");
 
@@ -585,7 +582,7 @@ function handledocumentsToAddToAppResponse(mime, data) {
 			select.innerHTML += "<option value=\"" + docs[i].uid + "\">"
 					+ docs[i].name + "</option>";
 		}
-//	}
+	}
 
 }
 
@@ -637,7 +634,7 @@ function handleShowApplicationTable2Response(mime, data) {
 	
 	connect("/hiwi/Clerk/js/documentsToAddToApplication", "aid=" + Aid+"&username="+User,
 			handledocumentsToAddToAppResponse);
-} // --> from applicationDocuments()
+}
 
 /**
  * This function checks if a applicant has delivered all of the rquired

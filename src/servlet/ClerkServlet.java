@@ -221,12 +221,11 @@ public class ClerkServlet extends HttpServlet {
 		else if (path.endsWith("/js/documentsToAddToOffer")) {
 
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			String username = request.getParameter("username");
 
 			Vector<Document> docsToAdd = DocumentController.getInstance()
-					.getDocumentsToAddToApp(aid, username);
+					.getDocumentsToAddToOffer(aid);
 
-			response.setContentType("docstoaddtoapp/json");
+			response.setContentType("documentstoaddoffer/json");
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
@@ -235,11 +234,12 @@ public class ClerkServlet extends HttpServlet {
 		else if (path.endsWith("/js/documentsToAddToApplication")) {
 
 			int aid = Integer.parseInt(request.getParameter("aid"));
+			String username = request.getParameter("username");
 
 			Vector<Document> docsToAdd = DocumentController.getInstance()
-					.getDocumentsToAddToOffer(aid);
+					.getDocumentsToAddToApp(aid, username);
 
-			response.setContentType("documentstoaddoffer/json");
+			response.setContentType("docstoaddtoapp/json");
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
@@ -328,22 +328,22 @@ public class ClerkServlet extends HttpServlet {
 					gson.toJson(datanamen, datanamen.getClass()));
 		}
 		// Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
-		else if (path.equals("/js/addDocument")) {
+		else if (path.equals("/js/createDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
-			int uid = -1;
-			try {
-				uid = Integer.parseInt(request.getParameter("uid"));
-			} catch (NumberFormatException e) {
-				log.write("ClerkServlet",
-						"NumberFormatException while parsing URL!");
-				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
-				return;
-			}
+//			int uid = -1;
+//			try {
+//				uid = Integer.parseInt(request.getParameter("uid"));
+//			} catch (NumberFormatException e) {
+//				log.write("ClerkServlet",
+//						"NumberFormatException while parsing URL!");
+//				response.setContentType("text/error");
+//				response.getWriter()
+//						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+//				return;
+//			}
 			if (title == null || title.isEmpty() || description == null
-					|| description.isEmpty() || uid < 0) {
+					|| description.isEmpty() /* || uid < 0*/) {
 				log.write("ClerkServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write(
@@ -351,7 +351,7 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			// all okay... continue:
-			if (!clerk.addDoc(new Document(uid, title, description))) {
+			if (!DocumentController.getInstance().generateDocument( title, description)) {
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");

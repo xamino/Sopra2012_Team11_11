@@ -78,6 +78,39 @@ public class DocumentController {
 		return db.insert(tableNameU, new Object[] { document.getUid(),
 				document.getName(), document.getDescription() });
 	}
+	
+	/**
+	 * Diese Methode erstellt eine Unterlage des Administrators in der
+	 * Datenbank. Mit uebergebenem Unterlagen-Objekt (Document-Objekt).
+	 * 
+	 * @param name
+	 * 			Name des Dokuments
+	 * @param beschreibung
+	 * 			Beschreibung des Dokuments
+	 * @return Gibt an, ob das Document erstellt werden konnte.
+	 */
+	public boolean generateDocument(String name, String beschreibung) { // checked
+		
+		int uid=0;
+		String[] select = {"MAX(UID)"};
+		String[] from = {tableNameU};
+		
+		ResultSet rs = db.select(select, from, null);
+		
+		try {
+			if(rs.next()){
+				uid = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		uid++;
+		
+		return db.insert(tableNameU, new Object[] { uid,
+				name, beschreibung });
+	}
 
 	/**
 	 * Diese Methode loescht eine Administrator Unterlage aus der Datenbank.
@@ -575,7 +608,9 @@ public class DocumentController {
 	 * 
 	 * @param aid
 	 *            AngebotsID des Angebots
-	 * @return Dokumente, die ein Angebot nicht als Standartunterlagen angegeben
+	 * @param username
+	 *            Benutzername des Bewerbers
+	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben
 	 *         hat
 	 */
 	public Vector<Document> getDocumentsToAddToApp(int aid, String username) {

@@ -129,7 +129,7 @@
 	<!-- Here are the popups -->
 	<!-- Document add popup -->
 	<div id="document_add" class="popup_hidden">
-		<form name="addDocumentForm">
+		<form name="addDocumentForm" id="adddocform">
 			<h3>Dokument hinzufügen</h3>
 			<hr>
 			<select id="selectAppDocumentsToAdd" size="1">
@@ -137,7 +137,7 @@
 				<option value="wert2">Eintrag2</option> -->
 			</select>
 			<div class="textblock">
-				UID: <br> <input name="uid" type="text" />
+				<!--  UID: <br> <input name="uid" type="text" /> -->
 				<div id="error_addDocument_uid" class="hiddenerror"></div>
 				Titel: <br>
 				<textarea name="title" rows="1" cols="30"></textarea>
@@ -148,9 +148,10 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" onclick="addDocument()" /> <input
-					type="button" value="Abbrechen"
-					onclick="clearAddDocumentPopup(); togglePopup('document_add', false);" />
+				<input type="button" value="Speichern" onclick="addDocument()" /> 
+				<input type="button" value="Erstellen" onclick="createDocument()" /> 
+				<input	type="button" value="Abbrechen"
+					onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>
 	</div>
