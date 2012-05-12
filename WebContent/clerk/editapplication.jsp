@@ -132,6 +132,10 @@
 		<form name="addDocumentForm">
 			<h3>Dokument hinzufügen</h3>
 			<hr>
+			<select id="selectAppDocumentsToAdd" size="1">
+				<!-- <option value="wert1">Eintrag1</option>
+				<option value="wert2">Eintrag2</option> -->
+			</select>
 			<div class="textblock">
 				UID: <br> <input name="uid" type="text" />
 				<div id="error_addDocument_uid" class="hiddenerror"></div>
@@ -144,7 +148,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" onclick="addDocument()" /> <input
+				<input type="button" value="Speichern" onclick="addDocument()" /> <input
 					type="button" value="Abbrechen"
 					onclick="clearAddDocumentPopup(); togglePopup('document_add', false);" />
 			</div>

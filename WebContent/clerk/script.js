@@ -421,7 +421,7 @@ function handleDeleteDocumentResponse(mime, data) {
 		window.location = data;
 }
 
-function addDocument() {
+function createDocument() {
 	var form = FormAddDocument;
 	if (form == null)
 		return;
@@ -447,9 +447,27 @@ function addDocument() {
 	if (error)
 		return;
 	// alert("All okay!");
-	connect("/hiwi/Clerk/js/addDocument", "uid=" + uid + "&title=" + title
-			+ "&description=" + description, handleAddDocumentResponse);
+	connect("/hiwi/Clerk/js/createDocument", "uid=" + uid + "&title=" + title
+			+ "&description=" + description, handleCreateDocumentResponse);
 }
+
+function handleCreateDocumentResponse(mime, data) {
+
+}
+
+
+function addDocument(){
+	
+	var chosenDocument = document.getElementById("selectAppDocumentsToAdd").value;
+	
+	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+	selectedDocument = null;
+	togglePopup("document_add", false);
+	
+	connect("/hiwi/Clerk/js/addAppDocument", "uid=" + chosenDocument+"&aid="+Aid+"&username="+User, applicationDocuments);
+
+}
+
 
 function handleAddDocumentResponse(mime, data) {
 	if (mime == "text/url") {
@@ -550,6 +568,27 @@ function handleApplicationDocumentsResponse(mime, data) {
 	}
 }
 
+//Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer die
+//angezeigte Bewerbung benoetigt werden
+function handledocumentsToAddToAppResponse(mime, data) {
+
+	alert(data);
+//	if (mime == "text/url") {
+//		window.location = data;
+//	} else if (mime == "docstoaddtoapp/json") {
+
+		var docs = eval("(" + data + ")");
+
+		var select = document.getElementById("selectAppDocumentsToAdd");
+		select.innerHTML = "";
+		for ( var i = 0; i < docs.length; i++) {
+			select.innerHTML += "<option value=\"" + docs[i].uid + "\">"
+					+ docs[i].name + "</option>";
+		}
+//	}
+
+}
+
 /**
  * This function forwards the parameters values to the ClerkServlet, where
  * the AppDocument, linked to those values, will be overwritten 
@@ -582,6 +621,7 @@ function showApplicationTable2() {
  *            The data.
  */
 function handleShowApplicationTable2Response(mime, data) {
+	
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "showapplicationtable2/json") {
@@ -594,6 +634,9 @@ function handleShowApplicationTable2Response(mime, data) {
 				+ "</td></tr><tr><td>Beworben fuer:</td></tr><tr><td>"
 				+ JSONarray[1] + "</td></tr>";
 	}
+	
+	connect("/hiwi/Clerk/js/documentsToAddToApplication", "aid=" + Aid+"&username="+User,
+			handledocumentsToAddToAppResponse);
 } // --> from applicationDocuments()
 
 /**

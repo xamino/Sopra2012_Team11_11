@@ -568,6 +568,42 @@ public class DocumentController {
 		}
 		return docsToAdd;
 	}
+	
+	/**
+	 * Diese Methode gibt alle Dokumente zurueck, die eine Bewerbung nicht als
+	 * Unterlagen angegeben hat
+	 * 
+	 * @param aid
+	 *            AngebotsID des Angebots
+	 * @return Dokumente, die ein Angebot nicht als Standartunterlagen angegeben
+	 *         hat
+	 */
+	public Vector<Document> getDocumentsToAddToApp(int aid, String username) {
+
+		System.out.println(tableNameU);
+
+		Vector<Document> docsToAdd = new Vector<Document>();
+
+		String[] select = { "*" };
+		String[] from = { tableNameU };
+		String where = "UID not in (Select UID FROM " + tableNameB
+				+ " WHERE AID = " + aid + " AND benutzername ='"+username+"')";
+
+		ResultSet rs = db.select(select, from, where);
+		try {
+			while (rs.next()) {
+				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
+						.getString(3)));
+			}
+
+			rs.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return docsToAdd;
+	}
 
 	/**
 	 * Die Methode liefert zu einem Username alle vorhandenen Dokumente.

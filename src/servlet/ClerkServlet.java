@@ -221,6 +221,20 @@ public class ClerkServlet extends HttpServlet {
 		else if (path.endsWith("/js/documentsToAddToOffer")) {
 
 			int aid = Integer.parseInt(request.getParameter("aid"));
+			String username = request.getParameter("username");
+
+			Vector<Document> docsToAdd = DocumentController.getInstance()
+					.getDocumentsToAddToApp(aid, username);
+
+			response.setContentType("docstoaddtoapp/json");
+			response.getWriter().write(
+					gson.toJson(docsToAdd, docsToAdd.getClass()));
+		}
+		
+		// Creates a Vector of Documents which can be added to an application
+		else if (path.endsWith("/js/documentsToAddToApplication")) {
+
+			int aid = Integer.parseInt(request.getParameter("aid"));
 
 			Vector<Document> docsToAdd = DocumentController.getInstance()
 					.getDocumentsToAddToOffer(aid);
@@ -479,6 +493,24 @@ public class ClerkServlet extends HttpServlet {
 			}
 			DocumentController.getInstance().createOfferDocument(
 					new OfferDocument(aid, uid));
+			return;
+		}
+		
+		// Funktion zum hinzufuegen eines AppDocuments der gewählten Application
+		else if (path.equals("/js/addAppDocument")) {
+			int uid;
+			int aid;
+			String username = request.getParameter("username");
+			try {
+				uid = Integer.parseInt(request.getParameter("uid"));
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet",
+						"Error add offer document! UID or AID invalid!");
+				return;
+			}
+			DocumentController.getInstance().createAppDocument(
+					new AppDocument(username,aid,uid,false));
 			return;
 		}
 
