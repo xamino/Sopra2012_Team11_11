@@ -22,7 +22,7 @@ function loadOffers() {
 // offers[i].author with realname, not username!
 function handleLoadOffers(mime, data) {
 	if (mime == "application/json") {
-		alert(data);
+		// alert(data);
 		var offers = eval(data);
 		var table = document.getElementById("offersTable");
 		table.innerHTML = "<tr><th>Datum</th><th>Bezeichnung</th><th>Beschreibung</th><th>Anbieter</th><th>Stellen</th></tr>";

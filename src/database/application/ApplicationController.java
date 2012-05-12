@@ -13,18 +13,13 @@ package database.application;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Vector;
 
-import user.Applicant;
-
 import database.DatabaseController;
-import database.account.Account;
 import database.account.AccountController;
 import database.document.AppDocument;
 import database.document.DocumentController;
 import database.document.OfferDocument;
-import database.offer.Offer;
 
 public class ApplicationController {
 
@@ -32,14 +27,14 @@ public class ApplicationController {
 	 * Klassenattribut "appcon" beinhaltet eine ApplicationController-Instanz,
 	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
 	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
-	 * ApplicationController existiert.
-	 * Das selbe gilt auch fuer die anderen Controller. 
+	 * ApplicationController existiert. Das selbe gilt auch fuer die anderen
+	 * Controller.
 	 */
 	private static ApplicationController appcon;
 	private static AccountController acccon;
 	private static DocumentController doccon;
 	private static DatabaseController db;
-	
+
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
 	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
@@ -61,11 +56,13 @@ public class ApplicationController {
 	 */
 	private ApplicationController() {
 		db = DatabaseController.getInstance();
+		acccon = AccountController.getInstance();
+		doccon = DocumentController.getInstance();
 		logger.Log.getInstance().write("ApplicationController",
 				"Instance created.");
 	}
-	
-	final static String tableName = "Bewerbungen";//tabellenname
+
+	final static String tableName = "Bewerbungen";// tabellenname
 
 	/**
 	 * Diese Methode erstellt eine Bewerbung in der Datenbank. Mit ubergebenem
@@ -75,17 +72,23 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public boolean createApplication(Application application) { //checked
-		Vector<Boolean>check= new Vector<Boolean>();
+	public boolean createApplication(Application application) { // checked
+		Vector<Boolean> check = new Vector<Boolean>();
 		Object[] values = { application.getUsername(), application.getAid(),
 				application.isFinished(), application.getClerk(),
 				application.isChosen() };
-		check.add( db.insert(tableName, values));
-		Vector<OfferDocument>offs = doccon.getDocumentsByOffer(application.getAid());
-		for(OfferDocument o:offs){
-			check.add(db.insert("Bewerbungsunterlagen",new Object[]{application.getUsername(),application.getAid(),o.getDocumentid(),false}));
+		check.add(db.insert(tableName, values));
+		Vector<OfferDocument> offs = doccon.getDocumentsByOffer(application
+				.getAid());
+		for (OfferDocument o : offs) {
+			check.add(db.insert(
+					"Bewerbungsunterlagen",
+					new Object[] { application.getUsername(),
+							application.getAid(), o.getDocumentid(), false }));
 		}
-		for(Boolean b:check)if(!b)return false;
+		for (Boolean b : check)
+			if (!b)
+				return false;
 		return true;
 	}
 
@@ -99,14 +102,16 @@ public class ApplicationController {
 	 */
 
 	public boolean deleteApplication(Application application) {
-		String where = "AID = "+application.getAid()+"AND benutzername = '"+application.getUsername()+"'";
-		
-		Vector<AppDocument> docs = doccon.getAllAppDocsByApplicant(application.getUsername());
+		String where = "AID = " + application.getAid() + "AND benutzername = '"
+				+ application.getUsername() + "'";
+
+		Vector<AppDocument> docs = doccon.getAllAppDocsByApplicant(application
+				.getUsername());
 		Iterator<AppDocument> it = docs.iterator();
 		for (int i = 0; it.hasNext(); i++) {
 			doccon.deleteAppDocument(docs.elementAt(i));
 		}
-		
+
 		return db.delete(tableName, where);
 	}
 
@@ -120,17 +125,16 @@ public class ApplicationController {
 	 */
 	public void updateApplication(Application application) {
 
-		String[] columns = { /*"benutzername",*/ "status", "sachbearbeiter",
+		String[] columns = { /* "benutzername", */"status", "sachbearbeiter",
 				"ausgewaehlt" };
-		Object[] values = { /*application.getUsername(),*/
-				application.isFinished(), application.getClerk(),
+		Object[] values = { /* application.getUsername(), */
+		application.isFinished(), application.getClerk(),
 				application.isChosen() };
-		String where = "AID = " + application.getAid()+" AND benutzername='"+application.getUsername()+"'";
+		String where = "AID = " + application.getAid() + " AND benutzername='"
+				+ application.getUsername() + "'";
 
 		db.update(tableName, columns, values, where);
 	}
-	
-	
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen aus der Datenbank und speichert
@@ -185,7 +189,6 @@ public class ApplicationController {
 		String[] from = { tableName };
 		String where = "benutzername = '" + username + "'";
 
-
 		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -217,7 +220,6 @@ public class ApplicationController {
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
 	public Vector<Application> getApplicationsByOffer(int aid) {
-
 
 		Vector<Application> applicationvec = new Vector<Application>(10, 5);
 
@@ -256,13 +258,11 @@ public class ApplicationController {
 	 */
 	public Vector<Application> getApprovedApplicationsByClerk(String clerkname) {
 
-
 		Vector<Application> applicationvec = new Vector<Application>(50, 10);
 
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "sachbearbeiter = '" + clerkname + "'";
-
 
 		ResultSet rs = db.select(select, from, where);
 		try {
@@ -285,10 +285,11 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Gibt eine Bestimmte Bewerbung zurueck. Die Bewerbung wird eindeutig durch die ID bestimmt.
+	 * Gibt eine Bestimmte Bewerbung zurueck. Die Bewerbung wird eindeutig durch
+	 * die ID bestimmt.
 	 * 
 	 * @param AId
-	 *            Id einer Bewerbung 
+	 *            Id einer Bewerbung
 	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
 	 */
 	public Application getApplicationById(int AId) throws SQLException {
@@ -302,5 +303,3 @@ public class ApplicationController {
 		return app;
 	}
 }
-
-

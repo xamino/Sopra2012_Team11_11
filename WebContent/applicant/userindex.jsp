@@ -50,45 +50,12 @@
 				<div class="haupttext">
 					<h4>Beworben:</h4>
 					<table class="sized" id="myofferTable">
-						<!-- <tr>
-						<th>Datum</th>
-						<th>Bezeichnung</th>
-						<th>Beschreibung</th>
-					</tr>
-					<!-- This is how the entrys will be generated with javascript:
-					<tr id="username" onclick="function(username)">
-						<td>realname</td>
-						<td>username</td>
-						<td>account type</td>
-					</tr> 
-					-->
-						<!-- <tr id="mhhh" onclick="">
-						<td>01.01.2001</td>
-						<td>La le lu Tut</td>
-						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="submit" value="Bewerbung ansehen" onclick="window.location='status.jsp'" /></div><div class="clear"></div></td>
-					</tr>-->
+						<!-- Table for applied offers here... -->
 					</table>
 					<hr>
 					<h4>Offene Stellen:</h4>
 					<table class="sized" id="offerTable">
-						<!-- <tr>
-						<th>Datum</th>
-						<th>Bezeichnung</th>
-						<th>Beschreibung</th>
-					</tr>
-					<!-- This is how the entrys will be generated with javascript:
-					<tr id="username" onclick="function(username)">
-						<td>realname</td>
-						<td>username</td>
-						<td>account type</td>
-					</tr> 
-					-->
-						<!-- <tr id="lala" onclick="">
-						<td>01.01.2001</td>
-						<td>La le lu Tut</td>
-						<td><div class="float2">stellen<br> lalala<br> usw</div><div class="float"><input type="button" value="Bewerben"
-						onclick="togglePopup('application',true);" /> </div><div class="clear"></div></td>
-					</tr>-->
+						<!-- Table for available offers here... -->
 					</table>
 				</div>
 			</div>
@@ -111,8 +78,8 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Bewerben"
-					onclick="apply(); togglePopup('application', false);" />
-				<input type="button" value="Abbrechen"
+					onclick="apply(); togglePopup('application', false);" /> <input
+					type="button" value="Abbrechen"
 					onclick="togglePopup('application', false);" />
 			</div>
 		</form>

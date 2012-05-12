@@ -4,7 +4,10 @@
  * @author: Laura Irlinger
  */
 
-//!!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd wieso??!!!!!!!!!!!!
+/**
+ * This variable stores which offer has been selected to apply to.
+ */
+var selectedOfferToApply;
 
 /**
  * This function loads all the offers in the system from the database and
@@ -14,7 +17,7 @@ function loadOffers() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
-	//alert("ohne alert funzt es ned =( 2");
+	// alert("ohne alert funzt es ned =( 2");
 }
 
 /**
@@ -37,16 +40,16 @@ function handleLoadOffersResponse(mime, data) {
 		table.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\""
-					+ JSONarray[i].startdate
-					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].startdate
-					+ "\');\"><td>"
+					+ JSONarray[i].aid
+					+ "\"><td>"
 					+ JSONarray[i].startdate
 					+ "</td><td>"
 					+ JSONarray[i].name
 					+ "</td><td><div class=\"float2\">"
 					+ JSONarray[i].description
-					+ "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"togglePopup('application',true);\" /> </div><div class=\"clear\"></div></td></tr>";
+					+ "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"prepareApply('"
+					+ JSONarray[i].aid
+					+ "')\" /> </div><div class=\"clear\"></div></td></tr>";
 		}
 		// loadMyOffers();
 	}
@@ -57,8 +60,6 @@ function handleLoadOffersResponse(mime, data) {
  * system from the database and displays them. (userindex.jsp)
  */
 function loadMyOffers() {
-	// reset selectedID (account could have been deleted in meantime)
-	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
 }
 
@@ -72,7 +73,7 @@ function loadMyOffers() {
  *            The data.
  */
 function handleLoadMyOffersResponse(mime, data) {
-	//alert("ohne alert funzt es ned =(");
+	// alert("ohne alert funzt es ned =(");
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "myapplication/json") {
@@ -84,7 +85,7 @@ function handleLoadMyOffersResponse(mime, data) {
 		table2.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\""
-					+ JSONarray[i].startdate
+					+ JSONarray[i].aid
 					+ "\"><td>"
 					+ JSONarray[i].startdate
 					+ "</td><td>"
@@ -96,7 +97,7 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ JSONarray[i].aid
 					+ "\');\" \></div><div class=\"clear\"></div></td></tr>";
 		} // �ber die onclick methode wird mit der id zur status.jsp weiter
-			// geleitet
+		// geleitet
 		loadOffers();
 	}
 }
@@ -204,7 +205,7 @@ function handleselectDocumentsResponse(mime, data) {
 }
 
 function deleteApplication() {
-	alert("deleteApplication");
+	// alert("deleteApplication");
 	connect("/hiwi/Applicant/js/deleteApplication", "UID=" + UID + "AND AID="
 			+ AID, handleDeleteApplication);
 
@@ -213,24 +214,34 @@ function deleteApplication() {
 function handleDeleteApplication(mime, data) {
 
 }
+
+function prepareApply(aid) {
+	// alert(aid);
+	selectedOfferToApply = aid;
+	togglePopup('application', true);
+}
+
 /**
  * Funktion zum Bewerben auf ein Angebot
- * @param aid AngebotsID
  */
-function apply(aid){
-	alert(aid);
-	connect("/hiwi/Applicant/js/apply","aid="+aid,handleApply);
+function apply() {
+	if (selectedOfferToApply == null || selectedOfferToApply == "")
+		return;
+	// alert(selectedOfferToApply);
+	connect("/hiwi/Applicant/js/apply", "aid=" + selectedOfferToApply,
+			handleApply);
 }
 /**
  * Callback funktion von apply
- * @param mime MimeType der Antwort
- * @param data Antwortdaten
+ * 
+ * @param mime
+ *            MimeType der Antwort
+ * @param data
+ *            Antwortdaten
  */
-function handleApply(mime,data){
-	if(mime=="text/url")
-		window.location=data;
-	else 
+function handleApply(mime, data) {
+	if (mime == "text/url")
+		window.location = data;
+	else
 		alert("Es ist ein Fehler beim Bewerben aufgetreten!");
-	
 }
-
