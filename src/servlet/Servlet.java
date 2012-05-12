@@ -64,7 +64,7 @@ public class Servlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = request.getPathInfo();
 		path = (path == null) ? "" : path;
-		log.write("Servlet", "Received request <" + path + ">.");
+		// log.write("Servlet", "Received request <" + path + ">.");
 		if (path.equals("/js/loadOffers")) {
 			Vector<Offer> offers = offController.getCheckedOffers();			
 			// On error:
