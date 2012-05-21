@@ -13,7 +13,7 @@ var selectedOfferToApply;
  * This function loads all the offers in the system from the database and
  * displays them. (userindex.jsp)
  */
-function loadOffers() {
+function loadOffers() {//getestet durch Anatoli Brill
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
@@ -59,7 +59,7 @@ function handleLoadOffersResponse(mime, data) {
  * This function loads all the offers of the applicant (who is logged in) in the
  * system from the database and displays them. (userindex.jsp)
  */
-function loadMyOffers() {
+function loadMyOffers() {//etestet durch Anatoli Brill
 	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
 }
 
