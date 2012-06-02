@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Vector;
 
 import config.Configurator;
@@ -185,7 +184,9 @@ public class DatabaseController {
 			return true;
 		} catch (SQLException e) {
 			log.write("DatabaseController", "INSERT error! <" + insert + ">");
-			e.printStackTrace();
+			// Commented out because this error happens often and should be
+			// handled further up.
+			// e.printStackTrace();
 			return false;
 		}
 	}
@@ -424,38 +425,42 @@ public class DatabaseController {
 				// Correctly parse & enter dates:
 				ret += "'" + new java.sql.Date(((Date) value[i]).getTime())
 						+ "'";
-			}
-			else
+			} else
 				ret += value[i];
 			if (i != (name.length - 1))
 				ret += ", ";
 		}
 		return ret;
 	}
-	
+
 	/**
-	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des uebergebenen Instituts
-	 * in Form eines Vectors des Datentyps HilfsDatenClerk zurueck.
+	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des
+	 * uebergebenen Instituts in Form eines Vectors des Datentyps
+	 * HilfsDatenClerk zurueck.
 	 * 
 	 * @param institute
-	 * 		Filtert den zurueckgegebenen Datensatz (nur uebergebenes Institut)
-	 * @return
-	 * 		Vector mit Bewerbername und Angebotsname aller angenommenen Bewerbungen des uebergebenen Instituts
+	 *            Filtert den zurueckgegebenen Datensatz (nur uebergebenes
+	 *            Institut)
+	 * @return Vector mit Bewerbername und Angebotsname aller angenommenen
+	 *         Bewerbungen des uebergebenen Instituts
 	 */
-	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(int institute){
-		
-		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID " +
-				"FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "+institute+
-				" JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
-		
+	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
+			int institute) {
+
+		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID "
+				+ "FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "
+				+ institute
+				+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
+
 		ResultSet rs;
 		System.out.println(sel);
 		try {
 			rs = st.executeQuery(sel);
 			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
-			while(rs.next()){
+			while (rs.next()) {
 				System.out.println(rs.getString(1));
-				hdc.add(new HilfsDatenClerk(rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+				hdc.add(new HilfsDatenClerk(rs.getString(1), rs.getString(2),
+						rs.getString(3), rs.getInt(4)));
 			}
 			return hdc;
 		} catch (SQLException e) {
