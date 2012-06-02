@@ -126,9 +126,22 @@ function clearAddDocumentPopup() {
 }
 
 /**
+ * Diese Funktion überprüft ob die Löschaktion legal ist (ist ein Dokument
+ * ausgewählt?) und reagiert entsprechend.
+ */
+function prepareDelete() {
+	if (selectedDocument == null) {
+		toggleWarning("error_selection", true, "Kein Dokument ausgewählt! ");
+		return;
+	}
+	togglePopup('document_del', true);
+}
+
+/**
  * Deletes a document if one is selected.
  */
 function deleteDocument() {
+	// this if shouldn't be able to get called, but you never know... (see prepareDelete())
 	if (selectedDocument == null) {
 		toggleWarning("error_selection", true, "Kein Dokument ausgewählt! ");
 		togglePopup("document_del", false);

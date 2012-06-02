@@ -117,6 +117,18 @@ function clearAddInstitutePopup() {
 }
 
 /**
+ * Diese Funktion überprüft ob die Löschaktion legal ist (ist ein Dokument
+ * ausgewählt?) und reagiert entsprechend.
+ */
+function prepareDelete() {
+	if (selectedInstitute == null) {
+		toggleWarning("error_selection", true, "Kein Institut ausgewählt! ");
+		return;
+	}
+	togglePopup('institute_del', true);
+}
+
+/**
  * Deletes a document if one is selected.
  */
 function deleteInstitute() {

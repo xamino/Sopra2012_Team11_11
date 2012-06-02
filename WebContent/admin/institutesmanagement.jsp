@@ -57,7 +57,7 @@
 							onclick="togglePopup('institute_add', true);" /> <input
 							style="float: right;" type="button"
 							value="Markiertes Institute löschen"
-							onclick="togglePopup('institute_del', true);" />
+							onclick="prepareDelete();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
 						<div class="clear"></div>
