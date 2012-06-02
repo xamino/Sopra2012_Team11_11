@@ -229,3 +229,10 @@ function handleRegisterResponse(mime, data) {
 		alert(data);
 	}
 }
+
+/**
+ * Einfache Funktion, welche aufgerufen kann um zum index weiterzuleiten.
+ */
+function gotoIndex() {
+	window.location = "/hiwi/public/index.jsp";
+}
