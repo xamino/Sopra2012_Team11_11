@@ -6,12 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="/hiwi/admin/script.js"></script>
+<script type="text/javascript" src="/hiwi/admin/indexScript.js"></script>
 <script type="text/javascript" src="/hiwi/md5.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Administrator Startseite | Hiwi Job Börse</title>
 </head>
-<body onload="loadUserindex();">
+<body onload="timedInfoLoop();">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
