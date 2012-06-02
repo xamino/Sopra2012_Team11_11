@@ -35,11 +35,6 @@ import database.offer.OfferController;
 
 public class AccountController {
 
-	private ApplicationController appcon;
-	private DocumentController doccon;
-	private InstituteController instcon;
-	private OfferController offcon;
-
 	/**
 	 * Klassenattribut "acccontr" beinhaltet eine AccountController-Instanz,
 	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
@@ -109,18 +104,19 @@ public class AccountController {
 		String username = applicant.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<AppDocument> doc = doccon.getAllAppDocsByApplicant(username);
-		Iterator<AppDocument> it = doc.iterator();
-
-		for (int j = 0; it.hasNext(); j++) {
-			doccon.deleteAppDocument(doc.elementAt(j));
+		Vector<AppDocument> doc = DocumentController.getInstance()
+				.getAllAppDocsByApplicant(username);
+		for (AppDocument tempDoc : doc) {
+			DocumentController.getInstance().deleteAppDocument(tempDoc);
 		}
 
-		Vector<Application> apps = appcon.getApplicationsByApplicant(username);
+		Vector<Application> apps = ApplicationController.getInstance()
+				.getApplicationsByApplicant(username);
 		Iterator<Application> itp = apps.iterator();
 
 		for (int i = 0; itp.hasNext(); i++) {
-			appcon.deleteApplication(apps.elementAt(i));
+			ApplicationController.getInstance().deleteApplication(
+					apps.elementAt(i));
 		}
 
 		return deleteAccount(acc);
@@ -138,8 +134,9 @@ public class AccountController {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Institute inst = instcon.getInstituteByIID(acc.getInstitute());
-		instcon.deleteInstitute(inst);
+		Institute inst = InstituteController.getInstance().getInstituteByIID(
+				acc.getInstitute());
+		InstituteController.getInstance().deleteInstitute(inst);
 		return deleteAccount(acc);
 
 	}
@@ -155,20 +152,22 @@ public class AccountController {
 		String username = provider.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<Offer> off = offcon.getOffersByProvider(provider);
+		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(
+				provider);
 		Iterator<Offer> it = off.iterator();
 
 		for (int i = 0; it.hasNext(); i++) {
 			Offer temp = off.elementAt(i);
 
-			offcon.deleteOffer(temp);
+			OfferController.getInstance().deleteOffer(temp);
 
-			Vector<AppDocument> doc = doccon.getAppDocumentByOffer(temp
-					.getAid());
+			Vector<AppDocument> doc = DocumentController.getInstance()
+					.getAppDocumentByOffer(temp.getAid());
 			Iterator<AppDocument> itp = doc.iterator();
 
 			for (int j = 0; itp.hasNext(); j++) {
-				doccon.deleteAppDocument(doc.elementAt(j));
+				DocumentController.getInstance().deleteAppDocument(
+						doc.elementAt(j));
 			}
 		}
 		return deleteAccount(acc);
@@ -321,7 +320,8 @@ public class AccountController {
 	 * @param id
 	 *            Id ist der Primaerschluessel in der Institute-DB.
 	 * @return Es wird ein Vector zurueckgegeben, welcher alle Account-Objekte
-	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut und Accounttyp 2 (Verwalter).
+	 *         enthaelt und zwar alle Account-Objekte mit uebergebenem Institut
+	 *         und Accounttyp 2 (Verwalter).
 	 */
 	public Vector<Account> getClerkAccountsByInstitute(int id) { // checked
 
@@ -352,9 +352,9 @@ public class AccountController {
 		return accountvec;
 
 	}
+
 	/**
-	 * Diese Methode selektiert alle Accounts mit uebergebenem
-	 * Institut.
+	 * Diese Methode selektiert alle Accounts mit uebergebenem Institut.
 	 * 
 	 * @param id
 	 *            Id ist der Primaerschluessel in der Institute-DB.
@@ -390,6 +390,7 @@ public class AccountController {
 		return accountvec;
 
 	}
+
 	/**
 	 * Diese Methode selektiert alle Provider Accounts mit uebergebenem
 	 * Institut.
@@ -454,10 +455,12 @@ public class AccountController {
 	}
 
 	/**
-	 * Gibt den Account des Stellvertreters zurueck. Gegeben wird der EINGENE Bentuzername!
+	 * Gibt den Account des Stellvertreters zurueck. Gegeben wird der EINGENE
+	 * Bentuzername!
 	 * 
 	 * @param userName
-	 *            Der Benutzername des Accounts, fuer den wir delegierte Angebote suchen.
+	 *            Der Benutzername des Accounts, fuer den wir delegierte
+	 *            Angebote suchen.
 	 * @return Den Account des Stellvertreters.
 	 */
 	public Account getRepresentativeAccount(String userName) {
@@ -495,19 +498,26 @@ public class AccountController {
 
 		dbc.update("accounts", columns, values, where);
 	}
+
 	/**
 	 * Gibt die Namen aller User zurueck die von diesem User vertreten werden
-	 * @param username Eigener Nutzername
+	 * 
+	 * @param username
+	 *            Eigener Nutzername
 	 * @return Namen aller vertrenenen User
 	 */
-	public Vector<String> represents(String username){
-		Vector<String>ret =new Vector<String>();
-		ResultSet rs = dbc.select(new String[]{"benutzername"},new String[]{tableName}, "stellvertreter='"+username+"'");
+	public Vector<String> represents(String username) {
+		Vector<String> ret = new Vector<String>();
+		ResultSet rs = dbc
+				.select(new String[] { "benutzername" },
+						new String[] { tableName }, "stellvertreter='"
+								+ username + "'");
 		try {
-			while(rs.next())
-					ret.add(rs.getString(1));
+			while (rs.next())
+				ret.add(rs.getString(1));
 		} catch (SQLException e) {
-			Helper.log.write("AccountController", "Error getting representing names");
+			Helper.log.write("AccountController",
+					"Error getting representing names");
 		}
 		return ret;
 	}

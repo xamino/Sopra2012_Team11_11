@@ -56,7 +56,6 @@ public class ApplicantServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
@@ -112,7 +111,7 @@ public class ApplicantServlet extends HttpServlet {
 					.getUserData().getUsername());
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
-				entfernen = false;				
+				entfernen = false;
 				for (int j = 0; j < myoffers1.size(); j++) {
 					if (offers.elementAt(i).getAid() == myoffers1.elementAt(j)
 							.getAid()) {
@@ -173,7 +172,11 @@ public class ApplicantServlet extends HttpServlet {
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
-			String name = request.getParameter("username");
+			// Das hier ist sehr falsch (wer auch immer es war)! ->
+			// "String name = request.getParameter("name");"
+			// name wäre so IMMER NULL! (js liest also falschen parameter aus
+			// und generell soll man NIE den client trauen!)
+			String name = applicant.getUserData().getUsername();
 			if (applicant.deleteOwnAccount()) {
 				log.write("ApplicantServlet", name
 						+ " has deleted his account.");

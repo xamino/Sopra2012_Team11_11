@@ -650,8 +650,8 @@ public class DocumentController {
 	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
-		String where = "benutzername=" + benutzername;
-		Vector<AppDocument> appdoc = null;
+		String where = "benutzername='" + benutzername+"'";
+		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -659,11 +659,10 @@ public class DocumentController {
 				temp = new AppDocument(rs.getString(0), rs.getInt(1),
 						rs.getInt(2), rs.getBoolean(3));
 				appdoc.add(temp);
-
 			}
 		} catch (SQLException e) {
 			log.write("DocumentController", "Error while select");
-			e.printStackTrace();
+			// e.printStackTrace();
 			return null;
 		}
 
