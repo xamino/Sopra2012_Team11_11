@@ -109,7 +109,18 @@ function handleAddDocumentResponse(mime, data) {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		alert(data);
+		// Case-sensitive reaction:
+		if (data == "0") {
+			toggleWarning("error_addDocument_uid", true,
+					"Nur ganze Zahlen erlaubt für die UID!");
+		} else if (data == "1") {
+			toggleWarning("error_addDocument_uid", true,
+					"Die UID ist nicht eindeutig!");
+		}
+		// if data != number, then it is an exceptional error and we simply show
+		// the data:
+		else
+			alert(data);
 	}
 }
 
@@ -141,7 +152,8 @@ function prepareDelete() {
  * Deletes a document if one is selected.
  */
 function deleteDocument() {
-	// this if shouldn't be able to get called, but you never know... (see prepareDelete())
+	// this if shouldn't be able to get called, but you never know... (see
+	// prepareDelete())
 	if (selectedDocument == null) {
 		toggleWarning("error_selection", true, "Kein Dokument ausgewählt! ");
 		togglePopup("document_del", false);

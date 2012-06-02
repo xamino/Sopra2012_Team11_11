@@ -102,7 +102,14 @@ function handleAddInstituteResponse(mime, data) {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		alert(data);
+		if (data == "0") {
+			toggleWarning("error_addInstitute_IID", true,
+					"Nur ganze Zahlen erlaubt für die IID!");
+		} else if (data == "1") {
+			toggleWarning("error_addInstitute_IID", true,
+					"IID ist nicht eindeutig!");
+		} else
+			alert(data);
 	}
 }
 

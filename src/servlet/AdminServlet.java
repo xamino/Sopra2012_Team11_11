@@ -1,6 +1,6 @@
 /**
- * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Laura Irlinger
  */
 package servlet;
 
@@ -241,11 +241,14 @@ public class AdminServlet extends HttpServlet {
 			try {
 				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
+				// Note: As of here, all errors that can happen regularly are
+				// encoded with a number in the text/error response so that the
+				// client can display the correct error message at the correct
+				// location in the webpage.
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+				response.getWriter().write("0");
 				return;
 			}
 			if (title == null || title.isEmpty() || description == null
@@ -259,8 +262,7 @@ public class AdminServlet extends HttpServlet {
 			// all okay... continue:
 			if (!admin.addDoc(new Document(uid, title, description))) {
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+				response.getWriter().write("1");
 				return;
 			}
 			response.setContentType("text/url");
@@ -274,7 +276,7 @@ public class AdminServlet extends HttpServlet {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehlerhafte uid!");
+				response.getWriter().write("Fehlerhafte UID!");
 				return;
 			}
 			Document doc = docController.getDocumentByUID(uid);
@@ -290,7 +292,7 @@ public class AdminServlet extends HttpServlet {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehlerhafte uid!");
+				response.getWriter().write("Fehlerhafte UID!");
 				return;
 			}
 			Document doc = docController.getDocumentByUID(uid);
@@ -302,7 +304,7 @@ public class AdminServlet extends HttpServlet {
 			String description = request.getParameter("description");
 			int uid = -1;
 			try {
-				uid = Integer.parseInt(request.getParameter("uid"));
+				uid = Integer.parseInt(request.getParameter("UID"));
 			} catch (NumberFormatException e) {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
@@ -351,11 +353,15 @@ public class AdminServlet extends HttpServlet {
 			try {
 				IID = Integer.parseInt(request.getParameter("IID"));
 			} catch (NumberFormatException e) {
+				// Note: As of here, all errors that can happen regularly are
+				// encoded with a number in the text/error response so that the
+				// client can display the correct error message at the correct
+				// location in the webpage.
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die IID.");
+						.write("0");
 				return;
 			}
 			if (name == null || name.isEmpty() || IID < 0) {
@@ -368,8 +374,7 @@ public class AdminServlet extends HttpServlet {
 			// all okay... continue:
 			if (!admin.addInstitute(new Institute(IID, name))) {
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler beim erstellen des Instituts! Ist die IID eineindeutig?");
+				response.getWriter().write("1");
 				return;
 			}
 			response.setContentType("text/url");
