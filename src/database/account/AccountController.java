@@ -161,6 +161,7 @@ public class AccountController {
 
 			OfferController.getInstance().deleteOffer(temp);
 
+			/* wird doch schon alles bei deleteOffer geloescht
 			Vector<AppDocument> doc = DocumentController.getInstance()
 					.getAppDocumentByOffer(temp.getAid());
 			Iterator<AppDocument> itp = doc.iterator();
@@ -169,6 +170,8 @@ public class AccountController {
 				DocumentController.getInstance().deleteAppDocument(
 						doc.elementAt(j));
 			}
+			*/
+			
 		}
 		return deleteAccount(acc);
 	}
