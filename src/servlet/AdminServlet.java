@@ -21,8 +21,11 @@ import database.document.DocumentController;
 import database.document.Document;
 import database.institute.Institute;
 import database.institute.InstituteController;
+import database.offer.Offer;
+import database.offer.OfferController;
 
 import user.Admin;
+import user.Provider;
 import userManagement.LoggedInUsers;
 
 import logger.Log;
@@ -109,6 +112,8 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter()
 						.write("Dieser Benutzer existiert nicht oder ist aktuell angemeldet. Kann nicht gelöscht werden!");
 			}
+
+			
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {

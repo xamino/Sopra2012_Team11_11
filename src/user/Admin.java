@@ -1,5 +1,7 @@
 package user;
 
+import java.util.Vector;
+
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
@@ -7,8 +9,11 @@ import logger.Log;
 import userManagement.LoggedInUsers;
 
 import database.account.Account;
+import database.account.AccountController;
 import database.document.Document;
 import database.institute.Institute;
+import database.offer.Offer;
+import database.offer.OfferController;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.
@@ -57,9 +62,16 @@ public class Admin extends User {
 					+ "> as currently logged in!");
 			return false;
 		}
-		log.write("Admin", "<" + getUserData().getUsername()
-				+ "> deleted account with username <" + username + ">");
-		acccon.deleteAccount(account);
+		//check if it's a provider account
+		if(account.getAccounttype() == 1){
+			acccon.deleteProviderAccount(new Provider(account.getUsername(), account.getEmail(), account.getName(), null));
+		}
+		else{
+			log.write("Admin", "<" + getUserData().getUsername()
+					+ "> deleted account with username <" + username + ">");
+			acccon.deleteAccount(account);
+		}
+
 		return true;
 	}
 
