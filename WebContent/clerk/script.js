@@ -33,6 +33,11 @@ function handleLoadInfo(mime, data){
 }
 
 /**
+ * Stores the selected Document:
+ */
+var selectedDocument;
+
+/**
  * Stores the selected Offer:
  */
 var selectedOffer;
@@ -303,35 +308,35 @@ function handleDocumentChangeResponse(mime, data) {
  * @param id
  *            The ID of the clicked entry.
  */
-function markDocumentSelected(id) {
-
-	// alert("alte docid: "+selectedDocument);
-	// Remove marking from previous selected, if applicable:
-	if (selectedDocument != null)
-		document.getElementById(selectedDocument).setAttribute("class", "");
-	// If clicked again, unselect:
-	if (selectedDocument == id) {
-		selectedDocument = null;
-		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-		document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
-		return;
-	}
-	// Else save & mark new one:
-	selectedDocument = id;
-
-	
-	document.getElementById("dokumentloeschenbutton").disabled = "";
-	document.getElementById("dokumentHinzufuegenButton").disabled = "";
-	// alert("aktuelle docid: "+selectedDocument);
-
-	document.getElementById(id).setAttribute("class", "selected");
-
-
-	
-	// updating 'Angebot pruefen' button
-	prepareButton();
-
-}
+//function markDocumentSelected(id) {
+//
+//	// alert("alte docid: "+selectedDocument);
+//	// Remove marking from previous selected, if applicable:
+//	if (selectedDocument != null)
+//		document.getElementById(selectedDocument).setAttribute("class", "");
+//	// If clicked again, unselect:
+//	if (selectedDocument == id) {
+//		selectedDocument = null;
+//		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+//		document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+//		return;
+//	}
+//	// Else save & mark new one:
+//	selectedDocument = id;
+//
+//	
+//	document.getElementById("dokumentloeschenbutton").disabled = "";
+//	document.getElementById("dokumentHinzufuegenButton").disabled = "";
+//	// alert("aktuelle docid: "+selectedDocument);
+//
+//	document.getElementById(id).setAttribute("class", "selected");
+//
+//
+//	
+//	// updating 'Angebot pruefen' button
+//	prepareButton();
+//
+//}
 
 /**
  * Function remembers which account has been clicked.
@@ -392,7 +397,7 @@ function deleteDocument() {
  */
 function deleteAppDocument(){
 	if(selectedDocument != null){
-		alert("to delete: "+selectedDocument);
+		//alert("to delete: "+selectedDocument);
 		togglePopup('document_del', false);
 		connect("/hiwi/Clerk/js/deleteAppDocument","uid=" + selectedDocument + "&user="+User+"&aid="+Aid, deleteAppDocumentResponse);
 	}
@@ -524,6 +529,7 @@ function applicationDocuments() {
 	User = getURLParameter("User");
 	Aid = getURLParameter("AID");
 	selectedOffer = null;
+	selectedDocument = null;
 	connect("/hiwi/Clerk/js/applicationDocuments", "User=" + User + "&AID="
 			+ Aid, handleApplicationDocumentsResponse);
 }
@@ -551,20 +557,34 @@ function handleApplicationDocumentsResponse(mime, data) {
 		// Betweensaves the 'present' value of the AppDocument element
 		var checked;
 		// Write table â€“ probably replaces old data!
-		table2.innerHTML = "<tr><th></th><th>Dokumente</th></tr>";
+		table2.innerHTML = "<tr><th>Dokumente</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i=i+2) {
 			if(JSONarray[i+1].present){
 				checked = "checked";
 			}else{
 				checked = "";
 			}
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid+ "\" onclick=\"markDocumentSelected(\'"
-					+ JSONarray[i].uid 	+ "\');\"><td><input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+JSONarray[i+1].offerID+")\" "+checked+"></td><td>"
+			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid+ "\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+JSONarray[i+1].offerID+")\" "+checked+"><td>"
 					+ JSONarray[i].name + "</td></tr>";
 		}
 		showApplicationTable2();
+		//alte vVersion mit checkbox
+//		for ( var i = 0; i < JSONarray.length; i=i+2) {
+//			if(JSONarray[i+1].present){
+//				checked = "checked";
+//			}else{
+//				checked = "";
+//			}
+//			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid+ "\" onclick=\"markDocumentSelected(\'"
+//					+ JSONarray[i].uid 	+ "\');\"><td><input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+JSONarray[i+1].offerID+")\" "+checked+"></td><td>"
+//					+ JSONarray[i].name + "</td></tr>";
+//		}
+//		showApplicationTable2();
 	}
 }
+
+
+
 
 //Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer die
 //angezeigte Bewerbung benoetigt werden
@@ -594,6 +614,30 @@ function handledocumentsToAddToAppResponse(mime, data) {
  * @param offerid
  */
 function setDocCheck(username, docid, offerid){
+	//ursprünglich nur die connect --> aber für Markierung das hinzugefuegt!!!
+	if (selectedDocument != null)
+	document.getElementById(selectedDocument).setAttribute("class", "");
+	//alert("man");
+	// If clicked again, unselect:
+	if (selectedDocument == docid) {
+	selectedDocument = null;
+	//alert("man oh man");
+	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+	document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+	return;
+	}
+	// Else save & mark new one:
+	//alert("hier");
+	selectedDocument = docid;
+	//alert("daa");
+	//alert("aktuelle id: "+selectedDocument);
+	document.getElementById(docid).setAttribute("class", "selected");
+	
+	document.getElementById("dokumentloeschenbutton").disabled = "";
+	document.getElementById("dokumentHinzufuegenButton").disabled = "";
+	
+	prepareButton();
+	
 	connect("/hiwi/Clerk/js/setDocCheck", "username=" + username + "&docid="+ docid +"&offerid="+offerid, null);
 }
 

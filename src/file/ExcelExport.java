@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import org.apache.catalina.startup.SetContextPropertiesRule;
+//import org.apache.catalina.startup.SetContextPropertiesRule;
 
 import jxl.Cell;
 import jxl.CellFormat;
