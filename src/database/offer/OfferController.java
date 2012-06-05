@@ -210,7 +210,8 @@ public class OfferController {
 		Vector<Offer> offervec = new Vector<Offer>();
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "Geprueft = 1 and abgeschlossen=0";
+		//War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
+		String where = "Geprueft = 1 and abgeschlossen = 0";
 		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
@@ -321,10 +322,9 @@ public class OfferController {
 		String where;
 
 		for (int i = 0; i < applications.size(); i++) {
-
+			//Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet und es geht.
 			where = "abgeschlossen = 0 and AID = "
 					+ applications.elementAt(i).getAid();
-
 			ResultSet rs = db.select(select, from, where);
 			try {
 				while (rs.next()) {
@@ -335,13 +335,10 @@ public class OfferController {
 							rs.getInt(6), rs.getDouble(7), rs.getString(8),
 							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
 							rs.getInt(12), rs.getDate(13), check);
-
 					if (!check)
 						offervec.add(currentoff);
 				}
-
 				rs.close();
-
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -544,7 +541,7 @@ public class OfferController {
 				return -1;
 			}
 				
-			newID = generateRandomNr(1, 9999);
+			newID = generateRandomNr(1, 10);
 			Object[] data = { newID, "", "", "", false, 0, 0, "",startdatum, startdatum,
 					0, 0, startdatum, false };
 			check = db.insert(tablename, data);
