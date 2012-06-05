@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
+import mail.Mailer;
 import user.User;
 import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
