@@ -64,7 +64,7 @@ public class Admin extends User {
 		}
 		//check if it's a provider account
 		if(account.getAccounttype() == 1){
-			acccon.deleteProviderAccount(new Provider(account.getUsername(), account.getEmail(), account.getName(), null));
+			acccon.deleteProviderAccount(account);
 		}
 		else{
 			log.write("Admin", "<" + getUserData().getUsername()

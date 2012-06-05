@@ -89,7 +89,7 @@ public class ProviderServlet extends HttpServlet {
 		// Load my offers:
 		if (path.equals("/js/loadOffers")) {
 			Vector<Offer> myoffers = OfferController.getInstance()
-					.getOffersByProvider(provider); // Offer vom Provider geholt
+					.getOffersByProvider(AccountController.getInstance().getAccountByUsername(provider.getUserData().getUsername())); // Offer vom Provider geholt
 			response.setContentType("offer/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));

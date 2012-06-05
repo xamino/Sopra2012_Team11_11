@@ -148,29 +148,16 @@ public class AccountController {
 	 *            Provider-Objekt
 	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
 	 */
-	public boolean deleteProviderAccount(Provider provider) {
-		String username = provider.getUserData().getUsername();
+	public boolean deleteProviderAccount(Account provider) {
+		String username = provider.getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(
-				provider);
-		Iterator<Offer> it = off.iterator();
+		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(acc);
 
-		for (int i = 0; it.hasNext(); i++) {
+		for (int i = 0; i<off.size(); i++) {
 			Offer temp = off.elementAt(i);
 
 			OfferController.getInstance().deleteOffer(temp);
-
-			/* wird doch schon alles bei deleteOffer geloescht
-			Vector<AppDocument> doc = DocumentController.getInstance()
-					.getAppDocumentByOffer(temp.getAid());
-			Iterator<AppDocument> itp = doc.iterator();
-
-			for (int j = 0; itp.hasNext(); j++) {
-				DocumentController.getInstance().deleteAppDocument(
-						doc.elementAt(j));
-			}
-			*/
 			
 		}
 		return deleteAccount(acc);
