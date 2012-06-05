@@ -155,3 +155,30 @@ function doLogout() {
 			window.location = data;
 	});
 }
+/**
+ * Funktion die ueberprueft ob der Text eines Textfelds gueltig ist.
+ * @param text zu ueberpruefender Text.
+ * @returns {Boolean} True falls gueltig, False falls ungueltig.
+ */
+function checkField(text){
+	if (text == "")return false;
+	var regex = new RegExp("^((\s)*[a-zA-Z0-9\_]+(\s)*)*$");
+	return(regex.test(text));
+}
+/**
+ * Funktion die ueberprueft ob eine Email gueltig ist.
+ * @param email zu ueberpruefende Email-Adresse.
+ * @returns {Boolean} True falls gueltig, False falls ungueltig.
+ */
+function checkEmail(email) {
+	  var regex = new RegExp("^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z0-9]{2,}$");
+	  return(regex.test(email));
+}
+/**
+ * Funktion die ueberprueft ob eine Email gueltig ist.
+ * @param password zu ueberpruefendes Passwort.
+ * @returns {Boolean} True falls gueltig, False falls ungueltig.
+ */
+function checkPassword(password){
+	return(!password=="");
+}
