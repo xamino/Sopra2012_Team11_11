@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 05/06/2012 14:43:33 PM
+ Date: 06/05/2012 11:12:12 AM
 */
 
 SET NAMES utf8;
@@ -38,7 +38,7 @@ CREATE TABLE `Accounts` (
 --  Records of `Accounts`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Accounts` VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww', '0', 'mmamam', 'amamam', '0', null), ('applicant', 'TgJ3G1XABBGA78n8puBKdw', '3', 'email', 'Name', '0', null), ('applicant2', 'gCKP4zQ8lhNHSr3F1UlBbQ', '3', 'applicant2', 'applicant2', '0', null), ('clerk', 'NHdpgfpHqmzz8pFdEbrgUQ', '2', 'kjkln', 'knklnln', '1', null), ('clerk2', 'MxyKM4k57nhTweZhgmcyQg', '2', 'clerk2', 'Name', '2', null), ('clerk3', 'I6rao/bIEptym rMb4czDA', '2', 'clerk3', 'clerk3', '2', null), ('provider', 'np89cL2MiVdifq2pbZZ3Bg', '1', '2Email', 'Name22', '1', null), ('provider2', '6/yBXuLMahYiUQW7ez4eUw', '1', 'provider2', 'provider2', '2', null);
+INSERT INTO `Accounts` VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww', '0', 'donotreply.hiwiboerse@gmail.com', 'amamam', '0', null), ('applicant', 'TgJ3G1XABBGA78n8puBKdw', '3', 'donotreply.hiwiboerse@gmail.com', 'Name', '0', null), ('applicant2', 'gCKP4zQ8lhNHSr3F1UlBbQ', '3', 'donotreply.hiwiboerse@gmail.com', 'applicant2', '0', null), ('clerk', 'NHdpgfpHqmzz8pFdEbrgUQ', '2', 'donotreply.hiwiboerse@gmail.com', 'knklnln', '1', null), ('clerk2', 'MxyKM4k57nhTweZhgmcyQg', '2', 'donotreply.hiwiboerse@gmail.com', 'Name', '2', null), ('clerk3', 'I6rao/bIEptym rMb4czDA', '2', 'donotreply.hiwiboerse@gmail.com', 'clerk3', '2', null), ('provider', 'np89cL2MiVdifq2pbZZ3Bg', '1', 'donotreply.hiwiboerse@gmail.com', 'Name22', '1', null), ('provider2', '6/yBXuLMahYiUQW7ez4eUw', '1', 'donotreply.hiwiboerse@gmail.com', 'provider2', '2', null);
 COMMIT;
 
 -- ----------------------------
