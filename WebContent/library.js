@@ -162,7 +162,7 @@ function doLogout() {
  */
 function checkText(text){
 	if (text == "")return false;
-	var regex = /^((\s)*[a-zA-Z0-9_]+(\s)*)*$/;
+	var regex = /^((\s)*[a-zA-Z0-9_-.]+(\s)*)*$/;
 	return(regex.test(text));
 }
 /**
@@ -198,10 +198,12 @@ function checkEmail(email) {
 	  return(regex.test(email));
 }
 /**
- * Funktion die ueberprueft ob ein Passwort gueltig ist. Laenge != 0 ist einzige Bedingung.
- * @param password zu ueberpruefendes Passwort.
+ * Funktion die ueberprueft ob ein Username gueltig ist. Laenge != 0 ist mit enthalten.
+ * @param username zu ueberpruefender UserName.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
-function checkPassword(password){
-	return(!password=="");
+function checkUsername(username){
+	if(username=="")return false;
+	var regex = /^[a-zA-Z]+[a-zA-Z0-9_-.]*$/;
+	return(regex.test(username));
 }

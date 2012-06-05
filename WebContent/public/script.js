@@ -120,13 +120,19 @@ function checkRegister(form) {
 	if (firstName == "" || firstName == null) {
 		toggleWarning("error_realFirstName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(firstName)){
+		toggleWarning("error_realFirstName",true,"Unerlaubtes Sonderzeichen!");
+		error = true;
+	}else
 		toggleWarning("error_realFirstName", false, "");
 	var lastName = form.realLastName.value;
 	if (lastName == "" || lastName == null) {
 		toggleWarning("error_realLastName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(lastName)){
+		toggleWarning("error_realLastName",true,"Unerlaubtes Sonderzeichen!");
+		error = true;
+	}else
 		toggleWarning("error_realLastName", false, "");
 	// Write complete name:
 	var realName = firstName + " " + lastName;
@@ -135,12 +141,18 @@ function checkRegister(form) {
 	if (email_1 == "" || email_1 == null) {
 		toggleWarning("error_userEmail_1", true, "Bitte ausfüllen!");
 		error = true;
+	}else if(!checkEmail(email_1)){
+		toggleWarning("error_userEmail_1",true,"Keine gültige Email!")
+		error=true;
 	} else
 		toggleWarning("error_userEmail_1", false, "");
 	var email_2 = form.userEmail_2.value;
 	if (email_2 == "" || email_2 == null) {
 		toggleWarning("error_userEmail_2", true, "Bitte ausfüllen!");
 		error = true;
+	} else if(!checkEmail(email_2)){
+		toggleWarning("error_userEmail_2",true,"Keine gültige Email!")
+		error=true;
 	} else
 		toggleWarning("error_userEmail_2", false, "");
 	// No need to check equality if emails are empty:
@@ -158,7 +170,11 @@ function checkRegister(form) {
 	if (userName == "" || userName == null) {
 		toggleWarning("error_userName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	}else if(!checkUsername(userName)){
+		toggleWarning("error_userName",true,"Unerlaubtes Sonderzeichen!");
+		error = true;
+	} 
+	else
 		toggleWarning("error_userName", false, "");
 	var password_1 = form.userPassword_1.value;
 	// Password:

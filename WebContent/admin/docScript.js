@@ -75,19 +75,28 @@ function addDocument() {
 	if (uid == null || uid == "") {
 		toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	}else if(!checkInt(uid)){
+		toggleWarning("error_addDocument_uid",true,"Bitte nur ganze Zahlen!");
+		error =true;
+    }else
 		toggleWarning("error_addDocument_uid", false, "");
 	var title = form.title.value;
 	if (title == null || title == "") {
 		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(title)){
+		toggleWarning("error_addDocument_title",true,"Unerlaubtes Sonderzeichen!");
+		error =true;
+    }else
 		toggleWarning("error_addDocument_title", false, "");
 	var description = form.description.value;
 	if (description == null || description == "") {
 		toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(description)){
+		toggleWarning("error_addDocument_descr",true,"Unerlaubtes Sonderzeichen!");
+		error =true;
+    }else
 		toggleWarning("error_addDocument_descr", false, "");
 	if (error)
 		return;
@@ -224,19 +233,28 @@ function editDocument() {
 	if (uid == null || uid == "") {
 		toggleWarning("error_editDocument_uid", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkInt(uid)){
+		toggleWarning("error_addDocument_uid",true,"Bitte nur ganze Zahlen!");
+		error =true;
+    }else
 		toggleWarning("error_editDocument_uid", false, "");
 	var title = form.title.value;
 	if (title == null || title == "") {
 		toggleWarning("error_editDocument_title", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	}else if(!checkText(title)){
+		toggleWarning("error_addDocument_title",true,"Unerlaubtes Sonderzeichen!");
+		error =true;
+    } else
 		toggleWarning("error_editDocument_title", false, "");
 	var description = form.description.value;
 	if (description == null || description == "") {
 		toggleWarning("error_editDocument_descr", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	}else if(!checkText(description)){
+		toggleWarning("error_addDocument_descr",true,"Unerlaubtes Sonderzeichen!");
+		error =true;
+    } else
 		toggleWarning("error_editDocument_descr", false, "");
 	if (error)
 		return;
