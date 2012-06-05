@@ -162,7 +162,7 @@ function doLogout() {
  */
 function checkText(text){
 	if (text == "")return false;
-	var regex = /^((\s)*[a-zA-Z0-9_-.]+(\s)*)*$/;
+	var regex = /^((\s)*[a-zA-Z0-9\_\-\.üöä]+(\s)*)*$/;
 	return(regex.test(text));
 }
 /**
@@ -183,7 +183,7 @@ function checkInt(int){
  */
 function checkFloat(float){
 	if(floar=="")return false;
-	var regex = /^(0|(-)?[1-9][0-9]*((,|.)[0-9]+)?|0(.|,)[0-9]+)$/;
+	var regex = /^(0|(-)?[1-9][0-9]*((\,|\.)[0-9]+)?|0(\.|\,)[0-9]+)$/;
 	return(regex.test(float));
 }
 
@@ -194,7 +194,7 @@ function checkFloat(float){
  */
 function checkEmail(email) {
 	  if (email=="")return false;
-	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[._-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+((-|.)[a-zA-Z0-9])?.)+[a-zA-Z0-9]{2,255}$/;
+	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+((\-\|\.)[a-zA-Z0-9])?\.)+[a-zA-Z0-9]{2,255}$/;
 	  return(regex.test(email));
 }
 /**
@@ -204,6 +204,6 @@ function checkEmail(email) {
  */
 function checkUsername(username){
 	if(username=="")return false;
-	var regex = /^[a-zA-Z]+[a-zA-Z0-9_-.]*$/;
+	var regex = /^[a-zA-Z]+[a-zA-Z0-9\_\-\.]*$/;
 	return(regex.test(username));
 }

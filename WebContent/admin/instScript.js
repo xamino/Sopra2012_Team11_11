@@ -74,11 +74,18 @@ function addInstitute() {
 	if (IID == null || IID == "") {
 		toggleWarning("error_addInstitute_IID", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	}else if (!checkInt(IID)){
+		toggleWarning("error_addInstitute_IID",true,"Bitte nur ganze Zahlen!");
+		error = true;
+	}	else
 		toggleWarning("error_addInstitute_IID", false, "");
 	var name = form.name.value;
 	if (name == null || name == "") {
 		toggleWarning("error_addInstitute_name", true, "Bitte ausfüllen!");
+		error = true;
+	} 
+	else if (!checkText(name)){
+		toggleWarning("error_addInstitute_name",true,"Unerlaubtes Sonderzeichen!");
 		error = true;
 	} else
 		toggleWarning("error_addInstitute_name", false, "");

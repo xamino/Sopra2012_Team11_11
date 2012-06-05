@@ -247,19 +247,27 @@ function saveChanges(form) {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
+	} else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
 	} else
 		toggleWarning("error_realName", false, "");
 	var email = form.email.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
+		error = true;
+	}else
 		toggleWarning("error_email", false, "");
 	var password = form.password.value;
 	if (password != null && password != "") {
-		password = b64_md5(password);
-	} else
-		password = "";
+		toggleWarning("error_password",false,"");
+	} else{
+		toggleWarning("error_password", true, "Bitte ausfüllen!");
+		error = true;
+	}
 	var accountType = form.accountType.value;
 	var institute = form.institute.value;
 	if (institute == null || institute == "") {
@@ -271,6 +279,7 @@ function saveChanges(form) {
 		return;
 	// As of here, send:
 	// alert("All okay!");
+	password = b64_md5(password);
 	var userName = document.getElementById("userName").innerHTML;
 	connect("/hiwi/Admin/js/editAccount", "realName=" + realName + "&email="
 			+ email + "&userName=" + userName + "&userPassword=" + password
@@ -305,17 +314,26 @@ function addAccount(form) {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}else
 		toggleWarning("error_realName", false, "");
 	var email = form.email.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
+		error = true;
+	}else
 		toggleWarning("error_email", false, "");
 	var userName = form.name.value;
 	if (userName == null || userName == "") {
 		toggleWarning("error_userName", true, "Bitte ausfüllen!");
+		error = true;
+	}else if(!checkUsername(userName)){
+		toggleWarning("error_userName", true, "Unerlaubtes Sonderzeichen!");
 		error = true;
 	} else
 		toggleWarning("error_userName", false, "");
