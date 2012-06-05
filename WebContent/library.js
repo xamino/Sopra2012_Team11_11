@@ -194,11 +194,11 @@ function checkFloat(float){
  */
 function checkEmail(email) {
 	  if (email=="")return false;
-	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z0-9]{2,}$/;
+	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z0-9]{2,255}$/;
 	  return(regex.test(email));
 }
 /**
- * Funktion die ueberprueft ob eine Email gueltig ist.
+ * Funktion die ueberprueft ob ein Passwort gueltig ist.
  * @param password zu ueberpruefendes Passwort.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
