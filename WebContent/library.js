@@ -156,7 +156,7 @@ function doLogout() {
 	});
 }
 /**
- * Funktion die ueberprueft ob der Text eines Textfelds gueltig ist.
+ * Funktion die ueberprueft ob der Text eines Textfelds gueltig ist. Laenge != 0 ist mit enthalten.
  * @param text zu ueberpruefender Text.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
@@ -166,7 +166,7 @@ function checkText(text){
 	return(regex.test(text));
 }
 /**
- * Funktion die ueberprueft ob ein String eine Ganze zahl ist.
+ * Funktion die ueberprueft ob ein String eine Ganze zahl ist. Laenge != 0 ist mit enthalten.
  * @param int zu pruefender String
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
@@ -177,7 +177,7 @@ function checkInt(int){
 }
 
 /**
- * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist.
+ * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist. Laenge != 0 ist mit enthalten.
  * @param float zu pruefende Gleitkommazahl
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
@@ -188,7 +188,7 @@ function checkFloat(float){
 }
 
 /**
- * Funktion die ueberprueft ob eine Email gueltig ist.
+ * Funktion die ueberprueft ob eine Email gueltig ist. Laenge != 0 ist mit enthalten.
  * @param email zu ueberpruefende Email-Adresse.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
@@ -198,7 +198,7 @@ function checkEmail(email) {
 	  return(regex.test(email));
 }
 /**
- * Funktion die ueberprueft ob ein Passwort gueltig ist.
+ * Funktion die ueberprueft ob ein Passwort gueltig ist. Laenge != 0 ist einzige Bedingung.
  * @param password zu ueberpruefendes Passwort.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
