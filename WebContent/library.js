@@ -160,18 +160,41 @@ function doLogout() {
  * @param text zu ueberpruefender Text.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
-function checkField(text){
+function checkText(text){
 	if (text == "")return false;
-	var regex = new RegExp("^((\s)*[a-zA-Z0-9\_]+(\s)*)*$");
+	var regex = /^((\s)*[a-zA-Z0-9\_]+(\s)*)*$/;
 	return(regex.test(text));
 }
+/**
+ * Funktion die ueberprueft ob ein String eine Ganze zahl ist.
+ * @param int zu pruefender String
+ * @returns {Boolean} True falls gueltig, False falls ungueltig
+ */
+function checkInt(int){
+	if(int=="")return false;
+	var regex = /^(0|(-)?[1-9][0-9]*)$/;
+	return(regex.test(int));
+}
+
+/**
+ * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist.
+ * @param float zu pruefende Gleitkommazahl
+ * @returns {Boolean} True falls gueltig, False falls ungueltig
+ */
+function checkFloat(float){
+	if(floar=="")return false;
+	var regex = /^(0|(-)?[1-9][0-9]*(\.[0-9]+)?|0.[0-9]+)$/;
+	return(regex.test(float));
+}
+
 /**
  * Funktion die ueberprueft ob eine Email gueltig ist.
  * @param email zu ueberpruefende Email-Adresse.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
 function checkEmail(email) {
-	  var regex = new RegExp("^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z0-9]{2,}$");
+	  if (email=="")return false;
+	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9\-])+\.)+[a-zA-Z0-9]{2,}$/;
 	  return(regex.test(email));
 }
 /**
