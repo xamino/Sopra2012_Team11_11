@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import sun.util.calendar.BaseCalendar.Date;
 import database.account.Account;
+import database.account.AccountController;
 import database.application.Application;
 import database.offer.Offer;
 
@@ -92,6 +93,7 @@ public class Provider extends User {
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
-		return acccon.deleteProviderAccount(this);
+		Account thisaccount = AccountController.getInstance().getAccountByUsername(this.getUserData().getUsername());
+		return acccon.deleteProviderAccount(thisaccount);
 	}
 }

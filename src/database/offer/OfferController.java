@@ -276,12 +276,12 @@ public class OfferController {
 	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
 	 *         Datenbank zurueckgegeben.
 	 */
-	public Vector<Offer> getOffersByProvider(Provider provider) {
+	public Vector<Offer> getOffersByProvider(Account provider) {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "abgeschlossen=0 and Ersteller = '"
-				+ provider.getUserData().getUsername() + "'";
+				+ provider.getUsername() + "'";
 		ResultSet rs = db.select(select, from, where);
 		try {
 			while (rs.next()) {
