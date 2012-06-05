@@ -162,7 +162,7 @@ function doLogout() {
  */
 function checkText(text){
 	if (text == "")return false;
-	var regex = /^((\s)*[a-zA-Z0-9\_]+(\s)*)*$/;
+	var regex = /^((\s)*[a-zA-Z0-9_]+(\s)*)*$/;
 	return(regex.test(text));
 }
 /**
@@ -177,13 +177,13 @@ function checkInt(int){
 }
 
 /**
- * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist. Laenge != 0 ist mit enthalten.
+ * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist. Laenge != 0 ist mit enthalten. Punkt und Komma werden als Trennzeichen akzeptiert.
  * @param float zu pruefende Gleitkommazahl
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
 function checkFloat(float){
 	if(floar=="")return false;
-	var regex = /^(0|(-)?[1-9][0-9]*(\.[0-9]+)?|0.[0-9]+)$/;
+	var regex = /^(0|(-)?[1-9][0-9]*((,|.)[0-9]+)?|0(.|,)[0-9]+)$/;
 	return(regex.test(float));
 }
 
@@ -194,7 +194,7 @@ function checkFloat(float){
  */
 function checkEmail(email) {
 	  if (email=="")return false;
-	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+(\-[a-zA-Z0-9])?\.)+[a-zA-Z0-9]{2,255}$/;
+	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[._-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+((-|.)[a-zA-Z0-9])?.)+[a-zA-Z0-9]{2,255}$/;
 	  return(regex.test(email));
 }
 /**
