@@ -96,6 +96,7 @@ function check() {
 			"Leeres Passwortfeld!");
 			toggleWarning("error_unequalPasswords", true,
 					"Passwörter sind nicht gleich!");
+			error=true;
 		}
 		// ELSE brauchen wir wenn der Fehler schonmal aufgetreten ist aber jetzt
 		// korrigiert wurde. Dann verstecken wir die (jetzt nicht mehr gültige)
@@ -105,12 +106,12 @@ function check() {
 //		}
 	}
 	//wenn passwortfelder leer
-	if ((pw = null || pw == "") && (pww = null || pww == "")) {
+	if ((pw = null || pw == "") && (pww = null || pww == "")|| (pw!=null && pww==null)) {
 		error=true;
 		toggleWarning("error_unequalPasswords", false,
 		"Passwörter sind nicht gleich!");
 		toggleWarning("error_emptyPasswords", true,
-		"Leeres Passwortfeld!");
+		"Leere Passwortfelder!");
 	}
 	// Wenn es einen Fehler gab, den Benutzer die Eingaben kontrollieren lassen:
 
@@ -122,6 +123,8 @@ function check() {
 		alert("changing account");
 		changeAccount();
 	}
+	else
+		alert("WRONG CASE");
 
 }
 
