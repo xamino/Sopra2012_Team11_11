@@ -89,6 +89,7 @@
 											name="newpasswortwdh" size="20" maxlength="100" />
 										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 										<div id="error_unequalPasswords" class="hiddenerror"></div>
+										<div id="error_emptyPasswords" class="hiddenerror"></div>
 									</div>
 									<br> <span> <label for="stellvertreter">Stellvertreter:
 									</label>

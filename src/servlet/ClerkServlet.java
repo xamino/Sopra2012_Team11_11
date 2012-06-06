@@ -418,7 +418,7 @@ public class ClerkServlet extends HttpServlet {
 			if (rep == null)
 				rep = "";
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
-				log.write("ApplicantServlet", clerk.getUserData().getUsername()
+				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_CLERK_USERINDEX);
