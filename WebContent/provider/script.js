@@ -141,21 +141,21 @@ function handleApplicantChoiceResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("applicantsTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Name:</th><th>Hier fehlen weiter Daten (nicht in DB)</th></tr>";
+		table.innerHTML = "<tr><th>Benutzername:</th><th>Name</th><th>E-Mail</th></tr>";
 		/* orginal von lau lau:
 		 * for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].name
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].name + "\');\"><td>"
 					+ JSONarray[i].name + "</td></tr>";
-		brauche username f�r berwerber annehmen
+		brauche username fuer berwerber annehmen
 		}
 		 * */
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
 					+ "\" onclick=\"markOfferSelected(\'"
-					+ JSONarray[i].username + "\');\"><td>"
-					+ JSONarray[i].username + "</td></tr>";
+					+ JSONarray[i].username + "\');\">" 
+					+"<td>"+JSONarray[i].username+"</td><td>"+JSONarray[i].name+"</td><td>"+JSONarray[i].email+"</td></tr>";
 		}
 	}
 }
