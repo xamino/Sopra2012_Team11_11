@@ -162,7 +162,7 @@ function doLogout() {
  */
 function checkText(text){
 	if (text == "")return false;
-	var regex = /^((\s)*[a-zA-Z0-9\_\-\.üöä]+(\s)*)*$/;
+	var regex = /^((\s)*[a-zA-Z0-9\_\-\.üöä\!\?]+(\s)*)*$/;
 	return(regex.test(text));
 }
 /**
@@ -204,6 +204,6 @@ function checkEmail(email) {
  */
 function checkUsername(username){
 	if(username=="")return false;
-	var regex = /^[a-zA-Z]+[a-zA-Z0-9\_\-\.]*$/;
+	var regex = /^[a-zA-Z0-9]+[a-zA-Z0-9\_\-\.]*$/;
 	return(regex.test(username));
 }

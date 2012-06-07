@@ -16,10 +16,13 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import database.DatabaseController;
+import database.account.Account;
 import database.account.AccountController;
 import database.document.AppDocument;
 import database.document.DocumentController;
 import database.document.OfferDocument;
+import database.offer.Offer;
+import database.offer.OfferController;
 
 public class ApplicationController {
 
@@ -102,15 +105,20 @@ public class ApplicationController {
 	 */
 
 	public boolean deleteApplication(Application application) {
-		String where = "AID = " + application.getAid() + "AND benutzername = '"
+		String where = "AID = " + application.getAid() + " AND benutzername = '"
 				+ application.getUsername() + "'";
-
-		Vector<AppDocument> docs = doccon.getAllAppDocsByApplicant(application
-				.getUsername());
-		Iterator<AppDocument> it = docs.iterator();
-		for (int i = 0; it.hasNext(); i++) {
-			doccon.deleteAppDocument(docs.elementAt(i));
+        
+		Account useracc = acccon.getAccountByUsername(application.getUsername());
+		Offer offer = OfferController.getInstance().getOfferById(application.getAid());
+		
+		//deletes all appdocuments from this application
+		Vector<AppDocument> docs = doccon.getDocumentsByUserAndOffer(useracc, offer);
+		if(docs != null){
+			for (int i = 0; i < docs.size(); i++) {
+				doccon.deleteAppDocument(docs.elementAt(i));
+			}
 		}
+
 
 		return db.delete(tableName, where);
 	}

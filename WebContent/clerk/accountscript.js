@@ -74,11 +74,10 @@ function check() {
 	// Hier die Werte auslesen:
 	var pw = document.getElementById("newpasswort").value;
 	var pww = document.getElementById("newpasswortwdh").value;
-	// Jetzt müssen wir schauen, ob die leer sind und gültig (hier jetzt nur für
-	// das passwort!). Da mehrere Sachen falsch sein könne, speichere ich den
-	// Wert in einer bool damit immer alle kontrolliert werden, auch wenn einige
-	// fehlen.
-	var error = false;
+	
+	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
+		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+	}
 	// ACHTUNG: Wenn eines der Passwörter NICHT leer ist, dann sollen sie
 	// geändert
 	// werden, also die werte hashen und mitschicken! Andere Variablen wie Name
@@ -119,13 +118,21 @@ function changeAccount(){
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if (!checkText(realName)){
+		toggleWarning("error_realName",true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}
+	else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if (!checkEmail(email)){
+		toggleWarning("error_email",true,"Ungültige Email!");
+		error=true;
+	}
+	else
 		toggleWarning("error_email", false, "");
 	var password = form.newpasswort.value;
 	if (password != null && password != "") {
@@ -135,6 +142,11 @@ function changeAccount(){
 	var rep = form.stellvertreter.value;
 	if (rep == null)
 		rep = "";
+	if(rep !=null && rep !="")if (!checkUsername(rep)){
+		toggleWarning("error_stellvertreter",true,"Kein gültiger Username!");
+		error=true;
+	}else
+		toggleWarning("error_stellvertreter",false,"");
 	if (error)
 		return;
 	// As of here, send:

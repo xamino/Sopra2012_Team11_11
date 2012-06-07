@@ -64,6 +64,11 @@ function check() {
 	// Hier die Werte auslesen:
 	var pw = document.getElementById("newpasswort").value;
 	var pww = document.getElementById("newpasswortwdh").value;
+	
+	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
+		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+	}
+	
 	// Jetzt müssen wir schauen, ob die leer sind und gültig (hier jetzt nur für
 	// das passwort!). Da mehrere Sachen falsch sein könne, speichere ich den
 	// Wert in einer bool damit immer alle kontrolliert werden, auch wenn einige
@@ -107,11 +112,17 @@ function changeAccount(){
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
+		error = true;
+	}else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
 		error = true;
 	} else
 		toggleWarning("error_email", false, "");

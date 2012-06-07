@@ -16,8 +16,6 @@ import java.util.Vector;
 import servlet.Helper;
 import user.Applicant;
 import user.Clerk;
-import user.Provider;
-
 import database.DatabaseController;
 import database.application.Application;
 import database.application.ApplicationController;
@@ -104,19 +102,12 @@ public class AccountController {
 		String username = applicant.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<AppDocument> doc = DocumentController.getInstance()
-				.getAllAppDocsByApplicant(username);
-		for (AppDocument tempDoc : doc) {
-			DocumentController.getInstance().deleteAppDocument(tempDoc);
-		}
-
-		Vector<Application> apps = ApplicationController.getInstance()
-				.getApplicationsByApplicant(username);
-		Iterator<Application> itp = apps.iterator();
-
-		for (int i = 0; itp.hasNext(); i++) {
-			ApplicationController.getInstance().deleteApplication(
-					apps.elementAt(i));
+		//deleting all applications from username
+		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByApplicant(username);
+		if(apps != null){
+			for (int i = 0; i < apps.size(); i++) {
+				ApplicationController.getInstance().deleteApplication(apps.elementAt(i));
+			}
 		}
 
 		return deleteAccount(acc);
@@ -133,10 +124,23 @@ public class AccountController {
 	public boolean deleteClerkAccount(Clerk clerk) {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
-
+		
+		//sets clerk - of all applications with current clerk as clerk - to null 
+		Vector<Application> apps = ApplicationController.getInstance().getApprovedApplicationsByClerk(username);
+		if(apps != null){
+			for(int i = 0; i < apps.size(); i++){
+				Application temp = apps.elementAt(i);
+				temp.setClerk(null);
+				ApplicationController.getInstance().updateApplication(temp);
+			}
+		}
+		
+		/*
 		Institute inst = InstituteController.getInstance().getInstituteByIID(
 				acc.getInstitute());
 		InstituteController.getInstance().deleteInstitute(inst);
+		*/
+		
 		return deleteAccount(acc);
 
 	}
@@ -152,13 +156,14 @@ public class AccountController {
 		String username = provider.getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(acc);
+		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(
+				acc);
 
-		for (int i = 0; i<off.size(); i++) {
+		for (int i = 0; i < off.size(); i++) {
 			Offer temp = off.elementAt(i);
 
 			OfferController.getInstance().deleteOffer(temp);
-			
+
 		}
 		return deleteAccount(acc);
 	}
@@ -512,4 +517,40 @@ public class AccountController {
 		return ret;
 	}
 
+	/**
+	 * Methode zum holen eines Accounts anhand der Emailaddresse. Wird verwendet
+	 * um die "Passwort vergessen" Funktion zu implementieren. Gibt es mehre
+	 * Accounts mit der gleichen Emailaddresse wird ein leerer Account
+	 * zurückgegeben.
+	 * 
+	 * @param email
+	 *            Die Emailaddresse anhand welcher der Account ausgewaehlt wird.
+	 * @return Bei einem Account wird dieser zurueckgegeben, bei mehreren ein
+	 *         leerer Account, bei keinen <code>Null</code>.
+	 */
+	public Account getAccountByEmail(String email) {
+		ResultSet rs = dbc.select(new String[] { "*" },
+				new String[] { tableName }, "email LIKE '" + email + "'");
+		try {
+			if (rs.next()) {
+				Account acc = new Account(rs.getString("benutzername"),
+						rs.getString("passworthash"), rs.getInt("accounttyp"),
+						rs.getString("email"), rs.getString("name"),
+						rs.getInt("institut"), rs.getString("stellvertreter"));
+				if (rs.next()) {
+					// This is the case where more than one account has the same
+					// email address:
+					logger.Log.getInstance().write(
+							"AccountController",
+							"Resetting password failed because of multiple accounts! Email: <"
+									+ email + ">");
+					return new Account("", "", 0, "", "", 0, "");
+				} else
+					return acc;
+			} else // This can happen when no account exists and is okay:
+				return null;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 }

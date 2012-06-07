@@ -66,7 +66,12 @@ function check() {
 	// Hier die Werte auslesen:
 	var pw = document.getElementById("newpasswort").value;
 	var pww = document.getElementById("newpasswortwdh").value;
-	if ((pw != null && pw != "") || (pww != null && pww != "")) {
+	
+	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
+		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+	}
+	
+	else if ((pw != null && pw != "") || (pww != null && pww != "")) {
 		// Passwort soll geändert werden, also schauen ob sie gleich sind:
 		if (pw != pww) {
 			toggleWarning("error_unequalPasswords", true,
@@ -74,10 +79,13 @@ function check() {
 		} else
 			toggleWarning("error_unequalPasswords", false, "");
 	}
+	// Wenn es einen Fehler gab, den Benutzer die Eingaben kontrollieren lassen:
+	// Ansonsten ist alles okay, also weiter:
+
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
-	} else if (pw == pww) {
+	} else if (pw == pww ) {
 		changeAccount();
 	}
 
@@ -90,13 +98,19 @@ function changeAccount() {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
+	}else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
 	} else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
+		error = true;
+	}else
 		toggleWarning("error_email", false, "");
 	var password = form.newpasswort.value;
 	if (password != null && password != "") {
