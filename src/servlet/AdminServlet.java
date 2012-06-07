@@ -13,22 +13,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import logger.Log;
+import user.Admin;
+import userManagement.LoggedInUsers;
+
 import com.google.gson.Gson;
 
 import database.account.Account;
 import database.account.AccountController;
-import database.document.DocumentController;
 import database.document.Document;
+import database.document.DocumentController;
 import database.institute.Institute;
 import database.institute.InstituteController;
-import database.offer.Offer;
-import database.offer.OfferController;
-
-import user.Admin;
-import user.Provider;
-import userManagement.LoggedInUsers;
-
-import logger.Log;
 
 /**
  * Das <code>Admin</code> Servlet behandelt alle Aktionen von angemeldeten
