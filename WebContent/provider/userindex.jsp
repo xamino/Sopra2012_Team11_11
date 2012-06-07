@@ -18,7 +18,7 @@
 <div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
@@ -33,6 +33,8 @@
 					&rarr; Startseite <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+						<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_PROVIDER_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 		</div>
 	</div>
@@ -41,7 +43,7 @@
 		<div class="textblock">
 			<h2>Startseite</h2>
 			<div class="text">Hier finden Sie Ihre angebotenen Stellen.<br>
-			Hilfe finden Sie <a	href="<%=Helper.D_APPLICANT_HELP %>" title="Hilfe"> hier</a>.</div>
+			Hilfe finden Sie <a	href="<%=Helper.D_PROVIDER_HELP %>" title="Hilfe"> hier</a>.</div>
 		</div>
 		<hr>
 		<div class="textblock">
