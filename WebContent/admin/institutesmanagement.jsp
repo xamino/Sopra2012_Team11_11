@@ -14,7 +14,7 @@
 <div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href="../admin/userindex.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
