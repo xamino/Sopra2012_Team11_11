@@ -66,7 +66,12 @@ function check() {
 	// Hier die Werte auslesen:
 	var pw = document.getElementById("newpasswort").value;
 	var pww = document.getElementById("newpasswortwdh").value;
-	if ((pw != null && pw != "") || (pww != null && pww != "")) {
+	
+	if (pw==""|| pw==null && pww=="" || pww==null){
+		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+	}
+	
+	else if ((pw != null && pw != "") || (pww != null && pww != "")) {
 		// Passwort soll geändert werden, also schauen ob sie gleich sind:
 		if (pw != pww) {
 			toggleWarning("error_unequalPasswords", true,
@@ -80,7 +85,7 @@ function check() {
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
-	} else if (pw == pww) {
+	} else if (pw == pww ) {
 		changeAccount();
 	}
 
