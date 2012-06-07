@@ -3,10 +3,24 @@
 	padding: 0px;
 }
 
+/* Footer ans Ende der Seite */
+html, body {
+	height:100%;
+	width:100%;
+}
+
+.footerunten{
+	min-height:100%;
+	min-width:1000px;
+	width:100%;
+	
+}
+
+/*allgemein*/
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
-	min-height: 600px;
+	/*min-height: 600px;*/
 	width: 100%;
 	background-color: white;
 }
@@ -69,34 +83,47 @@ a.hintlink {
 	font-size: small;
 }
 
-.rightborder {
-	border-right: 2px solid black;
+/*.rightborder {
+	
 	overflow: hidden;
 	/* unbedingt stehen lassen, erm�glicht automatische h�he =) */
-}
+}*/
 
-div.header,div.footer {
+.header {
 	background-color: rgb(137, 162, 179);
 	clear: left;
 	width: 100%;
-	min-height: 1em;
+	height: 82px;
 }
 
-div.right {
+.footer {
+	height:16px;
+	margin: -16px 0 0 0;
+	background-color: rgb(137, 162, 179);
+	width: 100%;
+	min-widt:800px;
+	claer:feft;
+}
+
+.right {
 	float: right;
 	width: 25%;
-	min-width: 22em;
-	/*min-height: 600px; --> kein px angaben bei dynamischen Layout!  */
+	min-width: 250px;
 	margin: 0px;
 }
 
-div.content { /* width: auto; */
-	/*border-right: 2% solid balck;*/
-	/*overflow: auto; 				/* kein auto!!! des l�st jeder Browser wie er will und dann ham ma unterschiedliche Darstellungen!!!! (Laura) */
+/*.zusatz {
+	height:auto;
+}*/
+
+.content {
 	width: 75%;
+	min-width:750px;
+	min-height:80%;
+	border-right: 2px solid black;
 }
 
-div.bordered_float {
+.bordered_float {
 	float: right;
 	border: 1px solid gray;
 	padding: 1em;
@@ -159,8 +186,8 @@ input {
 }
 
 .form {
-	padding-right: 10px;
-	float: right;
+	/*padding-right: 10px;*/
+	float: left;
 	width: 50%;
 	text-align: right;
 	line-height: 1.5em;
@@ -169,8 +196,9 @@ input {
 .commentform span {
 	padding-left: 10px;
 	text-align: left;
-	width: 30%;
+	width: 25%;
 	float: left;
+	min-width:100px;
 }
 
 .commentform p {

@@ -12,6 +12,7 @@
 </head>
 
 <body onload="showApplication()">
+<div class="footerunten">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -93,6 +94,7 @@
 			</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
