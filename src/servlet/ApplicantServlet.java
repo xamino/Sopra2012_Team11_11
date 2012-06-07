@@ -107,13 +107,13 @@ public class ApplicantServlet extends HttpServlet {
 																// Angebote
 			// bereits beworbene Stellen entfernen
 			// Offer vom User geholt
-			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant
-					.getUserData().getUsername());
+			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant.getUserData().getUsername());
+			
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
 				entfernen = false;
 				for (int j = 0; j < myoffers1.size(); j++) {
-					if (offers.elementAt(i).getAid() == myoffers1.elementAt(j)
+					if (((Offer) offers.elementAt(i)).getAid() == myoffers1.elementAt(j)
 							.getAid()) {
 						entfernen = true;
 					}
@@ -122,6 +122,7 @@ public class ApplicantServlet extends HttpServlet {
 					}
 				}
 			}
+						
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 		}
