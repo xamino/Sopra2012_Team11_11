@@ -1,6 +1,7 @@
 /**
  * @author: Patryk Boczon
  * @author: Laura Irlinger
+ * @author: Oemer Sahin
  */
 
 // !!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd

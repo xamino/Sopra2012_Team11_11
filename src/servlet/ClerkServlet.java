@@ -2,6 +2,7 @@
  * @author Laura Irlinger
  * @author Tamino Hartmann
  * @author Patryk Boczon
+ * @author Oemer Sahin
  */
 package servlet;
 
@@ -163,6 +164,13 @@ public class ClerkServlet extends HttpServlet {
 			double wage = Double.parseDouble(request.getParameter("wage"));
 
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
+			
+			//set modificationdate to current date
+			java.util.Date aenderungsdatum = new java.util.Date();
+			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(aenderungsdatum.getTime());
+						
+			//sets modificationdate and updates it
+			offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
 
