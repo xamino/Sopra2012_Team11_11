@@ -3,11 +3,20 @@
  */
 package servlet;
 
+import java.io.FileNotFoundException;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.servlet.http.HttpSession;
 
+import config.Configurator;
+import config.IllegalTypeException;
+import config.UnknownOptionException;
+
+import logger.Log;
 import user.User;
 import userManagement.LoggedInUsers;
-import logger.Log;
 
 /**
  * Hilfsklasse fuer Statische Variablen und Methoden der Servlets.
@@ -141,6 +150,11 @@ public final class Helper {
 	public static final Log log = Log.getInstance();
 
 	/**
+	 * Standard email-header.
+	 */
+	public static final String EMAILHEADER = "[HIWI-BÖRSE]";
+
+	/**
 	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
 	 * ist.
 	 * 
@@ -182,5 +196,38 @@ public final class Helper {
 		}
 		json += "}";
 		return json;
+	}
+
+	/**
+	 * Hilfsmethode um Serverseitig einen String nach String via Base64 und MD5
+	 * zu hashen. ACHTUNG: hacking in progress. Hier wird javascript
+	 * Server-seitig aufgerufen!
+	 * 
+	 * @param text
+	 *            Eingabetext.
+	 * @return Gehashter Text.
+	 */
+	public static String b64_md5(String text) {
+		// create a script engine manager
+		ScriptEngineManager factory = new ScriptEngineManager();
+		// create a JavaScript engine
+		ScriptEngine engine = factory.getEngineByName("JavaScript");
+		// evaluate JavaScript code from String
+		try {
+			// Load md5.js:
+			engine.eval(new java.io.FileReader(Configurator.getInstance()
+					.getPath("md5_javascript")));
+			// get string:
+			return (String) engine.eval("b64_md5('" + text + "');");
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IllegalTypeException e) {
+			e.printStackTrace();
+		} catch (UnknownOptionException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

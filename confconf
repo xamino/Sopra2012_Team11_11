@@ -36,3 +36,5 @@ path | excel | $HOME | .sopra | excel
 String | GMailUsername | donotreply.hiwiboerse@gmail.com
 # Passwort des GMail Accounts zum Mailversand
 String | GMailPassword | Team11_11rockt
+# Pfad zu der md5.js Datei:
+path | md5_javascript | $HOME | .sopra | md5.js

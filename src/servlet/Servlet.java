@@ -13,12 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import logger.Log;
+import mail.Mailer;
+
 import com.google.gson.Gson;
 
+import database.DatabaseController;
+import database.account.Account;
+import database.account.AccountController;
 import database.offer.Offer;
 import database.offer.OfferController;
-
-import logger.Log;
 
 /**
  * Dieses Servlet ist für alle öffentlich zugängliche Daten zuständig.
@@ -66,7 +70,7 @@ public class Servlet extends HttpServlet {
 		path = (path == null) ? "" : path;
 		// log.write("Servlet", "Received request <" + path + ">.");
 		if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = offController.getCheckedOffers();			
+			Vector<Offer> offers = offController.getCheckedOffers();
 			// On error:
 			if (offers == null) {
 				response.setContentType("text/error");
@@ -74,7 +78,7 @@ public class Servlet extends HttpServlet {
 				return;
 			}
 			// On empty:
-			if ( offers.isEmpty()) {
+			if (offers.isEmpty()) {
 				// If no offers are in the DB:
 				response.setContentType("text/plain");
 				response.getWriter().write("null");
@@ -86,18 +90,73 @@ public class Servlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 			return;
+		} else if (path.equals("/js/forgotPassword")) {
+			String email = request.getParameter("email");
+			// Check validity:
+			if (email == null || email.isEmpty())
+				return;
+			// Go for getting the account to this email:
+			Account acc = AccountController.getInstance().getAccountByEmail(
+					email);
+			if (acc == null) {
+				System.out.println("DEBUG: No account found for <" + email
+						+ ">");
+				return;
+			} else if (acc.getUsername().isEmpty()) {
+				// In this case, send an explanatory email:
+				Mailer.getInstance()
+						.sendMail(
+								email,
+								Helper.EMAILHEADER + "Password neu setzen",
+								"Für diese Emailaddresse wurde ein neues Password angefordert."
+										+ " Da es jedoch mehrere Accounts mit dieser Emailaddresse gibt, "
+										+ "wenden sie sich bitte an den Administrator, um ein neues Password anzufordern.");
+				return;
+			} else {
+				// Send new password:
+				log.write("Servlet", "<" + acc.getUsername()
+						+ "> requested new password.");
+				// Generate new password:
+				String newPassword = Long.toHexString(
+						Double.doubleToLongBits(Math.random())).substring(0, 8);
+				// Generate hash to save to database:
+				String encoded = Helper.b64_md5(newPassword);
+				// Check to be sure:
+				if (encoded == null) {
+					log.write(
+							"Servlet",
+							"ERROR hashing new password, ABORTED! Has md5.js been placed at the correct location?");
+					return;
+				}
+				// Write new password hash to DB:
+				if (!DatabaseController.getInstance().update("Accounts",
+						new String[] {"passworthash"}, new Object[] {encoded},
+						"benutzername LIKE '" + acc.getUsername() + "'")) {
+					log.write("Servlet", "Error updating password in DB! Aborting!");
+					return;
+				}
+				// Send mail:
+				Mailer.getInstance()
+						.sendMail(
+								email,
+								Helper.EMAILHEADER + "Neues Passwort",
+								"Für diese Emailaddresse wurde ein neues Passwort angefordert."
+										+ "\n\nNeues Passwort: "
+										+ newPassword
+										+ "\n\nBitte vergeben sie möglichst bald ein neues Passwort!");
+				return;
+			}
 		} else {
 			response.sendRedirect(Helper.D_INDEX);
 		}
 	}
-	
+
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
-		
 		try {
 			response.sendRedirect(Helper.D_INDEX);
 		} catch (IOException e) {
-			// TODO WTF?! Warum kann hier ein IO Fehler auftauchen?!
+			// WTF?! Warum kann hier ein IO-Error auftreten?
 			e.printStackTrace();
 		}
 	}
