@@ -26,7 +26,7 @@ function loadInfo(){
  */
 function handleLoadInfo(mime, data){
 	if(mime=="application/json"){
-		var json = eval("("+data+")")
+		var json = eval("("+data+")");
 		document.getElementById("offers").innerHTML=""+json.offers;
 		document.getElementById("apps").innerHTML=""+json.apps;
 	}else
@@ -142,10 +142,10 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "</td></tr>" + "<tr><td>Plätze:</td>" + "<td>" + offer.slots
 				+ "</td></tr>" + "<tr><td>Stunden die Woche:</td>"
 				+ "<td><input id=\"inputhoursperweek\" type=\"text\" value=\""
-				+ offer.hoursperweek + "\" /> std.</td></tr>"
+				+ offer.hoursperweek + "\" /> std. <div id=\"hours_error\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Lohn:</td>"
 				+ "<td><input id=\"inputwage\" type=\"text\" value=\""
-				+ offer.wage + "\" />€</td></tr>"
+				+ offer.wage + "\" />€ <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Anbieternotiz:</td>"
 				+ "<td style=\"background-color: lightgray;\">" + anbieternotiz
 				+ "</td></tr>" + "<tr><td>Status:</td><td>" + status
@@ -174,7 +174,26 @@ function angebotspeichern() {
 	var hoursperweek = document.getElementById("inputhoursperweek").value;
 	var wage = document.getElementById("inputwage").value;
 	var error =false;
-    //TODO:Hier überprüfung von gehalt und stunden pro woche
+    
+	if (hoursperweek == null || hoursperweek == "") {
+		toggleWarning("hours_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkInt(hoursperweek)) {
+		toggleWarning("hours_error", true, "Bitte eine ganze Zahl angeben!");
+		error = true;
+	} 
+	else
+		toggleWarning("hours_error", false, "");
+	if (wage == null || wage == "") {
+		toggleWarning("gage_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkFloat(wage)) {
+		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
+		error = true;
+	} 
+	else
+		toggleWarning("gage_error", false, "");
+	
 	if(error)return;
 	alert("Angebot aktualisiert:"+'\n'+"Stunden/Woche: "+hoursperweek+'\n'+"Lohn: "+wage);
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
