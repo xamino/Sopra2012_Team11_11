@@ -524,13 +524,13 @@ function handleShowApplicationResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("applicationTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Name des Bewerbers</th><th>Bewibt sich fuer</th></tr>";
+		table2.innerHTML = "<tr><th>Benutzername des Bewerbers</th><th>Bewirbt sich fuer</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
 					+ "�%#%�" + JSONarray[i].aid
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].username + "�%#%�" + JSONarray[i].aid
-					+ "\');\"><td>" + JSONarray[i].bewerbername + "</td><td>"
+					+ "\');\"><td>" + JSONarray[i].username + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
 	}
