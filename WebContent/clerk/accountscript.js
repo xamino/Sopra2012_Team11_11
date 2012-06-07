@@ -87,7 +87,6 @@ function check() {
 	// und so sollten IMMER nicht leer sein! Siehe auch die register.jsp als
 	// beispiel.
 	if ((pw != null && pw != "") || (pww != null && pww != "")) {
-		error=false;
 		// Passwort soll geändert werden, also schauen ob sie gleich sind:
 		if (pw != pww) {
 			// Ja, es gab einen Fehler:
@@ -96,18 +95,20 @@ function check() {
 			"Leeres Passwortfeld!");
 			toggleWarning("error_unequalPasswords", true,
 					"Passwörter sind nicht gleich!");
-			error=true;
 		}
 		// ELSE brauchen wir wenn der Fehler schonmal aufgetreten ist aber jetzt
 		// korrigiert wurde. Dann verstecken wir die (jetzt nicht mehr gültige)
 		// Fehlermeldung wieder.
-//		else {// paswortfelder leer
-//			
-//		}
+		else {// paswortfelder nicht leer und gleich
+			toggleWarning("error_emptyPasswords", false,
+			"Leeres Passwortfeld!");
+			toggleWarning("error_unequalPasswords", false,
+			"Passwörter sind nicht gleich!");
+			changeAccount();
+		}
 	}
 	//wenn passwortfelder leer
-	if ((pw = null || pw == "") && (pww = null || pww == "")|| (pw!=null && pww==null)) {
-		error=true;
+	if ((pw == null || pw == "") && (pww == null || pww == "")|| (pw!=null && pww==null)||(pww!=null && pw==null)) {
 		toggleWarning("error_unequalPasswords", false,
 		"Passwörter sind nicht gleich!");
 		toggleWarning("error_emptyPasswords", true,
@@ -118,13 +119,7 @@ function check() {
 	// Ansonsten ist alles okay, also weiter:
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
-
-	} else if (pw==pww && error==false) {
-		alert("changing account");
-		changeAccount();
 	}
-	else
-		alert("WRONG CASE");
 
 }
 

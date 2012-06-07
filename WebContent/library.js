@@ -182,7 +182,7 @@ function checkInt(int){
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
 function checkFloat(float){
-	if(floar=="")return false;
+	if(float=="")return false;
 	var regex = /^(0|(-)?[1-9][0-9]*((\,|\.)[0-9]+)?|0(\.|\,)[0-9]+)$/;
 	return(regex.test(float));
 }
