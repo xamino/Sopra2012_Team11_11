@@ -74,11 +74,9 @@ function check() {
 		} else
 			toggleWarning("error_unequalPasswords", false, "");
 	}
-<<<<<<< Updated upstream
-=======
 	// Wenn es einen Fehler gab, den Benutzer die Eingaben kontrollieren lassen:
 	// Ansonsten ist alles okay, also weiter:
->>>>>>> Stashed changes
+
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
