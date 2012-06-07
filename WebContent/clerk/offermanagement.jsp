@@ -56,6 +56,7 @@
 			<div class="haupttext">
 				<form id="angebotpruefenid" class="listform">
 						<input id="angebotpruefen" type="button" value="Angebot prüfen" />
+						<div id="error_noOfferSelected" class="hiddenerror"></div>
 					<hr>
 					<table id="clerkTable">
 						<!-- <tr>
