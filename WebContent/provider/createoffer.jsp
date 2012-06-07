@@ -35,6 +35,8 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Angebot erstellen <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+						<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_PROVIDER_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 		</div>
 	</div>
