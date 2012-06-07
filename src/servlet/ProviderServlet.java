@@ -353,15 +353,14 @@ public class ProviderServlet extends HttpServlet {
 			int aid;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
-
 			} catch (NumberFormatException e) {
 				log.write("ProviderServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			System.out.println("Applicant:" + username + " for OfferID = " + aid
-					+ " selected/taken");
+						
+			//System.out.println("Applicant:" + username + " for OfferID = " + aid + " selected/taken");
 
 			Vector<Application> appliVect = ApplicationController.getInstance()
 					.getApplicationsByOffer(aid);
@@ -390,7 +389,7 @@ public class ProviderServlet extends HttpServlet {
 						log.write("ProviderServlet"," Setting free slots for offer in progress...");
 						
 						//No free slots
-						if(freeSlots<=0){
+						if(OfferController.getInstance().getFreeSlotsOfOffer(aid) < 1){
 							log.write("ProviderServlet","No free slots available for: "+offertoSetSlots.getName());
 							response.setContentType("text/error");
 							response.getWriter().write("Keine freien PLaetze mehr!");

@@ -550,6 +550,30 @@ public class OfferController {
 		db.delete(tablename, "AID= " + newID);
 		return newID;
 	}
+	
+	/**
+	 * Return the free slots of an offer
+	 * @param aid
+	 * 			aid of the offer
+	 * @return free slots of the offer
+	 */
+	public int getFreeSlotsOfOffer(int aid){
+		
+		int number = 0;
+		Offer off = getOfferById(aid);
+		int total = off.getSlots();
+		int taken = 0;
+		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByOffer(aid);
+		for(int i = 0; i < apps.size(); i++){
+			if(apps.elementAt(i).isChosen()){
+				taken++;
+			}
+		}
+		
+		number = total - taken;
+		
+		return number;
+	}
 
 	/**
 	 * Generate a random number.
@@ -561,7 +585,6 @@ public class OfferController {
 	 * @return generated number.
 	 */
 	private int generateRandomNr(int aStart, int aEnd) {
-
 		Random random = new Random();
 		// get the range, casting to long to avoid overflow problems
 		long range = (long) aEnd - (long) aStart + 1;
