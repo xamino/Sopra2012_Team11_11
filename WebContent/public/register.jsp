@@ -49,8 +49,8 @@
 						onclick="checkLogin(login); return false;" />
 				</p>
 			</form>
-			<a class="hintlink" href="" title="neues Passwort">Passwort
-				vergessen?</a>
+			<a class="hintlink" href="javascript:void(0)"
+				onclick="prepareForgetful();" href="">Passwort vergessen?</a>
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>
@@ -134,8 +134,8 @@
 						<br> <input type="submit" value="Registrieren"
 							onclick="checkRegister(registerForm); return false;" /><input
 							type="button" value="Abbrechen"
-							style="position: relative; left: 20%" onclick="gotoIndex()" /><br><div
-							id="error_emptyfields" class="hiddenerror"></div>
+							style="position: relative; left: 20%" onclick="gotoIndex()" /><br>
+						<div id="error_emptyfields" class="hiddenerror"></div>
 					</form>
 				</div>
 			</div>
@@ -143,5 +143,24 @@
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
+	<!-- Forgotten password popup -->
+	<div id="password_forgotten" class="popup_hidden">
+		<form name="forgottenForm">
+			<h3>Password vergessen</h3>
+			<hr>
+			<div class="textblock">
+				Email: <br>
+				<textarea name="mail" rows="1" cols="30"></textarea>
+				<div id="error_passwordMail" class="hiddenerror"></div>
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Neues Password senden"
+					onclick="requestNewPassword();" /> <input type="button"
+					value="Abbrechen"
+					onclick="togglePopup('password_forgotten', false);" />
+			</div>
+		</form>
+	</div>
 </body>
 </html>
