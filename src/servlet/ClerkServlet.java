@@ -412,11 +412,13 @@ public class ClerkServlet extends HttpServlet {
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
 			String rep = request.getParameter("rep");
+			System.out.println("clerk pw: "+pw);
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
 			if (rep == null)
 				rep = "";
+			System.out.println("clerk edit own account: "+name+"-"+email+"-"+pw+"-"+rep);
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
