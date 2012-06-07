@@ -2,6 +2,7 @@
  * @author Laura Irlinger
  * @author Tamino Hartmann
  * @author Patryk Boczon
+ * @author Oemer Sahin
  */
 package servlet;
 
@@ -163,6 +164,13 @@ public class ClerkServlet extends HttpServlet {
 			double wage = Double.parseDouble(request.getParameter("wage"));
 
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
+			
+			//set modificationdate to current date
+			java.util.Date aenderungsdatum = new java.util.Date();
+			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(aenderungsdatum.getTime());
+						
+			//sets modificationdate and updates it
+			offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
 
@@ -412,11 +420,13 @@ public class ClerkServlet extends HttpServlet {
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
 			String rep = request.getParameter("rep");
+			System.out.println("clerk pw: "+pw);
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
 			if (rep == null)
 				rep = "";
+			System.out.println("clerk edit own account: "+name+"-"+email+"-"+pw+"-"+rep);
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");

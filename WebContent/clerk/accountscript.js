@@ -17,7 +17,6 @@ function doExcelExport() {
  * the data.
  */
 function loadAccount() {
-	alert("test");
 	connect("/hiwi/Clerk/js/loadAccount", "", handleLoadAccountResponse);
 
 }
@@ -31,7 +30,6 @@ function loadAccount() {
  *            The data.
  */
 function handleLoadAccountResponse(mime, data) {
-	alert(data);
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
@@ -91,39 +89,30 @@ function check() {
 		if (pw != pww) {
 			// Ja, es gab einen Fehler:
 			// Denn Bentzer benachrichtigen:
-			toggleWarning("error_emptyPasswords", false,
-			"Leeres Passwortfeld!");
 			toggleWarning("error_unequalPasswords", true,
 					"Passwörter sind nicht gleich!");
 		}
 		// ELSE brauchen wir wenn der Fehler schonmal aufgetreten ist aber jetzt
 		// korrigiert wurde. Dann verstecken wir die (jetzt nicht mehr gültige)
 		// Fehlermeldung wieder.
-		else {// paswortfelder nicht leer und gleich
-			toggleWarning("error_emptyPasswords", false,
-			"Leeres Passwortfeld!");
-			toggleWarning("error_unequalPasswords", false,
-			"Passwörter sind nicht gleich!");
-			changeAccount();
-		}
-	}
-	//wenn passwortfelder leer
-	if ((pw == null || pw == "") && (pww == null || pww == "")|| (pw!=null && pww==null)||(pww!=null && pw==null)) {
-		toggleWarning("error_unequalPasswords", false,
-		"Passwörter sind nicht gleich!");
-		toggleWarning("error_emptyPasswords", true,
-		"Leere Passwortfelder!");
+		else
+			toggleWarning("error_unequalPasswords", false, "");
 	}
 	// Wenn es einen Fehler gab, den Benutzer die Eingaben kontrollieren lassen:
 
 	// Ansonsten ist alles okay, also weiter:
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
+
+	}else if(pw==pww){
+		changeAccount();
 	}
 
 }
 
-function changeAccount() {
+
+
+function changeAccount(){
 	var form = datenAendern;
 	var error = false;
 	var realName = form.realName.value;
@@ -150,7 +139,7 @@ function changeAccount() {
 		return;
 	// As of here, send:
 	connect("/hiwi/Clerk/js/changeAccount", "name=" + realName + "&mail="
-			+ email + "&pw=" + "&rep=" + rep, handleChangeAccountResponse);
+			+ email + "&pw="+ password + "&rep=" + rep, handleChangeAccountResponse);
 }
 
 function handleChangeAccountResponse(mime, data) {

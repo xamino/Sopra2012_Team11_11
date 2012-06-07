@@ -1,6 +1,7 @@
 /**
  * @author: Patryk Boczon
  * @author: Laura Irlinger
+ * @author: Oemer Sahin
  */
 
 // !!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd
@@ -250,10 +251,20 @@ function prepareButton() {
 		// editoffer.jsp, wenn etwas markiert
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
-			window.location = 'editoffer.jsp?AID=' + selectedOffer;
+			//wenn angebotpruefen geklickt und kein angebot selektiert
+			if( selectedOffer==null){
+				toggleWarning("error_noOfferSelected", true,
+				"Kein Angebot selektiert!");
+			}
+			else{
+				toggleWarning("error_noOfferSelected", false,
+				"Kein Angebot selektiert!");
+				window.location = 'editoffer.jsp?AID=' + selectedOffer;
+			}
 		};
-	}
-
+	}	
+	//wenn angebotpruefen geklickt und kein angebot selektiert
+	
 	// alert("preparing button");
 
 	if (document.getElementById("editapplication") != null
@@ -269,7 +280,7 @@ function prepareButton() {
 		};
 	}
 
-}
+}//end prepareButton
 
 function deleteChosenDocument() {
 	var aid = getURLParameter("AID");
@@ -347,11 +358,13 @@ function handleDocumentChangeResponse(mime, data) {
 function markOfferSelected(id) {
 	// alert("alte id: "+selectedOffer);
 	// Remove marking from previous selected, if applicable:
-	if (selectedOffer != null)
+	if (selectedOffer != null){
 		document.getElementById(selectedOffer).setAttribute("class", "");
+	}
 	// If clicked again, unselect:
 	if (selectedOffer == id) {
 		selectedOffer = null;
+		prepareButton();
 		return;
 	}
 	// Else save & mark new one:
