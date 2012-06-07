@@ -37,6 +37,8 @@
 				Bewerbungen<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
 					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 			</div>
 		</div>
 	</div>

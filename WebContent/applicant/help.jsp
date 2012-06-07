@@ -30,10 +30,10 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a
 					href="<%=Helper.D_APPLICANT_USERINDEX%>"
 					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
-				Hilfe <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
-					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;Hilfe
 			</div>
 		</div>
 	</div>
