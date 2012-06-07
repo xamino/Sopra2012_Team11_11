@@ -104,19 +104,12 @@ public class AccountController {
 		String username = applicant.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 
-		Vector<AppDocument> doc = DocumentController.getInstance()
-				.getAllAppDocsByApplicant(username);
-		for (AppDocument tempDoc : doc) {
-			DocumentController.getInstance().deleteAppDocument(tempDoc);
-		}
-
-		Vector<Application> apps = ApplicationController.getInstance()
-				.getApplicationsByApplicant(username);
-		Iterator<Application> itp = apps.iterator();
-
-		for (int i = 0; itp.hasNext(); i++) {
-			ApplicationController.getInstance().deleteApplication(
-					apps.elementAt(i));
+		//deleting all applications from username
+		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByApplicant(username);
+		if(apps != null){
+			for (int i = 0; i < apps.size(); i++) {
+				ApplicationController.getInstance().deleteApplication(apps.elementAt(i));
+			}
 		}
 
 		return deleteAccount(acc);
@@ -133,10 +126,13 @@ public class AccountController {
 	public boolean deleteClerkAccount(Clerk clerk) {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
-
+		
+		/*
 		Institute inst = InstituteController.getInstance().getInstituteByIID(
 				acc.getInstitute());
 		InstituteController.getInstance().deleteInstitute(inst);
+		*/
+		
 		return deleteAccount(acc);
 
 	}
