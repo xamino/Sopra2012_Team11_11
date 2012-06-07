@@ -35,6 +35,8 @@
 					href="<%=Helper.D_APPLICANT_USERINDEX%>"
 					title="Hier geht es zur Ihrer Startseite">Startseite</a><br>
 				&rarr; Accountverwaltung
+				<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 			</div>
 		</div>
 	</div>

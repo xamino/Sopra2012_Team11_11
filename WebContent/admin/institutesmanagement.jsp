@@ -40,6 +40,8 @@
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
 				&rarr; Instituteverwaltung<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
+					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_ADMIN_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 			</div>
 		</div>
 	</div>

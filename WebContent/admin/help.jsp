@@ -30,13 +30,13 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_USERINDEX%>"
 					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
-				Hilfe <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+				 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
+					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;Hilfe
 			</div>
 		</div>
 	</div>

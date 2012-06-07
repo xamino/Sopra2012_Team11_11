@@ -70,7 +70,8 @@
 				<div class="text">
 					Hier finden Sie alle im Moment angebotenen Stellen. <br> Um
 					sich zu bewerben, registrieren Sie sich bitte, oder loggen Sie sich
-					ein.
+					ein.<br>
+					Hilfe finden Sie <a	href="<%=Helper.D_PUBLIC_HELP %>" title="Hilfe"> hier</a>.
 				</div>
 			</div>
 			<hr>
