@@ -127,6 +127,16 @@ public class AccountController {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 		
+		//sets clerk - of all applications with current clerk as clerk - to null 
+		Vector<Application> apps = ApplicationController.getInstance().getApprovedApplicationsByClerk(username);
+		if(apps != null){
+			for(int i = 0; i < apps.size(); i++){
+				Application temp = apps.elementAt(i);
+				temp.setClerk(null);
+				ApplicationController.getInstance().updateApplication(temp);
+			}
+		}
+		
 		/*
 		Institute inst = InstituteController.getInstance().getInstituteByIID(
 				acc.getInstitute());
