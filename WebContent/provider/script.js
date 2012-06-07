@@ -206,36 +206,54 @@ function addOffer(form) {
 	if (titel == null || titel == "") {
 		toggleWarning("error_titel", true, "Bitte ausfuellen!");
 		error = true;
-	} else
+	} else if (!checkText(titel)){
+		toggleWarning("error_titel", true, "Unerlaubtes Sonderzeichen!");
+	}else
 		toggleWarning("error_titel", false, "");
 
 	var std = form.std.value;
 	if (std == null || std == "") {
 		toggleWarning("error_std", true, "Bitte ausfuellen!");
 		error = true;
-	} else
+	} else if(!checkInt(std)){
+		toggleWarning("error_std", true , "Bitte nur ganze Zahlen!")
+		error=true;
+	} 
+	else
 		toggleWarning("error_std", false, "");
 
 	var stellen = form.stellen.value;
 	if (stellen == null || stellen == "") {
 		toggleWarning("error_stellen", true, "Bitte ausfuellen!");
 		error = true;
-	} else
+	} else if(!checkInt(stellen)){
+		toggleWarning("error_stellen",true,"Bitte nur ganze Zahlen!");
+		error = true;
+	}
+	else
 		toggleWarning("error_stellen", false, "");
 
 	var beschreibung = form.beschreibung.value;
 	if (beschreibung == null || beschreibung == "") {
 		toggleWarning("error_beschreibung", true, "Bitte ausfuellen!");
 		error = true;
-	} else {
+	} else if(!checkText(beschreibung)){
+		toggleWarning("error_beschreibung", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}
+	else {
 		toggleWarning("error_beschreibung", false, "");
 
-		var notiz = form.notiz.value;
-		if (notiz == null || notiz == "") {
-			toggleWarning("error_notiz", true, "Bitte ausfuellen!");
-			error = true;
-		} else
-			toggleWarning("error_notiz", false, "");
+	var notiz = form.notiz.value;
+	if (notiz == null || notiz == "") {			
+		toggleWarning("error_notiz", true, "Bitte ausfuellen!");
+		error = true;
+	} else if(!checkText(notiz)){
+		toggleWarning("error_notiz", true, "Unerlaubtes Sonderzeichen!");
+		error =true;
+	} 
+	else
+		toggleWarning("error_notiz", false, "");
 
 	}
 	/*is(!error)*/connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
@@ -341,7 +359,11 @@ function updateOfferChanges(form) {
 	if (titelFeld == null || titelFeld == "") {
 		toggleWarning("error_titelFeld", true, "Bitte ausfuellen!");
 		error = true;
-	} else
+	} else if(!checkText(titelFeld)){
+		toggleWarning("error_titelFeld",true,"Unerlaubtes Sonderzeichen!");
+		error=true;
+	}
+	else
 		toggleWarning("error_titelFeld", false, "");
 	
 	var beschreibungsFeld = form.beschreibungsFeld.value;
@@ -349,7 +371,11 @@ function updateOfferChanges(form) {
 	if (beschreibungsFeld == null || beschreibungsFeld == "") {
 		toggleWarning("error_beschreibungsFeld", true, "Bitte ausfuellen!");
 		error = true;
-	} else
+	} else if(!checkText(beschreibungsFeld)){
+		toggleWarning("error_beschreibungsFeld", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}
+	else
 		toggleWarning("error_beschreibungsFeld", false, "");
 	if (error){
 		return;

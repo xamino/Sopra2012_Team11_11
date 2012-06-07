@@ -119,13 +119,21 @@ function changeAccount(){
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if (!checkText(realName)){
+		toggleWarning("error_realName",true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}
+	else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if (!checkEmail(email)){
+		toggleWarning("error_email",true,"Ungültige Email!");
+		error=true;
+	}
+	else
 		toggleWarning("error_email", false, "");
 	var password = form.newpasswort.value;
 	if (password != null && password != "") {
@@ -135,6 +143,11 @@ function changeAccount(){
 	var rep = form.stellvertreter.value;
 	if (rep == null)
 		rep = "";
+	if(rep !=null && rep !="")if (!checkUsername(rep)){
+		toggleWarning("error_stellvertreter",true,"Kein gültiger Username!");
+		error=true;
+	}else
+		toggleWarning("error_stellvertreter",false,"");
 	if (error)
 		return;
 	// As of here, send:

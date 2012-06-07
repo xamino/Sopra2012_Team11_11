@@ -173,7 +173,9 @@ function angebotspeichern() {
 	var aid = getURLParameter("AID");
 	var hoursperweek = document.getElementById("inputhoursperweek").value;
 	var wage = document.getElementById("inputwage").value;
-
+	var error =false;
+    //TODO:Hier Ã¼berprÃ¼fung von gehalt und stunden pro woche
+	if(error)return;
 	alert("Angebot aktualisiert:"+'\n'+"Stunden/Woche: "+hoursperweek+'\n'+"Lohn: "+wage);
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
 			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
@@ -421,7 +423,7 @@ function deleteAppDocumentResponse(){
 	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 	selectedDocument = null;
 	applicationDocuments();
-	//TODO Dokument löschen button ausgrauen
+	//TODO Dokument lï¿½schen button ausgrauen
 }
 
 /**
@@ -627,7 +629,7 @@ function handledocumentsToAddToAppResponse(mime, data) {
  * @param offerid
  */
 function setDocCheck(username, docid, offerid){
-	//ursprünglich nur die connect --> aber für Markierung das hinzugefuegt!!!
+	//ursprï¿½nglich nur die connect --> aber fï¿½r Markierung das hinzugefuegt!!!
 	if (selectedDocument != null)
 	document.getElementById(selectedDocument).setAttribute("class", "");
 	//alert("man");

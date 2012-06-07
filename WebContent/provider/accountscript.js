@@ -107,11 +107,17 @@ function changeAccount(){
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
+	}else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
+		error = true;
+	}else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
 		error = true;
 	} else
 		toggleWarning("error_email", false, "");

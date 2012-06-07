@@ -74,6 +74,11 @@ function check() {
 		} else
 			toggleWarning("error_unequalPasswords", false, "");
 	}
+<<<<<<< Updated upstream
+=======
+	// Wenn es einen Fehler gab, den Benutzer die Eingaben kontrollieren lassen:
+	// Ansonsten ist alles okay, also weiter:
+>>>>>>> Stashed changes
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
@@ -90,13 +95,19 @@ function changeAccount() {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
+	}else if(!checkText(realName)){
+		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
+		error = true;
 	} else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else
+	} else if(!checkEmail(email)){
+		toggleWarning("error_email", true, "Ungültige Email!");
+		error = true;
+	}else
 		toggleWarning("error_email", false, "");
 	var password = form.newpasswort.value;
 	if (password != null && password != "") {
