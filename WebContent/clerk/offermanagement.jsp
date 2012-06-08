@@ -10,10 +10,12 @@
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Angebote Verwalten | Hiwi Job Börse</title>
 </head>
+
 <body onload="showMyOffers()">
+<div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href="../clerk/userindex.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
@@ -39,6 +41,8 @@
 					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>&rarr;
 				Angebotsverwaltung<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a>
+					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 			</div>
 		</div>
 	</div>
@@ -92,6 +96,7 @@
 			</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>

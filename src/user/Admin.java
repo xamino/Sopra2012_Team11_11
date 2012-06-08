@@ -1,19 +1,12 @@
 package user;
 
-import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
-
 import userManagement.LoggedInUsers;
-
 import database.account.Account;
-import database.account.AccountController;
 import database.document.Document;
 import database.institute.Institute;
-import database.offer.Offer;
-import database.offer.OfferController;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Admins.

@@ -13,9 +13,10 @@
 </head>
 
 <body>
+<div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href=../provider/userindex.jsp>Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
@@ -28,7 +29,6 @@
 				<div class="text">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a 
 					href="<%=Helper.D_CLERK_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					onclick="doExcelExport();">ExcelExport</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
@@ -36,7 +36,8 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_CLERK_OFFERMANAGEMENT%>">Angebotsverwaltung</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a>
+					href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe
 				</div>
 		</div>
 	</div>
@@ -52,7 +53,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<div class="clear"></div>
 
 	<div class="footer"></div>

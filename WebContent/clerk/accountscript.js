@@ -78,12 +78,6 @@ function check() {
 	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
 		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
 	}
-	
-	// Jetzt müssen wir schauen, ob die leer sind und gültig (hier jetzt nur für
-	// das passwort!). Da mehrere Sachen falsch sein könne, speichere ich den
-	// Wert in einer bool damit immer alle kontrolliert werden, auch wenn einige
-	// fehlen.
-	var error = false;
 	// ACHTUNG: Wenn eines der Passwörter NICHT leer ist, dann sollen sie
 	// geändert
 	// werden, also die werte hashen und mitschicken! Andere Variablen wie Name

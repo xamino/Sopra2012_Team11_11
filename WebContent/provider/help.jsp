@@ -13,9 +13,10 @@
 </head>
 
 <body>
+<div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
@@ -28,9 +29,9 @@
 				<div class="text">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="<%=Helper.D_PROVIDER_USERINDEX %>" title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe <br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Hilfe
 				</div>
 		</div>
 	</div>
@@ -46,7 +47,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<div class="clear"></div>
 
 	<div class="footer"></div>

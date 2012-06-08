@@ -10,14 +10,12 @@ package database.offer;
 /**
  * Verwaltet alle Datenbankzugriffe auf Angebots-bezogene Daten.
  */
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.Vector;
 
 import logger.Log;
-import user.Provider;
 import database.DatabaseController;
 import database.account.Account;
 import database.application.Application;
@@ -468,59 +466,6 @@ public class OfferController {
 			return null;
 		}
 	}
-	
-	
-//	/**
-//	 * Aktualisiert die freien Plaetze eines Angebots
-//	 * 
-//	 * @param offer
-//	 *            Angebotsobjekt
-//	 * .
-//	 */
-//	public void refreshOfferSlots(Offer offer) {
-//
-//		int oldSlotNumber = offer.getSlots();
-//		int takenSlots = db.count(new String[]{" Bewerbungen"}," AID="+offer.getAid()+" AND ausgewaehlt="+true);
-//		
-//		int newSlotNumber = oldSlotNumber-takenSlots;
-//		System.out.println("Offernam="+offer.getName()+"takenSlots"+" oldslot="+oldSlotNumber+" takenslots="+takenSlots+" newSlotNUmber="+newSlotNumber);
-//				
-//		ResultSet rs = db.select(new String[]{"*"}, new String[]{" Angebote"}," AID="+offer.getAid()+" AND Geprueft=true");
-//
-//		try {
-//			while (rs.next()) {
-//				
-//				if(oldSlotNumber<0){
-//					log.write("OfferController","Error free slot number is invalid!");
-//					return;
-//				}
-//				else if(takenSlots<0){
-//					takenSlots= takenSlots*(-1);
-//					return;
-//				}
-//				else if(newSlotNumber<0){
-//					log.write("OfferController","There are no more free Slots for offer "+offer.getName());
-//					return;
-//				}
-//				else{
-//					offer.setSlots(newSlotNumber);
-//					db.update("Angebote", new String[]{"Plaetze"}, new Object[]{newSlotNumber}, " AID="+offer.getAid());
-//					log.write("OfferController","Slot has been refreshed for "+offer.getName());
-//				}
-//				
-//			}
-//			
-//			rs.close();
-//			
-//			
-//		} catch (SQLException e) {
-//			log.write("OfferController",
-//					"Error reading ResultSet in refreshOfferSlots()!");
-//			e.printStackTrace();
-//			
-//		}
-//	}
-	
 
 	/**
 	 * Generate a new ID.
@@ -550,6 +495,30 @@ public class OfferController {
 		db.delete(tablename, "AID= " + newID);
 		return newID;
 	}
+	
+	/**
+	 * Return the free slots of an offer
+	 * @param aid
+	 * 			aid of the offer
+	 * @return free slots of the offer
+	 */
+	public int getFreeSlotsOfOffer(int aid){
+		
+		int number = 0;
+		Offer off = getOfferById(aid);
+		int total = off.getSlots();
+		int taken = 0;
+		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByOffer(aid);
+		for(int i = 0; i < apps.size(); i++){
+			if(apps.elementAt(i).isChosen()){
+				taken++;
+			}
+		}
+		
+		number = total - taken;
+		
+		return number;
+	}
 
 	/**
 	 * Generate a random number.
@@ -561,7 +530,6 @@ public class OfferController {
 	 * @return generated number.
 	 */
 	private int generateRandomNr(int aStart, int aEnd) {
-
 		Random random = new Random();
 		// get the range, casting to long to avoid overflow problems
 		long range = (long) aEnd - (long) aStart + 1;
@@ -570,7 +538,34 @@ public class OfferController {
 		int randomNumber = (int) (fraction + aStart);
 		return randomNumber;
 	}
-	
-	
 
+	//TODO: Doc
+	/**
+	 * Liest alle Angebote von einem Institut aus.
+	 * @param iid
+	 * @return
+	 */
+	public Vector<Offer> getOffersByInstitute(int iid) {
+		Vector<Offer> offers = new Vector<Offer>();
+		ResultSet rs;
+		rs = db.select(new String[] { "*" }, new String[] { tableName },
+				"Institut =" + iid);
+		try {
+			while (rs.next()) {
+				offers.add(new Offer(rs.getInt("AID"), rs
+						.getString("Ersteller"), rs.getString("Name"), rs
+						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
+						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
+						.getString("Beschreibung"), rs.getDate("Beginn"), rs
+						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
+						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
+						.getBoolean("abgeschlossen")));
+			}
+			return offers;
+		} catch (SQLException e) {
+			log.write("OfferController",
+					"Error reading ResultSet in getOffersByInstitute()!");
+			return null;
+		}
+	}
 }

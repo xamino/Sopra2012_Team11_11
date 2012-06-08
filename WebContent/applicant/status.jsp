@@ -15,9 +15,10 @@
 </head>
 
 <body onload="selectApplication()">
+<div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner" href="../applicant/userindex.jsp">Hiwi-Börse</a>
 		</h1>
 	</div>
 	<div class="right">
@@ -36,6 +37,8 @@
 				Bewerbungen<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
 					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
+					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					href="<%=Helper.D_APPLICANT_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 			</div>
 		</div>
 	</div>
@@ -79,7 +82,7 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
 	<div class="clear"></div>
 
 	<div class="footer"></div>

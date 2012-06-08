@@ -13,6 +13,7 @@
 </head>
 
 <body onload="loadOffers();">
+	<div class="footerunten">
 	<div class="header">
 		<h1>
 			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
@@ -25,12 +26,12 @@
 				<span> <label for="userName">Benutzername</label>
 				</span>
 				<div class="form">
-					<input type="text" name="userName" size="20" maxlength="100" />
+					<input type="text" name="userName" size="15" maxlength="100" />
 				</div>
 				<br> <span> <label for="userPassword">Passwort</label>
 				</span>
 				<div class="form">
-					<input type="password" name="userPassword" size="20"
+					<input type="password" name="userPassword" size="15"
 						maxlength="100" />
 				</div>
 				<div class="clear"></div>
@@ -69,7 +70,8 @@
 				<div class="text">
 					Hier finden Sie alle im Moment angebotenen Stellen. <br> Um
 					sich zu bewerben, registrieren Sie sich bitte, oder loggen Sie sich
-					ein.
+					ein.<br>
+					Hilfe finden Sie <a	href="<%=Helper.D_PUBLIC_HELP %>" title="Hilfe"> hier</a>.
 				</div>
 			</div>
 			<hr>
@@ -82,6 +84,8 @@
 			</div>
 		</div>
 	</div>
+	</div>
+
 	<div class="clear"></div>
 	<div class="footer"></div>
 	<!-- Forgotten password popup -->
