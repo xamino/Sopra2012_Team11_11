@@ -80,16 +80,16 @@ public class ApplicantServlet extends HttpServlet {
 		// Delete an application:
 		else if (path.equals("/js/deleteApplication")) {
 			int aid = Integer.parseInt(request.getParameter("AID"));
-			int uid = Integer.parseInt(request.getParameter("UID"));
-
-			if (!applicant.deleteApplication(uid, aid)) {
-				response.setContentType("text/text");
-				response.getWriter().write(
-						"Application " + aid + "/" + uid + " deleted");
-				return;
-			}
-			response.setContentType("text/error");
-			response.getWriter().write("Failed to delete application!");
+			String callbackUsername = applicant.getUserData().getUsername();
+			//int uid = Integer.parseInt(request.getParameter("UID"));
+//			if (!applicant.deleteApplication(uid, aid)) {
+//				response.setContentType("text/text");
+//				response.getWriter().write(
+//						"Application " + aid + "/" + uid + " deleted");
+//				return;
+//			}
+//			response.setContentType("text/error");
+//			response.getWriter().write("Failed to delete application!");
 
 		}
 		// Load my offers:

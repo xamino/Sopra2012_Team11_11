@@ -2,6 +2,7 @@
  * Script for applicant webpages.
  * 
  * @author: Laura Irlinger
+ * @author: Oemer Sahin
  */
 
 /**
@@ -206,8 +207,8 @@ function handleselectDocumentsResponse(mime, data) {
 
 function deleteApplication() {
 	// alert("deleteApplication");
-	connect("/hiwi/Applicant/js/deleteApplication", "UID=" + UID + "AND AID="
-			+ AID, handleDeleteApplication);
+	var aidToDelete = getURLParameter("AID");
+	connect("/hiwi/Applicant/js/deleteApplication", "AID="+ aidToDelete, handleDeleteApplication);
 
 }
 
