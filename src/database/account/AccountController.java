@@ -155,16 +155,29 @@ public class AccountController {
 	public boolean deleteProviderAccount(Account provider) {
 		String username = provider.getUsername();
 		Account acc = getAccountByUsername(username);
+		
+		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(acc);
+		
+		String representative = provider.getRepresentative();
+		
+		
+		if(representative == null){
+			for (int i = 0; i < off.size(); i++) {
+				Offer temp = off.elementAt(i);
 
-		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(
-				acc);
-
-		for (int i = 0; i < off.size(); i++) {
-			Offer temp = off.elementAt(i);
-
-			OfferController.getInstance().deleteOffer(temp);
-
+				OfferController.getInstance().deleteOffer(temp);
+			}
 		}
+		else{
+			for(int i = 0; i < off.size(); i++){
+				Offer temp = off.elementAt(i);
+				
+				temp.setAuthor(representative);
+				
+				OfferController.getInstance().updateOffer(temp);
+			}
+		}
+
 		return deleteAccount(acc);
 	}
 
