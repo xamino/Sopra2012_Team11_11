@@ -209,7 +209,7 @@ function handleselectDocumentsResponse(mime, data) {
  * This function deletes an application which the applicant wants to abandon in the system.
  */
 function deleteApplication() {
-	// alert("deleteApplication");
+	//alert("deleteApplication");
 	var aidToDelete = getURLParameter("AID");
 	connect("/hiwi/Applicant/js/deleteApplication", "AID="+ aidToDelete, handleDeleteApplication);
 
