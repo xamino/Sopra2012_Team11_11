@@ -1,10 +1,12 @@
 /**
  * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Oemer Sahin
  */
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -18,6 +20,8 @@ import user.Applicant;
 
 import com.google.gson.Gson;
 
+import database.application.Application;
+import database.application.ApplicationController;
 import database.document.DocumentController;
 import database.document.OfferDocument;
 import database.offer.Offer;
@@ -77,10 +81,46 @@ public class ApplicantServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
 		}
-		// Delete an application:
+		// Delete an application, bewerbung wiederrufen:
 		else if (path.equals("/js/deleteApplication")) {
-			int aid = Integer.parseInt(request.getParameter("AID"));
-			String callbackUsername = applicant.getUserData().getUsername();
+			// aid und benutzername sind identifier
+			int aid;			
+			try {
+				aid = Integer.parseInt(request.getParameter("AID"));
+
+			} catch (NumberFormatException e){
+				log.write("ApplicantServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID!");
+				return;
+			}
+					
+			String callerUsername = applicant.getUserData().getUsername(); //benutzername des bewerbers
+			//alle bewerbungen dieses Bewerbers
+			Vector<Application> applisToDelete = ApplicationController.getInstance().getApplicationsByApplicant(callerUsername);
+			Application appToDelete = null;
+			
+			//gehe alle Bewerbungen von diesem User durch und suche nach der AID des Angebots, welches er wiederufen will
+			for(int i=0;i<applisToDelete.size();i++){
+				if(applisToDelete.elementAt(i).getAid()==aid)//gefunden !
+					appToDelete=applisToDelete.elementAt(i);
+			}
+			
+			if(appToDelete==null){ //nicht gefunden!
+				log.write("ApplicantServlet","There is no application for user:"+callerUsername+" with aid= "+aid+". Errorpath: "+path.toString());
+				response.setContentType("text/error");
+				response.getWriter().write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
+				return;
+			}
+			
+			log.write("ApplicantServlet","Deleting application in progress...");
+			ApplicationController.getInstance().deleteApplication(appToDelete);
+
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
+			return;
+			
+			
 			//int uid = Integer.parseInt(request.getParameter("UID"));
 //			if (!applicant.deleteApplication(uid, aid)) {
 //				response.setContentType("text/text");

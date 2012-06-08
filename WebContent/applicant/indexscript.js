@@ -205,6 +205,9 @@ function handleselectDocumentsResponse(mime, data) {
 	}
 }
 
+/**
+ * This function deletes an application which the applicant wants to abandon in the system.
+ */
 function deleteApplication() {
 	// alert("deleteApplication");
 	var aidToDelete = getURLParameter("AID");
@@ -212,8 +215,19 @@ function deleteApplication() {
 
 }
 
+/**
+ * This function handles the response of the ApplicantServlet after deleteing an application
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
 function handleDeleteApplication(mime, data) {
-
+	if (mime == "text/error")
+		alert(data);
+	else if (mime == "text/url")
+		window.location = data;
 }
 
 function prepareApply(aid) {

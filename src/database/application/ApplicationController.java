@@ -300,14 +300,37 @@ public class ApplicationController {
 	 *            Id einer Bewerbung
 	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
 	 */
-	public Application getApplicationById(int AId) throws SQLException {
-		String[] select = { "AID" };
+	public Application getApplicationById(int AId){
+		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = null;
-
+		String where = "AID = " + AId;
+				
 		ResultSet rs = db.select(select, from, where);
-		Application app = new Application(rs.getString(1), rs.getInt(2),
-				rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
-		return app;
+
+		try {
+			if (rs.next()) {
+				Application app = new Application(rs.getString(1), rs.getInt(2),
+						rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+				return app;
+			} else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("ApplicantionController",
+					"Error while reading application by aid from Database");
+		}
+		return null;
+		
+//changed by oemer. orginal:		
+//		public Application getApplicationById(int AId) throws SQLException {
+//			String[] select = { "AID" };
+//			String[] from = { tableName };
+//			String where = null;
+//
+//			ResultSet rs = db.select(select, from, where);
+//			Application app = new Application(rs.getString(1), rs.getInt(2),
+//					rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+//			return app;
+//		}
+	
 	}
 }
