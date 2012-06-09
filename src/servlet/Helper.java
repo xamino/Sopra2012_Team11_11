@@ -230,4 +230,18 @@ public final class Helper {
 		}
 		return null;
 	}
+
+	/**
+	 * Globale Funktion zum Ueberpruefen eines Strings auf Gueltigkeit.
+	 * 
+	 * @param string
+	 *            Der zu pruefende String.
+	 * @return <code>True</code> wenn gueltig, sonst <code>False</code>.
+	 */
+	public static Boolean validate(String string) {
+		if (string == null || string.trim().isEmpty())
+			return false;
+		// TODO: Check for sql-injection and valid chars here!
+		return true;
+	}
 }

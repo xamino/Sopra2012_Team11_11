@@ -10,7 +10,6 @@ package database.account;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.Vector;
 
 import servlet.Helper;
@@ -19,10 +18,6 @@ import user.Clerk;
 import database.DatabaseController;
 import database.application.Application;
 import database.application.ApplicationController;
-import database.document.AppDocument;
-import database.document.DocumentController;
-import database.institute.Institute;
-import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 

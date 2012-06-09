@@ -140,11 +140,12 @@ function handleEditOneOfferResponse(mime, data) {
 		// einfach die Werte setzen könnten?
 		var anbieternotiz = (offer.note == null || offer.note == "") ? "[Keine Notiz vorhanden.]"
 				: offer.note;
-		offertable.innerHTML = "<tr><td>Name des Veranstalters:</td>" + "<td>"
+		offertable.innerHTML = "<tr><td>Name des Veranstalters:</td>"
+				+ "<td id=\"offerAuthor\">"
 				+ offer.author
 				+ "</td></tr>"
 				+ "<tr><td>Titel der Stelle:</td>"
-				+ "<td>"
+				+ "<td id=\"offerName\">"
 				+ offer.name
 				+ "</td></tr>"
 				+ "<tr><td>Plätze:</td>"
@@ -160,8 +161,11 @@ function handleEditOneOfferResponse(mime, data) {
 				+ offer.wage
 				+ "\" />€ <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Anbieternotiz:</td>"
-				+ "<td style=\"background-color: lightgray;\">" + anbieternotiz
-				+ "</td></tr>" + "<tr><td>Status:</td><td>" + status
+				+ "<td style=\"background-color: lightgray;\">"
+				+ anbieternotiz
+				+ "</td></tr>"
+				+ "<tr><td>Status:</td><td>"
+				+ status
 				+ "</td></tr>";
 		angebotbestaetigenbutton.disabled = angebotbestattribut;
 		angebotablehnenbutton.disabled = angebotablattribut;
@@ -268,7 +272,7 @@ function handledocumentsFromOfferResponse(mime, data) {
 
 /**
  * Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer das angezeigte
- * Angebot benoetigt werden.
+ * Angebot benoetigt werden. Initialisiert auch den mailto button.
  * 
  * @param mime
  * @param data
@@ -286,6 +290,24 @@ function handledocumentsToAddToOfferResponse(mime, data) {
 			select.innerHTML += "<option value=\"" + docs[i].uid + "\">"
 					+ docs[i].name + "</option>";
 		}
+		// All loaded now, so get email of provider for mailto button:
+		connect("/hiwi/Clerk/js/getEmail", "user="
+				+ document.getElementById("offerAuthor").innerText, function(
+				mime, data) {
+			if (mime == "text/url") {
+				window.location = data;
+			} else if (mime == "text/error") {
+				alert(data);
+			}
+			// This is the case we want:
+			else if (mime == "text/email") {
+				var button = document.getElementById("mailToAuthorButton");
+				var offerTitel = document.getElementById("offerName").innerText;
+				// Note that clickMail() is defined in the library.js!
+				button.setAttribute("onclick", "clickMail('" + data
+						+ "', '[Hiwi-Börse:" + offerTitel + "]')");
+			}
+		});
 	}
 }
 

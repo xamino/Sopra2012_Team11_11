@@ -78,7 +78,7 @@
 					</table>
 					<hr>
 					<div style="float: right;">
-						<input type="button" value="Mail an Anbieter" />
+						<input type="button" value="Mail an Anbieter" id="mailToAuthorButton"/>
 					</div>
 					<input type="button" id="angebotbestaetigen"
 						value="Angebot bestätigen" onclick="angebotbestaetigen()" /> 

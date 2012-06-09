@@ -117,6 +117,8 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		} else if (path.equals("/js/editOneOffer")) {
+			// SO sollten zahlen geparst werden! Sonst wird die Exception
+			// naemlich nicht abgefangen!
 			int aid = -1;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
@@ -587,6 +589,19 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(gsonny);
 			return;
+		}
+		// Get email addresses if required:
+		else if (path.equals("/js/getEmail")) {
+			String user = request.getParameter("user");
+			if (!Helper.validate(user)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Invalid user parameter!");
+				return;
+			}
+			String email = AccountController.getInstance()
+					.getAccountByUsername(user).getEmail();
+			response.setContentType("text/email");
+			response.getWriter().write(email);
 		} else {
 			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}

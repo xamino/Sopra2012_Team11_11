@@ -156,54 +156,86 @@ function doLogout() {
 	});
 }
 /**
- * Funktion die ueberprueft ob der Text eines Textfelds gueltig ist. Laenge != 0 ist mit enthalten.
- * @param text zu ueberpruefender Text.
+ * Funktion die ueberprueft ob der Text eines Textfelds gueltig ist. Laenge != 0
+ * ist mit enthalten.
+ * 
+ * @param text
+ *            zu ueberpruefender Text.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
-function checkText(text){
-	if (text == "")return false;
+function checkText(text) {
+	if (text == "")
+		return false;
 	var regex = /^((\s)*[a-zA-Z0-9\_\-\.üöä\!\?]+(\s)*)*$/;
-	return(regex.test(text));
+	return (regex.test(text));
 }
 /**
- * Funktion die ueberprueft ob ein String eine Ganze zahl ist. Laenge != 0 ist mit enthalten.
- * @param int zu pruefender String
+ * Funktion die ueberprueft ob ein String eine Ganze zahl ist. Laenge != 0 ist
+ * mit enthalten.
+ * 
+ * @param int
+ *            zu pruefender String
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
-function checkInt(int){
-	if(int=="")return false;
+function checkInt(int) {
+	if (int == "")
+		return false;
 	var regex = /^(0|(-)?[1-9][0-9]*)$/;
-	return(regex.test(int));
+	return (regex.test(int));
 }
 
 /**
- * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist. Laenge != 0 ist mit enthalten. Punkt und Komma werden als Trennzeichen akzeptiert.
- * @param float zu pruefende Gleitkommazahl
+ * Funktion die ueberprueft ob ein String eine Gleitkommazahl ist. Laenge != 0
+ * ist mit enthalten. Punkt und Komma werden als Trennzeichen akzeptiert.
+ * 
+ * @param float
+ *            zu pruefende Gleitkommazahl
  * @returns {Boolean} True falls gueltig, False falls ungueltig
  */
-function checkFloat(float){
-	if(float=="")return false;
+function checkFloat(float) {
+	if (float == "")
+		return false;
 	var regex = /^(0|(-)?[1-9][0-9]*((\,|\.)[0-9]+)?|0(\.|\,)[0-9]+)$/;
-	return(regex.test(float));
+	return (regex.test(float));
 }
 
 /**
- * Funktion die ueberprueft ob eine Email gueltig ist. Laenge != 0 ist mit enthalten.
- * @param email zu ueberpruefende Email-Adresse.
+ * Funktion die ueberprueft ob eine Email gueltig ist. Laenge != 0 ist mit
+ * enthalten.
+ * 
+ * @param email
+ *            zu ueberpruefende Email-Adresse.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
 function checkEmail(email) {
-	  if (email=="")return false;
-	  var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+((\-\|\.)[a-zA-Z0-9])?\.)+[a-zA-Z0-9]{2,255}$/;
-	  return(regex.test(email));
+	if (email == "")
+		return false;
+	var regex = /^[a-zA-Z]([a-zA-Z0-9]|[\.\_\-][a-zA-Z0-9])*\@(([a-zA-Z0-9])+((\-\|\.)[a-zA-Z0-9])?\.)+[a-zA-Z0-9]{2,255}$/;
+	return (regex.test(email));
 }
 /**
- * Funktion die ueberprueft ob ein Username gueltig ist. Laenge != 0 ist mit enthalten.
- * @param username zu ueberpruefender UserName.
+ * Funktion die ueberprueft ob ein Username gueltig ist. Laenge != 0 ist mit
+ * enthalten.
+ * 
+ * @param username
+ *            zu ueberpruefender UserName.
  * @returns {Boolean} True falls gueltig, False falls ungueltig.
  */
-function checkUsername(username){
-	if(username=="")return false;
+function checkUsername(username) {
+	if (username == "")
+		return false;
 	var regex = /^[a-zA-Z0-9]+[a-zA-Z0-9\_\-\.]*$/;
-	return(regex.test(username));
+	return (regex.test(username));
+}
+
+/**
+ * Function for sending an email from a javascripted button.
+ * 
+ * @param toAddress
+ *            Address the email is to be sent.
+ * @param subject
+ *            The subject of the email.
+ */
+function clickMail(toAddress, subject) {
+	window.location.href = "mailto:" + toAddress + "?Subject=" + subject;
 }
