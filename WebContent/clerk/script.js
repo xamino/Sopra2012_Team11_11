@@ -2,10 +2,9 @@
  * @author: Patryk Boczon
  * @author: Laura Irlinger
  * @author: Oemer Sahin
+ * @author: Tamino Hartmann
  */
 
-// !!!!!!!ohne alerts funktionierts nicht =( also drin lassen!!!!... wei� jmd
-// wieso??!!!!!!!!!!!!
 /**
  * Fragt mich nicht, warum das so funktioniert... :P
  */

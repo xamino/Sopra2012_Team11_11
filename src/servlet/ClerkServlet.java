@@ -9,10 +9,6 @@ package servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -73,16 +69,12 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speichern einer Instanz vom OfferController;
 	 */
 	private OfferController offcon;
-	/**
-	 * Variable zum speichern einer Instanz vom AccountController
-	 */
-	private AccountController acccon;
 
 	/**
 	 * Variable zum speichern einer Instanz vom InstituteController
 	 */
 	private InstituteController instcon;
-	
+
 	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
@@ -97,9 +89,8 @@ public class ClerkServlet extends HttpServlet {
 		gson = new Gson();
 		doccon = DocumentController.getInstance();
 		appcon = ApplicationController.getInstance();
-		acccon = AccountController.getInstance();
 		offcon = OfferController.getInstance();
-		instcon=InstituteController.getInstance();
+		instcon = InstituteController.getInstance();
 	}
 
 	/**
@@ -164,12 +155,13 @@ public class ClerkServlet extends HttpServlet {
 			double wage = Double.parseDouble(request.getParameter("wage"));
 
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
-			
-			//set modificationdate to current date
+
+			// set modificationdate to current date
 			java.util.Date aenderungsdatum = new java.util.Date();
-			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(aenderungsdatum.getTime());
-						
-			//sets modificationdate and updates it
+			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
+					aenderungsdatum.getTime());
+
+			// sets modificationdate and updates it
 			offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
@@ -237,7 +229,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
-		
+
 		// Creates a Vector of Documents which can be added to an application
 		else if (path.endsWith("/js/documentsToAddToApplication")) {
 
@@ -278,39 +270,43 @@ public class ClerkServlet extends HttpServlet {
 			int aid1 = Integer.parseInt(aid);
 			Account acc = AccountController.getInstance().getAccountByUsername(
 					user); // Account vom ausgewï¿½hlten User
-			Offer off = OfferController.getInstance().getOfferById(aid1); // Offer
-																			// des
-																			// ausgewï¿½hlten
-																			// User
-			Vector<AppDocument> docs = DocumentController.getInstance().getDocumentsByUserAndOffer(acc, off);
+			// Offer des ausgewï¿½hlten User
+			Offer off = OfferController.getInstance().getOfferById(aid1);
+			Vector<AppDocument> docs = DocumentController.getInstance()
+					.getDocumentsByUserAndOffer(acc, off);
 			Vector<Document> docs2 = new Vector<Document>(docs.size());
-			
-			//dieser Vector enthält bei geraden Indizes ein Element vom Typ Document, bei dem
-			//jeweiligen darauffolgenden, ungeraden Index das Pendant zu diesem, in Form eines AppDocument
-			Vector<Object> customDocs = new Vector<Object>(docs.size()*2);
-			
+
+			// dieser Vector enthï¿½lt bei geraden Indizes ein Element vom Typ
+			// Document, bei dem
+			// jeweiligen darauffolgenden, ungeraden Index das Pendant zu
+			// diesem, in Form eines AppDocument
+			Vector<Object> customDocs = new Vector<Object>(docs.size() * 2);
+
 			for (int i = 0; i < docs.size(); i++) {
-				docs2.add(DocumentController.getInstance().getDocumentByUID(docs.elementAt(i).getdID()));
-				
+				docs2.add(DocumentController.getInstance().getDocumentByUID(
+						docs.elementAt(i).getdID()));
+
 				customDocs.add(docs2.elementAt(i));
 				customDocs.add(docs.elementAt(i));
 			}
-			
-//			System.out.println("Ergebnis: "+docs2);
+
+			// System.out.println("Ergebnis: "+docs2);
 			response.setContentType("showthedocuments/json");
-			response.getWriter().write(gson.toJson(customDocs, customDocs.getClass()));
+			response.getWriter().write(
+					gson.toJson(customDocs, customDocs.getClass()));
 
 		}
 		// Updates the status of an AppDocument
-		else if(path.equals("/js/setDocCheck")){
+		else if (path.equals("/js/setDocCheck")) {
 			String username = request.getParameter("username");
 			int offerid = Integer.parseInt(request.getParameter("offerid"));
 			int docid = Integer.parseInt(request.getParameter("docid"));
-			
-			AppDocument appdoc = DocumentController.getInstance().getDocumentByUsernameAIDandUID(username, offerid, docid);
-			if(appdoc.getPresent()){
+
+			AppDocument appdoc = DocumentController.getInstance()
+					.getDocumentByUsernameAIDandUID(username, offerid, docid);
+			if (appdoc.getPresent()) {
 				appdoc.setPresent(false);
-			}else{
+			} else {
 				appdoc.setPresent(true);
 			}
 			DocumentController.getInstance().updateAppDocument(appdoc);
@@ -339,19 +335,19 @@ public class ClerkServlet extends HttpServlet {
 		else if (path.equals("/js/createDocument")) {
 			String title = request.getParameter("title");
 			String description = request.getParameter("description");
-//			int uid = -1;
-//			try {
-//				uid = Integer.parseInt(request.getParameter("uid"));
-//			} catch (NumberFormatException e) {
-//				log.write("ClerkServlet",
-//						"NumberFormatException while parsing URL!");
-//				response.setContentType("text/error");
-//				response.getWriter()
-//						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt fÃ¼r die UID.");
-//				return;
-//			}
+			// int uid = -1;
+			// try {
+			// uid = Integer.parseInt(request.getParameter("uid"));
+			// } catch (NumberFormatException e) {
+			// log.write("ClerkServlet",
+			// "NumberFormatException while parsing URL!");
+			// response.setContentType("text/error");
+			// response.getWriter()
+			// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt fÃ¼r die UID.");
+			// return;
+			// }
 			if (title == null || title.isEmpty() || description == null
-					|| description.isEmpty() /* || uid < 0*/) {
+					|| description.isEmpty() /* || uid < 0 */) {
 				log.write("ClerkServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write(
@@ -359,7 +355,8 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			// all okay... continue:
-			if (!DocumentController.getInstance().generateDocument( title, description)) {
+			if (!DocumentController.getInstance().generateDocument(title,
+					description)) {
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
@@ -368,18 +365,18 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
-		}
-		else if(path.equals("/js/deleteAppDocument")){
+		} else if (path.equals("/js/deleteAppDocument")) {
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			String username = request.getParameter("user");
 			int aid = Integer.parseInt(request.getParameter("aid"));
-			AppDocument appdoc = DocumentController.getInstance().getDocumentByUsernameAIDandUID(username, aid, uid);
-			
+			AppDocument appdoc = DocumentController.getInstance()
+					.getDocumentByUsernameAIDandUID(username, aid, uid);
+
 			DocumentController.getInstance().deleteAppDocument(appdoc);
-//			response.setContentType("text/url");
-//			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			// response.setContentType("text/url");
+			// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
 			return;
-			
+
 		}
 		// Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
 		else if (path.equals("/js/deleteDocument")) {
@@ -420,13 +417,13 @@ public class ClerkServlet extends HttpServlet {
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
 			String rep = request.getParameter("rep");
-			System.out.println("clerk pw: "+pw);
+			// System.out.println("clerk pw: " + pw);
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
 			if (rep == null)
 				rep = "";
-			System.out.println("clerk edit own account: "+name+"-"+email+"-"+pw+"-"+rep);
+			// System.out.println("clerk edit own account: " + name + "-" + email+ "-" + pw + "-" + rep);
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
@@ -505,8 +502,8 @@ public class ClerkServlet extends HttpServlet {
 					new OfferDocument(aid, uid));
 			return;
 		}
-		
-		// Funktion zum hinzufuegen eines AppDocuments der gewählten Application
+
+		// Funktion zum hinzufuegen eines AppDocuments der gewaehlten Application
 		else if (path.equals("/js/addAppDocument")) {
 			int uid;
 			int aid;
@@ -520,11 +517,11 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			DocumentController.getInstance().createAppDocument(
-					new AppDocument(username,aid,uid,false));
+					new AppDocument(username, aid, uid, false));
 			return;
 		}
 
-		// TO DO!
+		// TODO!
 		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
 		else if (path.equals("/js/doApplicationCompletion")) {
 			int AID = 0;
@@ -554,9 +551,12 @@ public class ClerkServlet extends HttpServlet {
 
 		} else if (path.equals("/js/loadInfo")) {
 			Vector<Offer> off = new Vector<Offer>();
-			Vector<Integer>institutes= instcon.getAllRepresentingInstitutes(clerk.getUserData().getUsername());
+			Vector<Integer> institutes = instcon
+					.getAllRepresentingInstitutes(clerk.getUserData()
+							.getUsername());
 			institutes.add(0);
-			for(Integer i:institutes)off.addAll(offcon.getUncheckedOffersByInstitute(i));
+			for (Integer i : institutes)
+				off.addAll(offcon.getUncheckedOffersByInstitute(i));
 			int unchecked = off.size();
 			int apps = 0;
 			for (Offer o : offcon.getCheckedOffers()) {
@@ -579,6 +579,10 @@ public class ClerkServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * doGet() wird nur zum Download der Excel-Datei verwendet. Ansonsten leitet
+	 * es an public/index.jsp weiter.
+	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
@@ -615,11 +619,5 @@ public class ClerkServlet extends HttpServlet {
 			output.close();
 			fileToDownload.close();
 		}
-	}
-
-	private String getDateTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		return dateFormat.format(date);
 	}
 }

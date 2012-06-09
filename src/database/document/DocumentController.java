@@ -75,41 +75,42 @@ public class DocumentController {
 	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
 	public boolean createDocument(Document document) { // checked
-		return db.insert(tableNameU, new Object[] { document.getUid(),
-				document.getName(), document.getDescription() });
+		return db.insert(
+				tableNameU,
+				new Object[] { document.getUid(), document.getName(),
+						document.getDescription() });
 	}
-	
+
 	/**
 	 * Diese Methode erstellt eine Unterlage des Administrators in der
 	 * Datenbank. Mit uebergebenem Unterlagen-Objekt (Document-Objekt).
 	 * 
 	 * @param name
-	 * 			Name des Dokuments
+	 *            Name des Dokuments
 	 * @param beschreibung
-	 * 			Beschreibung des Dokuments
+	 *            Beschreibung des Dokuments
 	 * @return Gibt an, ob das Document erstellt werden konnte.
 	 */
 	public boolean generateDocument(String name, String beschreibung) { // checked
-		
-		int uid=0;
-		String[] select = {"MAX(UID)"};
-		String[] from = {tableNameU};
-		
+
+		int uid = 0;
+		String[] select = { "MAX(UID)" };
+		String[] from = { tableNameU };
+
 		ResultSet rs = db.select(select, from, null);
-		
+
 		try {
-			if(rs.next()){
+			if (rs.next()) {
 				uid = rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		uid++;
-		
-		return db.insert(tableNameU, new Object[] { uid,
-				name, beschreibung });
+
+		return db.insert(tableNameU, new Object[] { uid, name, beschreibung });
 	}
 
 	/**
@@ -316,17 +317,15 @@ public class DocumentController {
 								.getInt("UID"), rs.getBoolean("status")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out
-					.println("There was an error while trying to cast from ResultSet to Document-Object.");
+			log.write("DocumentController",
+					"There was an error while trying to cast from ResultSet to Document-Object.");
 			e.printStackTrace();
 		}
 		try {
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out
-					.println("There was an error while trying to close the ResultSet.");
+			log.write("DocumentController",
+					"There was an error while trying to close the ResultSet.");
 			e.printStackTrace();
 		}
 		/*
@@ -466,17 +465,21 @@ public class DocumentController {
 		 */
 		db.update(tableNameB, columns, values, where);
 	}
-	
-	public AppDocument getDocumentByUsernameAIDandUID(String username, int aid, int uid){
+
+	public AppDocument getDocumentByUsernameAIDandUID(String username, int aid,
+			int uid) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
-		String where = "benutzername = '"+username+"' AND AID ="+aid+" AND UID ="+uid;
+		String where = "benutzername = '" + username + "' AND AID =" + aid
+				+ " AND UID =" + uid;
 
 		ResultSet rs = db.select(select, from, where);
 
 		try {
 			if (rs.next()) {
-				AppDocument doc = new AppDocument(rs.getString("benutzername"), rs.getInt("AID"), rs.getInt("UID"), rs.getBoolean("status"));
+				AppDocument doc = new AppDocument(rs.getString("benutzername"),
+						rs.getInt("AID"), rs.getInt("UID"),
+						rs.getBoolean("status"));
 				return doc;
 			} else
 				return null;
@@ -601,7 +604,7 @@ public class DocumentController {
 		}
 		return docsToAdd;
 	}
-	
+
 	/**
 	 * Diese Methode gibt alle Dokumente zurueck, die eine Bewerbung nicht als
 	 * Unterlagen angegeben hat
@@ -610,8 +613,7 @@ public class DocumentController {
 	 *            AngebotsID des Angebots
 	 * @param username
 	 *            Benutzername des Bewerbers
-	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben
-	 *         hat
+	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben hat
 	 */
 	public Vector<Document> getDocumentsToAddToApp(int aid, String username) {
 
@@ -622,7 +624,8 @@ public class DocumentController {
 		String[] select = { "*" };
 		String[] from = { tableNameU };
 		String where = "UID not in (Select UID FROM " + tableNameB
-				+ " WHERE AID = " + aid + " AND benutzername ='"+username+"')";
+				+ " WHERE AID = " + aid + " AND benutzername ='" + username
+				+ "')";
 
 		ResultSet rs = db.select(select, from, where);
 		try {
@@ -650,7 +653,7 @@ public class DocumentController {
 	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
-		String where = "benutzername='" + benutzername+"'";
+		String where = "benutzername='" + benutzername + "'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
 		try {
@@ -696,40 +699,41 @@ public class DocumentController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Generate a new ID.
-	 * @return
-	 *			generated ID
+	 * 
+	 * @return generated ID
 	 */
-	public int getNewDocID(String tablename){
+	public int getNewDocID(String tablename) {
 		int newID = 0;
 		boolean check = false;
-		while(!check){
+		while (!check) {
 			newID = generateRandomNr(1, 9999);
-			Object[] data = {newID, "TempName", "TempText"};
-			check =  db.insert(tablename, data );
+			Object[] data = { newID, "TempName", "TempText" };
+			check = db.insert(tablename, data);
 		}
-		db.delete(tablename, "UID= "+newID);
+		db.delete(tablename, "UID= " + newID);
 		return newID;
 	}
+
 	/**
 	 * Generate a random number.
+	 * 
 	 * @param aStart
-	 * 			Start of the number.
+	 *            Start of the number.
 	 * @param aEnd
-	 * 			End of the number.
-	 * @return
-	 * 		  generated number.
+	 *            End of the number.
+	 * @return generated number.
 	 */
-	private int generateRandomNr(int aStart, int aEnd){
-		
-		    Random random = new Random();
-		    //get the range, casting to long to avoid overflow problems
-		    long range = (long)aEnd - (long)aStart + 1;
-		    // compute a fraction of the range, 0 <= frac < range
-		    long fraction = (long)(range * random.nextDouble());
-		    int randomNumber =  (int)(fraction + aStart);
-		    return randomNumber;
-		  }
+	private int generateRandomNr(int aStart, int aEnd) {
+
+		Random random = new Random();
+		// get the range, casting to long to avoid overflow problems
+		long range = (long) aEnd - (long) aStart + 1;
+		// compute a fraction of the range, 0 <= frac < range
+		long fraction = (long) (range * random.nextDouble());
+		int randomNumber = (int) (fraction + aStart);
+		return randomNumber;
+	}
 }

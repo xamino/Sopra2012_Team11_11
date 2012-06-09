@@ -453,12 +453,13 @@ public class DatabaseController {
 				+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
 
 		ResultSet rs;
-		System.out.println(sel);
+		// Auskommentiert da nervig (Tamino)
+		// System.out.println(sel);
 		try {
 			rs = st.executeQuery(sel);
 			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
 			while (rs.next()) {
-				System.out.println(rs.getString(1));
+				// System.out.println(rs.getString(1));
 				hdc.add(new HilfsDatenClerk(rs.getString(1), rs.getString(2),
 						rs.getString(3), rs.getInt(4)));
 			}
