@@ -26,6 +26,8 @@ import database.document.DocumentController;
 import database.institute.Institute;
 import database.institute.InstituteController;
 
+import static servlet.Helper.validate;
+
 /**
  * Das <code>Admin</code> Servlet behandelt alle Aktionen von angemeldeten
  * Administratoren.
@@ -96,7 +98,7 @@ public class AdminServlet extends HttpServlet {
 			// Get username parameter:
 			String username = request.getParameter("name");
 			// Check if legal:
-			if (username == null || username.isEmpty()) {
+			if (!validate(username)) {
 				log.write("AdminServlet", "Username invalid!");
 				response.setContentType("text/error");
 				response.getWriter().write("Username invalid!");
@@ -109,12 +111,11 @@ public class AdminServlet extends HttpServlet {
 						.write("Dieser Benutzer existiert nicht oder ist aktuell angemeldet. Kann nicht gelöscht werden!");
 			}
 
-			
 		}
 		// Get the information of an account:
 		else if (path.equals("/js/getAccountData")) {
 			String username = request.getParameter("name");
-			if (username == null) {
+			if (!validate(username)) {
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_ADMIN_ACCOUNTSMANAGEMENT);
 				return;
@@ -144,10 +145,9 @@ public class AdminServlet extends HttpServlet {
 						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut und AccountType.");
 				return;
 			}
-			if (realName == null || realName.isEmpty() || userName == null
-					|| email == null || email.isEmpty() || userName.isEmpty()
-					|| password == null || password.isEmpty()
-					|| accountType < 0 || accountType > 3 || institute == -1) {
+			if (!validate(realName) || !validate(email) || !validate(userName)
+					|| !validate(password) || accountType < 0
+					|| accountType > 3 || institute == -1) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write("Werte illegal!");
@@ -177,16 +177,13 @@ public class AdminServlet extends HttpServlet {
 		} else if (path.equals("/js/getSystemInformation")) {
 			response.setContentType("application/json");
 			Runtime r = Runtime.getRuntime();
-			response.getWriter()
-					.write(Helper.jsonAtor(
-							new String[] { "loggedInUsers", "allUsers",
-									"totalRAM", "maxRAM" },
-							new Object[] {
-									LoggedInUsers.getUsers().size(),
-									accountController.accountCount(),
-									"~" + r.totalMemory() / (1024 * 1024)
-											+ " MB",
-									"~" + r.maxMemory() / (1024 * 1024) + " MB" }));
+			String[] names = new String[] { "loggedInUsers", "allUsers",
+					"totalRAM", "maxRAM" };
+			Object[] objects = new Object[] { LoggedInUsers.getUsers().size(),
+					accountController.accountCount(),
+					"~" + r.totalMemory() / (1024 * 1024) + " MB",
+					"~" + r.maxMemory() / (1024 * 1024) + " MB" };
+			response.getWriter().write(Helper.jsonAtor(names, objects));
 		} else if (path.equals("/js/editAccount")) {
 			String realName = request.getParameter("realName");
 			String email = request.getParameter("email");
@@ -207,8 +204,7 @@ public class AdminServlet extends HttpServlet {
 						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut und AccountType.");
 				return;
 			}
-			if (realName == null || realName.isEmpty() || userName == null
-					|| email == null || email.isEmpty() || userName.isEmpty()
+			if (!validate(realName) || !validate(userName) || !validate(email)
 					|| accountType < 0 || accountType > 3 || institute == -1) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
@@ -216,7 +212,7 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// This can happen and is legal if the password isn't to be changed:
-			if (password == null || password.isEmpty())
+			if (!validate(password))
 				password = accountController.getAccountByUsername(userName)
 						.getPasswordhash();
 			// System.out.println(password);
@@ -252,8 +248,7 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write("0");
 				return;
 			}
-			if (title == null || title.isEmpty() || description == null
-					|| description.isEmpty() || uid < 0) {
+			if (!validate(title) || !validate(description) || uid < 0) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write(
@@ -314,8 +309,7 @@ public class AdminServlet extends HttpServlet {
 						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
 				return;
 			}
-			if (title == null || title.isEmpty() || description == null
-					|| description.isEmpty() || uid < 0) {
+			if (!validate(title) || !validate(description) || uid < 0) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write(
@@ -361,11 +355,10 @@ public class AdminServlet extends HttpServlet {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("0");
+				response.getWriter().write("0");
 				return;
 			}
-			if (name == null || name.isEmpty() || IID < 0) {
+			if (!validate(name) || IID < 0) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter()
