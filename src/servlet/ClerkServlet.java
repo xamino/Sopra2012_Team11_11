@@ -117,9 +117,20 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		} else if (path.equals("/js/editOneOffer")) {
-			int aid = Integer.parseInt(request.getParameter("aid"));
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ClerkServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für AID.");
+				return;
+			}
+			// AID should be != -1 here, so continue:
 			Offer offertoedit = OfferController.getInstance().getOfferById(aid);
-			response.setContentType("offers/json");
+			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(offertoedit, offertoedit.getClass()));
 			return;
@@ -423,7 +434,8 @@ public class ClerkServlet extends HttpServlet {
 							// funktion das pw nicht auf "" setzt!
 			if (rep == null)
 				rep = "";
-			// System.out.println("clerk edit own account: " + name + "-" + email+ "-" + pw + "-" + rep);
+			// System.out.println("clerk edit own account: " + name + "-" +
+			// email+ "-" + pw + "-" + rep);
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
@@ -503,7 +515,8 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		}
 
-		// Funktion zum hinzufuegen eines AppDocuments der gewaehlten Application
+		// Funktion zum hinzufuegen eines AppDocuments der gewaehlten
+		// Application
 		else if (path.equals("/js/addAppDocument")) {
 			int uid;
 			int aid;

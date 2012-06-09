@@ -6,6 +6,31 @@
  */
 
 /**
+ * Stores the selected Document:
+ */
+var selectedDocument;
+
+/**
+ * Stores the selected Offer:
+ */
+var selectedOffer;
+
+/**
+ * Stores the User in editapplication:
+ */
+var User;
+
+/**
+ * Stores the Offer in editapplication:
+ */
+var Aid;
+
+/**
+ * Stores the selected Document:
+ */
+var selectedDocument;
+
+/**
  * Fragt mich nicht, warum das so funktioniert... :P
  */
 function doExcelExport() {
@@ -33,31 +58,6 @@ function handleLoadInfo(mime, data) {
 	} else
 		alert("Error occured!");
 }
-
-/**
- * Stores the selected Document:
- */
-var selectedDocument;
-
-/**
- * Stores the selected Offer:
- */
-var selectedOffer;
-
-/**
- * Stores the User in editapplication:
- */
-var User;
-
-/**
- * Stores the Offer in editapplication:
- */
-var Aid;
-
-/**
- * Stores the selected Document:
- */
-var selectedDocument;
 
 /**
  * This function loads all the offers of the applicant in the system from the
@@ -99,7 +99,7 @@ function handleShowMyOffersResponse(mime, data) {
 }
 
 /**
- * Function to edit a single offer.
+ * Function to prepare site to edit a single offer.
  */
 function editOneOffer() {
 	var aid = getURLParameter("AID");
@@ -108,15 +108,17 @@ function editOneOffer() {
 }
 
 /**
- * TODO comment!
+ * Function handles the preparation of a single offer.
  * 
  * @param mime
+ *            The MIME-type of the response data.
  * @param data
+ *            The response.
  */
 function handleEditOneOfferResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "offers/json") {
+	} else if (mime == "application/json") {
 		var offer = eval("(" + data + ")");
 		var status;
 		var angebotbestattribut;
@@ -165,6 +167,8 @@ function handleEditOneOfferResponse(mime, data) {
 		angebotablehnenbutton.disabled = angebotablattribut;
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		documentsFromOffer();
+	} else if (mime == "text/error") {
+		alert(data);
 	}
 }
 
