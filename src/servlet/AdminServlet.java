@@ -59,7 +59,12 @@ public class AdminServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-
+	
+	/**
+	 * Konstruktor des AdminServlet. Hier werden die wichtigen Referenzen gesetzt und wenn noetig
+	 * erstellt. Auch wird ein log Eintrag geschrieben um die Initialisierung zu ersichtlich zu
+	 * machen.
+	 **/
 	public AdminServlet() {
 		super();
 		log = Helper.log;
