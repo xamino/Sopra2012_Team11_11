@@ -11,9 +11,9 @@
 var selectedDocument;
 
 /**
- * Stores the selected Offer:
+ * Stores the selected Offer/Applicant:
  */
-var selectedOffer;
+var selectedItem;
 
 /**
  * Stores the User in editapplication:
@@ -65,7 +65,8 @@ function handleLoadInfo(mime, data) {
  */
 function showMyOffers() {
 	// reset selectedID (account could have been deleted in meantime)
-	selectedOffer = null;
+	// selectedOffer mit selectedItem ersetzt, da es sich um Offer UND Applicant handelt
+	selectedItem = null;
 	toggleWarning("error_noOfferSelected", true,
 	"Kein Angebot selektiert!");
 	prepareButton();
@@ -323,23 +324,23 @@ function handledocumentsToAddToOfferResponse(mime, data) {
 function prepareButton() {
 	// alert("preparing button3");
 	if (document.getElementById("angebotpruefen") != null
-			&& selectedOffer != null) { // offermanagement.jsp -->
+			&& selectedItem != null) { // offermanagement.jsp -->
 		// editoffer.jsp, wenn etwas markiert
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-				window.location = 'editoffer.jsp?AID=' + selectedOffer;
+				window.location = 'editoffer.jsp?AID=' + selectedItem;
 		};
 	}
 	// wenn angebotpruefen geklickt und kein angebot selektiert
 	// alert("preparing button");
 	
 	else if (document.getElementById("editapplication") != null
-			&& selectedOffer != null) { // applicationmanagement.jsp -->
+			&& selectedItem != null) { // applicationmanagement.jsp -->
 		// editapplication.jsp, wenn etwas
 		// markiert ist
 		document.getElementById("editapplication").onclick = function() {
-			var temp = selectedOffer.split("�%#%�");
+			var temp = selectedItem.split("�%#%�");
 			var user = temp[0];
 			var aid = temp[1];
 			window.location = 'editapplication.jsp?User=' + user + "&AID="
@@ -430,25 +431,25 @@ function handleDocumentChangeResponse(mime, data) {
  *            The ID of the clicked entry.
  */
 function markOfferSelected(id) {
-	// alert("alte id: "+selectedOffer);
+	// alert("alte id: "+selectedItem);
 	// Remove marking from previous selected, if applicable:
-	if (selectedOffer != null) {
-		document.getElementById(selectedOffer).setAttribute("class", "");
+	if (selectedItem != null) {
+		document.getElementById(selectedItem).setAttribute("class", "");
 	}
 	// If clicked again, unselect:
-	if (selectedOffer == id) {
-		selectedOffer = null;
+	if (selectedItem == id) {
+		selectedItem = null;
 		toggleWarning("error_noOfferSelected", true,
 		"Kein Angebot selektiert!");
 		prepareButton();
 		return;
 	}
 	// Else save & mark new one:
-	selectedOffer = id;
+	selectedItem = id;
 	toggleWarning("error_noOfferSelected", false,
 	"Kein Angebot selektiert!");
 
-	// ("aktuelle id: "+selectedOffer);
+	// ("aktuelle id: "+selectedItem);
 
 	document.getElementById(id).setAttribute("class", "selected");
 
@@ -588,7 +589,7 @@ function handleAddDocumentResponse(mime, data) {
  * (applicationmanagement.jsp)
  */
 function showApplication() {
-	selectedOffer = null;
+	selectedItem = null;
 	toggleWarning("error_noOfferSelected", true,
 	"Kein Angebot selektiert!");
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
@@ -631,7 +632,7 @@ function handleShowApplicationResponse(mime, data) {
 function applicationDocuments() {
 	User = getURLParameter("User");
 	Aid = getURLParameter("AID");
-	selectedOffer = null;
+	selectedItem = null;
 	selectedDocument = null;
 	connect("/hiwi/Clerk/js/applicationDocuments", "User=" + User + "&AID="
 			+ Aid, handleApplicationDocumentsResponse);
@@ -745,7 +746,7 @@ function setDocCheck(username, docid, offerid) {
 function showApplicationTable2() {
 	var User = getURLParameter("User");
 	var Aid = getURLParameter("AID");
-	selectedOffer = null;
+	selectedItem = null;
 	connect("/hiwi/Clerk/js/showApplicationTable2", "User=" + User + "&AID="
 			+ Aid, handleShowApplicationTable2Response);
 }

@@ -2,6 +2,7 @@
  * Script for public webpages.
  * 
  * @author: Tamino Hartmann
+ * @author: Laura Irlinger
  */
 
 /**
