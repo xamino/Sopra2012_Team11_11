@@ -93,7 +93,7 @@ function handleShowMyOffersResponse(mime, data) {
 		table2.innerHTML = "<tr><th>Name des Zuständigen</th><th>Angebot</th><th>Plätze</th><th>Stunden pro Woche</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].aid
-					+ "\" onclick=\"markOfferSelected(\'" + JSONarray[i].aid
+					+ "\" onclick=\"markItemSelected(\'" + JSONarray[i].aid
 					+ "\');\"><td>" + JSONarray[i].author + "</td><td>"
 					+ JSONarray[i].name + "</td><td>" + JSONarray[i].slots
 					+ "</td><td>" + JSONarray[i].hoursperweek + "</td></tr>";
@@ -425,12 +425,12 @@ function handleDocumentChangeResponse(mime, data) {
 //
 // }
 /**
- * Function remembers which account has been clicked.
+ * Function remembers which offer/ applicant has been clicked.
  * 
  * @param id
  *            The ID of the clicked entry.
  */
-function markOfferSelected(id) {
+function markItemSelected(id) {
 	// alert("alte id: "+selectedItem);
 	// Remove marking from previous selected, if applicable:
 	if (selectedItem != null) {
@@ -617,7 +617,7 @@ function handleShowApplicationResponse(mime, data) {
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].username
 					+ "�%#%�" + JSONarray[i].aid
-					+ "\" onclick=\"markOfferSelected(\'"
+					+ "\" onclick=\"markItemSelected(\'"
 					+ JSONarray[i].username + "�%#%�" + JSONarray[i].aid
 					+ "\');\"><td>" + JSONarray[i].username + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
