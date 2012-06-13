@@ -61,6 +61,7 @@
 				<form class="listform">
 						<input type="button" value="Bewerbung bearbeiten" id="editapplication" />
 							<!-- onclick="window.location='editapplication.jsp'"--> 
+							<div id="error_noOfferSelected" class="hiddenerror"></div>
 					<hr>
 					<table id="applicationTable">
 						<tr>

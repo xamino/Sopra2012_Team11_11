@@ -66,6 +66,8 @@ function handleLoadInfo(mime, data) {
 function showMyOffers() {
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
+	toggleWarning("error_noOfferSelected", true,
+	"Kein Angebot selektiert!");
 	prepareButton();
 	connect("/hiwi/Clerk/js/showMyOffers", "", handleShowMyOffersResponse);
 }
@@ -326,20 +328,13 @@ function prepareButton() {
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-			if (selectedOffer == null) {
-				toggleWarning("error_noOfferSelected", true,
-						"Kein Angebot selektiert!");
-			} else {
-				toggleWarning("error_noOfferSelected", false,
-						"Kein Angebot selektiert!");
 				window.location = 'editoffer.jsp?AID=' + selectedOffer;
-			}
 		};
 	}
 	// wenn angebotpruefen geklickt und kein angebot selektiert
 	// alert("preparing button");
-
-	if (document.getElementById("editapplication") != null
+	
+	else if (document.getElementById("editapplication") != null
 			&& selectedOffer != null) { // applicationmanagement.jsp -->
 		// editapplication.jsp, wenn etwas
 		// markiert ist
@@ -351,7 +346,6 @@ function prepareButton() {
 					+ aid;
 		};
 	}
-
 }// end prepareButton
 
 /**
@@ -444,11 +438,15 @@ function markOfferSelected(id) {
 	// If clicked again, unselect:
 	if (selectedOffer == id) {
 		selectedOffer = null;
+		toggleWarning("error_noOfferSelected", true,
+		"Kein Angebot selektiert!");
 		prepareButton();
 		return;
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
+	toggleWarning("error_noOfferSelected", false,
+	"Kein Angebot selektiert!");
 
 	// ("aktuelle id: "+selectedOffer);
 
@@ -591,6 +589,8 @@ function handleAddDocumentResponse(mime, data) {
  */
 function showApplication() {
 	selectedOffer = null;
+	toggleWarning("error_noOfferSelected", true,
+	"Kein Angebot selektiert!");
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 
