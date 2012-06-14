@@ -141,7 +141,17 @@ public class ClerkServlet extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			double hoursperweek = Double.parseDouble(request
 					.getParameter("hoursperweek"));
-			double wage = Double.parseDouble(request.getParameter("wage"));
+			double wage = 0.0;
+			try {
+				wage = Double.parseDouble(request.getParameter("wage"));}
+			catch(NumberFormatException e){
+				log.write("ClerkServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur double Werte erlaubt fuer wage.");
+				return;
+			}
 
 			Offer offertoapprove = OfferController.getInstance().getOfferById(
 					aid);
@@ -165,7 +175,17 @@ public class ClerkServlet extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			double hoursperweek = Double.parseDouble(request
 					.getParameter("hoursperweek"));
-			double wage = Double.parseDouble(request.getParameter("wage"));
+			double wage = 0.0;
+			try {
+				wage = Double.parseDouble(request.getParameter("wage"));}
+			catch(NumberFormatException e){
+				log.write("ClerkServlet",
+						"NumberFormatException while parsing URL!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler bei Eingabe! Nur double Werte erlaubt fuer wage.");
+				return;
+			}
 
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
 
