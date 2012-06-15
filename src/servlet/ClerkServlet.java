@@ -277,7 +277,7 @@ public class ClerkServlet extends HttpServlet {
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
 
-		// Creates an Vector for the table in applicationmanagement.jsp
+		// Creates a Vector for the table in applicationmanagement.jsp
 		else if (path.equals("/js/showApplication")) {
 			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance()
