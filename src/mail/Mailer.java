@@ -104,21 +104,9 @@ public class Mailer {
 	public Boolean sendMail(String address, String subject, String message) {
 		try {
 			if(!checkAddress(address))throw new MalformedAddressException();
-			Session session = authenticate();
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("donotreply.hiwiboerse@gmail.com"));
-			msg.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(address));
-			msg.setSubject(subject);
-			msg.setText(message);
-			Transport.send(msg);
- 
-			log.write("Mailer", "Message to "+address+" delivered.");
+			new MailTread().start(authenticate(), username, address, subject, message);
 			return true;
- 
-		} catch (MessagingException e) {
-			log.write("Mailer", "Could not deliver Message");
-			return false;
+
 		} catch (MalformedAddressException e){
 			log.write("Mailer", "Could not deliver Message. Destination address malformed.");
 			return false;
