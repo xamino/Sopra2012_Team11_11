@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import logger.Log;
+import mail.Mailer;
 import database.DatabaseController;
 import database.account.Account;
 import database.application.Application;
@@ -48,6 +49,7 @@ public class OfferController {
 	private OfferController() {
 		db = DatabaseController.getInstance();
 		log = Log.getInstance();
+		mail=Mailer.getInstance();
 		log.write("OfferController", "Instance created.");
 	}
 
@@ -65,6 +67,8 @@ public class OfferController {
 	 */
 	private DatabaseController db;
 
+	private Mailer mail;
+	
 	final static String tableName = "Angebote";// tabellenname
 
 	/**
@@ -96,7 +100,7 @@ public class OfferController {
 
 	/**
 	 * Diese Methode loescht ein Jobangebot aus der Datenbank, welches mit den
-	 * Daten des uebergebenem Offer-Objekts uebereinstimmt.
+	 * Daten des uebergebenem Offer-Objekts uebereinstimmt. Alle Bewerber auf dieses Angebot werden informiert.
 	 * 
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
@@ -104,7 +108,21 @@ public class OfferController {
 	 *            entfernt.
 	 */
 	public void deleteOffer(Offer offer) {
-
+		
+		// Hier ist die Mail benachrichtigung:
+		ResultSet rs = db.select(new String[]{"acc.email"}
+		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
+		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
+		try {
+			while(rs.next()){
+				String addi = rs.getString(1);
+				mail.sendMail(addi, "Warnung: Angebot \""+offer.getName()+"\" wurde gelöscht!", 
+						"Dies ist eine automatische Mitteilung, dass das Angebot \""+offer.getName()+"\" aus der Hiwi-Börse entfernt wurde. \nIhre Bewerbung wurde daraufhin automatisch gelöscht.");
+			}
+		} catch (SQLException e) {
+			log.write("OfferController", "Error during mailnotification while deleting Offer "+offer.getAid());
+		}
+		//Ende benachrichtigung und anfang löschen
 		db.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
 		db.delete("Standardunterlagen", "AID=" + offer.getAid());
 		db.delete("Bewerbungen", "AID=" + offer.getAid());
@@ -134,6 +152,21 @@ public class OfferController {
 		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 		// offer.getInstitute(), offer.getModificationdate() };
 
+		// Hier ist die Mail benachrichtigung:
+		ResultSet rs = db.select(new String[]{"acc.email"}
+		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
+		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
+		try {
+			while(rs.next()){
+				String addi = rs.getString(1);
+				mail.sendMail(addi, "Warnung: Angebot \""+offer.getName()+"\" wurde aktualisiert!", 
+						"Dies ist eine automatische Mitteilung, dass das Angebot \""+offer.getName()+"\" geändert wurde. \nBitte überprüfen sie, ob das Angebot immernoch ihren Vorstellungen entspricht.");
+			}
+		} catch (SQLException e) {
+			log.write("OfferController", "Error during mailnotification while updating Offer "+offer.getAid());
+		}
+		//Ende benachrichtigung und anfang updaten.
+		
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
 				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
 				"Institut", "aenderungsdatum", "abgeschlossen" };
