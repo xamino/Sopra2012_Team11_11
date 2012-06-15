@@ -104,7 +104,9 @@ public class Mailer {
 	public Boolean sendMail(String address, String subject, String message) {
 		try {
 			if(!checkAddress(address))throw new MalformedAddressException();
-			new MailTread().start(authenticate(), username, address, subject, message);
+			MailTread m = new MailTread();
+			m.config(authenticate(), username, address, subject, message);
+			m.start();
 			return true;
 
 		} catch (MalformedAddressException e){
