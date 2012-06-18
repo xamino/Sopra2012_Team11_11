@@ -118,7 +118,7 @@
 							<td>Passbild</td>
 						</tr>-->
 					</table>
-					<input type="button" value="Dokument hinzufügen"
+					<input type="button" value="Dokument hinzufügen" id="dokumentHinzufuegenButton"
 						onclick="togglePopup('document_add',true);" /> <input
 						type="button" value="Dokument löschen" id="dokumentloeschenbutton"
 						onclick="togglePopup('document_del',true);" />

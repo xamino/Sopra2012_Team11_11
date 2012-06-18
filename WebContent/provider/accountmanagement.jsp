@@ -1,4 +1,3 @@
-
 <%@page import="servlet.Helper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -94,6 +93,14 @@
 										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 										<div id="error_unequalPasswords" class="hiddenerror"></div>
 									</div>
+									<br> <span> <label for="stellvertreter">Stellvertreter:
+										</label>
+										</span>
+										<div class="regform">
+											<select id="selectStellvertreter" size="1">	</select>
+											<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
+											<div id="error_stellvertreter" class="hiddenerror"></div>
+										</div>
 									<br>
 								</div>
 								<div class="clear"></div>

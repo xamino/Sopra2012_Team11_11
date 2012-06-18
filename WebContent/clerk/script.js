@@ -441,7 +441,7 @@ function markDocumentSelected(id) {
  if (selectedDocument == id) {
  selectedDocument = null;
  document.getElementById("dokumentloeschenbutton").disabled = "disabled";
- document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+ //document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
  return;
  }
  // Else save & mark new one:
@@ -715,10 +715,10 @@ function handleApplicationDocumentsResponse(mime, data) {
 		var JSONarray = eval("(" + data + ")");
 		// Get the table:
 		var table2 = document.getElementById("documentsTable");
-		// Betweensaves the 'present' value of the AppDocument element
+		// Stores the 'present' value of the AppDocument element
 		var checked;
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Dokumente</th></tr>";
+		table2.innerHTML = "<tr><th>Abgegeben</th><th>Dokumente</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i = i + 2) {
 			if (JSONarray[i + 1].present) {
 				checked = "checked";
@@ -726,10 +726,16 @@ function handleApplicationDocumentsResponse(mime, data) {
 				checked = "";
 			}
 			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
-					+ "\" onclick=\"setDocCheck('" + JSONarray[i + 1].username
-					+ "'," + JSONarray[i + 1].docID + ","
-					+ JSONarray[i + 1].offerID + ")\" " + checked + "><td>"
+					+ "\"  onclick=\"markDocumentSelected(\'" + JSONarray[i].uid
+					+ "\');\"> <td> <input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+ JSONarray[i+1].offerID+")\" " 
+					+ checked + "> </td><td>"
 					+ JSONarray[i].name + "</td></tr>";
+			
+/*			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
+			+ "\" onclick=\"setDocCheck('" + JSONarray[i + 1].username
+			+ "'," + JSONarray[i + 1].docID + ","
+			+ JSONarray[i + 1].offerID + ")\" " + checked + "><td>"
+			+ JSONarray[i].name + "</td></tr>"; */
 		}
 		showApplicationTable2();
 	}
@@ -768,6 +774,7 @@ function handledocumentsToAddToAppResponse(mime, data) {
  * @param offerid
  */
 function setDocCheck(username, docid, offerid) {
+
 	// urspr�nglich nur die connect --> aber f�r Markierung das hinzugefuegt!!!
 	if (selectedDocument != null)
 		document.getElementById(selectedDocument).setAttribute("class", "");
@@ -777,7 +784,7 @@ function setDocCheck(username, docid, offerid) {
 		selectedDocument = null;
 		// alert("man oh man");
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-		document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+		//document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
 		return;
 	}
 	// Else save & mark new one:
