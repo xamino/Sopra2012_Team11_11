@@ -181,7 +181,7 @@ function handleEditOneOfferResponse(mime, data) {
 }
 
 /**
- * TODO comment!
+ * Function which approves an offer
  */
 function angebotbestaetigen() {
 	var aid = getURLParameter("AID");
@@ -189,8 +189,22 @@ function angebotbestaetigen() {
 	var wage = document.getElementById("inputwage").value;
 
 	connect("/hiwi/Clerk/js/approveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
+			+ hoursperweek + "&wage=" + wage, handleApproveOfferResponse);
 }
+
+/**
+ * Handles the response (relaoding) of the ClerkServlet after approving an offer.
+ * 
+ * @param mime
+ * @param data
+ */
+function handleApproveOfferResponse(mime, data) {
+	if (mime == "text/url") {
+		location.reload();
+	}
+}
+
+
 
 /**
  * TODO comment!
@@ -228,13 +242,27 @@ function angebotspeichern() {
 }
 
 /**
- * TODO comment!
+ * Function declines an offer only if it is immadiately pressed after approving.
  */
 function angebotablehnen() {
 	var aid = getURLParameter("AID");
 	connect("/hiwi/Clerk/js/rejectOffer", "aid=" + aid,
-			handleEditOneOfferResponse);
+			handleRejectOfferResponse);
 }
+
+/**
+ * Handles the response (relaoding) of the ClerkServlet after declining an offer.
+ * 
+ * @param mime
+ * @param data
+ */
+function handleRejectOfferResponse(mime, data) {
+	if (mime == "text/url") {
+		location.reload();
+	}
+}
+
+
 
 /**
  * TODO comment!

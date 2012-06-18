@@ -138,18 +138,20 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		} else if (path.equals("/js/approveOffer")) {
 
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			double hoursperweek = Double.parseDouble(request
-					.getParameter("hoursperweek"));
+			int aid = 0;
+			double hoursperweek = 0.0;
 			double wage = 0.0;
 			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+				hoursperweek = Double.parseDouble(request
+						.getParameter("hoursperweek"));
 				wage = Double.parseDouble(request.getParameter("wage"));}
 			catch(NumberFormatException e){
 				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler bei Eingabe! Nur double Werte erlaubt fuer wage.");
+						.write("Fehler bei Eingabe! Eine oder mehrere Eingabewerte ungueltig!");
 				return;
 			}
 
@@ -158,6 +160,7 @@ public class ClerkServlet extends HttpServlet {
 			offertoapprove.setChecked(true);
 			offertoapprove.setWage(wage);
 			offertoapprove.setHoursperweek(hoursperweek);
+			log.write("ClerkServlet","Approving offer in progress...");
 
 			OfferController.getInstance().updateOffer(offertoapprove);
 			// wir wollten doch einen String als date?
@@ -165,11 +168,14 @@ public class ClerkServlet extends HttpServlet {
 			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
 			// da was schief.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
-
-			response.setContentType("offers/json");
-			response.getWriter().write(
-					gson.toJson(offertoapprove, offertoapprove.getClass()));
+			
+			response.setContentType("text/url");
 			return;
+//Vorher
+//			response.setContentType("offers/json");
+//			response.getWriter().write(
+//					gson.toJson(offertoapprove, offertoapprove.getClass()));
+//			return;
 		} else if (path.equals("/js/saveOffer")) {
 
 			int aid = Integer.parseInt(request.getParameter("aid"));
@@ -220,11 +226,16 @@ public class ClerkServlet extends HttpServlet {
 			OfferController.getInstance().updateOffer(offertoreject);
 			// wir wollten doch einen String als date? -> s.o.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
-
-			response.setContentType("offers/json");
-			response.getWriter().write(
-					gson.toJson(offertoreject, offertoreject.getClass()));
+			
+			log.write("ClerkServlet","Rejecting offer in progress...");
+			response.setContentType("text/url");
 			return;
+			
+//Vorher
+//			response.setContentType("offers/json");
+//			response.getWriter().write(
+//					gson.toJson(offertoreject, offertoreject.getClass()));
+//			return;
 		} else if (path.equals("/js/documentsFromOffer")) {
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
