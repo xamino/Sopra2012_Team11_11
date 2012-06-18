@@ -1,6 +1,9 @@
 /**
+ * @author: Patryk Boczon
  * @author: Manuel Guentzel
  */
+
+var currentrepresentative;
 
 /**
  * Fragt mich nicht, warum das so funktioniert... :P
@@ -38,13 +41,41 @@ function handleLoadAccountResponse(mime, data) {
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
 		document.getElementById("realName").value = JSONdata.realName;
-		document.getElementById("stellvertreter").value = JSONdata.rep;
+		
+		currentrepresentative = JSONdata.rep;
 
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
 		document.getElementById("newpasswortwdh").value = "";
+		
+		connect("/hiwi/Clerk/js/loadRepresentatives", "", handleLoadRepresentativesResponse);
 	}
 }
+
+function handleLoadRepresentativesResponse(mime, data){
+	
+	var repr = eval("(" + data + ")");
+
+	if (mime == "text/url") {
+		window.location = data;
+	} 
+	else if (mime == "application/json") {
+		var select = document.getElementById("selectStellvertreter");
+		select.innerHTML = "<option value=\"keinen\"> keinen </option>";
+		for ( var i = 0; i < repr.length; i++) {
+			if(currentrepresentative == repr[i]){
+				select.innerHTML += "<option value=\"" + repr[i] + "\" selected = \"selected\">"
+				+ repr[i] + "</option>";
+			}else{
+				select.innerHTML += "<option value=\"" + repr[i] + "\">"
+				+ repr[i] + "</option>";
+			}
+			
+		}
+	}
+}
+
+
 
 /**
  * Sends request to delete own account.
@@ -139,8 +170,8 @@ function changeAccount(){
 		password = b64_md5(password);
 	} else
 		password = "";
-	var rep = form.stellvertreter.value;
-	if (rep == null)
+	var rep = document.getElementById("selectStellvertreter").value;
+	if (rep == "keinen")
 		rep = "";
 	if(rep !=null && rep !="")if (!checkUsername(rep)){
 		toggleWarning("error_stellvertreter",true,"Kein gültiger Username!");

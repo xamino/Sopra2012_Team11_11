@@ -478,6 +478,14 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
 		}
+		//loads potential representatives for this account
+		else if(path.equals("/js/loadRepresentatives")){
+			String username = clerk.getUserData().getUsername();
+			Vector<String> representatives = AccountController.getInstance().getPotentialRepresentatives(username);
+			
+			response.setContentType("application/json");
+			response.getWriter().write(gson.toJson(representatives, representatives.getClass()));
+		}
 		// TODO
 		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
 		else if (path.equals("/js/doApplicationCompletion")) {

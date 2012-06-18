@@ -599,6 +599,37 @@ public class AccountController {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Gibt die potentiellen Stellvertreter eines benutzers zurueck
+	 * @param username
+	 * 			Nutzer mit username wird nicht im Resultat enthalten sein
+	 * @return
+	 * 			Vector, der alle usernames beinhaltet, ausser den übergebenen
+	 */
+	public Vector<String> getPotentialRepresentatives(String username){
+		int accounttype = 3;
+		ResultSet rstype = dbc.select(new String[] {"accounttyp"},new String[] {tableName}, "benutzername = '"+username+"'");
+		try { if(rstype.next()){ accounttype = rstype.getInt("accounttyp"); }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Vector<String> representatives = new Vector<String>();
+		
+		ResultSet rs = dbc.select(new String[] {"benutzername"}, new String[] {tableName}, "accounttyp = "+accounttype+" AND benutzername != '"+username+"'");
+		try {
+			while(rs.next()){
+				representatives.add(rs.getString("benutzername"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return representatives;
+	}
 
 	/**
 	 * Methode zum holen eines Accounts anhand der Emailaddresse. Wird verwendet

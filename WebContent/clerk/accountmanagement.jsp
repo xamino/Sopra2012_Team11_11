@@ -98,8 +98,10 @@
 										</label>
 										</span>
 										<div class="regform">
-											<input id="stellvertreter" type="text" name="stellvertreter"
-												size="20" maxlength="100" />
+														<select id="selectStellvertreter" size="1">
+															<!-- <option value="wert1">Eintrag1</option>
+															<option value="wert2">Eintrag2</option> -->
+														</select>
 											<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
 											<div id="error_stellvertreter" class="hiddenerror"></div>
 										</div>
