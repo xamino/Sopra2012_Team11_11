@@ -59,11 +59,11 @@ public class AdminServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-	
+
 	/**
-	 * Konstruktor des AdminServlet. Hier werden die wichtigen Referenzen gesetzt und wenn noetig
-	 * erstellt. Auch wird ein log Eintrag geschrieben um die Initialisierung zu ersichtlich zu
-	 * machen.
+	 * Konstruktor des AdminServlet. Hier werden die wichtigen Referenzen
+	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
+	 * um die Initialisierung zu ersichtlich zu machen.
 	 **/
 	public AdminServlet() {
 		super();
@@ -163,8 +163,7 @@ public class AdminServlet extends HttpServlet {
 				log.write("AdminServlet",
 						"Error creating account – username alreay exists!");
 				response.setContentType("text/plain");
-				response.getWriter()
-						.write("false");
+				response.getWriter().write("false");
 				return;
 			}
 			// Okay, all okay, continue:
@@ -195,22 +194,20 @@ public class AdminServlet extends HttpServlet {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("userPassword");
 			// System.out.println(password);
-			int accountType = -1;
 			int institute = -1;
+			int accountType = -1;
 			try {
 				institute = Integer.parseInt(request.getParameter("institute"));
-				accountType = Integer.parseInt(request
-						.getParameter("accountType"));
 			} catch (NumberFormatException e) {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut und AccountType.");
+						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für Institut.");
 				return;
 			}
 			if (!validate(realName) || !validate(userName) || !validate(email)
-					|| accountType < 0 || accountType > 3 || institute == -1) {
+					|| institute == -1) {
 				log.write("AdminServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write("Werte illegal!");
@@ -220,6 +217,8 @@ public class AdminServlet extends HttpServlet {
 			if (!validate(password))
 				password = accountController.getAccountByUsername(userName)
 						.getPasswordhash();
+			accountType = accountController.getAccountByUsername(userName)
+					.getAccounttype();
 			// System.out.println(password);
 			if (!admin.editAccount(new Account(userName, password, accountType,
 					email, realName, institute, null))) {

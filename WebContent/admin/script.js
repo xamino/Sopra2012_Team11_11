@@ -116,8 +116,17 @@ function markAccountSelected(id) {
 	}
 	// Else save & mark new one:
 	selectedAccount = id;
+	toggleWarning("error_selection", false, "");
 	document.getElementById(id).setAttribute("class", "selected");
 	// alert(selectedID + " is selected.");
+}
+
+function checkSelection() {
+	if (selectedAccount != null) {
+		togglePopup('account_del', true);
+	} else {
+		toggleWarning("error_selection", true, "Kein Account ausgewählt! ");
+	}
 }
 
 /**
@@ -186,6 +195,11 @@ function loadEditOptions() {
 		// Add input for userName:
 		document.getElementById("userName").innerHTML = "<input type=\"text\" "
 				+ "name=\"name\"/><div id=\"error_userName\" class=\"invisibleWarning\"></div>";
+		// Add input for accountType:
+		document.getElementById("changeAccountType").innerHTML = "<select id=\"accountType\" "
+				+ "name=\"accountType\"><option value=\"0\">Administrator</option><option value"
+				+ "=\"1\">Anbieter</option><option value=\"2\">Verwalter</option><option selected"
+				+ "=\"selected\" value=\"3\">Bewerber</option></select>";
 	} else if (mode = "edit") {
 		// alert("Edit an account.");
 		// Read username from URL:
@@ -216,7 +230,7 @@ function handleLoadEditResponse(mime, data) {
 		// Set the values we have:
 		document.getElementById("userName").innerHTML = account.username;
 		document.getElementById("realName").value = account.name;
-		document.getElementById("accountType").value = account.accounttype;
+		document.getElementById("changeAccountType").innerHTML = getTypeString(account.accounttype);
 		document.getElementById("email").value = account.email;
 		document.getElementById("institute").value = account.institute;
 		// Set the values we don't necessarily have:
@@ -247,7 +261,7 @@ function saveChanges(form) {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else if(!checkText(realName)){
+	} else if (!checkText(realName)) {
 		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
 		error = true;
 	} else
@@ -256,15 +270,15 @@ function saveChanges(form) {
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else if(!checkEmail(email)){
+	} else if (!checkEmail(email)) {
 		toggleWarning("error_email", true, "Ungültige Email!");
 		error = true;
-	}else
+	} else
 		toggleWarning("error_email", false, "");
 	var password = form.password.value;
 	if (password != null && password != "") {
-		toggleWarning("error_password",false,"");
-	} else{
+		toggleWarning("error_password", false, "");
+	} else {
 		toggleWarning("error_password", true, "Bitte ausfüllen!");
 		error = true;
 	}
@@ -314,25 +328,25 @@ function addAccount(form) {
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else if(!checkText(realName)){
+	} else if (!checkText(realName)) {
 		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
 		error = true;
-	}else
+	} else
 		toggleWarning("error_realName", false, "");
 	var email = form.email.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	} else if(!checkEmail(email)){
+	} else if (!checkEmail(email)) {
 		toggleWarning("error_email", true, "Ungültige Email!");
 		error = true;
-	}else
+	} else
 		toggleWarning("error_email", false, "");
 	var userName = form.name.value;
 	if (userName == null || userName == "") {
 		toggleWarning("error_userName", true, "Bitte ausfüllen!");
 		error = true;
-	}else if(!checkUsername(userName)){
+	} else if (!checkUsername(userName)) {
 		toggleWarning("error_userName", true, "Unerlaubtes Sonderzeichen!");
 		error = true;
 	} else
@@ -374,7 +388,8 @@ function handleCreateAccountResponse(mime, data) {
 			window.location = "accountsmanagement.jsp";
 			return;
 		} else if (data == "false") {
-			toggleWarning("error_userName", true, "Benutzername ist bereits vergeben!");
+			toggleWarning("error_userName", true,
+					"Benutzername ist bereits vergeben!");
 			return;
 		}
 	} else if (mime == "text/error") {
