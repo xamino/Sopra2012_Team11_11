@@ -107,6 +107,30 @@ public class AccountController {
 
 		return deleteAccount(acc);
 	}
+	
+	
+	/**
+	 * Methode zum löschen eines ApplicantAccounts.
+	 * 
+	 * @param applicant
+	 *            Account-Objekt
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */
+	public boolean deleteApplicantAccount(Account applicant) {
+		String username = applicant.getUsername();
+		Account acc = getAccountByUsername(username);
+
+		//deleting all applications from username
+		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByApplicant(username);
+		if(apps != null){
+			for (int i = 0; i < apps.size(); i++) {
+				ApplicationController.getInstance().deleteApplication(apps.elementAt(i));
+			}
+		}
+
+		return deleteAccount(acc);
+	}
+	
 
 	/**
 	 * Methode zum löschen eines ClerkAccounts
@@ -120,21 +144,67 @@ public class AccountController {
 		String username = clerk.getUserData().getUsername();
 		Account acc = getAccountByUsername(username);
 		
-		//sets clerk - of all applications with current clerk as clerk - to null 
+		String representative = acc.getRepresentative();
+		
+		//removes the clerk as a reprensentative from all the other clerks
+		Object[] values = { null };
+		String[] columns = { "stellvertreter" };
+		String where = "stellvertreter = '"+username+"'";
+		dbc.update(tableName, columns, values, where);
+		
+		//sets clerk - of all applications with current clerk as clerk - to null or representative
 		Vector<Application> apps = ApplicationController.getInstance().getApprovedApplicationsByClerk(username);
 		if(apps != null){
 			for(int i = 0; i < apps.size(); i++){
 				Application temp = apps.elementAt(i);
-				temp.setClerk(null);
+				if(representative == null){
+					temp.setClerk(null);
+				}else{
+					temp.setClerk(representative);
+				}
+				
 				ApplicationController.getInstance().updateApplication(temp);
 			}
 		}
 		
-		/*
-		Institute inst = InstituteController.getInstance().getInstituteByIID(
-				acc.getInstitute());
-		InstituteController.getInstance().deleteInstitute(inst);
-		*/
+		return deleteAccount(acc);
+
+	}
+	
+	/**
+	 * Methode zum löschen eines ClerkAccounts
+	 * 
+	 * @param clerk
+	 *            Account-Objekt
+	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 */
+
+	public boolean deleteClerkAccount(Account clerk) {
+		String username = clerk.getUsername();
+		Account acc = getAccountByUsername(username);
+		
+		String representative = acc.getRepresentative();
+		
+		//removes the clerk as a reprensentative from all the other clerks
+		Object[] values = { null };
+		String[] columns = { "stellvertreter" };
+		String where = "stellvertreter = '"+username+"'";
+		dbc.update(tableName, columns, values, where);
+		
+		//sets clerk - of all applications with current clerk as clerk - to null or representative
+		Vector<Application> apps = ApplicationController.getInstance().getApprovedApplicationsByClerk(username);
+		if(apps != null){
+			for(int i = 0; i < apps.size(); i++){
+				Application temp = apps.elementAt(i);
+				if(representative == null){
+					temp.setClerk(null);
+				}else{
+					temp.setClerk(representative);
+				}
+				
+				ApplicationController.getInstance().updateApplication(temp);
+			}
+		}
 		
 		return deleteAccount(acc);
 
@@ -151,10 +221,15 @@ public class AccountController {
 		String username = provider.getUsername();
 		Account acc = getAccountByUsername(username);
 		
+		//removes the provider as a reprensentative from all the other providers
+		Object[] values = { null };
+		String[] columns = { "stellvertreter" };
+		String where = "stellvertreter = '"+username+"'";
+		dbc.update(tableName, columns, values, where);
+		
 		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(acc);
 		
 		String representative = provider.getRepresentative();
-		
 		
 		if(representative == null){
 			for (int i = 0; i < off.size(); i++) {

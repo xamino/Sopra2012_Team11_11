@@ -58,12 +58,18 @@ public class Admin extends User {
 		//check if it's a provider account
 		if(account.getAccounttype() == 1){
 			acccon.deleteProviderAccount(account);
-		}
-		else{
-			log.write("Admin", "<" + getUserData().getUsername()
-					+ "> deleted account with username <" + username + ">");
+		}//check if it's a clerk account
+		else if(account.getAccounttype() == 2){
+			acccon.deleteClerkAccount(account);
+		}//check if it's an applicant account
+		else if(account.getAccounttype() == 3){
+			acccon.deleteApplicantAccount(account);
+		}//check if it's an admin account
+		else if(account.getAccounttype() == 0){
 			acccon.deleteAccount(account);
 		}
+		log.write("Admin", "<" + getUserData().getUsername()
+					+ "> deleted account with username <" + username + ">");
 
 		return true;
 	}
