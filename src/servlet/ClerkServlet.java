@@ -629,8 +629,15 @@ public class ClerkServlet extends HttpServlet {
 				response.getWriter().write("Invalid user parameter!");
 				return;
 			}
-			String email = AccountController.getInstance()
+			String email=null;
+			try{
+			email = AccountController.getInstance()
 					.getAccountByUsername(user).getEmail();
+			}catch (NullPointerException e){
+				log.write("ClerkServlet",
+						"Error getting e-mail adress of user in: "+path);
+				return;
+			}
 			response.setContentType("text/email");
 			response.getWriter().write(email);
 		} else {

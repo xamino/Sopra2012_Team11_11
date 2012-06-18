@@ -474,7 +474,7 @@ function markItemSelected(id) {
 	// If clicked again, unselect:
 	if (selectedItem == id) {
 		selectedItem = null;
-		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+		toggleWarning("error_noOfferSelected", true, "Keine Selektion!");
 		prepareButton();
 		return;
 	}
@@ -623,7 +623,7 @@ function handleAddDocumentResponse(mime, data) {
  */
 function showApplication() {
 	selectedItem = null;
-	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Bewerber selektiert!");
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 
