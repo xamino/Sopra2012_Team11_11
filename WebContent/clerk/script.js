@@ -430,6 +430,31 @@ function handleDocumentChangeResponse(mime, data) {
  * @param id
  *            The ID of the clicked entry.
  */
+
+function markDocumentSelected(id) {
+
+ // alert("alte docid: "+selectedDocument);
+ // Remove marking from previous selected, if applicable:
+ if (selectedDocument != null)
+ document.getElementById(selectedDocument).setAttribute("class", "");
+ // If clicked again, unselect:
+ if (selectedDocument == id) {
+ selectedDocument = null;
+ document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+ document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+ return;
+ }
+ // Else save & mark new one:
+ selectedDocument = id;
+ document.getElementById(id).setAttribute("class", "selected");
+ document.getElementById("dokumentloeschenbutton").disabled = "";
+ document.getElementById("dokumentHinzufuegenButton").disabled = "";
+ // alert("aktuelle docid: "+selectedDocument);	
+ // updating 'Angebot pruefen' button
+ prepareButton();
+
+ }
+/*ORGINAL:*/
 // function markDocumentSelected(id) {
 //
 // // alert("alte docid: "+selectedDocument);
