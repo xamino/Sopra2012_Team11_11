@@ -25,11 +25,19 @@
 			</h1>
 		</div>
 		<div class="right">
-			<div class="angemeldet">
-				Sie sind als Anbieter angemeldet. <br> <input type="submit"
-					value="Logout" onclick="doLogout();" />
+			<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Anbieter angemeldet.</label>
+					</p>
+					<br>
+					<p>
+						<input type="button" value="Abmelden" name="logout"
+							onclick="doLogout();" />
+					</p>
+				</form>
 			</div>
-			<div id="error_login" class="hiddenerror"></div>
 			<div class="nav">
 				<h3>Navigation</h3>
 				<div class="text">

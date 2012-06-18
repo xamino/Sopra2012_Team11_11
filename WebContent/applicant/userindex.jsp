@@ -15,55 +15,64 @@
 </head>
 
 <body onload="loadMyOffers()">
-<div class="footerunten">
-	<div class="header">
-		<h1>
-			<a class="banner" href="../applicant/userindex.jsp">Hiwi-Börse</a>
-		</h1>
-	</div>
-	<div class="right">
-		<div class="angemeldet">
-			Sie sind als Bewerber angemeldet. <br> <input type="submit"
-				value="Logout" onclick="doLogout();" />
+	<div class="footerunten">
+		<div class="header">
+			<h1>
+				<a class="banner" href="../applicant/userindex.jsp">Hiwi-Börse</a>
+			</h1>
 		</div>
-		<div id="error_login" class="hiddenerror"></div>
-		<div class="nav">
-			<h3>Navigation</h3>
-			<div class="text">
-				&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
-					title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
-					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_APPLICANT_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
+		<div class="right">
+			<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Bewerber angemeldet.</label>
+					</p>
+					<br>
+					<p>
+						<input type="button" value="Abmelden" name="logout"
+							onclick="doLogout();" />
+					</p>
+				</form>
 			</div>
-		</div>
-	</div>
-	<div class="content">
-		<div class="rightborder">
-			<div class="textblock">
-				<h2>Startseite</h2>
+			<div class="nav">
+				<h3>Navigation</h3>
 				<div class="text">
-					Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene
-					Stellen.<br> Hilfe finden Sie <a
-						href="<%=Helper.D_APPLICANT_HELP%>" title="Hilfe"> hier</a>.
-				</div>
-			</div>
-			<hr>
-			<div class="textblock">
-				<div class="haupttext">
-					<h4>Beworben:</h4>
-					<table class="sized" id="myofferTable">
-						<!-- Table for applied offers here... -->
-					</table>
-					<hr>
-					<h4>Offene Stellen:</h4>
-					<table class="sized" id="offerTable">
-						<!-- Table for available offers here... -->
-					</table>
+					&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_APPLICANT_ACCOUNTMANAGEMENT%>"
+						title="Hier geht es zur Accountverwaltung">Accountverwaltung</a> <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_APPLICANT_HELP%>"
+						title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="content">
+			<div class="rightborder">
+				<div class="textblock">
+					<h2>Startseite</h2>
+					<div class="text">
+						Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene
+						Stellen.<br> Hilfe finden Sie <a
+							href="<%=Helper.D_APPLICANT_HELP%>" title="Hilfe"> hier</a>.
+					</div>
+				</div>
+				<hr>
+				<div class="textblock">
+					<div class="haupttext">
+						<h4>Beworben:</h4>
+						<table class="sized" id="myofferTable">
+							<!-- Table for applied offers here... -->
+						</table>
+						<hr>
+						<h4>Offene Stellen:</h4>
+						<table class="sized" id="offerTable">
+							<!-- Table for available offers here... -->
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="clear"></div>
 

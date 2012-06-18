@@ -15,41 +15,51 @@
 </head>
 
 <body onload="loadOffers()">
-<div class="footerunten">
-	<div class="header">
-		<h1>
-			<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
-		</h1>
-	</div>
-	<div class="right">
-		<div class="angemeldet">
-			Sie sind als Anbieter angemeldet. <br>
-			<input type="submit" value="Logout" onclick="doLogout();"/>
-		</div>				
-			<div id="error_login" class="hiddenerror"></div>
-		<div class="nav">
-			<h3>Navigation</h3>
+	<div class="footerunten">
+		<div class="header">
+			<h1>
+				<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
+			</h1>
+		</div>
+		<div class="right">
+			<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Anbieter angemeldet.</label>
+					</p>
+					<br>
+					<p>
+						<input type="button" value="Abmelden" name="logout"
+							onclick="doLogout();" />
+					</p>
+				</form>
+			</div>
+			<div class="nav">
+				<h3>Navigation</h3>
 				<div class="text">
-					&rarr; Startseite <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT %>" title="Hier geht es zur Accountverwaltung">Accountverwaltung</a>
-						<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_PROVIDER_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
+					&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_PROVIDER_ACCOUNTMANAGEMENT%>"
+						title="Hier geht es zur Accountverwaltung">Accountverwaltung</a> <br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=Helper.D_PROVIDER_HELP%>"
+						title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
+			</div>
 		</div>
-	</div>
-	<div class="content">
-	<div class="rightborder">
-		<div class="textblock">
-			<h2>Startseite</h2>
-			<div class="text">Hier finden Sie Ihre angebotenen Stellen.<br>
-			Hilfe finden Sie <a	href="<%=Helper.D_PROVIDER_HELP %>" title="Hilfe"> hier</a>.</div>
-		</div>
-		<hr>
-		<div class="textblock">
-			<div class="haupttext">
-				<table class="sized" id="providerTable">
-					<!-- <tr>
+		<div class="content">
+			<div class="rightborder">
+				<div class="textblock">
+					<h2>Startseite</h2>
+					<div class="text">
+						Hier finden Sie Ihre angebotenen Stellen.<br> Hilfe finden
+						Sie <a href="<%=Helper.D_PROVIDER_HELP%>" title="Hilfe"> hier</a>.
+					</div>
+				</div>
+				<hr>
+				<div class="textblock">
+					<div class="haupttext">
+						<table class="sized" id="providerTable">
+							<!-- <tr>
 						<th>Meine Stellenangebote:</th>
 						<th>Bewerber/Stelle</th>
 						<th>Ändern</th>
@@ -62,26 +72,27 @@
 						<td>account type</td>
 					</tr> 
 					-->
-					<!-- <tr id="manohman" onclick="">
+							<!-- <tr id="manohman" onclick="">
 						<td>TUT xy</td>
 						<td>14/10<br><input type="submit" value="Bewerberauswahl" onclick="window.location='applicantlist.jsp'" /></td>
 						<td><br><input type="submit" value="Angebot ändern" onclick="window.location='editoffer.jsp'"/> </td>
 						<td><br><input type="button" value="Angebot zurückziehen"
 						onclick="togglePopup('offer_cancel',true);" /> </td>
 						<!-- <td><br><input type="submit" value="Angebot zurückziehen" /> </td>-->
-					<!-- </tr>-->
-				</table><br>
-				<input type="submit" value="Neues Angebot erstellen" onclick="window.location='createoffer.jsp'" />
+							<!-- </tr>-->
+						</table>
+						<br> <input type="submit" value="Neues Angebot erstellen"
+							onclick="window.location='createoffer.jsp'" />
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 	<div class="clear"></div>
 
 	<div class="footer"></div>
 
-		<!-- Here are the popups -->
+	<!-- Here are the popups -->
 	<!-- Confirmation account del popup -->
 	<div id="offer_cancel" class="popup_hidden">
 		<form>
@@ -93,8 +104,8 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Zurückziehen" id="offerZurueckziehen"
-					onclick="deleteOffer(); togglePopup('offer_cancel', false);" />
-				<input type="button" value="Abbrechen"
+					onclick="deleteOffer(); togglePopup('offer_cancel', false);" /> <input
+					type="button" value="Abbrechen"
 					onclick="togglePopup('offer_cancel', false);" />
 			</div>
 		</form>
