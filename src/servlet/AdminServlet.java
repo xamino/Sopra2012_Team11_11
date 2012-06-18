@@ -162,9 +162,9 @@ public class AdminServlet extends HttpServlet {
 			if (accountController.getAccountByUsername(userName) != null) {
 				log.write("AdminServlet",
 						"Error creating account – username alreay exists!");
-				response.setContentType("text/error");
+				response.setContentType("text/plain");
 				response.getWriter()
-						.write("Benutzername ist bereits vergeben!");
+						.write("false");
 				return;
 			}
 			// Okay, all okay, continue:

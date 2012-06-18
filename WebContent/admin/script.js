@@ -373,6 +373,9 @@ function handleCreateAccountResponse(mime, data) {
 		if (data == "true") {
 			window.location = "accountsmanagement.jsp";
 			return;
+		} else if (data == "false") {
+			toggleWarning("error_userName", true, "Benutzername ist bereits vergeben!");
+			return;
 		}
 	} else if (mime == "text/error") {
 		alert(data);
