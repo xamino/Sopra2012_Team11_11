@@ -3,6 +3,9 @@
  * @author: Manuel Guentzel
  */
 
+/**
+ * Stores the clerk's representative
+ */
 var currentrepresentative;
 
 /**
@@ -52,6 +55,14 @@ function handleLoadAccountResponse(mime, data) {
 	}
 }
 
+/**
+ * This function displays the account's potential representatives in the drow down menu.
+ * 
+ * @param mime
+ *            The MIME type of the data.
+ * @param data
+ *            The data.
+ */
 function handleLoadRepresentativesResponse(mime, data){
 	
 	var repr = eval("(" + data + ")");

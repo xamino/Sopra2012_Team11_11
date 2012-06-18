@@ -114,10 +114,13 @@ public class ProviderServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
+			String rep = request.getParameter("rep");
 			if (pw.equals(""))
 				pw = null; // falls leeres pw-> null damit die editOwnAccount
 							// funktion das pw nicht auf "" setzt!
-			if (provider.editOwnAccount(name, email, pw, null)) {
+			if (rep == null)
+				rep = "";
+			if (provider.editOwnAccount(name, email, pw, rep)) {
 				log.write("ApplicantServlet", provider.getUserData()
 						.getUsername() + " has modified his account.");
 				response.setContentType("text/url");
@@ -130,11 +133,19 @@ public class ProviderServlet extends HttpServlet {
 		} else // Do loadAccount:
 		if (path.equals("/js/loadAccount")) {
 			String realName = provider.getUserData().getName();
-			String email = provider.getUserData().getEmail();
+			String email = provider.getUserData().getEmail();		
+			String rep = AccountController.getInstance().getAccountByUsername(provider.getUserData().getUsername()).getRepresentative();
 			String JsonString = Helper.jsonAtor(new String[] { "realName",
-					"email" }, new String[] { realName, email });
+					"email", "rep" }, new String[] { realName, email, rep });
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
+		}
+		//loads potential representatives for this account
+		else if(path.equals("/js/loadRepresentatives")){
+			String username = provider.getUserData().getUsername();
+			Vector<String> representatives = AccountController.getInstance().getPotentialRepresentatives(username);
+			response.setContentType("application/json");
+			response.getWriter().write(gson.toJson(representatives, representatives.getClass()));
 		}
 		// Creates an Vector with all applicants from the selected Offer
 		else if (path.equals("/js/applicantChoice")) {
