@@ -54,7 +54,7 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Angebot erstellen</h2>
-					<div class="text">Hier können Sie das Angebot bearbeiten.</div>
+					<div class="text">Hier können Sie das Angebot bearbeiten.<br>Wenn Sie wichtige Informationen wie z.B. die Stundenzahl verändern möchten, müssen Sie das Angebot neu einstellen.</div>
 				</div>
 				<hr>
 				<div class="textblock">

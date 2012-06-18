@@ -54,7 +54,7 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Bewerberliste</h2>
-					<div class="text">Hier sehen Sie Ihre Bewerber.</div>
+					<div class="text">Hier sehen Sie alle Bewerber, die sich auf das Angebot beworben haben.<br>Des Weiteren können Sie hier Bewerber annehmen.</div>
 				</div>
 				<hr>
 				<div class="textblock">

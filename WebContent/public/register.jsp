@@ -67,7 +67,7 @@
 		<div class="rightborder">
 			<div class="textblock">
 				<h2>Registrierung</h2>
-				<div class="text">Erläuterungstext</div>
+				<div class="text">Hier können Sie sich als Benutzer der Hiwi-Börse registrieren. <br>Füllen Sie hierzu alle Felder aus, stimmen Sie den Datenschutzbestimmungen zu und klicken Sie auf "Registrieren". </div>
 			</div>
 			<hr>
 			<div class="textblock">

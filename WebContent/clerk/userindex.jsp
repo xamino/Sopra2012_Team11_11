@@ -50,7 +50,7 @@
 			<div class="textblock">
 				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Fill with sensible information.<br>
+					Hier erhalten Sie Informationen zur Anzahl der von Ihnen ungeprüften Angebote und der offenen Bewerbungen.<br>
 					Hilfe finden Sie <a	href="<%=Helper.D_CLERK_HELP %>" title="Hilfe"> hier</a>.
 				</div>
 			</div>

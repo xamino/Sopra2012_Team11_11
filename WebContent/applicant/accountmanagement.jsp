@@ -53,7 +53,7 @@
 				<div class="textblock">
 					<h2>Accountverwaltung</h2>
 					<div class="text">Hier können Sie Ihre persönlichen Daten
-						bearbeiten. Wenn die zu ändernden Daten hier nicht aufgeführt
+						bearbeiten.<br>Wenn die zu ändernden Daten hier nicht aufgeführt
 						werden, wenden Sie sich bitte an den Administrator.</div>
 				</div>
 				<hr>

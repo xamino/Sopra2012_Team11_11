@@ -53,8 +53,9 @@
 				<div class="textblock">
 					<h2>Account verwalten</h2>
 					<div class="text">
-						Erläuterungstext ...<br>TODO: "Stellvertreter" should have
-						better field for none than "null" – maybe like "keinen"?
+						Hier können Sie Ihre persönlichen Daten
+						bearbeiten. <br> Wenn die zu ändernden Daten hier nicht aufgeführt
+						werden, wenden Sie sich bitte an den Administrator.
 					</div>
 				</div>
 				<hr>

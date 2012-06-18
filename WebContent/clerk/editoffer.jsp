@@ -54,10 +54,8 @@
 			<div class="textblock">
 				<h2>Angebot bearbeiten</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Form implementation is lacking –
-					do we even need forms? Maybe everything can be done with
-					javascript, as we have to check for validity anyway. Implmenent
-					mouseover highlight for table list on right side. Error divs.
+					Hier sehen Sie die Details des gewählten Angebots.<br>Sie können das Angebot bestätigen und abändern.<br>
+					Des Weiteren werden hier die benötigten Unterlagen zum jeweiligen Angebot aufgeführt. Auch diese können Sie bearbeiten.
 				</div>
 			</div>
 			<hr>

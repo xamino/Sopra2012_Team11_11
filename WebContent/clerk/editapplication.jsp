@@ -52,7 +52,8 @@
 			<div class="textblock">
 				<h2>Bewerbung bearbeiten</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Error divs
+					Hier können Sie alle für eine Bewerbung benötigten Unterlagen bearbeiten. Des Weiteren können Sie Unterlagen als abgegeben markieren.<br>
+					Hier können Sie auch die Bewerbung abschließen.
 				</div>
 			</div>
 			<hr>

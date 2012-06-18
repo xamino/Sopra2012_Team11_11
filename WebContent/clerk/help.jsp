@@ -45,7 +45,7 @@
 		<div class="rightborder">
 			<div class="textblock">
 				<h2>Hilfe</h2>
-				<div class="text">Erläuterungstext ...</div>
+				<div class="text">Hier finden Sie Hilfe zu allen wichtigen Themen der Hiwi-Börse.</div>
 			</div>
 			<hr>
 			<div class="textblock">

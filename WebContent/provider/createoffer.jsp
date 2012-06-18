@@ -54,8 +54,8 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Angebot erstellen</h2>
-					<div class="text">Hier können Sie ein neues Angebot
-						erstellen.</div>
+					<div class="text">Hier können Sie ein neues Angebot	erstellen.<br>Füllen Sie hierzu alle Felder aus und klicken Sie auf "Angebot einstellen".<br>
+					Sobald der Verwalter dem Angebot zugestimmt hat, wird dieses in der Hiwi-Börse aufgeführt.</div>
 				</div>
 				<hr>
 				<div class="textblock">

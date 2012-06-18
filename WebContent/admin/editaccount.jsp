@@ -56,12 +56,12 @@
 			<div class="textblock">
 				<h2>Daten ändern</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Implement that "Institut" and
-					"Stellvertreter" are only active when legal.
+					Hier können Sie den gewählten Account bearbeiten und löschen.
 				</div>
 			</div>
 			<hr>
 			<div class="textblock">
+				<div class="haupttext">
 				<form name="dataForm" class="listform">
 					<div class="textblock">
 						<input id="saveButton" type="button" value="Änderungen übernehmen"
@@ -107,6 +107,7 @@
 						</tr>
 					</table>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

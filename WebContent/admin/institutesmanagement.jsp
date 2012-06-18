@@ -50,12 +50,11 @@
 			<div class="textblock">
 				<h2>Institute Verwalten</h2>
 				<div class="text">Hier können sie die Institute im System
-					verwalten. Die IID muss eineindeutig sein!</div>
+					verwalten.<br>Die IID muss eindeutig sein.</div>
 			</div>
 			<hr>
 			<div class="textblock">
 				<div class="haupttext">
-					<div class="textblock">
 						<input type="button" value="Eintrag hinzufügen"
 							onclick="togglePopup('institute_add', true);" /> <input
 							style="float: right;" type="button"
@@ -63,12 +62,12 @@
 							onclick="prepareDelete();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<div class="clear"></div>
+						<br><br>
+						<!--<div class="clear"></div>-->
 						<hr>
 						<table id="institutesList">
 							<!-- javascript loads documents here -->
 						</table>
-					</div>
 				</div>
 			</div>
 		</div>

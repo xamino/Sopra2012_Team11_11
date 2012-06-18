@@ -51,8 +51,7 @@
 			<div class="textblock">
 				<h2>Bewerbungen verwalten</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Button that leads to
-					editapplication view MUST transfer data!
+					Hier können Sie eine Bewerbung auswählen und diese mittels des Buttons bearbeiten.
 				</div>
 			</div>
 			<hr>

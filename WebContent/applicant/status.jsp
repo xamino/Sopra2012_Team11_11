@@ -56,7 +56,8 @@
 				<div class="textblock">
 					<h2>Bewerbungen</h2>
 					<div class="text">Hier finden Sie den Bearbeitungsstatus
-						Ihrer Bewerbungen.</div>
+						Ihrer Bewerbungen.<br>
+						Des Weiteren können Sie hier Ihre Bewerbung wiederrufen und Anbieter bzw. Verwalten kontaktieren.</div>
 				</div>
 				<hr>
 				<div class="textblock">

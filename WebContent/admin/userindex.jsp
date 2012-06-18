@@ -51,8 +51,7 @@
 			<div class="textblock">
 				<h2>Willkommen in ihrer persönlichen Zentrale</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Fill with what we really can
-					show. Consider live update? <br> Hilfe finden Sie <a
+					Hier finden Sie allgemeine Informationen zur Hiwi-Börse.<br> Hilfe finden Sie <a
 						href="<%=Helper.D_ADMIN_HELP%>" title="Hilfe"> hier</a>.
 				</div>
 			</div>

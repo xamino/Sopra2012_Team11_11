@@ -52,8 +52,8 @@
 				<div class="textblock">
 					<h2>Startseite</h2>
 					<div class="text">
-						Hier finden Sie Ihre laufenden Bewerbungen und weitere angebotene
-						Stellen.<br> Hilfe finden Sie <a
+						In der oberen Tabelle finden Sie Ihre laufenden Bewerbungen.<br>
+						Weitere angebotene Stellen finden Sie in der unteren Tabelle.<br> Hilfe finden Sie <a
 							href="<%=Helper.D_APPLICANT_HELP%>" title="Hilfe"> hier</a>.
 					</div>
 				</div>

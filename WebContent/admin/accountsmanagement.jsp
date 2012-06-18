@@ -54,8 +54,8 @@
 						Accounts einsehen, verändern, und löschen.</div>
 				</div>
 				<hr>
-				<div class="haupttext">
-					<div class="textblock">
+				<div class="textblock">
+					<div class="haupttext">
 						<!-- The URLs to editaccount.jsp are set with parameters so that the page reacts correctly. -->
 						<input type="button" value="Account hinzufügen"
 							onclick="window.location='editaccount.jsp?mode=add'" /> <input
@@ -64,7 +64,8 @@
 							onclick="checkSelection();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<div class="clear"></div>
+						<br><br>
+						<!--<div class="clear"></div>-->
 						<hr>
 						<table class="sized" id="accountTable">
 							<!-- Table with accounts here -->

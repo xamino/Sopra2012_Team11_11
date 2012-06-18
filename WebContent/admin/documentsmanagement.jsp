@@ -50,13 +50,13 @@
 			<div class="textblock">
 				<h2>Unterlagen Verwalten</h2>
 				<div class="text">Hier können sie die Standardunterlagen
-					verwalten. Bei erstellen einer neuen Unterlage MUSS die UID
-					eineindeutig sein!</div>
+					verwalten. <br>Beim Erstellen einer neuen Unterlage MUSS die UID
+					eineindeutig sein.
+				</div>
 			</div>
 			<hr>
 			<div class="textblock">
 				<div class="haupttext">
-					<div class="textblock">
 						<input type="button" value="Eintrag hinzufügen"
 							onclick="togglePopup('document_add', true);" /> <input
 							align="left" type="button" value="Eintrag ändern"
@@ -65,12 +65,12 @@
 							onclick="prepareDelete();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<div class="clear"></div>
+						<br><br>
+						<!--<div class="clear"></div>-->
 						<hr>
 						<table id="documentsList">
 							<!-- javascript loads documents here -->
 						</table>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -51,8 +51,7 @@
 			<div class="textblock">
 				<h2>Angebote verwalten</h2>
 				<div class="text">
-					Erläuterungstext ...<br>TODO: Checkoffer button MUST transfer
-					data to editoffer.jsp!
+					Hier finden Sie alle ungeprüften Angebote.<br>Mittels "Angebot prüfen" gelangen Sie zu einer detaillirteren Anzeige des gewählten Angebots.
 				</div>
 			</div>
 			<hr>
