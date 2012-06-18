@@ -95,24 +95,16 @@
 							<td><input type="text" id="email" name="email" size="40" />
 								<div id="error_email" class="invisibleWarning"></div></td>
 						</tr>
+						<!-- Accounttype can NOT be changed because of system crash! -->
 						<tr>
 							<td>Accounttyp:</td>
-							<td><select id="accountType" name="accountType"><option
-										value="0">Administrator</option>
-									<option value="1">Anbieter</option>
-									<option value="2">Verwalter</option>
-									<option selected="selected" value="3">Bewerber</option></select></td>
+							<td id="changeAccountType"></td>
 						</tr>
 						<tr>
 							<td>Institut:</td>
 							<td><select id="institute" name="institute"></select>
 								<div id="error_institute" class="invisibleWarning"></div></td>
 						</tr>
-						<!-- TODO: rename name... -->
-						<!-- <tr>
-							<td>Stellvertreter:</td>
-							<td><input type="text" id="standIn" /></td>
-						</tr> -->
 					</table>
 				</form>
 			</div>

@@ -176,12 +176,12 @@ function handleEditOneOfferResponse(mime, data) {
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		documentsFromOffer();
 	} else if (mime == "text/error") {
-		alert(data);
+		alert(data);		
 	}
 }
 
 /**
- * TODO comment!
+ * Function which approves an offer
  */
 function angebotbestaetigen() {
 	var aid = getURLParameter("AID");
@@ -189,8 +189,22 @@ function angebotbestaetigen() {
 	var wage = document.getElementById("inputwage").value;
 
 	connect("/hiwi/Clerk/js/approveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
+			+ hoursperweek + "&wage=" + wage, handleApproveOfferResponse);
 }
+
+/**
+ * Handles the response (relaoding) of the ClerkServlet after approving an offer.
+ * 
+ * @param mime
+ * @param data
+ */
+function handleApproveOfferResponse(mime, data) {
+	if (mime == "text/url") {
+		location.reload();
+	}
+}
+
+
 
 /**
  * TODO comment!
@@ -228,13 +242,27 @@ function angebotspeichern() {
 }
 
 /**
- * TODO comment!
+ * Function declines an offer only if it is immadiately pressed after approving.
  */
 function angebotablehnen() {
 	var aid = getURLParameter("AID");
 	connect("/hiwi/Clerk/js/rejectOffer", "aid=" + aid,
-			handleEditOneOfferResponse);
+			handleRejectOfferResponse);
 }
+
+/**
+ * Handles the response (relaoding) of the ClerkServlet after declining an offer.
+ * 
+ * @param mime
+ * @param data
+ */
+function handleRejectOfferResponse(mime, data) {
+	if (mime == "text/url") {
+		location.reload();
+	}
+}
+
+
 
 /**
  * TODO comment!
@@ -332,7 +360,11 @@ function prepareButton() {
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-			window.location = 'editoffer.jsp?AID=' + selectedItem;
+			if(selectedItem == null){ // wenn selektiert und gleich wieder deselektiert wird
+				// DO NOTHING
+			}
+			else
+				window.location = 'editoffer.jsp?AID=' + selectedItem;
 		};
 	}
 	// wenn angebotpruefen geklickt und kein angebot selektiert
@@ -398,6 +430,31 @@ function handleDocumentChangeResponse(mime, data) {
  * @param id
  *            The ID of the clicked entry.
  */
+
+function markDocumentSelected(id) {
+
+ // alert("alte docid: "+selectedDocument);
+ // Remove marking from previous selected, if applicable:
+ if (selectedDocument != null)
+ document.getElementById(selectedDocument).setAttribute("class", "");
+ // If clicked again, unselect:
+ if (selectedDocument == id) {
+ selectedDocument = null;
+ document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+ document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+ return;
+ }
+ // Else save & mark new one:
+ selectedDocument = id;
+ document.getElementById(id).setAttribute("class", "selected");
+ document.getElementById("dokumentloeschenbutton").disabled = "";
+ document.getElementById("dokumentHinzufuegenButton").disabled = "";
+ // alert("aktuelle docid: "+selectedDocument);	
+ // updating 'Angebot pruefen' button
+ prepareButton();
+
+ }
+/*ORGINAL:*/
 // function markDocumentSelected(id) {
 //
 // // alert("alte docid: "+selectedDocument);
@@ -442,7 +499,7 @@ function markItemSelected(id) {
 	// If clicked again, unselect:
 	if (selectedItem == id) {
 		selectedItem = null;
-		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+		toggleWarning("error_noOfferSelected", true, "Keine Selektion!");
 		prepareButton();
 		return;
 	}
@@ -591,7 +648,7 @@ function handleAddDocumentResponse(mime, data) {
  */
 function showApplication() {
 	selectedItem = null;
-	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Bewerber selektiert!");
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 

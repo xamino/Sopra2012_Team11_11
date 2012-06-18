@@ -226,6 +226,67 @@ public class DocumentController {
 		return docVect;
 
 	}
+	
+	/**
+	 * Die Methode liefert zu einer Bewerbung alle abgegebenen Dokumente.
+	 * 
+	 * @param benutzername
+	 *            Username vom Bewerber.
+	 * @return
+	 */			
+	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername, int aid) {
+		String[] select = { "*" };
+		String[] from = { tableNameB };
+		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'TRUE'";
+		Vector<AppDocument> appdoc = new Vector<AppDocument>();
+		ResultSet rs = db.select(select, from, where);
+		try {
+			while (rs.next()) {
+				AppDocument temp;
+				temp = new AppDocument(rs.getString(0), rs.getInt(1),
+						rs.getInt(2), rs.getBoolean(3));
+				appdoc.add(temp);
+			}
+		} catch (SQLException e) {
+			log.write("DocumentController", "Error while select");
+			// e.printStackTrace();
+			return null;
+		}
+
+		return appdoc;
+
+	}
+	
+	/**
+	 * Die Methode liefert zu einer Bewerbung alle nicht abgegebenen Dokumente.
+	 * 
+	 * @param benutzername
+	 *            Username vom Bewerber.
+	 * @return
+	 */			
+	public Vector<AppDocument> getAppDocsWithStatusZero(String benutzername, int aid) {
+		String[] select = { "*" };
+		String[] from = { tableNameB };
+		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'FALSE'";
+		Vector<AppDocument> appdoc = new Vector<AppDocument>();
+		ResultSet rs = db.select(select, from, where);
+		try {
+			while (rs.next()) {
+				AppDocument temp;
+				temp = new AppDocument(rs.getString(0), rs.getInt(1),
+						rs.getInt(2), rs.getBoolean(3));
+				appdoc.add(temp);
+			}
+		} catch (SQLException e) {
+			log.write("DocumentController", "Error while select");
+			// e.printStackTrace();
+			return null;
+		}
+
+		return appdoc;
+
+	}
+
 
 	/**
 	 * Diese Methode sammelt alle Bewerber-Unterlagen zu einem bestimmten

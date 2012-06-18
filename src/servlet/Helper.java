@@ -48,6 +48,10 @@ public final class Helper {
 	 */
 	public static final String D_PUBLIC_DATAAGREEMENT = "/hiwi/public/dataagreement.jsp";
 	/**
+	 * Pfad zu Datenschutzerklärung fuer eingeloggte User.
+	 */
+	public static final String D_PUBLIC_DATAAGREEMENTUSER = "/hiwi/public/dataagreementuser.jsp";
+	/**
 	 * Pfad zu /hiwi/public/help.jsp.
 	 */
 	public static final String D_PUBLIC_HELP = "/hiwi/public/help.jsp";
