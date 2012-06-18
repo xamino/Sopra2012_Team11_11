@@ -176,7 +176,7 @@ function handleEditOneOfferResponse(mime, data) {
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		documentsFromOffer();
 	} else if (mime == "text/error") {
-		alert(data);
+		alert(data);		
 	}
 }
 
@@ -332,7 +332,11 @@ function prepareButton() {
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-			window.location = 'editoffer.jsp?AID=' + selectedItem;
+			if(selectedItem == null){ // wenn selektiert und gleich wieder deselektiert wird
+				// DO NOTHING
+			}
+			else
+				window.location = 'editoffer.jsp?AID=' + selectedItem;
 		};
 	}
 	// wenn angebotpruefen geklickt und kein angebot selektiert

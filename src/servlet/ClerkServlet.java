@@ -127,7 +127,7 @@ public class ClerkServlet extends HttpServlet {
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt fÃ¼r AID.");
+						.write("Fehler! Ungültige AID:");
 				return;
 			}
 			// AID should be != -1 here, so continue:
