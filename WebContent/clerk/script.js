@@ -65,7 +65,8 @@ function handleLoadInfo(mime, data) {
  */
 function showMyOffers() {
 	// reset selectedID (account could have been deleted in meantime)
-	// selectedOffer mit selectedItem ersetzt, da es sich um Offer UND Applicant handelt
+	// selectedOffer mit selectedItem ersetzt, da es sich um Offer UND Applicant
+	// handelt
 	selectedItem = null;
 	toggleWarning("error_noOfferSelected", true,
 	"Kein Angebot selektiert!");
@@ -294,23 +295,25 @@ function handledocumentsToAddToOfferResponse(mime, data) {
 					+ docs[i].name + "</option>";
 		}
 		// All loaded now, so get email of provider for mailto button:
-		connect("/hiwi/Clerk/js/getEmail", "user="
-				+ document.getElementById("offerAuthor").innerText, function(
-				mime, data) {
-			if (mime == "text/url") {
-				window.location = data;
-			} else if (mime == "text/error") {
-				alert(data);
-			}
-			// This is the case we want:
-			else if (mime == "text/email") {
-				var button = document.getElementById("mailToAuthorButton");
-				var offerTitel = document.getElementById("offerName").innerText;
-				// Note that clickMail() is defined in the library.js!
-				button.setAttribute("onclick", "clickMail('" + data
-						+ "', '[Hiwi-Börse:" + offerTitel + "]')");
-			}
-		});
+		connect(
+				"/hiwi/Clerk/js/getEmail",
+				"user=" + document.getElementById("offerAuthor").innerText,
+				function(mime, data) {
+					if (mime == "text/url") {
+						window.location = data;
+					} else if (mime == "text/error") {
+						alert(data);
+					}
+					// This is the case we want:
+					else if (mime == "text/email") {
+						var button = document
+								.getElementById("mailToAuthorButton");
+						var offerTitel = document.getElementById("offerName").innerText;
+						// Note that clickMail() is defined in the library.js!
+						button.setAttribute("onclick", "clickMail('" + data
+								+ "', '[Hiwi-Börse:" + offerTitel + "]')");
+					}
+				});
 	}
 }
 
@@ -329,12 +332,12 @@ function prepareButton() {
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-				window.location = 'editoffer.jsp?AID=' + selectedItem;
+			window.location = 'editoffer.jsp?AID=' + selectedItem;
 		};
 	}
 	// wenn angebotpruefen geklickt und kein angebot selektiert
 	// alert("preparing button");
-	
+
 	else if (document.getElementById("editapplication") != null
 			&& selectedItem != null) { // applicationmanagement.jsp -->
 		// editapplication.jsp, wenn etwas
@@ -439,15 +442,13 @@ function markItemSelected(id) {
 	// If clicked again, unselect:
 	if (selectedItem == id) {
 		selectedItem = null;
-		toggleWarning("error_noOfferSelected", true,
-		"Kein Angebot selektiert!");
+		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 		prepareButton();
 		return;
 	}
 	// Else save & mark new one:
 	selectedItem = id;
-	toggleWarning("error_noOfferSelected", false,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", false, "Kein Angebot selektiert!");
 
 	// ("aktuelle id: "+selectedItem);
 
@@ -590,8 +591,7 @@ function handleAddDocumentResponse(mime, data) {
  */
 function showApplication() {
 	selectedItem = null;
-	toggleWarning("error_noOfferSelected", true,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 	connect("/hiwi/Clerk/js/showApplication", "", handleShowApplicationResponse);
 }
 
