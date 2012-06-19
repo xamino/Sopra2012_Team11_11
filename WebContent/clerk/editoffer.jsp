@@ -79,10 +79,10 @@
 						<input type="button" value="Mail an Anbieter" id="mailToAuthorButton"/>
 					</div>
 					<input type="button" id="angebotbestaetigen"
-						value="Angebot bestätigen" onclick="angebotbestaetigen()" /> 
+						value="Angebot bestätigen" onclick="togglePopup('offer_approve',true);" /> 
 					<input
 						type="button" id="angebotablehnen" value="Angebot ablehnen"
-						onclick="angebotablehnen()" />
+						onclick="togglePopup('offer_reject',true)" />
 					<input
 						type="button" id="angebotspeichern" value="Angebot Speichern"
 						onclick="angebotspeichern()" />
@@ -127,5 +127,34 @@
 			</div>
 		</form>
 	</div>
+	<!-- Approve offer popup -->
+	<div id="offer_approve" class="popup_hidden">
+			<h3>Angebot bestätigen</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie das ausgewählte<br>Angebot wirklich bestätigen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Bestätigen" id="angebotBestaetigen"
+					onclick="angebotbestaetigen();" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('offer_approve', false);" />
+			</div>
+	</div>
+	<!-- Reject offer popup -->
+	<div id="offer_reject" class="popup_hidden">
+			<h3>Angebot ablehnen</h3>
+			<hr>
+			<div class="textblock">
+				Wollen sie das ausgewählte<br>Angebot wirklich ablehnen?
+			</div>
+			<hr>
+			<div class="textblock">
+				<input type="button" value="Ablehnen" id="angebotAblehnen"
+					onclick="angebotablehnen();" /> <input type="button"
+					value="Abbrechen" onclick="togglePopup('offer_reject', false);" />
+			</div>
+	</div>
+	
 </body>
 </html>
