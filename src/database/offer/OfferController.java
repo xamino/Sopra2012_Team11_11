@@ -158,7 +158,7 @@ public class OfferController {
 		String a = "";
 		try{
 			if(rrs.next())
-		    a = rrs.getString(0);
+		    a = rrs.getString(1);
 		}catch (Exception e) {
 			log.write("OfferController", "Fehler beim Auslesen der Mailadresse des Anbieters");
 		}
