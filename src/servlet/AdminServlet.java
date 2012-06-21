@@ -219,7 +219,6 @@ public class AdminServlet extends HttpServlet {
 						.getPasswordhash();
 			accountType = accountController.getAccountByUsername(userName)
 					.getAccounttype();
-			// System.out.println(password);
 			if (!admin.editAccount(new Account(userName, password, accountType,
 					email, realName, institute, null))) {
 				response.setContentType("text/error");

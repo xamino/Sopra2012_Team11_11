@@ -641,7 +641,7 @@ public class DocumentController {
 	 */
 	public Vector<Document> getDocumentsToAddToOffer(int aid) {
 
-		System.out.println(tableNameU);
+		
 
 		Vector<Document> docsToAdd = new Vector<Document>();
 

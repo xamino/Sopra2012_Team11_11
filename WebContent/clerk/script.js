@@ -188,6 +188,29 @@ function angebotbestaetigen() {
 	var hoursperweek = document.getElementById("inputhoursperweek").value;
 	var wage = document.getElementById("inputwage").value;
 
+	var error = false;
+
+	if (hoursperweek == null || hoursperweek == "") {
+		toggleWarning("hours_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkInt(hoursperweek)) {
+		toggleWarning("hours_error", true, "Bitte eine ganze Zahl angeben!");
+		error = true;
+	} else
+		toggleWarning("hours_error", false, "");
+	if (wage == null || wage == "") {
+		toggleWarning("gage_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkFloat(wage)) {
+		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
+		error = true;
+	} else{
+		toggleWarning("gage_error", false, "");
+		wage = wage.replace(",",".");
+	}
+	togglePopup("offer_approve", false);
+	if (error)
+		return;
 	connect("/hiwi/Clerk/js/approveOffer", "aid=" + aid + "&hoursperweek="
 			+ hoursperweek + "&wage=" + wage, handleApproveOfferResponse);
 }
@@ -229,9 +252,10 @@ function angebotspeichern() {
 	} else if (!checkFloat(wage)) {
 		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
 		error = true;
-	} else
+	} else{
 		toggleWarning("gage_error", false, "");
-
+		wage = wage.replace(",",".");
+	}
 	if (error)
 		return;
 	// Debug:

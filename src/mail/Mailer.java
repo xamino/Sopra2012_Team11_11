@@ -91,7 +91,7 @@ public class Mailer {
 	 * @return <code>True</code>, falls die Mail Adresse korrekt ist. <code>False</code>, falls sie es nicht ist.
 	 */
 	private Boolean checkAddress(String address){
-		if(!address.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))return false;
+		if(!address.matches("^[A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))return false;
 		return true;
 	}
 	/**
