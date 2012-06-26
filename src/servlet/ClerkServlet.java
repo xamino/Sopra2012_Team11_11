@@ -9,7 +9,6 @@ package servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -84,7 +83,7 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speichern einer Instanz vom Mailer
 	 */
 	private Mailer mail;
-	
+
 	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
@@ -102,6 +101,7 @@ public class ClerkServlet extends HttpServlet {
 		appcon = ApplicationController.getInstance();
 		offcon = OfferController.getInstance();
 		instcon = InstituteController.getInstance();
+		mail = Mailer.getInstance();
 	}
 
 	/**
@@ -137,8 +137,7 @@ public class ClerkServlet extends HttpServlet {
 				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler! Ung�ltige AID:");
+				response.getWriter().write("Fehler! Ung�ltige AID:");
 				return;
 			}
 			// AID should be != -1 here, so continue:
@@ -147,18 +146,20 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertoedit, offertoedit.getClass()));
 			return;
-			
+
 		} else if (path.equals("/js/saveOffer")) {
-			boolean changed = Boolean.parseBoolean(request.getParameter("changed"));
-			boolean accepted = Boolean.parseBoolean(request.getParameter("annehmen"));
-			
+			boolean changed = Boolean.parseBoolean(request
+					.getParameter("changed"));
+			boolean accepted = Boolean.parseBoolean(request
+					.getParameter("annehmen"));
+
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			double hoursperweek = Double.parseDouble(request
 					.getParameter("hoursperweek"));
 			double wage = 0.0;
 			try {
-				wage = Double.parseDouble(request.getParameter("wage"));}
-			catch(NumberFormatException e){
+				wage = Double.parseDouble(request.getParameter("wage"));
+			} catch (NumberFormatException e) {
 				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
@@ -178,23 +179,34 @@ public class ClerkServlet extends HttpServlet {
 			offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
-			if(changed&&accepted){
+			if (changed && accepted) {
 				offertosave.setChecked(true);
 				offertosave.setFinished(false);
-			}else if(changed&&!accepted){
+			} else if (changed && !accepted) {
 				offertosave.setChecked(false);
 				offertosave.setFinished(true);
-			}else{
+			} else {
 				offertosave.setChecked(false);
 				offertosave.setFinished(false);
 			}
 
-			Account author = acccon.getAccountByUsername(offertosave.getAuthor());
+			Account author = acccon.getAccountByUsername(offertosave
+					.getAuthor());
 			String address = author.getEmail();
-			if(offertosave.isChecked()&&!offertosave.isFinished())mail.sendMail(address,"Freischaltung des Angebots \""+offertosave.getName()+"\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""+offertosave.getName()+"\" für Bewerber freigeschaltet wurde.");
-			if(!offertosave.isChecked()&&offertosave.isFinished())mail.sendMail(address,"Ablehnen des Angebots \""+offertosave.getName()+"\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""+offertosave.getName()+"\" durch einen Verwalter abgelehnt wurde.");
-			
-			
+			if (offertosave.isChecked() && !offertosave.isFinished())
+				mail.sendMail(address, "Freischaltung des Angebots \""
+						+ offertosave.getName() + "\"",
+						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
+								+ offertosave.getName()
+								+ "\" für Bewerber freigeschaltet wurde.");
+			if (!offertosave.isChecked() && offertosave.isFinished())
+				mail.sendMail(address,
+						"Ablehnen des Angebots \"" + offertosave.getName()
+								+ "\"",
+						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
+								+ offertosave.getName()
+								+ "\" durch einen Verwalter abgelehnt wurde.");
+
 			OfferController.getInstance().updateOffer(offertosave);
 			// wir wollten doch einen String als date?
 			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
@@ -206,7 +218,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertosave, offertosave.getClass()));
 			return;
-			
+
 		} else if (path.equals("/js/documentsFromOffer")) {
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
@@ -460,13 +472,15 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(JsonString);
 		}
-		//loads potential representatives for this account
-		else if(path.equals("/js/loadRepresentatives")){
+		// loads potential representatives for this account
+		else if (path.equals("/js/loadRepresentatives")) {
 			String username = clerk.getUserData().getUsername();
-			Vector<String> representatives = AccountController.getInstance().getPotentialRepresentatives(username);
-			
+			Vector<String> representatives = AccountController.getInstance()
+					.getPotentialRepresentatives(username);
+
 			response.setContentType("application/json");
-			response.getWriter().write(gson.toJson(representatives, representatives.getClass()));
+			response.getWriter().write(
+					gson.toJson(representatives, representatives.getClass()));
 		}
 		// TODO
 		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
@@ -608,13 +622,13 @@ public class ClerkServlet extends HttpServlet {
 				response.getWriter().write("Invalid user parameter!");
 				return;
 			}
-			String email=null;
-			try{
-			email = AccountController.getInstance()
-					.getAccountByUsername(user).getEmail();
-			}catch (NullPointerException e){
+			String email = null;
+			try {
+				email = AccountController.getInstance()
+						.getAccountByUsername(user).getEmail();
+			} catch (NullPointerException e) {
 				log.write("ClerkServlet",
-						"Error getting e-mail adress of user in: "+path);
+						"Error getting e-mail adress of user in: " + path);
 				return;
 			}
 			response.setContentType("text/email");

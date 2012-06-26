@@ -206,7 +206,14 @@ function angebotspeichern() {
 	if (error)
 		return;
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage+"&changed="+changed+"&annehmen="+annehmen, handleEditOneOfferResponse);
+			+ hoursperweek + "&wage=" + wage+"&changed="+changed+"&annehmen="+annehmen, gotoOfferManagement);
+}
+
+/**
+*  Weiterleitung an offermanagement.
+**/
+function gotoOfferManagement() {
+    window.location = "/hiwi/clerk/offermanagement.jsp";
 }
 
 function checkButtonOne () {
