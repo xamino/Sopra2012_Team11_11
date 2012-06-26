@@ -55,15 +55,19 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Bewerbungen</h2>
-					<div class="text">Hier finden Sie den Bearbeitungsstatus
-						Ihrer Bewerbungen.<br>
-						Des Weiteren können Sie hier Ihre Bewerbung wiederrufen und Anbieter bzw. Verwalten kontaktieren.</div>
+					<div class="text">
+						Hier finden Sie den Bearbeitungsstatus Ihrer Bewerbungen.<br>
+						Des Weiteren können Sie hier Ihre Bewerbung wiederrufen und
+						Anbieter bzw. Verwalten kontaktieren.
+					</div>
 				</div>
 				<hr>
 				<div class="textblock">
 					<div class="haupttext">
-						<div id="applications">
-							<!-- <h4>Bewerbung für: WOW-TUT</h4>-->
+						<div>
+							<h4 id="applications">
+								<!-- <h4>Bewerbung für: WOW-TUT</h4>-->
+							</h4>
 						</div>
 						<form class="listform">
 							<table id="applicationsTable">
@@ -72,21 +76,10 @@
 						</form>
 						<hr>
 						<div class="float">
-							<form method="post" action="mailto:email@email.com">
-								<input type="submit" value="Verwalter kontaktieren" />
-							</form>
-						</div>
-						<div class="float">
-							<form method="post" action="mailto:email@email.com">
-								<input type="submit" value="Anbieter kontaktieren" />
-							</form>
-						</div>
-						<div class="float">
-							<form name="stornieren">
-								<input type="button" value="Bewerbung wiederrufen"
-									onclick="togglePopup('application_cancel',true);" />
-								<!-- <input type="submit" value="Bewerbung wiederrufen" />-->
-							</form>
+							<input type="button" value="Anbieter kontaktieren"
+								id="mailToProvider" /> <input type="button"
+								value="Bewerbung wiederrufen"
+								onclick="togglePopup('application_cancel',true);" />
 						</div>
 					</div>
 				</div>
