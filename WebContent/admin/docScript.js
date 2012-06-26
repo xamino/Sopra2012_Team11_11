@@ -230,20 +230,12 @@ function editDocument() {
 		return;
 	var error = false;
 	var uid = form.uid.value;
-	if (uid == null || uid == "") {
-		toggleWarning("error_editDocument_uid", true, "Bitte ausfüllen!");
-		error = true;
-	} else if(!checkInt(uid)){
-		toggleWarning("error_addDocument_uid",true,"Bitte nur ganze Zahlen!");
-		error =true;
-    }else
-		toggleWarning("error_editDocument_uid", false, "");
 	var title = form.title.value;
 	if (title == null || title == "") {
 		toggleWarning("error_editDocument_title", true, "Bitte ausfüllen!");
 		error = true;
 	}else if(!checkText(title)){
-		toggleWarning("error_addDocument_title",true,"Unerlaubtes Sonderzeichen!");
+		toggleWarning("error_editDocument_title",true,"Unerlaubtes Sonderzeichen!");
 		error =true;
     } else
 		toggleWarning("error_editDocument_title", false, "");
@@ -252,14 +244,14 @@ function editDocument() {
 		toggleWarning("error_editDocument_descr", true, "Bitte ausfüllen!");
 		error = true;
 	}else if(!checkText(description)){
-		toggleWarning("error_addDocument_descr",true,"Unerlaubtes Sonderzeichen!");
+		toggleWarning("error_editDocument_descr",true,"Unerlaubtes Sonderzeichen!");
 		error =true;
     } else
 		toggleWarning("error_editDocument_descr", false, "");
 	if (error)
 		return;
 	// alert("All okay!");
-	connect("/hiwi/Admin/js/editDocument", "uid=" + uid + "&title=" + title
+	connect("/hiwi/Admin/js/editDocument", "UID=" + uid + "&title=" + title
 			+ "&description=" + description, handleEditResponse);
 }
 
