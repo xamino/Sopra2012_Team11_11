@@ -12,7 +12,6 @@ package database.application;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.Vector;
 
 import database.DatabaseController;
