@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
-import sun.util.calendar.BaseCalendar.Date;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -74,15 +73,15 @@ public class Provider extends User {
 
 	}
 
-	/**
-	 * Erstellt ein neues, noch zu pruefendes Angebot im System.
-	 */
-	public void createOffer(int pId, String pAuthor, String pName,
-			String pNote, boolean pChecked, int pSlots, double pHours,
-			String pDescription, Date pStartDate, Date pEndDate, double pWage,
-			int pInstitute, Date pModificationdate) {
-
-	}
+//	/**
+//	 * Erstellt ein neues, noch zu pruefendes Angebot im System.
+//	 */
+//	public void createOffer(int pId, String pAuthor, String pName,
+//			String pNote, boolean pChecked, int pSlots, double pHours,
+//			String pDescription, Date pStartDate, Date pEndDate, double pWage,
+//			int pInstitute, Date pModificationdate) {
+//
+//	}
 
 	/**
 	 * Methode zum Löschen seines Accounts

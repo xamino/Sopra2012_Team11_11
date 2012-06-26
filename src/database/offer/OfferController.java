@@ -94,7 +94,6 @@ public class OfferController {
 				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 				offer.getInstitute(), offer.getModificationdate(),
 				offer.isFinished() };
-
 		db.insert(tableName, values);
 	}
 

@@ -14,7 +14,7 @@ var selectedOfferToApply;
  * This function loads all the offers in the system from the database and
  * displays them. (userindex.jsp)
  */
-function loadOffers() {//getestet durch Anatoli Brill
+function loadOffers() {// getestet durch Anatoli Brill
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
 	connect("/hiwi/Applicant/js/loadOffers", "", handleLoadOffersResponse);
@@ -60,7 +60,7 @@ function handleLoadOffersResponse(mime, data) {
  * This function loads all the offers of the applicant (who is logged in) in the
  * system from the database and displays them. (userindex.jsp)
  */
-function loadMyOffers() {//etestet durch Anatoli Brill
+function loadMyOffers() {// etestet durch Anatoli Brill
 	connect("/hiwi/Applicant/js/loadMyOffers", "", handleLoadMyOffersResponse);
 }
 
@@ -137,17 +137,20 @@ function selectApplication() {
  * @param data
  *            The data.
  */
+var stupidThing;
 function handleLoadMyApplicationResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "offer/json") {
+	} else if (mime == "application/json") {
 		// alert(data);
 		// Erstelle Array aus JSON array:
 		// var JSONarray = eval("("+data+")");
 		// Get the table:
+		var obj = eval("(" + data + ")");
+		stupidThing = obj.author;
 		var table = document.getElementById("applications");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<h4>Bewerbung für " + data + "</h4>";
+		table.innerHTML = "Bewerbung für " + obj.offerName;
 		selectDocuments();
 	}
 }
@@ -202,21 +205,44 @@ function handleselectDocumentsResponse(mime, data) {
 			table2.innerHTML += "<tr><td>" + isChecked + "</td><td>"
 					+ JSONarray[i].name + "</td>";
 		}
+		// Prepare mailTo button:
+		connect("/hiwi/Applicant/js/getEmail", "user=" + stupidThing, function(
+				mime, data) {
+			if (mime == "text/url") {
+				window.location = data;
+			} else if (mime == "text/error") {
+				alert(data);
+			}
+			// This is the case we want:
+			else if (mime == "text/email") {
+				var button = document.getElementById("mailToProvider");
+				// Check mail address:
+				alert(data);
+				// Note that clickMail() is defined in the library.js!
+				button.setAttribute("onclick", "clickMail('" + data
+						+ "', '[Hiwi-Börse:"
+						+ document.getElementById("applications").innerText
+						+ "]')");
+			}
+		});
 	}
 }
 
 /**
- * This function deletes an application which the applicant wants to abandon in the system.
+ * This function deletes an application which the applicant wants to abandon in
+ * the system.
  */
 function deleteApplication() {
-	//alert("deleteApplication");
+	// alert("deleteApplication");
 	var aidToDelete = getURLParameter("AID");
-	connect("/hiwi/Applicant/js/deleteApplication", "AID="+ aidToDelete, handleDeleteApplication);
+	connect("/hiwi/Applicant/js/deleteApplication", "AID=" + aidToDelete,
+			handleDeleteApplication);
 
 }
 
 /**
- * This function handles the response of the ApplicantServlet after deleteing an application
+ * This function handles the response of the ApplicantServlet after deleteing an
+ * application
  * 
  * @param mime
  *            The MIME type of the data.

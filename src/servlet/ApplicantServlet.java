@@ -6,7 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -20,6 +19,7 @@ import user.Applicant;
 
 import com.google.gson.Gson;
 
+import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
 import database.document.DocumentController;
@@ -84,53 +84,52 @@ public class ApplicantServlet extends HttpServlet {
 		// Delete an application, bewerbung wiederrufen:
 		else if (path.equals("/js/deleteApplication")) {
 			// aid und benutzername sind identifier
-			int aid;			
+			int aid;
 			try {
 				aid = Integer.parseInt(request.getParameter("AID"));
 
-			} catch (NumberFormatException e){
-				log.write("ApplicantServlet","There was an error while PARSING int-value(AID) in: "+path.toString());
+			} catch (NumberFormatException e) {
+				log.write("ApplicantServlet",
+						"There was an error while PARSING int-value(AID) in: "
+								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-					
-			String callerUsername = applicant.getUserData().getUsername(); //benutzername des bewerbers
-			//alle bewerbungen dieses Bewerbers
-			Vector<Application> applisToDelete = ApplicationController.getInstance().getApplicationsByApplicant(callerUsername);
+
+			String callerUsername = applicant.getUserData().getUsername(); // benutzername
+																			// des
+																			// bewerbers
+			// alle bewerbungen dieses Bewerbers
+			Vector<Application> applisToDelete = ApplicationController
+					.getInstance().getApplicationsByApplicant(callerUsername);
 			Application appToDelete = null;
-			
-			//gehe alle Bewerbungen von diesem User durch und suche nach der AID des Angebots, welches er wiederufen will
-			for(int i=0;i<applisToDelete.size();i++){
-				if(applisToDelete.elementAt(i).getAid()==aid)//gefunden !
-					appToDelete=applisToDelete.elementAt(i);
+
+			// gehe alle Bewerbungen von diesem User durch und suche nach der
+			// AID des Angebots, welches er wiederufen will
+			for (int i = 0; i < applisToDelete.size(); i++) {
+				if (applisToDelete.elementAt(i).getAid() == aid)// gefunden !
+					appToDelete = applisToDelete.elementAt(i);
 			}
-			
-			if(appToDelete==null){ //nicht gefunden!
-				log.write("ApplicantServlet","There is no application for user:"+callerUsername+" with aid= "+aid+". Errorpath: "+path.toString());
+
+			if (appToDelete == null) { // nicht gefunden!
+				log.write(
+						"ApplicantServlet",
+						"There is no application for user:" + callerUsername
+								+ " with aid= " + aid + ". Errorpath: "
+								+ path.toString());
 				response.setContentType("text/error");
-				response.getWriter().write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
+				response.getWriter()
+						.write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
 				return;
 			}
-			
-			log.write("ApplicantServlet","Deleting application in progress...");
+
+			log.write("ApplicantServlet", "Deleting application in progress...");
 			ApplicationController.getInstance().deleteApplication(appToDelete);
 
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
 			return;
-			
-			
-			//int uid = Integer.parseInt(request.getParameter("UID"));
-//			if (!applicant.deleteApplication(uid, aid)) {
-//				response.setContentType("text/text");
-//				response.getWriter().write(
-//						"Application " + aid + "/" + uid + " deleted");
-//				return;
-//			}
-//			response.setContentType("text/error");
-//			response.getWriter().write("Failed to delete application!");
-
 		}
 		// Load my offers:
 		else if (path.equals("/js/loadMyOffers")) {
@@ -147,14 +146,15 @@ public class ApplicantServlet extends HttpServlet {
 																// Angebote
 			// bereits beworbene Stellen entfernen
 			// Offer vom User geholt
-			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant.getUserData().getUsername());
-			
+			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant
+					.getUserData().getUsername());
+
 			boolean entfernen;
 			for (int i = 0; i < offers.size(); i++) {
 				entfernen = false;
 				for (int j = 0; j < myoffers1.size(); j++) {
-					if (((Offer) offers.elementAt(i)).getAid() == myoffers1.elementAt(j)
-							.getAid()) {
+					if (((Offer) offers.elementAt(i)).getAid() == myoffers1
+							.elementAt(j).getAid()) {
 						entfernen = true;
 					}
 					if (entfernen) {
@@ -162,7 +162,7 @@ public class ApplicantServlet extends HttpServlet {
 					}
 				}
 			}
-						
+
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 		}
@@ -170,10 +170,11 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
 			int aid = Integer.parseInt(request.getParameter("id"));
-			String offername = offcon.getOfferById(aid).getName();
-			response.setContentType("offer/json");
+			Offer off = offcon.getOfferById(aid);
+			response.setContentType("application/json");
 			response.getWriter().write(
-					gson.toJson(offername, offername.getClass()));
+					Helper.jsonAtor(new String[] { "offerName", "author" },
+							new Object[] { off.getName(), off.getAuthor() }));
 			return;
 
 		}
@@ -257,6 +258,26 @@ public class ApplicantServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("error");
 			}
+		}
+		// Get email addresses if required:
+		else if (path.equals("/js/getEmail")) {
+			String user = request.getParameter("user");
+			if (!Helper.validate(user)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Invalid user parameter!");
+				return;
+			}
+			String email = null;
+			try {
+				email = AccountController.getInstance()
+						.getAccountByUsername(user).getEmail();
+			} catch (NullPointerException e) {
+				log.write("ClerkServlet",
+						"Error getting e-mail adress of user in: " + path);
+				return;
+			}
+			response.setContentType("text/email");
+			response.getWriter().write(email);
 		} else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
