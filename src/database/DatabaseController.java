@@ -132,6 +132,11 @@ public class DatabaseController {
 	 */
 	synchronized public boolean update(String table, String[] columns,
 			Object[] values, String where) {
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return false;
+		}
 		String update = "UPDATE " + table + " SET "
 				+ commanator(columns, values) + " WHERE " + where;
 		try {
@@ -155,7 +160,11 @@ public class DatabaseController {
 	 * @return boolean Ob die Aktion fehlerfrei geklappt hat.
 	 */
 	synchronized public boolean delete(String table, String where) {
-
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return false;
+		}
 		String del = "DELETE FROM " + table + " WHERE " + where;
 		try {
 			st.executeUpdate(del);
@@ -177,6 +186,11 @@ public class DatabaseController {
 	 * @return Boolean welcher angibt, ob INSERT erfolgreich war.
 	 */
 	synchronized public boolean insert(String table, Object[] values) {
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return false;
+		}
 		String insert = "INSERT INTO " + table + " VALUES ("
 				+ commanator(values) + ")";
 		try {
@@ -202,6 +216,11 @@ public class DatabaseController {
 	 * @return Anzahl der Zeilen
 	 */
 	synchronized public int count(String[] from, String where) {
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return 0;
+		}
 		String sel = "SELECT COUNT(*) FROM " + commanator(from);
 		if (where != null)
 			sel += " WHERE " + where;
@@ -230,6 +249,11 @@ public class DatabaseController {
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
 			String where) {
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return null;
+		}
 		String sel = "SELECT " + commanator(select) + " FROM "
 				+ commanator(from);
 		if (where != null)
@@ -260,6 +284,11 @@ public class DatabaseController {
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
 			String[] columns, Object[] values) {
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return false;
+		}
 		String update = "INSERT INTO " + table + " VALUES ("
 				+ commanator(values) + ") ON DUPLICATE KEY UPDATE "
 				+ commanator(columns, values);
@@ -272,92 +301,6 @@ public class DatabaseController {
 		}
 		return false;
 	}
-
-	// /**
-	// * Erstellt eine Datei mit Logininformationen für die Datenbank. In der
-	// * Datei werden der Usename,der Datenbankname und das Passwort
-	// gespeichert.
-	// * Dies wird benoetigt damit eine Verbindung mit der Datenbank unabhaengig
-	// * der Hardware hergestellt werden kann.
-	// *
-	// */
-	// private void createLoginInfo() {
-	// String sep = System.getProperty("file.separator");
-	// String home = System.getProperty("user.home");
-	// File f = new File(home + sep + ".sopraconf");
-	// f.delete(); // erst vorhandene löschen
-	// try {
-	// f.createNewFile(); // dann neue erstellen
-	// } catch (IOException e) {
-	// System.out
-	// .println("[Database] createLoginInfo():f.createNewFile()");
-	// e.printStackTrace();
-	// }
-	// try {
-	// BufferedWriter buf = new BufferedWriter(new FileWriter(f));
-	// buf.write("database=sopra");
-	// buf.newLine();
-	// buf.write("port=3306");
-	// buf.newLine();
-	// buf.write("user=root");
-	// buf.close();
-	// } catch (IOException e) {
-	// System.out.println("[Database] createLoginInfo():BufferedWriter");
-	// e.printStackTrace();
-	// }
-	// log.write("DatabaseController", "New loginfile created.");
-	// }
-	//
-	// /**
-	// * Liest die Informationen zum Verbindungsaufbau zur Datenbank aus einer
-	// * Config-Datei. Die Datei behinhaltet den Username,den Datenbanknamen und
-	// * das Passwort welche benoetigt werden um eine Verbindung zur Datenbank
-	// * herzustellen.
-	// *
-	// */
-	// private void getLoginInfo() { // Liest die Config Datei aus
-	// String sep = System.getProperty("file.separator");
-	// String home = System.getProperty("user.home");
-	// try {
-	// File f = new File(home + sep + ".sopraconf"); // datei im homeordner
-	// // namens .sopraconf
-	// if (f.exists()) { // falls config datei existiert
-	// BufferedReader buf = new BufferedReader(new FileReader(f));
-	// Field field;
-	// database = "sopra";
-	// user = "root";
-	// port = "3306";
-	// password = null;
-	// while (true) {
-	// if (!buf.ready())
-	// break;
-	// String conf = buf.readLine();
-	// String[] confarr = conf.split("=");
-	// if (confarr[0].trim().equalsIgnoreCase("password")
-	// || confarr[0].trim().equalsIgnoreCase("user")
-	// || confarr[0].trim().equalsIgnoreCase("database")
-	// || confarr[0].trim().equalsIgnoreCase("port")) {
-	// field = getClass().getDeclaredField(confarr[0].trim());
-	// field.set(this, confarr[1].trim());
-	// } else
-	// log.write("DatabaseController", "Error in ConfigFile on: " + conf);
-	// }
-	// } else { // falls noch nicht existent
-	// createLoginInfo(); // config datei erstellen
-	// database = "sopra";
-	// user = "root";
-	// port = "3306";
-	// password = null;
-	// }
-	// log.write("Database", "Try Login: user=" + user
-	// + " password=" + password + " database=" + database
-	// + " port=" + port);
-	// } catch (Exception e) {
-	// System.out.print("[Database] getLoginInfo()");
-	// e.printStackTrace();
-	//
-	// }
-	// }
 
 	/**
 	 * Hilfsmethode zum Konkatenieren von Strings mit Kommasetzung.
@@ -446,7 +389,11 @@ public class DatabaseController {
 	 */
 	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
 			int institute) {
-
+		// Sicherheitsüberprüfung:
+		if (con == null) {
+			log.write("DatabaseController", "No instance of CON detected!");
+			return null;
+		}
 		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID "
 				+ "FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "
 				+ institute
