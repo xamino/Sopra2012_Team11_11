@@ -31,6 +31,14 @@ var Aid;
 var selectedDocument;
 
 /**
+ * Status ob angebot als angenommen markiert ist oder nicht.
+ */
+var annehmen=false;
+/**
+ * status ob sich am angenommen status was geändet hat.
+ */
+var changed=false;
+/**
  * Fragt mich nicht, warum das so funktioniert... :P
  */
 function doExcelExport() {
@@ -125,17 +133,6 @@ function handleEditOneOfferResponse(mime, data) {
 	} else if (mime == "application/json") {
 		var offer = eval("(" + data + ")");
 		var status;
-		var angebotbestattribut;
-		var angebotablattribut;
-		if (offer.checked) {
-			status = "bestätigt";
-			angebotbestattribut = "disabled";
-			angebotablattribut = "";
-		} else {
-			status = "abgelehnt";
-			angebotbestattribut = "";
-			angebotablattribut = "disabled";
-		}
 		var offertable = document.getElementById("offerinfotable");
 		var angebotbestaetigenbutton = document
 				.getElementById("angebotbestaetigen");
@@ -168,65 +165,15 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "<td style=\"background-color: lightgray;\">"
 				+ anbieternotiz
 				+ "</td></tr>"
-				+ "<tr><td>Status:</td><td>"
-				+ status
+				+ "<tr><td>Status:</td><td id=\"state\">"
+				+ "Ungeprüft"
 				+ "</td></tr>";
-		angebotbestaetigenbutton.disabled = angebotbestattribut;
-		angebotablehnenbutton.disabled = angebotablattribut;
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		documentsFromOffer();
 	} else if (mime == "text/error") {
 		alert(data);		
 	}
 }
-
-/**
- * Function which approves an offer
- */
-function angebotbestaetigen() {
-	var aid = getURLParameter("AID");
-	var hoursperweek = document.getElementById("inputhoursperweek").value;
-	var wage = document.getElementById("inputwage").value;
-
-	var error = false;
-
-	if (hoursperweek == null || hoursperweek == "") {
-		toggleWarning("hours_error", true, "Bitte ausfüllen!");
-		error = true;
-	} else if (!checkInt(hoursperweek)) {
-		toggleWarning("hours_error", true, "Bitte eine ganze Zahl angeben!");
-		error = true;
-	} else
-		toggleWarning("hours_error", false, "");
-	if (wage == null || wage == "") {
-		toggleWarning("gage_error", true, "Bitte ausfüllen!");
-		error = true;
-	} else if (!checkFloat(wage)) {
-		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
-		error = true;
-	} else{
-		toggleWarning("gage_error", false, "");
-		wage = wage.replace(",",".");
-	}
-	togglePopup("offer_approve", false);
-	if (error)
-		return;
-	connect("/hiwi/Clerk/js/approveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage, handleApproveOfferResponse);
-}
-
-/**
- * Handles the response (relaoding) of the ClerkServlet after approving an offer.
- * 
- * @param mime
- * @param data
- */
-function handleApproveOfferResponse(mime, data) {
-	if (mime == "text/url") {
-		location.reload();
-	}
-}
-
 
 
 /**
@@ -258,32 +205,49 @@ function angebotspeichern() {
 	}
 	if (error)
 		return;
-	// Debug:
-	// alert("Angebot aktualisiert:" + '\n' + "Stunden/Woche: " + hoursperweek+
-	// '\n' + "Lohn: " + wage);
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage, handleEditOneOfferResponse);
+			+ hoursperweek + "&wage=" + wage+"&changed="+changed+"&annehmen="+annehmen, handleEditOneOfferResponse);
 }
 
-/**
- * Function declines an offer only if it is immadiately pressed after approving.
- */
-function angebotablehnen() {
-	var aid = getURLParameter("AID");
-	connect("/hiwi/Clerk/js/rejectOffer", "aid=" + aid,
-			handleRejectOfferResponse);
-}
-
-/**
- * Handles the response (relaoding) of the ClerkServlet after declining an offer.
- * 
- * @param mime
- * @param data
- */
-function handleRejectOfferResponse(mime, data) {
-	if (mime == "text/url") {
-		location.reload();
+function checkButtonOne () {
+	if(!changed)
+		togglePopup('offer_reject',true);
+	else if (!annehmen){
+		changed=false;
+		document.getElementById("state").innerHTML="Ungeprüft";
+	}else{
+		togglePopup('offer_reject',true);
 	}
+}
+
+function checkButtonTwo () {
+	if(!changed)
+		togglePopup('offer_approve',true);
+	else if (annehmen){
+		changed=false;
+		document.getElementById("state").innerHTML="Ungeprüft";
+	}else{
+		togglePopup('offer_approve',true);
+	}
+}
+/**
+ * Setzen des bestaetigen status
+ */
+function approve(){
+	annehmen=true;
+	changed=true;
+	togglePopup('offer_approve',false);
+	document.getElementById("state").innerHTML = "Angenommen";
+	
+}
+/**
+ * Setzen des ablehnen status
+ */
+function reject(){
+	annehmen=false;
+	changed=true;
+	togglePopup('offer_reject', false);
+	document.getElementById("state").innerHTML = "Abgelehnt";
 }
 
 

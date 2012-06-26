@@ -79,13 +79,13 @@
 						<input type="button" value="Mail an Anbieter" id="mailToAuthorButton"/>
 					</div>
 					<input type="button" id="angebotbestaetigen"
-						value="Angebot bestätigen" onclick="togglePopup('offer_approve',true);" /> 
+						value="Angebot bestätigen" onclick="checkButtonTwo();" /> 
 					<input
 						type="button" id="angebotablehnen" value="Angebot ablehnen"
-						onclick="togglePopup('offer_reject',true)" />
+						onclick="checkButtonOne();" />
 					<input
 						type="button" id="angebotspeichern" value="Angebot Speichern"
-						onclick="angebotspeichern()" />
+						onclick="angebotspeichern();" />
 				</div>
 			</div>
 		</div>
@@ -137,7 +137,7 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Bestätigen" id="angebotBestaetigen"
-					onclick="angebotbestaetigen();" /> <input type="button"
+					onclick="approve();" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('offer_approve', false);" />
 			</div>
 	</div>
@@ -151,10 +151,11 @@
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Ablehnen" id="angebotAblehnen"
-					onclick="angebotablehnen();" /> <input type="button"
+					onclick="reject();" /> <input type="button"
 					value="Abbrechen" onclick="togglePopup('offer_reject', false);" />
 			</div>
 	</div>
+	
 	
 </body>
 </html>

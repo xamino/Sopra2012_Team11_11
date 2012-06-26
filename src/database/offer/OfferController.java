@@ -152,19 +152,8 @@ public class OfferController {
 		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 		// offer.getInstitute(), offer.getModificationdate() };
 
-		//Benachrichtigung an Anbieter bei freischaltung:
-		Offer x = getOfferById(offer.getAid());
-		ResultSet rrs = db.select(new String[]{"email"},new String[]{"Accounts"} , "benutzername='"+x.getAuthor()+"'");
-		String a = "";
-		try{
-			if(rrs.next())
-		    a = rrs.getString(1);
-		}catch (Exception e) {
-			log.write("OfferController", "Fehler beim Auslesen der Mailadresse des Anbieters");
-		}
-		if(!x.isChecked()&&offer.isChecked())mail.sendMail(a,"Freischaltung des Angebots \""+offer.getName()+"\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""+offer.getName()+"\" für Bewerber freigeschaltet wurde.");
-		
-		
+		//Benachrichtigung an Anbieter bei freischaltung oder ablehnen:
+	
 		// Hier ist die Mail benachrichtigung:
 		ResultSet rs = db.select(new String[]{"acc.email"}
 		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}

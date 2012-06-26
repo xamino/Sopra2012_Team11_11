@@ -98,10 +98,9 @@ public abstract class LoggedInUsers {
 	 * @see User
 	 */
 	public static User getUserByUsername(String username) {
-		Iterator<Entry<String, User>> it = userMap.entrySet().iterator();
 		User u;
-		while(it.hasNext()){
-			u=it.next().getValue();
+		for(Entry<String,User> e : userMap.entrySet()){
+			u=e.getValue();
 			if(u.getUserData().getUsername().equals(username))return u;
 		}
 		return null;

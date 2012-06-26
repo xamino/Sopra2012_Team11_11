@@ -9,6 +9,7 @@ package servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 import logger.Log;
+import mail.Mailer;
 import user.Clerk;
 
 import com.google.gson.Gson;
@@ -74,7 +76,15 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speichern einer Instanz vom InstituteController
 	 */
 	private InstituteController instcon;
-
+	/**
+	 * Variable zum speichern einer Instanz vom InstituteController
+	 */
+	private AccountController acccon;
+	/**
+	 * Variable zum speichern einer Instanz vom Mailer
+	 */
+	private Mailer mail;
+	
 	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
@@ -87,6 +97,7 @@ public class ClerkServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 		gson = new Gson();
+		acccon = AccountController.getInstance();
 		doccon = DocumentController.getInstance();
 		appcon = ApplicationController.getInstance();
 		offcon = OfferController.getInstance();
@@ -127,7 +138,7 @@ public class ClerkServlet extends HttpServlet {
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter()
-						.write("Fehler! Ung�ltige AID:");
+						.write("Fehler! Ung�ltige AID:");
 				return;
 			}
 			// AID should be != -1 here, so continue:
@@ -136,48 +147,11 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertoedit, offertoedit.getClass()));
 			return;
-		} else if (path.equals("/js/approveOffer")) {
-
-			int aid = 0;
-			double hoursperweek = 0.0;
-			double wage = 0.0;
-			try {
-				aid = Integer.parseInt(request.getParameter("aid"));
-				hoursperweek = Double.parseDouble(request
-						.getParameter("hoursperweek"));
-				wage = Double.parseDouble(request.getParameter("wage"));}
-			catch(NumberFormatException e){
-				log.write("ClerkServlet",
-						"NumberFormatException while parsing URL!");
-				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler bei Eingabe! Eine oder mehrere Eingabewerte ungueltig!");
-				return;
-			}
-
-			Offer offertoapprove = OfferController.getInstance().getOfferById(
-					aid);
-			offertoapprove.setChecked(true);
-			offertoapprove.setWage(wage);
-			offertoapprove.setHoursperweek(hoursperweek);
-			log.write("ClerkServlet","Approving offer in progress...");
-
-			OfferController.getInstance().updateOffer(offertoapprove);
-			// wir wollten doch einen String als date?
-			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
-			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
-			// da was schief.
-			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
 			
-			response.setContentType("text/url");
-			return;
-//Vorher
-//			response.setContentType("offers/json");
-//			response.getWriter().write(
-//					gson.toJson(offertoapprove, offertoapprove.getClass()));
-//			return;
 		} else if (path.equals("/js/saveOffer")) {
-
+			boolean changed = Boolean.parseBoolean(request.getParameter("changed"));
+			boolean accepted = Boolean.parseBoolean(request.getParameter("annehmen"));
+			
 			int aid = Integer.parseInt(request.getParameter("aid"));
 			double hoursperweek = Double.parseDouble(request
 					.getParameter("hoursperweek"));
@@ -204,7 +178,23 @@ public class ClerkServlet extends HttpServlet {
 			offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
+			if(changed&&accepted){
+				offertosave.setChecked(true);
+				offertosave.setFinished(false);
+			}else if(changed&&!accepted){
+				offertosave.setChecked(false);
+				offertosave.setFinished(true);
+			}else{
+				offertosave.setChecked(false);
+				offertosave.setFinished(false);
+			}
 
+			Account author = acccon.getAccountByUsername(offertosave.getAuthor());
+			String address = author.getEmail();
+			if(offertosave.isChecked()&&!offertosave.isFinished())mail.sendMail(address,"Freischaltung des Angebots \""+offertosave.getName()+"\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""+offertosave.getName()+"\" für Bewerber freigeschaltet wurde.");
+			if(!offertosave.isChecked()&&offertosave.isFinished())mail.sendMail(address,"Ablehnen des Angebots \""+offertosave.getName()+"\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""+offertosave.getName()+"\" durch einen Verwalter abgelehnt wurde.");
+			
+			
 			OfferController.getInstance().updateOffer(offertosave);
 			// wir wollten doch einen String als date?
 			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
@@ -216,26 +206,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertosave, offertosave.getClass()));
 			return;
-		} else if (path.equals("/js/rejectOffer")) {
-			int aid = Integer.parseInt(request.getParameter("aid"));
-
-			Offer offertoreject = OfferController.getInstance().getOfferById(
-					aid);
-			offertoreject.setChecked(false);
-
-			OfferController.getInstance().updateOffer(offertoreject);
-			// wir wollten doch einen String als date? -> s.o.
-			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
 			
-			log.write("ClerkServlet","Rejecting offer in progress...");
-			response.setContentType("text/url");
-			return;
-			
-//Vorher
-//			response.setContentType("offers/json");
-//			response.getWriter().write(
-//					gson.toJson(offertoreject, offertoreject.getClass()));
-//			return;
 		} else if (path.equals("/js/documentsFromOffer")) {
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
