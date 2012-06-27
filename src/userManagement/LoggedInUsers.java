@@ -1,17 +1,14 @@
 package userManagement;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
-import file.FileController;
-
-import user.User;
-
 import logger.Log;
+import user.User;
+import file.FileController;
 
 /**
  * Verwaltet alle eingelogten User.

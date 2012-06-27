@@ -15,14 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
-import mail.Mailer;
 import user.User;
 import userManagement.LoggedInUsers;
 import userManagement.UserFactory;
 import database.account.Account;
 import database.account.AccountController;
-import database.application.Application;
-import database.application.ApplicationController;
 
 /**
  * Das <code>Secure</code> Servlet behandelt den Login der Benutzer, die

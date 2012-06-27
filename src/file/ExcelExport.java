@@ -4,25 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-//import org.apache.catalina.startup.SetContextPropertiesRule;
-
-import jxl.Cell;
-import jxl.CellFormat;
 import jxl.Workbook;
-import jxl.format.Border;
-import jxl.format.BorderLineStyle;
 import jxl.write.Label;
-import jxl.write.WritableCellFeatures;
-import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+import user.UserData;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
 import database.offer.OfferController;
-import user.UserData;
 
 /**
  * Klasse zur erstellung von Exceldateien mit den getaetigten Einstellungen

@@ -1,22 +1,15 @@
 package mail;
 
 import java.util.Properties;
- 
-import javax.mail.Message;
-import javax.mail.MessagingException;
+
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
+import logger.Log;
+import servlet.Helper;
 import config.Configurator;
 import config.IllegalTypeException;
 import config.UnknownOptionException;
-
-import servlet.Helper;
-
-import logger.Log;
  /**
   * Klasse für den Mailversand
   * @author Guentzel

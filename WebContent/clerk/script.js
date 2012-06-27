@@ -132,11 +132,7 @@ function handleEditOneOfferResponse(mime, data) {
 		window.location = data;
 	} else if (mime == "application/json") {
 		var offer = eval("(" + data + ")");
-		var status;
 		var offertable = document.getElementById("offerinfotable");
-		var angebotbestaetigenbutton = document
-				.getElementById("angebotbestaetigen");
-		var angebotablehnenbutton = document.getElementById("angebotablehnen");
 		// TODO: Wieso wird hier die gesamte Tabelle in Strings gebaut wenn wir
 		// einfach die Werte setzen könnten?
 		var anbieternotiz = (offer.note == null || offer.note == "") ? "[Keine Notiz vorhanden.]"

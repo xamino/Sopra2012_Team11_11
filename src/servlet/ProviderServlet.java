@@ -6,7 +6,6 @@
 package servlet;
 
 import java.io.IOException;
-//import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -15,10 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jxl.write.DateFormat;
-import jxl.write.DateFormats;
-
 import logger.Log;
+import user.Provider;
 
 import com.google.gson.Gson;
 
@@ -26,15 +23,8 @@ import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
-import database.document.AppDocument;
-import database.document.Document;
-import database.document.DocumentController;
 import database.offer.Offer;
 import database.offer.OfferController;
-
-import user.Admin;
-import user.Applicant;
-import user.Provider;
 
 /**
  * Das <code>Provider</code> Servlet behandelt alle Aktionen von angemeldeten
