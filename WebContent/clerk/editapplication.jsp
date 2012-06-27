@@ -144,17 +144,17 @@
 			<div class="textblock">
 				<!--  UID: <br> <input name="uid" type="text" /> -->
 				<div id="error_addDocument_uid" class="hiddenerror"></div>
-				Titel: <br>
+			<!--Titel: <br>
 				<textarea name="title" rows="1" cols="30"></textarea>
 				<div id="error_addDocument_title" class="hiddenerror"></div>
 				Beschreibung: <br>
 				<textarea name="description" rows="4" cols="30"></textarea>
-				<div id="error_addDocument_descr" class="hiddenerror"></div>
+				<div id="error_addDocument_descr" class="hiddenerror"></div>  -->
 			</div>
 			<hr>
 			<div class="textblock">
 				<input type="button" value="Speichern" onclick="addDocument()" /> 
-				<input type="button" value="Erstellen" onclick="createDocument()" /> 
+				<!--<input type="button" value="Erstellen" onclick="createDocument()" />-->
 				<input	type="button" value="Abbrechen"
 					onclick="togglePopup('document_add', false);" />
 			</div>
