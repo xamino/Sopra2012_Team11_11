@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
+import logger.Log;
+
 
 /**
  * 
@@ -44,6 +46,68 @@ public class Configurator {
 	public static Configurator getInstance(){
 		if(config==null)config=new Configurator();
 		return config;
+	}
+	/**
+	 * Erneutes einlesen der Konfigurationsdateien.
+	 */
+	public  void refresh(){
+		Values.clear();
+		try{
+			BufferedReader bufread = new BufferedReader(new InputStreamReader(new FileInputStream(new File(CCPATH)),"UTF-8"));
+			String s = ""; 
+			while(true){
+				s = bufread.readLine();
+				if(!properTrim(s).isEmpty())if(properTrim(s).charAt(0)=='#')continue;
+				if(properTrim(s).isEmpty())continue;
+				break;
+			}
+			String[] sa = s.split("\\|");
+			for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
+			if(sa[0].equals("$HOME")){
+				s="";
+				s=System.getProperty("user.home");
+				for(int x = 1; x< sa.length;x++){
+					s+= System.getProperty("file.separator")+sa[x];
+				}
+				cpath = s;
+			}else cpath = s;
+			while(true){
+				if(!bufread.ready())break;
+				s = bufread.readLine();
+				if(!properTrim(s).isEmpty())if(properTrim(s).charAt(0)=='#')continue;
+				sa = s.split("\\|");
+				for(int y=0;y<sa.length;y++)sa[y]=properTrim(sa[y]);
+				if(sa[0].equalsIgnoreCase("path")){
+					Types.put(sa[1],sa[0]);
+					String s2="";
+					if(sa[2].equals("$HOME")){
+						s2=System.getProperty("user.home");
+						for(int x = 3; x< sa.length;x++){
+							s2+= System.getProperty("file.separator")+sa[x];
+						}
+					}else s2=sa[2];
+					Values.put(sa[1],s2);
+				}
+				else if(sa.length==3){
+					Types.put(sa[1], sa[0]);
+					if(sa[0].equalsIgnoreCase("int"))Values.put(sa[1], Integer.parseInt(sa[2]));
+					if(sa[0].equalsIgnoreCase("String"))Values.put(sa[1],sa[2]);
+					if(sa[0].equalsIgnoreCase("boolean"))Values.put(sa[1], Boolean.parseBoolean(sa[2]));
+				}
+				else if(sa.length==2){
+					Types.put(sa[1], sa[0]);
+					if(sa[0].equalsIgnoreCase("int"))Values.put(sa[1], 0);
+					if(sa[0].equalsIgnoreCase("String"))Values.put(sa[1],"");
+					if(sa[0].equalsIgnoreCase("boolean"))Values.put(sa[1], false);
+					if(sa[0].equalsIgnoreCase("path"))Values.put(sa[1], "");
+				
+				}
+			}
+			
+			}catch(Exception e){
+				
+			}
+			readConf();
 	}
 	/**
 	 * Privater Konstruktor, in dem die Werte aus der Konfigdatei gelesen werden.
@@ -102,7 +166,7 @@ public class Configurator {
 		}
 		
 		}catch(Exception e){
-			e.printStackTrace();
+			
 		}
 		readConf();
 	}
@@ -147,7 +211,7 @@ public class Configurator {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 	/**

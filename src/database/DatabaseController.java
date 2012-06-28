@@ -7,6 +7,10 @@
 
 package database;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -80,11 +84,13 @@ public class DatabaseController {
 		this.log = Log.getInstance();
 		log.write("DatabaseController", "Instance created.");
 		// Connect to database:
+		generateStandardConfig();
+		Configurator conf = Configurator.getInstance();
+		conf.refresh();
 		try {
 			log.write("DatabaseController", "Connecting to Database");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			// getLoginInfo();
-			Configurator conf = Configurator.getInstance();
 			user = conf.getString("user");
 			password = conf.getString("password");
 			database = conf.getString("database");
@@ -107,10 +113,14 @@ public class DatabaseController {
 			st = con.createStatement();
 
 			log.write("DatabaseController", "Connection successful.");
+			//falls kein default institut existiert wird dies nun erstellt.
+			generateDefaultInstitute();
+			// falls kein admin account existiert wird nun einer erstellt.
+			generateAdminAccount();
 		} catch (Exception e) {
 			log.write(
 					"DatabaseController",
-					"Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopraconf)");
+					"Error while connecting to database: please check if DB is running and if logindata is correct (~/.sopra/sopraconf)");
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
@@ -417,4 +427,140 @@ public class DatabaseController {
 		}
 		return null;
 	}
+	/**
+	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei wird falls noetig der .sopra Ordner fuer die KonfigurationsDateien und die confconf und config dateien erstellt. 
+	 */
+	public void generateStandardConfig(){
+		File configFolder = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra");
+		if(!configFolder.exists()){
+			configFolder.mkdir();
+			log.write("DatabaseController", ".sopra folder created.");
+		}
+		File confconf = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra"+System.getProperty("file.separator")+"confconf");
+		if(!confconf.exists()){
+			try {
+				confconf.createNewFile();
+				BufferedWriter writer = new BufferedWriter(new FileWriter(confconf));
+				writer.write("# Die erste Zeile gibt an, an welchem Ort die zu interpretierende");
+				writer.newLine();
+				writer.write("# Konfigurationsdatei Liegt.");
+				writer.newLine();
+				writer.write("#");
+				writer.newLine();
+				writer.write("# in Dateipfaden steht $HOME für das Homeverzeichnis.");
+				writer.newLine();
+				writer.write("#");
+				writer.newLine();
+				writer.write("# Mögliche Optionstypen: int, String, boolean und path");
+				writer.newLine();
+				writer.write("#");
+				writer.newLine();
+				writer.write("# Neue Optionen werden nach folgendem Schema hinzugefügt:");
+				writer.newLine();
+				writer.write("#");
+				writer.newLine();
+			    writer.write("# Typ | name | Standardwert");
+				writer.newLine();
+			   	writer.write("#");
+				writer.newLine();
+			   	writer.write("# Bleibt der Standardwert frei, so werden folgende Standards gesetzt:");
+				writer.newLine();
+			   	writer.write("#");
+				writer.newLine();
+			   	writer.write("# int: 0");
+				writer.newLine();
+			   	writer.write("# String: \"\"");
+				writer.newLine();
+			    writer.write("# boolean: false");
+				writer.newLine();
+			   	writer.write("# path: \"\"");
+				writer.newLine();
+			   	writer.newLine();
+			    writer.write("$HOME | .sopra | sopraconf");
+				writer.newLine();
+				writer.write("# Port der Mysql Datenbank");
+				writer.newLine();
+				writer.write("int | port | 3306");
+				writer.newLine();
+				writer.write("# Passwort für die Mysql Datenbank");
+				writer.newLine();
+				writer.write("String | password |");
+				writer.newLine();
+				writer.write("# Benutzername für die Mysql Datenbank");
+				writer.newLine();
+				writer.write("String | user | root");
+				writer.newLine();
+				writer.write("# Name der Mysql Datenbank");
+				writer.newLine();
+				writer.write("String | database | sopra");
+				writer.newLine();
+				writer.write("# Pfad der Log Datei");
+				writer.newLine();
+				writer.write("path | log | $HOME | .sopra | log");
+				writer.newLine();
+				writer.write("# Wo der log geschriebene wird.");
+				writer.newLine();
+				writer.write("# 0 = null, 1 = System.out, 2 = log file, 3 = System.out UND log file");
+				writer.newLine();
+				writer.write("int | logWriteTo | 3");
+				writer.newLine();
+				writer.write("# Pfad für den EscelExport Ordner");
+				writer.newLine();
+				writer.write("path | excel | $HOME | .sopra | excel");
+				writer.newLine();
+				writer.write("# Username des GMail Accounts zum Mailversand");
+				writer.newLine();
+				writer.write("String | GMailUsername | donotreply.hiwiboerse@gmail.com");
+				writer.newLine();
+				writer.write("# Passwort des GMail Accounts zum Mailversand");
+				writer.newLine();
+				writer.write("String | GMailPassword | Team11_11rockt");
+				writer.close();
+				log.write("DatabaseController","confconf created.");
+			} catch (IOException e) {
+				log.write("DatebaseController", "failed to create confconf!");
+				e.printStackTrace();
+			}
+		}
+		File sopraconf = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra"+System.getProperty("file.separator")+"sopraconf");
+		if(!sopraconf.exists()){
+			try {
+				sopraconf.createNewFile();
+				log.write("DatabaseController", "sopraconf created.");
+			} catch (IOException e) {
+				log.write("DatabaseController", "failed to create sopraconf!");
+				e.printStackTrace();
+			}
+		}
+	}
+	/**
+	 * Funktion die falls kein Admin Account vorhanden ist einen erstellt.
+	 */
+	public void generateAdminAccount(){
+		ResultSet rs = select(new String[]{"count(accounttyp)"}, new String[]{"Accounts"}, "accounttyp=0");
+		try {
+			rs.next();
+			if(rs.getInt(1)==0){
+				insert("Accounts", new Object[]{"admin","ISMvKXpXpadDiUoOSoAfww",0,"donotreply.hiwiboerse@googlemail.com","Admin Account",0,null});
+				log.write("DatabaseController", "Admin account \"admin\" with password \"admin\" created.");
+			}
+		} catch (SQLException e) {
+			log.write("DatabaseController","failed to create Admin Account. Please check config.");
+		}
+	}
+	/**
+	 * Funktion die falls nicht vorhanden das default Institut erstellt.
+	 */
+	public void generateDefaultInstitute(){
+		ResultSet rs = select(new String[]{"iid"}, new String[]{"Institute"}, "iid=0");
+		try {
+			if(!rs.next()){
+				insert("Institute", new Object[]{0,"default"});
+				log.write("DatabaseController", "default institute created.");
+			}
+		} catch (SQLException e) {
+			log.write("DatabaseController","failed to create default institute. Please check config.");
+		}
+	}
+	
 }
