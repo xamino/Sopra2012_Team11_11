@@ -574,35 +574,35 @@ function handleDeleteDocumentResponse(mime, data) {
 /**
  * TODO comment!
  */
-function createDocument() {
-	var form = document.getElementById("adddocform");
-	if (form == null)
-		return;
-	var error = false;
-	// var uid = form.uid.value;
-	// if (uid == null || uid == "") {
-	// toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
-	// error = true;
-	// } else
-	// toggleWarning("error_addDocument_uid", false, "");
-	var title = form.title.value;
-	if (title == null || title == "") {
-		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
-		error = true;
-	} else
-		toggleWarning("error_addDocument_title", false, "");
-	var description = form.description.value;
-	if (description == null || description == "") {
-		toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
-		error = true;
-	} else
-		toggleWarning("error_addDocument_descr", false, "");
-	if (error)
-		return;
-
-	connect("/hiwi/Clerk/js/createDocument", /* "uid=" + uid + "& */"title="
-			+ title + "&description=" + description, applicationDocuments);
-}
+//function createDocument() {
+//	var form = document.getElementById("adddocform");
+//	if (form == null)
+//		return;
+//	var error = false;
+//	// var uid = form.uid.value;
+//	// if (uid == null || uid == "") {
+//	// toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
+//	// error = true;
+//	// } else
+//	// toggleWarning("error_addDocument_uid", false, "");
+//	var title = form.title.value;
+//	if (title == null || title == "") {
+//		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
+//		error = true;
+//	} else
+//		toggleWarning("error_addDocument_title", false, "");
+//	var description = form.description.value;
+//	if (description == null || description == "") {
+//		toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
+//		error = true;
+//	} else
+//		toggleWarning("error_addDocument_descr", false, "");
+//	if (error)
+//		return;
+//
+//	connect("/hiwi/Clerk/js/createDocument", /* "uid=" + uid + "& */"title="
+//			+ title + "&description=" + description, applicationDocuments);
+//}
 
 /**
  * TODO comment!

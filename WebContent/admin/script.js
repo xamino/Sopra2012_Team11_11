@@ -283,7 +283,7 @@ function saveChanges(form) {
 		toggleWarning("error_institute", true, "Bitte ausfüllen!");
 		error = true;
 	} else
-		toggleWarning("error_institute", false, "");
+		toggleWarning("error_institute", false, ""); 
 	if (error)
 		return;
 	// As of here, send:

@@ -359,40 +359,41 @@ public class ClerkServlet extends HttpServlet {
 					gson.toJson(datanamen, datanamen.getClass()));
 		}
 		// Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
-		else if (path.equals("/js/createDocument")) {
-			String title = request.getParameter("title");
-			String description = request.getParameter("description");
-			// int uid = -1;
-			// try {
-			// uid = Integer.parseInt(request.getParameter("uid"));
-			// } catch (NumberFormatException e) {
-			// log.write("ClerkServlet",
-			// "NumberFormatException while parsing URL!");
-			// response.setContentType("text/error");
-			// response.getWriter()
-			// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
-			// return;
-			// }
-			if (title == null || title.isEmpty() || description == null
-					|| description.isEmpty() /* || uid < 0 */) {
-				log.write("ClerkServlet", "Error in parameters!");
-				response.setContentType("text/error");
-				response.getWriter().write(
-						"Fehler bei Eingabe! Fehlende Eingaben.");
-				return;
-			}
-			// all okay... continue:
-			if (!DocumentController.getInstance().generateDocument(title,
-					description)) {
-				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
-				return;
-			}
-			response.setContentType("text/url");
-			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-			return;
-		} else if (path.equals("/js/deleteAppDocument")) {
+//		else if (path.equals("/js/createDocument")) {
+//			String title = request.getParameter("title");
+//			String description = request.getParameter("description");
+//			// int uid = -1;
+//			// try {
+//			// uid = Integer.parseInt(request.getParameter("uid"));
+//			// } catch (NumberFormatException e) {
+//			// log.write("ClerkServlet",
+//			// "NumberFormatException while parsing URL!");
+//			// response.setContentType("text/error");
+//			// response.getWriter()
+//			// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+//			// return;
+//			// }
+//			if (title == null || title.isEmpty() || description == null
+//					|| description.isEmpty() /* || uid < 0 */) {
+//				log.write("ClerkServlet", "Error in parameters!");
+//				response.setContentType("text/error");
+//				response.getWriter().write(
+//						"Fehler bei Eingabe! Fehlende Eingaben.");
+//				return;
+//			}
+//			// all okay... continue:
+//			if (!DocumentController.getInstance().generateDocument(title,
+//					description)) {
+//				response.setContentType("text/error");
+//				response.getWriter()
+//						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+//				return;
+//			}
+//			response.setContentType("text/url");
+//			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+//			return;
+//		} 
+		else if (path.equals("/js/deleteAppDocument")) {
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			String username = request.getParameter("user");
 			int aid = Integer.parseInt(request.getParameter("aid"));
