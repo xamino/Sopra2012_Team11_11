@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import logger.Log;
+
 import servlet.Helper;
 import user.Applicant;
 import user.Clerk;
@@ -35,6 +37,10 @@ public class AccountController {
 	 * AccountController. existiert.
 	 */
 	private static AccountController acccontr;
+	/**
+	 * Instanz des Loggers.
+	 */
+	private Log log;
 
 	final static String tableName = "Accounts";// tabellenname
 
@@ -58,8 +64,8 @@ public class AccountController {
 	 */
 	private AccountController() {
 		dbc = DatabaseController.getInstance();
-		logger.Log.getInstance()
-				.write("AccountController", "Instance created.");
+		log= Log.getInstance();
+		log.write("AccountController", "Instance created.");
 	}
 
 	/**
@@ -309,6 +315,10 @@ public class AccountController {
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { tableName }, null);
 		Vector<Account> accounts = new Vector<Account>();
+		if(rs==null){
+			log.write("AccountController", "No Connection: couldn't fetch accounts");
+			return accounts;
+		}
 		try {
 			while (rs.next()) {
 				accounts.add(new Account(rs.getString(1), rs.getString(2), rs
@@ -335,6 +345,10 @@ public class AccountController {
 	public Account getAccountByUsername(String username) { // checked
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { tableName }, "benutzername='" + username + "'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get Account");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				return new Account(rs.getString(1), rs.getString(2),
@@ -370,6 +384,10 @@ public class AccountController {
 		String where = "accounttyp = " + accounttype;
 
 		ResultSet rs = dbc.select(select, from, where);
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get Accounts.");
+			return accountvec;
+		}
 		try {
 			while (rs.next()) {
 				Account currentacc;
@@ -410,6 +428,10 @@ public class AccountController {
 		String where = "institut = " + id + " and accounttyp = 2";
 
 		ResultSet rs = dbc.select(select, from, where);
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get Accounts");
+			return accountvec;
+		}
 		try {
 			while (rs.next()) {
 				Account currentacc;
@@ -448,6 +470,10 @@ public class AccountController {
 		String where = "institut = " + id;
 
 		ResultSet rs = dbc.select(select, from, where);
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get accounts.");
+			return accountvec;
+		}
 		try {
 			while (rs.next()) {
 				Account currentacc;
@@ -487,6 +513,10 @@ public class AccountController {
 		String where = "institut = " + id + " and accounttyp = 1";
 
 		ResultSet rs = dbc.select(select, from, where);
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get accounts");
+			return accountvec;
+		}
 		try {
 			while (rs.next()) {
 				Account currentacc;
@@ -520,6 +550,10 @@ public class AccountController {
 
 		ResultSet rs = dbc.select(new String[] { "stellvertreter" },
 				new String[] { "accounts" }, "benutzername = '" + name + "'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get representative");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				return rs.getString(1);
@@ -545,6 +579,10 @@ public class AccountController {
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { "Accounts" }, "stellvertreter= '" + userName
 						+ "'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get account");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				return new Account(rs.getString("benutzername"),
@@ -590,6 +628,10 @@ public class AccountController {
 				.select(new String[] { "benutzername" },
 						new String[] { tableName }, "stellvertreter='"
 								+ username + "'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get list of represented accounts");
+			return ret;
+		}
 		try {
 			while (rs.next())
 				ret.add(rs.getString(1));
@@ -605,11 +647,15 @@ public class AccountController {
 	 * @param username
 	 * 			Nutzer mit username wird nicht im Resultat enthalten sein
 	 * @return
-	 * 			Vector, der alle usernames beinhaltet, ausser den übergebenen
+	 * 			Vector, der alle usernames beinhaltet, ausser den ï¿½bergebenen
 	 */
 	public Vector<String> getPotentialRepresentatives(String username){
 		int accounttype = 3;
 		ResultSet rstype = dbc.select(new String[] {"accounttyp"},new String[] {tableName}, "benutzername = '"+username+"'");
+		if(rstype==null){
+			log.write("AccountController", "No connection: couldn't get potential representatives");
+			return new Vector<String>();
+		}
 		try { if(rstype.next()){ accounttype = rstype.getInt("accounttyp"); }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -619,6 +665,10 @@ public class AccountController {
 		Vector<String> representatives = new Vector<String>();
 		
 		ResultSet rs = dbc.select(new String[] {"benutzername"}, new String[] {tableName}, "accounttyp = "+accounttype+" AND benutzername != '"+username+"'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get potential representatives");
+			return representatives;
+		}
 		try {
 			while(rs.next()){
 				representatives.add(rs.getString("benutzername"));
@@ -645,6 +695,10 @@ public class AccountController {
 	public Account getAccountByEmail(String email) {
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { tableName }, "email LIKE '" + email + "'");
+		if(rs==null){
+			log.write("AccountController", "No connection: couldn't get account");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				Account acc = new Account(rs.getString("benutzername"),

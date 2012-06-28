@@ -98,7 +98,10 @@ public class DocumentController {
 		String[] from = { tableNameU };
 
 		ResultSet rs = db.select(select, from, null);
-
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't generate Document");
+			return false;
+		}
 		try {
 			if (rs.next()) {
 				uid = rs.getInt(1);
@@ -151,6 +154,10 @@ public class DocumentController {
 		Document doc = null;
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, "UID=" + uid);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get document");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				doc = new Document(rs.getInt("UID"), rs.getString("Name"),
@@ -188,7 +195,10 @@ public class DocumentController {
 		Vector<OfferDocument> docVect = new Vector<OfferDocument>();
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameS }, "AID=" + aid);
-
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return docVect;
+		}
 		try {
 			while (rs.next()) {
 				docVect.add(new OfferDocument(rs.getInt("AID"), rs
@@ -240,6 +250,10 @@ public class DocumentController {
 		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'TRUE'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return appdoc;
+		}
 		try {
 			while (rs.next()) {
 				AppDocument temp;
@@ -270,6 +284,10 @@ public class DocumentController {
 		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'FALSE'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return appdoc;
+		}
 		try {
 			while (rs.next()) {
 				AppDocument temp;
@@ -304,7 +322,10 @@ public class DocumentController {
 		Vector<AppDocument> appDocVect = new Vector<AppDocument>();
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameB }, "AID=" + aid);
-
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return appDocVect;
+		}
 		try {
 			while (rs.next()) {
 				appDocVect.add(new AppDocument(rs.getString("benutzername"), rs
@@ -370,7 +391,10 @@ public class DocumentController {
 				new String[] { tableNameB },
 				"benutzername='" + account.getUsername() + "' AND AID="
 						+ offer.getAid());
-
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return userOffDocVect;
+		}
 		try {
 			while (rs.next()) {
 				userOffDocVect.add(new AppDocument(
@@ -430,6 +454,10 @@ public class DocumentController {
 		Vector<Document> allDocVect = new Vector<Document>();
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, null);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return allDocVect;
+		}
 
 		try {
 			while (rs.next()) {
@@ -535,7 +563,10 @@ public class DocumentController {
 				+ " AND UID =" + uid;
 
 		ResultSet rs = db.select(select, from, where);
-
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get document");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				AppDocument doc = new AppDocument(rs.getString("benutzername"),
@@ -651,6 +682,10 @@ public class DocumentController {
 				+ " WHERE AID = " + aid + ")";
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return docsToAdd;
+		}
 		try {
 			while (rs.next()) {
 				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
@@ -689,6 +724,10 @@ public class DocumentController {
 				+ "')";
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return docsToAdd;
+		}
 		try {
 			while (rs.next()) {
 				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
@@ -717,6 +756,10 @@ public class DocumentController {
 		String where = "benutzername='" + benutzername + "'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get documents");
+			return appdoc;
+		}
 		try {
 			while (rs.next()) {
 				AppDocument temp;
@@ -747,6 +790,10 @@ public class DocumentController {
 		String where = "UID=" + UID;
 		AppDocument appdoc;
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("DocumentController", "No connection: couldn't get document");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				appdoc = new AppDocument(rs.getString("benutzername"),

@@ -538,6 +538,10 @@ public class DatabaseController {
 	 */
 	public void generateAdminAccount(){
 		ResultSet rs = select(new String[]{"count(accounttyp)"}, new String[]{"Accounts"}, "accounttyp=0");
+		if(rs==null){
+			log.write("DatabaseController","No connection: couldn't create admin account.");
+			return;
+		}
 		try {
 			rs.next();
 			if(rs.getInt(1)==0){
@@ -553,6 +557,10 @@ public class DatabaseController {
 	 */
 	public void generateDefaultInstitute(){
 		ResultSet rs = select(new String[]{"iid"}, new String[]{"Institute"}, "iid=0");
+		if(rs==null){
+			log.write("DatabaseController", "No connection: couldn't create default Institute.");
+			return;
+		}
 		try {
 			if(!rs.next()){
 				insert("Institute", new Object[]{0,"default"});
