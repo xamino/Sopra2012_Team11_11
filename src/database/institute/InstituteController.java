@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.Vector;
 
+import logger.Log;
+
 import servlet.Helper;
 
 import database.DatabaseController;
@@ -24,6 +26,10 @@ public class InstituteController {
 	 * Tabelle zu updaten
 	 */
 	private static AccountController acccon;
+	/**
+	 * Instanz des Loggers.
+	 */
+	private Log log;
 
 	/**
 	 * Gibt eine Instanz des InstituteContoller zurück.
@@ -40,7 +46,8 @@ public class InstituteController {
 	private InstituteController() {
 		db = DatabaseController.getInstance();
 		acccon = AccountController.getInstance();
-		logger.Log.getInstance().write("InstituteController",
+		log= Log.getInstance();
+		log.write("InstituteController",
 				"Instance created.");
 	}
 
@@ -61,6 +68,10 @@ public class InstituteController {
 	public String getInstituteNameById(int id) {
 		ResultSet rs = db.select(new String[] { "Name" },
 				new String[] { tableName }, "IID=" + id);
+		if(rs==null){
+			log.write("InstituteController", "No connection: couldn't get institutename");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				return rs.getString("Name");
@@ -81,6 +92,10 @@ public class InstituteController {
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableName }, null);
 		Vector<Institute> inst = new Vector<Institute>();
+		if(rs==null){
+			log.write("InstituteController", "No connection: couldn't get institutes");
+			return inst;
+		}
 		try {
 			while (rs.next()) {
 				inst.add(new Institute(rs.getInt("IID"), rs.getString("Name")));
@@ -131,6 +146,10 @@ public class InstituteController {
 	public Institute getInstituteByIID(int IID) {
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableName }, "IID=" + IID);
+		if(rs==null){
+			log.write("InstituteController", "No connection: couldn't get institute");
+			return null;
+		}
 		try {
 			if (rs.next()) {
 				return new Institute(rs.getInt("IID"), rs.getString("Name"));
@@ -156,6 +175,10 @@ public class InstituteController {
 				"Institute.IID=Accounts.institut AND (Accounts.benutzername='"
 						+ username + "' OR Accounts.stellvertreter='"
 						+ username + "')");
+		if(rs==null){
+			log.write("InstituteController", "No connection: couldn't get institutes");
+			return ret;
+		}
 		try {
 			while (rs.next()) {
 				ret.add(rs.getInt(1));

@@ -112,6 +112,10 @@ public class OfferController {
 		ResultSet rs = db.select(new String[]{"acc.email"}
 		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
 		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't delete offer");
+			return;
+		}
 		try {
 			while(rs.next()){
 				String addi = rs.getString(1);
@@ -157,6 +161,10 @@ public class OfferController {
 		ResultSet rs = db.select(new String[]{"acc.email"}
 		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
 		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't update offer");
+			return false;
+		}
 		try {
 			while(rs.next()){
 				String addi = rs.getString(1);
@@ -203,7 +211,10 @@ public class OfferController {
 		String[] from = { tableName };
 
 		ResultSet rs = db.select(select, from, null);
-
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -245,6 +256,10 @@ public class OfferController {
 		//War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
 		String where = "Geprueft = 1 and abgeschlossen = 0";
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -280,6 +295,10 @@ public class OfferController {
 		String[] from = { tableName };
 		String where = "Plaetze > 0";
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -315,6 +334,10 @@ public class OfferController {
 		String where = "abgeschlossen=0 and Ersteller = '"
 				+ provider.getUsername() + "'";
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
 		try {
 			while (rs.next()) {
 				Offer currentoff;
@@ -358,6 +381,10 @@ public class OfferController {
 			where = "abgeschlossen = 0 and AID = "
 					+ applications.elementAt(i).getAid();
 			ResultSet rs = db.select(select, from, where);
+			if(rs==null){
+				log.write("OfferController", "No connection: couldn't get offers");
+				return offervec;
+			}
 			try {
 				while (rs.next()) {
 					Offer currentoff;
@@ -393,6 +420,10 @@ public class OfferController {
 		String where = "AID = " + ID;
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offer");
+			return null;
+		}
 
 		try {
 			if (rs.next()) {
@@ -438,6 +469,10 @@ public class OfferController {
 
 			rs = db.select(new String[] { "*" }, new String[] { tableName },
 					"abgeschlossen=0 and Geprueft=0");
+			if(rs==null){
+				log.write("OfferController", "No connection: couldn't get offers");
+				return offers;
+			}
 
 		} else {
 			// Institut in (accountInstitut, 0) secures that Offers of Institut
@@ -446,6 +481,10 @@ public class OfferController {
 			rs = db.select(new String[] { "*" }, new String[] { tableName },
 					"abgeschlossen = 0 and Geprueft=0 AND Institut IN ("
 							+ account.getInstitute() + ",0)");
+			if(rs==null){
+				log.write("OfferController", "No connection: couldn't get offers");
+				return offers;
+			}
 
 		}
 		try {
@@ -481,6 +520,10 @@ public class OfferController {
 
 		rs = db.select(new String[] { "*" }, new String[] { tableName },
 				"Geprueft=0 AND Institut =" + institute);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offers;
+		}
 
 		try {
 			while (rs.next()) {
@@ -584,6 +627,10 @@ public class OfferController {
 		ResultSet rs;
 		rs = db.select(new String[] { "*" }, new String[] { tableName },
 				"Institut =" + iid);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offers;
+		}
 		try {
 			while (rs.next()) {
 				offers.add(new Offer(rs.getInt("AID"), rs

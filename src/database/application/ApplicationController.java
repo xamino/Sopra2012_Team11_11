@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import logger.Log;
+
 import database.DatabaseController;
 import database.account.Account;
 import database.account.AccountController;
@@ -36,6 +38,10 @@ public class ApplicationController {
 	private static AccountController acccon;
 	private static DocumentController doccon;
 	private static DatabaseController db;
+	/**
+	 * Instanz des Loggers.
+	 */
+	private Log log;
 
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
@@ -60,7 +66,8 @@ public class ApplicationController {
 		db = DatabaseController.getInstance();
 		acccon = AccountController.getInstance();
 		doccon = DocumentController.getInstance();
-		logger.Log.getInstance().write("ApplicationController",
+		log= Log.getInstance();
+		log.write("ApplicationController",
 				"Instance created.");
 	}
 
@@ -158,6 +165,10 @@ public class ApplicationController {
 		String[] from = { tableName };
 
 		ResultSet rs = db.select(select, from, null);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get applications");
+			return applicationvec;
+		}
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -197,6 +208,10 @@ public class ApplicationController {
 		String where = "benutzername = '" + username + "'";
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get applications");
+			return applicationvec;
+		}
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -235,6 +250,10 @@ public class ApplicationController {
 		String where = "AID = " + aid;
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get applications");
+			return applicationvec;
+		}
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -272,6 +291,10 @@ public class ApplicationController {
 		String where = "sachbearbeiter = '" + clerkname + "'";
 
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get applications");
+			return applicationvec;
+		}
 		try {
 			while (rs.next()) {
 				Application currentapp;
@@ -305,6 +328,10 @@ public class ApplicationController {
 		String where = "AID = " + AId;
 				
 		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get application");
+			return null;
+		}
 
 		try {
 			if (rs.next()) {
