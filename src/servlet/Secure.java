@@ -1,6 +1,6 @@
 /**
- * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Laura Irlinger
  * @author Manuel Güntzel
  */
 package servlet;
@@ -48,7 +48,8 @@ public class Secure extends HttpServlet {
 	}
 
 	/**
-	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
+	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Diese werden normalerweise von
+	 * Javascript ausgeloest.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

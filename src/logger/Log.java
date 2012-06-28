@@ -18,8 +18,8 @@ import config.UnknownOptionException;
  * This class implements the Logger for the complete program. All information
  * that could be useful for debugging or is required to check the correct
  * function of the program should be posted here. The standard setting is that
- * the log prints to the console AND writes to the log file. This Class
- * implements the Configurator.
+ * the log prints to the console AND writes to the log file. This class
+ * implements the configurator.
  */
 public class Log {
 
@@ -45,7 +45,6 @@ public class Log {
 	 * be null.
 	 */
 	private PrintStream sysStream;
-
 	/**
 	 * Variable for storing time stamp of program start.
 	 */
@@ -74,7 +73,7 @@ public class Log {
 
 	/**
 	 * Private constructor to ensure singleton instance. Use getInstance() to
-	 * get a reference to Log.
+	 * get a working reference to the logger.
 	 */
 	private Log() {
 		// Set initial start time:
@@ -120,7 +119,9 @@ public class Log {
 	}
 
 	/**
-	 * Method to post something in the log.
+	 * Standard method to post something in the log. The log accepts an object reference
+	 * (the caller) and a message to show. Together with a timestamp from the start of the
+	 * logger, these are then printed to the selected output streams.
 	 * 
 	 * @param caller
 	 *            The name of the object that wants to log information.
@@ -204,7 +205,8 @@ public class Log {
 	}
 
 	/**
-	 * Method for changing where the stream goes.
+	 * Method for changing where the stream goes. Should ideally only be called seldomly,
+	 * as messages can be lost via switching to other streams.
 	 * 
 	 * @param stream
 	 *            The variable that sets where the logs go.
@@ -268,8 +270,8 @@ public class Log {
 	}
 
 	/**
-	 * Method for restarting the timer. Should not be called from outside – Log
-	 * does NOT provide custom timer implementations.
+	 * Method for restarting the timer. Should not be called from outside – log
+	 * does NOT provide custom timer implementations!
 	 */
 	private void startTimer() {
 		timer = System.currentTimeMillis();

@@ -404,16 +404,11 @@ public class ProviderServlet extends HttpServlet {
 						log.write("ProviderServlet","'Bewerber annehmen' in progress...");
 						ApplicationController.getInstance().updateApplication(applicationToChange);
 					}
-
 				}
-
 			}
-
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
-
 		}
-		
 	}
 }

@@ -159,12 +159,12 @@ public final class Helper {
 	public static final String EMAILHEADER = "[HIWI-BÖRSE]";
 
 	/**
-	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige Admin session
+	 * Diese Hilfsmethode gibt an, ob eine Session eine gueltige User session
 	 * ist.
 	 * 
 	 * @param session
 	 *            Die session zum ueberpruefen.
-	 * @return Das Admin Object wenn korrekt, sonst null.
+	 * @return Das User Object wenn korrekt, sonst null.
 	 */
 	@SuppressWarnings("unchecked")
 	public static <U> U checkAuthenticity(HttpSession session, Class<U> c) {
@@ -177,14 +177,14 @@ public final class Helper {
 	}
 
 	/**
-	 * Help function for creating correct JSON objects with given names and
-	 * parameters.
+	 * Diese Methode erstellt JSON Objekte. Dazu werden die Bezeichner und die Objekte
+	 * eingelesen und zu einem JSON Objekt zusammengebaut.
 	 * 
 	 * @param varNames
-	 *            The name of the variables.
+	 *            Die Bezeichner der Variabeln.
 	 * @param variables
-	 *            The value of the variables.
-	 * @return The JSON string.
+	 *            Die Variablen.
+	 * @return Das zusammengebaute JSON Objekt.
 	 */
 	public static String jsonAtor(String[] varNames, Object[] variables) {
 		if (varNames.length != variables.length || varNames.length <= 0)
@@ -204,8 +204,9 @@ public final class Helper {
 
 	/**
 	 * Hilfsmethode um Serverseitig einen String nach String via Base64 und MD5
-	 * zu hashen. ACHTUNG: hacking in progress. Hier wird javascript
-	 * Server-seitig aufgerufen!
+	 * zu hashen. ACHTUNG: hier wird javascript Server-seitig aufgerufen!
+	 * Dies ist noetig da die hashing Methode sowohl Client- als auch Server-seitig
+	 * identisch sein muss!
 	 * 
 	 * @param text
 	 *            Eingabetext.

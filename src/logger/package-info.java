@@ -1,4 +1,4 @@
 /**
-*Package fuer den Logger
+* Package fuer den Logger.
 **/
 package logger;

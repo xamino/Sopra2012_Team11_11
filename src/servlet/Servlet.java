@@ -62,7 +62,9 @@ public class Servlet extends HttpServlet {
 	}
 
 	/**
-	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
+	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Normalerweise werden vom
+	 * System nur POST-Anfragen kommen, also wird hier auf alle Javascript aufrufe
+	 * eingegangen.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -151,6 +153,10 @@ public class Servlet extends HttpServlet {
 		}
 	}
 
+    /**
+    * Diese Methode handhabt die Abarbeitung von Aufrufen. Hier wird nur an die Indexseite
+    * weitergeleitet, da das System normalerweise alles via POST macht.
+    **/
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {

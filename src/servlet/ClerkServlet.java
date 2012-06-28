@@ -640,7 +640,7 @@ public class ClerkServlet extends HttpServlet {
 	}
 
 	/**
-	 * doGet() wird nur zum Download der Excel-Datei verwendet. Ansonsten leitet
+	 * GET-Aufruffe werden hier nur zum Download der Excel-Datei verwendet. Ansonsten leitet
 	 * es an public/index.jsp weiter.
 	 */
 	protected void doGet(HttpServletRequest request,

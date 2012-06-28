@@ -266,39 +266,6 @@ public class OfferController {
 	}
 
 	/**
-	 * Diese Methode sammelt alle Jobangebote mit freien Stellen aus der
-	 * Datenbank und speichert diese in einem Vector.
-	 * 
-	 * @return Es wird ein Vector mit allen noch freien Jobangeboten aus der
-	 *         Datenbank zurueckgegeben. Frei entspricht freie plaetze (slots)
-	 *         >= 1. Wenn keine in der Datenbank sind wird <code>null</code>
-	 *         zurueckgegeben.
-	 */
-	public Vector<Offer> getOffersWithFreeSlots() {
-		Vector<Offer> offervec = new Vector<Offer>(50, 10);
-		String[] select = { "*" };
-		String[] from = { tableName };
-		String where = "Plaetze > 0";
-		ResultSet rs = db.select(select, from, where);
-		try {
-			while (rs.next()) {
-				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getBoolean(5),
-						rs.getInt(6), rs.getDouble(7), rs.getString(8),
-						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
-				offervec.add(currentoff);
-			}
-			rs.close();
-		} catch (SQLException e) {
-			log.write("OfferController", "Error reading free offers!");
-			return null;
-		}
-		return offervec;
-	}
-
-	/**
 	 * Diese Methode sammelt alle Jobangebote eines Providers aus der Datenbank
 	 * und speichert diese in einem Vector.
 	 * 
