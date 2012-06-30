@@ -76,30 +76,28 @@
 									<div id="error_titel" class="invisibleWarning"></div>
 									<!-- Oemer -->
 								</div>
-								<div class="clear"></div>
-								<div class="float2">
-									<label for="std">Std/Monat </label>
-								</div>
-								<div class="float2">
-									<input type="text" id="std" name="std" size="20"
-										maxlength="100" />
-									<!-- Oemer -->
-									<div id="error_std" class="invisibleWarning"></div>
-									<!-- Oemer -->
-								</div>
-								<div class="float2">
-									<label for="stellen"> Stellen </label>
-								</div>
-								<div class="float2">
-									<input type="text" id="stellen" name="stellen" size="20"
-										maxlength="100" />
-									<!-- Oemer -->
-									<div id="error_stellen" class="invisibleWarning"></div>
-									<!-- Oemer -->
-								</div>
-								<br>
-								<div class="clear"></div>
-								<br>
+								<table class="hidden">
+									<tr>
+										<td>Std/Monat:</td>
+										<td><input type="text" id="std" name="std" size="20"
+											maxlength="100" />
+											<div id="error_std" class="invisibleWarning"></div></td>
+										<td>Stellen:</td>
+										<td><input type="text" id="stellen" name="stellen"
+											size="20" maxlength="100" />
+											<div id="error_stellen" class="invisibleWarning"></div></td>
+									</tr>
+									<tr>
+										<td>Start Datum:</td>
+										<td><input type="text" name="startDate" size="20"
+											maxlength="100" />
+											<div id="error_startDate" class="invisibleWarning"></div></td>
+										<td>End Datum:</td>
+										<td><input type="text" name="endDate" size="20"
+											maxlength="100" />
+											<div id="error_endDate" class="invisibleWarning"></div></td>
+									</tr>
+								</table>
 								<!-- Oemer -->
 								<div id="error_beschreibung" class="invisibleWarning"></div>
 								<!-- Oemer -->
@@ -146,7 +144,5 @@
 			</div>
 		</form>
 	</div>
-
 </body>
-
 </html>

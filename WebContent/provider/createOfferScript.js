@@ -1,8 +1,31 @@
 /**
- * TODO!
+ * Loads the default values from the database.
  */
 function loadDefValues() {
+	connect("/hiwi/Provider/js/getDefValues", "", handleLoadResponse);
+}
 
+/**
+ * Handles the response from loadDefValues. If correct values are sent, fills
+ * them into the form at the correct locations.
+ * 
+ * @param mime
+ *            The MIME-type of the data.
+ * @param data
+ *            The data.
+ */
+function handleLoadResponse(mime, data) {
+	if (mime == "text/url")
+		window.location = data;
+	else if (mime == "text/error")
+		alert(data);
+	else if (mime == "application/json") {
+		// alert(data);
+		var obj = eval("(" + data + ")");
+		angebotErstellen.std.value = obj.hoursMonth;
+		angebotErstellen.startDate.value = obj.startDate;
+		angebotErstellen.endDate.value = obj.endDate;
+	}
 }
 
 /**
@@ -83,17 +106,14 @@ function addOffer(form) {
  *            The data.
  */
 function handleCreateOfferResponse(mime, data) {
-	// alert("ANTWORT VOM SERVLET ADD OFFER");
-	if (mime == "text/url") { // im Servlet:
-		// response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
-		// veranlasst nach dem Anlegen eines neues Offer
-		// Objekts die weiterleitung auf die hauptseite
-		// des providers
+	if (mime == "text/url") {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		// hier fehler als html errormessage einbauen
-		alert("TODO: HTML ERRORMESSAGE für die falscheingabe fehler!");
+		// TODO: hier fehler als html errormessage einbauen ?? Echt? Sind doch
+		// alle da... (Tamino)
+		// alert("HTML ERRORMESSAGE für die falscheingabe fehler!");
+		alert(data);
 		return;
 	}
 }

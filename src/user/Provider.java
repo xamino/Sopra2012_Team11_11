@@ -1,9 +1,13 @@
 package user;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import servlet.Helper;
+
+import database.DatabaseController;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -94,5 +98,31 @@ public class Provider extends User {
 		invalidate();
 		Account thisaccount = AccountController.getInstance().getAccountByUsername(this.getUserData().getUsername());
 		return acccon.deleteProviderAccount(thisaccount);
+	}
+	
+	/**
+	 * Liest die Standardwerte eines Angebots aus der Datenbank und gibt sie als
+	 * JSON-Objekt zurueck.
+	 * 
+	 * @return Das JSON-Objekt mit den Werten.
+	 */
+	public String readDefValues() {
+		String ret = new String();
+		ResultSet rs = DatabaseController.getInstance().select(
+				new String[] { "*" }, new String[] { "Standardangebot" }, null);
+		try {
+			if (rs.next()) {
+				ret = Helper.jsonAtor(new String[] { "hoursMonth", "startDate",
+						"endDate" }, new Object[] { rs.getInt("StdProMonat"),
+						rs.getString("StartDatum"), rs.getString("EndDatum") });
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		}
+		if (ret.isEmpty()) {
+			log.write("Provider", "Error reading default offer values!");
+			return null;
+		}
+		return ret;
 	}
 }
