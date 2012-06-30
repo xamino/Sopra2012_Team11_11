@@ -212,3 +212,12 @@ INSERT INTO `unterlagen` VALUES ('555', 'Marvel-Vertrag', 'Justice League');
 INSERT INTO `unterlagen` VALUES ('666', 'Boesewichtszertifikat', 'Auflistung der Leistungen');
 INSERT INTO `unterlagen` VALUES ('777', 'Angaben zu den Schwachstellen', 'Materialien und Ressourcen Ihrer Schwaeche.');
 INSERT INTO `unterlagen` VALUES ('888', 'IQ-Zertifikat', 'IQ-Testbelege');
+
+DROP TABLE IF EXISTS `standardangebot`;
+CREATE TABLE `standardangebot` (
+  `stdProMonat` text,
+  `startDatum` text,
+  `endDatum` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `standardangebot` VALUES ('40', 'todo', 'todo');

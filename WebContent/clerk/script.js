@@ -242,7 +242,7 @@ function approve(){
 	annehmen=true;
 	changed=true;
 	togglePopup('offer_approve',false);
-	document.getElementById("state").innerHTML = "Angenommen";
+	document.getElementById("state").innerHTML = "Angenommen (ungespeichert)";
 	
 	var aid = getURLParameter("AID");
 	var hoursperweek = document.getElementById("inputhoursperweek").value;
@@ -280,7 +280,7 @@ function reject(){
 	annehmen=false;
 	changed=true;
 	togglePopup('offer_reject', false);
-	document.getElementById("state").innerHTML = "Abgelehnt";
+	document.getElementById("state").innerHTML = "Abgelehnt (ungespeichert)";
 }
 
 

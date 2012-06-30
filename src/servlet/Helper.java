@@ -84,6 +84,10 @@ public final class Helper {
 	 */
 	public static final String D_ADMIN_INSTITUTESMANAGMENT = "/hiwi/admin/institutesmanagement.jsp";
 	/**
+	 * Pfad zu /hiwi/admin/defoffervalues.jsp.
+	 */
+	public static final String D_ADMIN_DEFOFFERVALUES = "/hiwi/admin/defoffervalues.jsp";
+	/**
 	 * Pfad zu /hiwi/clerk/userindex.jsp.
 	 */
 	public static final String D_CLERK_USERINDEX = "/hiwi/clerk/userindex.jsp";

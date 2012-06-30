@@ -402,6 +402,21 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_ADMIN_INSTITUTESMANAGMENT);
 			return;
 		}
+		// TODO!
+		else if (path.equals("/js/getDefValues")) {
+			log.write("AdminServlet", "Reading standard values...");
+			response.setContentType("application/json");
+			response.getWriter().write("{true:true}");
+			return;
+		}
+		// TODO!
+		else if (path.equals("/js/saveDefValues")) {
+			log.write("AdminServlet", "<" + admin.getUserData().getUsername()
+					+ "> edited default offer values.");
+			response.setContentType("text/plain");
+			response.getWriter().write("true");
+			return;
+		}
 		// Unknown:
 		else {
 			log.write("AdminServlet", "Unknown path <" + path + ">");
