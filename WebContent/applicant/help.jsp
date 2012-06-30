@@ -70,6 +70,14 @@
 					Unter "Bewerbung ansehen", kann der für den Bewerbungsablauf verantwortliche Verwalter über den Button "Verwalter Kontaktieren" erreicht werden. 
 					Hierbei öffnet sich der E-Mail Client.<br>
 					<br>
+					<strong>Account bearbeiten</strong><br>
+					Durch einen Klick auf "Accountverwaltung" kann der Benutzer seine Accountdaten bearbeiten.
+					Werden die Textfelder "neues Passwort" und "neues Passwort wiederholen" unausgefüllt bleiben, wird das bisherige Passwort beibehalten.
+					Ein Klick auf "Zurücksetzen" lädt die ursprünglichen Accountdaten.
+					Ein Klick auf "Ändern" übernimmt die getätigten eingaben und ändern den Account.<br>
+					<br>
+					<strong>Eigenen Account löschen</strong><br>
+					Wird das Häkchen "Datenschutzbestimmungen widerrufen" aktiviert und "Ändern" geklickt, kann der eigene Account des Benutzers gelöscht werden.
 					</div>
 				</div>
 			</div>
