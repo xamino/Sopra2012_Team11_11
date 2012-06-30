@@ -111,7 +111,7 @@ public class OfferController {
 		// Hier ist die Mail benachrichtigung:
 		ResultSet rs = db.select(new String[]{"acc.email"}
 		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
-		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
+		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid()+" AND a.abgeschlossen=false");
 		if(rs==null){
 			log.write("OfferController", "No connection: couldn't delete offer");
 			return;
@@ -237,6 +237,45 @@ public class OfferController {
 		return offervec;
 	}
 
+	/**
+	 * Diese Methode sammelt alle 2 Jahre alten Jobangebote aus der Datenbank
+	 * und speichert diese in einem Vector.
+	 * 
+	 * @param years Gibt an wie viele Jahre das Angebot zurueckliegen muss um zurueckgegeben zu werden.
+	 * 
+	 * @return Alle Jobangebote in der Datenbank, die bereits 2 Jahre im System waren werden in Form eines Vectors zurueckgegeben.
+	 */
+	public Vector<Offer> getOldOffers(int years) {
+		Vector<Offer> offervec = new Vector<Offer>();
+		String[] select = { "*" };
+		String[] from = { tableName };
+		//War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
+		String where = "(Year(Now())-YEAR(aenderungsdatum)) >= "+ years;
+		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
+		try {
+			while (rs.next()) {
+				Offer currentoff;
+				boolean check = rs.getBoolean(14);
+				currentoff = new Offer(rs.getInt(1), rs.getString(2),
+						rs.getString(3), rs.getString(4), rs.getBoolean(5),
+						rs.getInt(6), rs.getDouble(7), rs.getString(8),
+						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
+						rs.getInt(12), rs.getDate(13), check);
+				if (!check)
+					offervec.add(currentoff);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			log.write("OfferController", "Error retrieving all checked offers!");
+			return null;
+		}
+		return offervec;
+	}
+	
 	/**
 	 * Diese Methode sammelt alle ueberprueften Jobangebote aus der Datenbank
 	 * und speichert diese in einem Vector.
