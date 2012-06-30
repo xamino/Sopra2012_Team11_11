@@ -712,9 +712,6 @@ public class DocumentController {
 	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben hat
 	 */
 	public Vector<Document> getDocumentsToAddToApp(int aid, String username) {
-
-		System.out.println(tableNameU);
-
 		Vector<Document> docsToAdd = new Vector<Document>();
 
 		String[] select = { "*" };

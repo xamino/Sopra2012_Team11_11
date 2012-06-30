@@ -11,6 +11,10 @@ package config;
  */
 public class UnknownOptionException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2267238564959385228L;
+	/**
 	 * StandardKonstruktor
 	 */
 	public UnknownOptionException() {

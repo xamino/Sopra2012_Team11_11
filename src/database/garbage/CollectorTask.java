@@ -1,11 +1,9 @@
 package database.garbage;
 
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
 import logger.Log;
-
 import database.offer.Offer;
 import database.offer.OfferController;
 

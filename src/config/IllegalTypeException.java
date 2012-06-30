@@ -11,6 +11,10 @@ package config;
  */
 public class IllegalTypeException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7679246204885544615L;
+	/**
 	 * StandardKonstruktor
 	 */
 	public IllegalTypeException() {

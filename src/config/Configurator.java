@@ -6,8 +6,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-import logger.Log;
-
 
 /**
  * 
