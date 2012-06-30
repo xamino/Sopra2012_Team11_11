@@ -176,3 +176,12 @@ INSERT INTO `Unterlagen` VALUES ('111', 'Normvertrag', 'Normvertrag für Bewerbe
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+DROP TABLE IF EXISTS `standardangebot`;
+CREATE TABLE `standardangebot` (
+  `stdProMonat` text,
+  `startDatum` text,
+  `endDatum` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `standardangebot` VALUES ('40', 'todo', 'todo');
