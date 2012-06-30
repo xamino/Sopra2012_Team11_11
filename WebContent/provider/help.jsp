@@ -59,7 +59,7 @@
 					Um ein neues Angebot zu erstellen, klickt man auf der Startseite unten links auf den gleichnamigen Button.
 					Man wird zur Angebot erstellen - Seite weitergeleitet. Hier füllt man alle Felder aus.
 					Achtung, nachträglich kann man nur den Titel und die Beschreibung ändern (weitere Informationen unter Angebot ändern).
-					Wichtig ist hierbei das Feld Anbieternotiz, da dies der Verwalter sieht, wenn er entscheidet, ob das Angeobot auf der Hiwi-Börse erscheinen darf oder nicht.
+					Wichtig ist hierbei das Feld Anbieternotiz, da dies der Verwalter sieht, wenn er entscheidet, ob das Angebot auf der Hiwi-Börse erscheinen darf oder nicht.
 					Das Angebot erscheint erst auf der Hiwi-Börse, wenn der Verwalter zugestimmt hat.<br>
 					<br>
 					<strong>Angebot ändern</strong><br>
