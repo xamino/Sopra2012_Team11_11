@@ -54,7 +54,23 @@
 				</div>
 				<hr>
 				<div class="textblock">
-					<div class="haupttext">Hier steht Kram!!</div>
+					<div class="haupttext">
+					<strong>Bewerben</strong><br>
+					Mit einem Klick auf "Bewerben" kann sich auf eine offene Stelle beworben werden.<br>
+					<br>
+					<strong>Bewerbungsstatus einsehen</strong><br>
+					Mit einem Klick auf "Bewerbung ansehen", kann der Status der Bewerbung eingesehen werden.
+					Hier werden die für die Bewerbung benötigten Unterlagen und deren Abgabestatus, sowie der Bewerbungsstatus ("angenommen" bzw. "nicht angenommen") angezeigt.<br>
+					<br>
+					<strong>Anbieter kontaktieren</strong><br>
+					Unter "Bewerbung ansehen", kann der für das Angebot verantwortliche Anbieter über den Button "Anbieter Kontaktieren" erreicht werden. 
+					Hierbei öffnet sich der E-Mail Client.<br>
+					<br>
+					<strong>Verwalter kontaktieren</strong><br>
+					Unter "Bewerbung ansehen", kann der für den Bewerbungsablauf verantwortliche Verwalter über den Button "Verwalter Kontaktieren" erreicht werden. 
+					Hierbei öffnet sich der E-Mail Client.<br>
+					<br>
+					</div>
 				</div>
 			</div>
 		</div>
