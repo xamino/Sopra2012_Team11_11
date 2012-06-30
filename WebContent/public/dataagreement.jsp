@@ -40,7 +40,7 @@
 				<br> 
 				<strong>Nutzungsdaten</strong><br>
 				Wir erheben und verwenden personenbezogene Daten von Ihnen, soweit dies erforderlich ist, um die Inanspruchnahme unseres Internetangebotes zu ermöglichen.
-				Diese Daten werden ein Jahr für Dokumentationszwecke gespeichert.
+				Diese Daten werden zwei Jahre für Dokumentationszwecke gespeichert.
 				Wenn Sie die Datenschutzbestimmungen widerrufen bzw. Ihren Account löschen, werden alle personenbezogenen Daten von Ihenen umgehend gelöscht.<br>
 				Ihre personenbezogenen Daten werden an in keinem Fall an Dritte weitergegeben oder sonst übermittelt.
  				</div>

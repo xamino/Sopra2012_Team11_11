@@ -60,7 +60,55 @@
 				</div>
 				<hr>
 				<div class="textblock">
-					<div class="haupttext">Hier steht Kram!!</div>
+					<div class="haupttext">
+					<strong>Unterlagen (Unterlagenverwaltung)</strong><br>
+					<br>
+					<div style="padding-left:20px;">
+					<strong>Unterlage hinzufügen</strong><br>
+					Mit einem Klick auf "Eintrag hinzufügen" kann eine neue Unterlage im System angelegt werden.
+					Hierfür müssen die obligatorischen Textfelder des Popups ausgefüllt und anschließend mit dem "Speichern" Button bestätigt werden.<br>
+					<br>
+					<strong>Unterlage bearbeiten</strong><br>
+					Mit einem Klick auf "Eintrag ändern" kann eine aus der Unterlagentabelle selektierte Unterlage bearbeitet werden. 
+					Hierfür müssen die obligatorischen Textfelder des Popups ausgefüllt und anschließend mit dem "Speichern" Button bestätigt werden.<br>
+					<br>
+					<strong>Unterlage löschen</strong><br>
+					Mit einem Klick auf "Markierten Eintrag löschen" kann eine aus der Unterlagentabelle selektierte Unterlage gelöscht werden. 
+					Hierbei wird die Unterlage aus dem System gelöscht und somit auch aus allen Bewerbungs- und Angebotsunterlagen entfernt.
+					</div><br><br>
+					<strong>Institute (Instituteverwaltung)</strong><br>
+					<br>
+					<div style="padding-left:20px;">
+					<strong>Institut hinzufügen</strong><br>
+					Mit einem Klick auf "Eintrag hinzufügen" kann eine neues Institut im System angelegt werden.
+					Hierfür müssen die obligatorischen Textfelder des Popups ausgefüllt und anschließend mit dem "Speichern" Button bestätigt werden.<br>
+					<br>
+					<strong>Institut löschen</strong><br>
+					Mit einem Klick auf "Markiertes Institut löschen" kann eines aus der Instituttabelle selektiertes Institut gelöscht werden. 
+					Hierbei wird das Institut aus dem System gelöscht und somit auch aus allen Angeboten und Accounts entfernt.<br>
+					</div><br><br>
+					<strong>Accounts (Accountsverwaltung)</strong><br>
+					<br>
+					<div style="padding-left:20px;">
+					<strong>Account hinzufügen</strong><br>
+					Mit einem Klick auf "Account hinzufügen" kann eine neuer Account im System angelegt werden.
+					Hierfür müssen die obligatorischen Textfelder ausgefüllt und anschließend mit dem "Account erstellen" Button bestätigt werden.<br>
+					<br>
+					<strong>Account bearbeiten</strong><br>
+					Mit einem Klick auf "Account ändern" kann ein aus der Accounttabelle selektierter Account bearbeitet werden. 
+					Wird das Textfeld "Passwort" nicht ausgefüllt, bleibt das alte Passwort des Accounts erhalten.
+					Mithilfe des Buttons "Änderungen verwerfen", kann ohne Änderungen zu tätigen zur Accountsübersicht zurückgekehrt werden.<br>
+					<br>
+					<strong>Account löschen</strong><br>
+					Mit einem Klick auf "Account löschen" kann ein aus der Accounttabelle selektierter Account gelöscht werden.
+					- Wird ein Bewerber aus dem System entfernt, werden seine Bewerbungen und Bewerbungsunterlagen gelöscht.
+					- Wird ein Anbieter aus dem System entfernt, werden seine Angebote seinem Stellvertreter zugewiesen.
+					  Falls kein Stellvertreter angegeben ist, werden die Angebote des Anbieters gelöscht.
+					- Wird ein Verwalter aus dem System entfernt, werden seine zu verwaltenden Bewerbungen seinem Stellvertreter zugewiesen. 
+					  Falls kein Stellvertreter angegeben ist, muss ein Admin manuell einen Verwalter in das entsprechende Institut eintragen.
+					  </div><br>
+					  <br>
+					</div>
 				</div>
 			</div>
 		</div>

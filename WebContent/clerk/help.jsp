@@ -49,7 +49,48 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<div class="haupttext">Hier steht Kram!!</div>
+				<div class="haupttext">
+				<strong>Angebot Verwalten</strong>(Auswahl eines Angebots aus der Angebotstabelle mit anschließendem Klick auf "Angebot prüfen")<br>
+				<br>
+				<div style="padding-left:20px;">
+				<strong>Angebotsattribute ändern</strong><br>
+				Es können die Stunden/Woche und der Lohn angepasst werden. Zudem kann durch den Button "Angebot bestätigen",
+				dieses für Bewerbungen freigegeben werden und wird dadurch für den Verwalter nicht mehr abänderbar.
+				Diese Änderungen werden erst durch einen Klick auf "Angebot Speichern" übernommen.<br>
+				<br>
+				<strong>Standartdokumente hinzufügen/löschen</strong><br>
+				Durch einen Klick auf "Dokument hinzufügen" kann ein Dokument aus allen hinzufügbaren Dokumenten ausgewählt und mit "Speichern" hinzugefügt werden.
+				Durch einen Klick auf "Dokument löschen" kann ein ausgewähltes Dokument gelöscht werden.<br>
+				<br>
+				<strong>Anbieter Kontaktieren</strong><br>
+				Durch einen Klick auf "Mail an Anbieter" kann der Anbieter des Angebots kontaktiert werden.
+				Hierbei öffnet sich der E-Mail Client.
+				</div><br><br>
+				<strong>Bewerbung Verwalten</strong> (Auswahl einer Bewerbung aus der Bewerbungstabelle mit anschließendem Klick auf "Bewerbung bearbeiten")<br>
+				<br>
+				<div style="padding-left:20px;">
+				<strong>Dokuemtentenabgabe Verwalten</strong><br>
+				Durch ein Häkchen neben dem dazugehörigen Dokument kann dieses als abgegeben bzw. nicht abgegeben markiert werden.<br>
+				<br>
+				<strong>Bewerbungsdokumente hinzufügen/löschen</strong><br>
+				Durch einen Klick auf "Dokument hinzufügen" kann ein Dokument aus allen hinzufügbaren Dokumenten ausgewählt und mit "Speichern" hinzugefügt werden.
+				Durch einen Klick auf "Dokument löschen" kann ein ausgewähltes Dokument gelöscht werden.<br>
+				<br>
+				<strong>Bewerbungsabschluss</strong><br>
+				Mit einem Klick auf den Bewerbungsabschluss-Button wird die bewerbung als abgeschlossen markiert und ist damit nicht mehr sichtbar.
+				</div><br><br>
+				<strong>Excel-Export</strong><br>
+				Hier werden alle Bewerber mit Benutzername, realen Namen und beworbenem Angebot gespeichert.<br>
+				<br>
+				<strong>Account bearbeiten</strong><br>
+				Durch einen Klick auf "Accountverwaltung" kann der Benutzer seine Accountdaten bearbeiten.
+				Werden die Textfelder "neues Passwort" und "neues Passwort wiederholen" unausgefüllt bleiben, wird das bisherige Passwort beibehalten.
+				Ein Klick auf "Zurücksetzen" lädt die ursprünglichen Accountdaten.
+				Ein Klick auf "Ändern" übernimmt die getätigten eingaben und ändern den Account.<br>
+				<br>
+				<strong>Eigenen Account löschen</strong><br>
+				Wird das Häkchen "Datenschutzbestimmungen widerrufen" aktiviert und "Ändern" geklickt, kann der eigene Account des Benutzers gelöscht werden.
+				</div><br>
 			</div>
 		</div>
 	</div>

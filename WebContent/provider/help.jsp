@@ -59,7 +59,7 @@
 					Um ein neues Angebot zu erstellen, klickt man auf der Startseite unten links auf den gleichnamigen Button.
 					Man wird zur Angebot erstellen - Seite weitergeleitet. Hier füllt man alle Felder aus.
 					Achtung, nachträglich kann man nur den Titel und die Beschreibung ändern (weitere Informationen unter Angebot ändern).
-					Wichtig ist hierbei das Feld Anbieternotiz, da dies der Verwalter sieht, wenn er entscheidet, ob das Angeobot auf der Hiwi-Börse erscheinen darf oder nicht.
+					Wichtig ist hierbei das Feld Anbieternotiz, da dies der Verwalter sieht, wenn er entscheidet, ob das Angebot auf der Hiwi-Börse erscheinen darf oder nicht.
 					Das Angebot erscheint erst auf der Hiwi-Börse, wenn der Verwalter zugestimmt hat.<br>
 					<br>
 					<strong>Angebot ändern</strong><br>
@@ -79,6 +79,14 @@
 					<strong>Bewerber annehmen</strong><br>
 					Um einen Bewerber für ein Angebot anzunehmen, selektieren sie den Bewerber in der Bewerberliste und klicken auf den Button Annehmen.<br>
 					<br>
+					<strong>Account bearbeiten</strong><br>
+					Durch einen Klick auf "Accountverwaltung" kann der Benutzer seine Accountdaten bearbeiten.
+					Werden die Textfelder "neues Passwort" und "neues Passwort wiederholen" unausgefüllt bleiben, wird das bisherige Passwort beibehalten.
+					Ein Klick auf "Zurücksetzen" lädt die ursprünglichen Accountdaten.
+					Ein Klick auf "Ändern" übernimmt die getätigten eingaben und ändern den Account.<br>
+					<br>
+					<strong>Eigenen Account löschen</strong><br>
+					Wird das Häkchen "Datenschutzbestimmungen widerrufen" aktiviert und "Ändern" geklickt, kann der eigene Account des Benutzers gelöscht werden.
 					</div>
 				</div>
 			</div>
