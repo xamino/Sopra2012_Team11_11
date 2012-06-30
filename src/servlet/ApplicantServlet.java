@@ -176,11 +176,21 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
 			int aid = Integer.parseInt(request.getParameter("id"));
+	
+			String username = applicant.getUserData().getUsername();
+			Application appli = ApplicationController.getInstance().getApplicationByOfferAndUser(aid, username);
+			String status = "fehler";
+			if(appli.isChosen()){
+				status = " - angenommen";
+			} else {
+				status = " - nicht angenommen";
+			}
+			
 			Offer off = offcon.getOfferById(aid);
 			response.setContentType("application/json");
 			response.getWriter().write(
-					Helper.jsonAtor(new String[] { "offerName", "author" },
-							new Object[] { off.getName(), off.getAuthor() }));
+					Helper.jsonAtor(new String[] { "offerName", "author" , "status" },
+							new Object[] { off.getName(), off.getAuthor(), status }));
 			return;
 
 		}
