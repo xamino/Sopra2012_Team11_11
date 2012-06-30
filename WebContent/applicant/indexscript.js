@@ -150,7 +150,7 @@ function handleLoadMyApplicationResponse(mime, data) {
 		stupidThing = obj.author;
 		var table = document.getElementById("applications");
 		// Write table – probably replaces old data!
-		table.innerHTML = "Bewerbung für " + obj.offerName;
+		table.innerHTML = "Bewerbung für " + obj.offerName + obj.status;
 		selectDocuments();
 	}
 }
