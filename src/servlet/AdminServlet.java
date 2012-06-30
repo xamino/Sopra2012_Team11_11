@@ -436,8 +436,12 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// System.out.println(hoursMonth + ":" + startDate + ":" + endDate);
-			// TODO: not done... 
-			admin.writeDefValues(hoursMonth, startDate, endDate);
+			if (!admin.writeDefValues(hoursMonth, startDate, endDate)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Error saving new values to database!");
+				return;
+			}
 			log.write("AdminServlet", "<" + admin.getUserData().getUsername()
 					+ "> edited default offer values.");
 			response.setContentType("text/plain");
