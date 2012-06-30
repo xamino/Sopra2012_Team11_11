@@ -175,4 +175,15 @@ BEGIN;
 INSERT INTO `Unterlagen` VALUES ('111', 'Normvertrag', 'Normvertrag für Bewerber'), ('222', 'Prüfungsbescheinigung', 'Bescheinigung über bestandene Prüfung'), ('888', 'Spezialbescheinigung', 'Spezielle Spezialbescheinigung für Spezialfälle'), ('999', 'Superheldenbescheinigung', 'Hiermit werden Superkräfte atestiert.');
 COMMIT;
 
+DROP TABLE IF EXISTS `Standardangebot`;
+CREATE TABLE `Standardangebot` (
+  `StdProMonat` int(11),
+  `StartDatum` text,
+  `EndDatum` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+BEGIN;
+INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo');
+COMMIT;
+
 SET FOREIGN_KEY_CHECKS = 1;

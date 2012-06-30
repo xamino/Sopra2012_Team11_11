@@ -12,20 +12,29 @@ function loadDefValues() {
 }
 
 /**
- * TODO!
+ * Handles the server response to loadDefValues.
  * 
  * @param mime
+ *            The MIME-type of the data.
  * @param data
+ *            The data.
  */
 function handleLoadDefValues(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
-	else
-		alert(mime + "\n\n" + data);
+	else if (mime == "text/error")
+		alert(data);
+	else if (mime == "application/json") {
+		var dataObj = eval("(" + data + ")");
+		inputValForm.hoursMonth.value = dataObj.hoursMonth;
+		inputValForm.startDate.value = dataObj.startDate;
+		inputValForm.endDate.value = dataObj.endDate;
+	} else
+		return;
 }
 
 /**
- * TODO!
+ * Checks the inputed values and saves them to the DB if correct.
  */
 function checkVal() {
 	var form = inputValForm;
@@ -68,7 +77,7 @@ function checkVal() {
 }
 
 /**
- * TODO!
+ * Handles the response from checkVal if data was sent to the server.
  * 
  * @param mime
  * @param data
