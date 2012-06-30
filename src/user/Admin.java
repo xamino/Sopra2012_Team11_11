@@ -264,8 +264,8 @@ public class Admin extends User {
 			log.write("Admin", "Error updating default offer!");
 			return false;
 		} else {
-			log.write("Admin", "<" + getUserData().getUsername()
-					+ "> modified default offer.");
+			// log.write("Admin", "<" + getUserData().getUsername()+
+			// "> modified default offer.");
 			return true;
 		}
 	}

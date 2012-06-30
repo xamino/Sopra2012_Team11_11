@@ -85,6 +85,10 @@ function checkVal() {
 function handleSaveResponse(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
-	else
-		alert(mime + "\n\n" + data);
+	else if (mime == "text/error")
+		alert(data);
+	else if (mime == "text/plain") {
+		if (data == "true")
+			window.location = "/hiwi/admin/userindex.jsp";
+	}
 }
