@@ -69,6 +69,26 @@ function addOffer(form) {
 	} else
 		toggleWarning("error_stellen", false, "");
 
+	var startDate = form.startDate.value;
+	if (startDate == null || startDate == "") {
+		toggleWarning("error_startDate", true, "Bitte ausfuellen!");
+		error = true;
+	} else if (!checkText(startDate)) {
+		toggleWarning("error_startDate", true, "Bitte nur ganze Zahlen!");
+		error = true;
+	} else
+		toggleWarning("error_startDate", false, "");
+
+	var endDate = form.endDate.value;
+	if (endDate == null || endDate == "") {
+		toggleWarning("error_endDate", true, "Bitte ausfuellen!");
+		error = true;
+	} else if (!checkText(endDate)) {
+		toggleWarning("error_endDate", true, "Bitte nur ganze Zahlen!");
+		error = true;
+	} else
+		toggleWarning("error_endDate", false, "");
+
 	var beschreibung = form.beschreibung.value;
 	if (beschreibung == null || beschreibung == "") {
 		toggleWarning("error_beschreibung", true, "Bitte ausfuellen!");
@@ -93,7 +113,8 @@ function addOffer(form) {
 	// alert("Sending...");
 	connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
 			+ "&stellen=" + stellen + "&beschreibung=" + beschreibung
-			+ "&notiz=" + notiz, handleCreateOfferResponse);
+			+ "&notiz=" + notiz + "&startDate=" + startDate + "&endDate="
+			+ endDate, handleCreateOfferResponse);
 }
 
 /**

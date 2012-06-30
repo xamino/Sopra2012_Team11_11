@@ -5,6 +5,8 @@
  */
 package servlet;
 
+import static servlet.Helper.validate;
+
 import java.io.IOException;
 import java.util.Vector;
 
@@ -64,7 +66,6 @@ public class ProviderServlet extends HttpServlet {
 	/**
 	 * Diese Methode handhabt die Abarbeitung von Aufrufen.
 	 */
-	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Check authenticity:
@@ -174,11 +175,6 @@ public class ProviderServlet extends HttpServlet {
 
 		// Creating a new Offer
 		else if (path.equals("/js/addOffer")) {
-			// System.out.println("PROVIDER_SERVLET, PATH: ADD OFFER");
-			// Provider provi =
-			// Helper.checkAuthenticity(request.getSession(),Provider.class);
-			// --> provider von oben benutzen!!
-
 			// Generating AID
 			int aid = offcon.getNewOffID("Angebote");
 			if (aid < 0) {
@@ -196,6 +192,11 @@ public class ProviderServlet extends HttpServlet {
 			String ersteller = provider.getUserData().getUsername();
 			String name = request.getParameter("titel");
 			String notiz = request.getParameter("notiz");
+			String beschreibung = request.getParameter("beschreibung");
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDate");
+			// wird vom clerk gesetzt defaultwert ist 0.0
+			double lohn = 0.0;
 			boolean checked = false;
 			int stellen;
 			try {
@@ -210,12 +211,10 @@ public class ProviderServlet extends HttpServlet {
 						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [INT Wert von 'Stellen' pruefen]");
 				return;
 			}
-
 			double stunden;
 			try {
 				// in der DB Std/Woche, in der HTML Std/Monat
 				stunden = Double.parseDouble(request.getParameter("std"));
-
 			} catch (NumberFormatException e) {
 				// System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				log.write("ProviderServlet",
@@ -226,58 +225,38 @@ public class ProviderServlet extends HttpServlet {
 						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [DOUBLE Wert von 'Std' pruefen]");
 				return;
 			}
-
-			String beschreibung = request.getParameter("beschreibung");
-
-			java.util.Date startdatum_1 = new java.util.Date();
-			java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
-
-			java.util.Date enddatum_1 = new java.util.Date();
-			// enddatum is in default settings 6 months after startdatum
-			enddatum_1.setMonth(startdatum_1.getMonth() + 6);
-			java.sql.Date enddatum = new java.sql.Date(enddatum_1.getTime());
-
+			// Set modify date:
 			java.util.Date aenderungsdatum_1 = new java.util.Date();
 			java.sql.Date aenderungsdatum = new java.sql.Date(
 					aenderungsdatum_1.getTime());
-
-			double lohn = 0.0;// wird vom clerk gesetzt defaultwert ist 0.0
-
+			// Load institute:
 			int institut = AccountController.getInstance()
-					.getAccountByUsername(ersteller).getInstitute(); // TODO
-
+					.getAccountByUsername(ersteller).getInstitute();
 			// in log schreiben
-			if (name == null || name.isEmpty() || stunden == 0 || stellen == 0
-					|| beschreibung.isEmpty() || beschreibung == null
-					|| notiz == null || notiz.isEmpty() || startdatum == null
-					|| enddatum == null || aenderungsdatum == null
-					|| /* lohn == 0 || */institut < 0) {
-				log.write("ProviderServlet", "Error in parameters!Path: "
-						+ path.toString());
+			if (!validate(name) || stunden == 0 || stellen == 0
+					|| !validate(beschreibung) || !validate(notiz)
+					|| !validate(startDate) || !validate(endDate)
+					|| aenderungsdatum == null || institut < 0) {
+				log.write("ProviderServlet", "Error in parameters!");
 				response.setContentType("text/error");
 				response.getWriter().write("Werte illegal!");
 				return;
 			}
-
 			// If already exists:
+			// TODO: Can this really happen? Is this required?
 			Vector<Offer> allOffers = OfferController.getInstance()
 					.getAllOffers();
-
 			for (int i = 0; i < allOffers.size(); i++) {
 				if (allOffers.elementAt(i).getName().equals(name)) {
-					// System.out.println("ANGEBOT EXSISTIERT BEREITS, NAME VORHANDEN!");
 					log.write("ProviderServlet",
-							"Error while creating new offer! -->Offer (name) is already exisitng! PATH: "
-									+ path.toString());
+							"Error while creating new offer! -->Offer (name) already exists!");
 					response.setContentType("text/error");
 					response.getWriter().write(
 							"Angebot ist bereits vorhanden (NAME)!");
 					return;
 				} else if (allOffers.elementAt(i).getAid() == aid) {
-					// System.out.println("ANGEBOT EXSISTIERT BEREITS, AID VORHANDEN!");
 					log.write("ProviderServlet",
-							"Error while creating new offer! -->Offer (AID) is already exisitng! PATH: "
-									+ path.toString());
+							"Error while creating new offer! -->Offer (AID) already exists!");
 					response.setContentType("text/error");
 					response.getWriter()
 							.write("Angebot ist bereits vorhanden!");
@@ -285,13 +264,9 @@ public class ProviderServlet extends HttpServlet {
 				}
 			}
 
-			// NOt tested yet... TODO
-			// institut =
-			// AccountController.getInstance().getAccountByUsername(provider.getUserData().getName()).getInstitute();
-
 			// Save new Offer in the DB and response
 			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
-					stellen, stunden, beschreibung, startdatum, enddatum, lohn,
+					stellen, stunden, beschreibung, startDate, endDate, lohn,
 					institut, aenderungsdatum, false);
 			log.write("ProviderServlet", "Creating new offer in progress...");
 			OfferController.getInstance().createOffer(offer);

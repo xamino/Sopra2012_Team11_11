@@ -57,12 +57,12 @@ public class Offer {
 	/**
 	 * Der Beginn des Angebots.
 	 */
-	private Date startdate;
+	private String startdate;
 	
 	/**
 	 * Das Ende des Angebots.
 	 */
-	private Date enddate;
+	private String enddate;
 	
 	/**
 	 * Der Gehalt pro Stunde des Angebots.
@@ -102,9 +102,9 @@ public class Offer {
 	 * 		Die Anzahl der Stunden pro Woche des Angebots.
 	 * @param description
 	 * 		Die beschreibung zum Angebot.
-	 * @param startdate
+	 * @param startDate
 	 * 		Der Beginn des Angebots.
-	 * @param enddate
+	 * @param endDate
 	 * 		Das Ende des Angebots.
 	 * @param wage
 	 * 		Der Gehalt pro Stunde des Angebots.
@@ -117,7 +117,7 @@ public class Offer {
 	 */
 	public Offer(int aid, String author, String name, String note,
 			boolean checked, int slots, double hoursperweek,
-			String description, Date startdate, Date enddate, double wage,
+			String description, String startDate, String endDate, double wage,
 			int institute, Date modificationdate, boolean finished) {
 		super();
 		this.aid = aid;
@@ -128,8 +128,8 @@ public class Offer {
 		this.slots = slots;
 		this.hoursperweek = hoursperweek;
 		this.description = description;
-		this.startdate = startdate;
-		this.enddate = enddate;
+		this.startdate = startDate;
+		this.enddate = endDate;
 		this.wage = wage;
 		this.institute = institute;
 		this.modificationdate = modificationdate;
@@ -310,7 +310,7 @@ public class Offer {
 	 * 
 	 * @return Beginn des Angebots.
 	 */
-	public Date getStartdate() {
+	public String getStartdate() {
 		return startdate;
 	}
 
@@ -320,7 +320,7 @@ public class Offer {
 	 * @param startdate
 	 *            Beginn des Angebots.
 	 */
-	public void setStartdate(Date startdate) {
+	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
 
@@ -329,7 +329,7 @@ public class Offer {
 	 * 
 	 * @return Ende des Angebots.
 	 */
-	public Date getEnddate() {
+	public String getEnddate() {
 		return enddate;
 	}
 
@@ -339,7 +339,7 @@ public class Offer {
 	 * @param enddate
 	 *            Ende des Angebots.
 	 */
-	public void setEnddate(Date enddate) {
+	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
 
