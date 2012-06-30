@@ -213,7 +213,7 @@ INSERT INTO `unterlagen` VALUES ('666', 'Boesewichtszertifikat', 'Auflistung der
 INSERT INTO `unterlagen` VALUES ('777', 'Angaben zu den Schwachstellen', 'Materialien und Ressourcen Ihrer Schwaeche.');
 INSERT INTO `unterlagen` VALUES ('888', 'IQ-Zertifikat', 'IQ-Testbelege');
 
-DROP TABLE IF EXISTS `standardangebot`
+DROP TABLE IF EXISTS `standardangebot`;
 CREATE TABLE `standardangebot` (
   `stdProMonat` text,
   `startDatum` text,
