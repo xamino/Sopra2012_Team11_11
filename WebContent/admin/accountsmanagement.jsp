@@ -40,6 +40,8 @@
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_DEFOFFERVALUES%>">Normwerte Angebote</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
 					&rarr; Accountsverwaltung <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
@@ -64,7 +66,8 @@
 							onclick="checkSelection();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<br><br>
+						<br>
+						<br>
 						<!--<div class="clear"></div>-->
 						<hr>
 						<table class="sized" id="accountTable">

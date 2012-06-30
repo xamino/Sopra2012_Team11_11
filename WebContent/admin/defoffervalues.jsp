@@ -6,12 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="/hiwi/admin/indexScript.js"></script>
-<script type="text/javascript" src="/hiwi/md5.js"></script>
+<script type="text/javascript" src="/hiwi/admin/instScript.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
-<title>Administrator Startseite | Hiwi Job Börse</title>
+<title>Normwerte für Angebote | Hiwi Job Börse</title>
 </head>
-<body onload="timedInfoLoop();">
+<body onload="loadDefValues();">
 	<div class="footerunten">
 		<div class="header">
 			<h1>
@@ -35,11 +34,11 @@
 			<div class="nav">
 				<h3>Navigation</h3>
 				<div class="text">
-					&rarr; Startseite<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_USERINDEX%>">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<%=Helper.D_ADMIN_DEFOFFERVALUES%>">Normwerte Angebote</a><br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+					&rarr; Normwerte Angebote<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_INSTITUTESMANAGMENT%>">Instituteverwaltung</a><br>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
 						href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
@@ -51,36 +50,13 @@
 		<div class="content">
 			<div class="rightborder">
 				<div class="textblock">
-					<h2>Willkommen in ihrer persönlichen Zentrale</h2>
-					<div class="text">
-						Hier finden Sie allgemeine Informationen zur Hiwi-Börse.<br>
-						Hilfe finden Sie <a href="<%=Helper.D_ADMIN_HELP%>" title="Hilfe">
-							hier</a>.
-					</div>
+					<h2>Normwerte für Angebote</h2>
+					<div class="text">Diese Seite dient zur Einrichtung von
+						Standardwerten für Anbieter bei Erstellung eines neuen Angebots.</div>
 				</div>
 				<hr>
 				<div class="textblock">
-					<div class="haupttext">
-						<table class="hidden">
-							<tr>
-								<td>Angemeldete Benutzer:</td>
-								<td id="loggedInUsers"></td>
-							</tr>
-							<tr>
-								<td>Registrierte Benutzer:</td>
-								<td id="allUsers"></td>
-							</tr>
-							<tr>
-								<td>Total RAM:</td>
-								<td id="totalRAM"></td>
-							</tr>
-
-							<tr>
-								<td>Max RAM:</td>
-								<td id="maxRAM"></td>
-							</tr>
-						</table>
-					</div>
+					<div class="haupttext">TODO!</div>
 				</div>
 			</div>
 		</div>

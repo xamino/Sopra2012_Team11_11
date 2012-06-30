@@ -11,67 +11,71 @@
 <title>Dokumenten Verwaltung | Hiwi Job Börse</title>
 </head>
 <body onload="loadInstitutes();">
-<div class="footerunten">
-	<div class="header">
-		<h1>
-			<a class="banner" href="../admin/userindex.jsp">Hiwi-Börse</a>
-		</h1>
-	</div>
-	<div class="right">
-		<div class="commentform">
-			<h3>Abmeldung</h3>
-			<form name="abmeldung">
-				<p>
-					<label for="logout">Sie sind als Administrator angemeldet.</label>
-				</p>
-				<br>
-				<p>
-					<input type="button" value="Abmelden" name="logout"
-						onclick="doLogout();" />
-				</p>
-			</form>
+	<div class="footerunten">
+		<div class="header">
+			<h1>
+				<a class="banner" href="../admin/userindex.jsp">Hiwi-Börse</a>
+			</h1>
 		</div>
-		<div class="nav">
-			<h3>Navigation</h3>
-			<div class="text">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_USERINDEX%>">Startseite</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
-				&rarr; Instituteverwaltung<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
+		<div class="right">
+			<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Administrator angemeldet.</label>
+					</p>
+					<br>
+					<p>
+						<input type="button" value="Abmelden" name="logout"
+							onclick="doLogout();" />
+					</p>
+				</form>
+			</div>
+			<div class="nav">
+				<h3>Navigation</h3>
+				<div class="text">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_USERINDEX%>">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_DOCUMENTSMANAGEMENT%>">Unterlagenverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_DEFOFFERVALUES%>">Normwerte Angebote</a><br>
+					&rarr; Instituteverwaltung<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_ADMIN_ACCOUNTSMANAGEMENT%>">Accountsverwaltung</a>
 					<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_ADMIN_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
+						href="<%=Helper.D_ADMIN_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="content">
-		<div class="rightborder">
-			<div class="textblock">
-				<h2>Institute Verwalten</h2>
-				<div class="text">Hier können sie die Institute im System
-					verwalten.<br>Die IID muss eindeutig sein.</div>
-			</div>
-			<hr>
-			<div class="textblock">
-				<div class="haupttext">
+		<div class="content">
+			<div class="rightborder">
+				<div class="textblock">
+					<h2>Institute Verwalten</h2>
+					<div class="text">
+						Hier können sie die Institute im System verwalten.<br>Die IID
+						muss eindeutig sein.
+					</div>
+				</div>
+				<hr>
+				<div class="textblock">
+					<div class="haupttext">
 						<input type="button" value="Eintrag hinzufügen"
 							onclick="togglePopup('institute_add', true);" /> <input
 							style="float: right;" type="button"
-							value="Markiertes Institute löschen"
-							onclick="prepareDelete();" />
+							value="Markiertes Institute löschen" onclick="prepareDelete();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<br><br>
+						<br>
+						<br>
 						<!--<div class="clear"></div>-->
 						<hr>
 						<table id="institutesList">
 							<!-- javascript loads documents here -->
 						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
