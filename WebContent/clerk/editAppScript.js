@@ -211,7 +211,17 @@ function setDocCheck(username, docid, offerid) {
 	prepareButton();
 
 	connect("/hiwi/Clerk/js/setDocCheck", "username=" + username + "&docid="
-			+ docid + "&offerid=" + offerid, null);
+			+ docid + "&offerid=" + offerid, handleCheckResponse);
+}
+
+/**
+ * Simple default handler for check response.
+ */
+function handleCheckResponse(mime, data) {
+	if(mime == "text/url")
+		window.location = data;
+	else if (mime == "text/error")
+		alert(data);
 }
 
 /**

@@ -186,7 +186,7 @@ function handleselectDocumentsResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
-		alert(data);
+		// alert(data);
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("(" + data + ")");
 		// alert("data= "+JSONarray);
@@ -255,6 +255,11 @@ function handleDeleteApplication(mime, data) {
 		window.location = data;
 }
 
+/**
+ * TODO!
+ * 
+ * @param aid
+ */
 function prepareApply(aid) {
 	// alert(aid);
 	selectedOfferToApply = aid;

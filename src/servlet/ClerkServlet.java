@@ -324,10 +324,12 @@ public class ClerkServlet extends HttpServlet {
 			if (appdoc.getPresent()) {
 				appdoc.setPresent(false);
 			} else {
-				// TODO: hier fehlt was... :(
-				System.out.println("set to true");
+				appdoc.setPresent(true);
+				// System.out.println("set to true");
 			}
 			DocumentController.getInstance().updateAppDocument(appdoc);
+			log.write("ClerkServelt", "<" + clerk.getUserData().getUsername()
+					+ "> changed AppDoc.");
 			return;
 		}
 		// Creates an String for the table in editapplication.jsp
