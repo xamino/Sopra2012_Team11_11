@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="/hiwi/admin/instScript.js"></script>
+<script type="text/javascript" src="/hiwi/admin/defScript.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Normwerte für Angebote | Hiwi Job Börse</title>
 </head>
@@ -56,7 +56,30 @@
 				</div>
 				<hr>
 				<div class="textblock">
-					<div class="haupttext">TODO!</div>
+					<div class="haupttext">
+						<form name="inputValForm">
+							<table class="hidden">
+								<tr>
+									<td>Standard Anzahl der Stunden<br>pro Monat:
+									</td>
+									<td><input type="text" name="hoursMonth" size="4" />
+										<div id="error_hoursMonth" class="invisibleWarning"></div></td>
+								</tr>
+								<tr>
+									<td>Startdatum des Vertrags:</td>
+									<td><input type="text" name="startDate" />
+										<div id="error_startDate" class="invisibleWarning"></div></td>
+								</tr>
+								<tr>
+									<td>Enddatum des Vertrags:</td>
+									<td><input type="text" name="endDate" />
+										<div id="error_endDate" class="invisibleWarning"></div></td>
+								</tr>
+							</table>
+							<input type="submit" value="Werte Speichern"
+								onclick="checkVal(); return false;" />
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

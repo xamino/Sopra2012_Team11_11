@@ -10,3 +10,7 @@
 function loadDefValues() {
 	alert("Hi!");
 }
+
+function checkVal() {
+	alert("Check...");
+}
