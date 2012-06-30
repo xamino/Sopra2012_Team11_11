@@ -33,11 +33,11 @@ var selectedDocument;
 /**
  * Status ob angebot als angenommen markiert ist oder nicht.
  */
-var annehmen=false;
+var annehmen = false;
 /**
  * status ob sich am angenommen status was geändet hat.
  */
-var changed=false;
+var changed = false;
 /**
  * Fragt mich nicht, warum das so funktioniert... :P
  */
@@ -76,8 +76,7 @@ function showMyOffers() {
 	// selectedOffer mit selectedItem ersetzt, da es sich um Offer UND Applicant
 	// handelt
 	selectedItem = null;
-	toggleWarning("error_noOfferSelected", true,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 	prepareButton();
 	connect("/hiwi/Clerk/js/showMyOffers", "", handleShowMyOffersResponse);
 }
@@ -162,15 +161,13 @@ function handleEditOneOfferResponse(mime, data) {
 				+ anbieternotiz
 				+ "</td></tr>"
 				+ "<tr><td>Status:</td><td id=\"state\">"
-				+ "Ungeprüft"
-				+ "</td></tr>";
+				+ "Ungeprüft" + "</td></tr>";
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 		documentsFromOffer();
 	} else if (mime == "text/error") {
-		alert(data);		
+		alert(data);
 	}
 }
-
 
 /**
  * TODO comment!
@@ -195,67 +192,65 @@ function angebotspeichern() {
 	} else if (!checkFloat(wage)) {
 		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
 		error = true;
-	} else{
+	} else {
 		toggleWarning("gage_error", false, "");
-		wage = wage.replace(",",".");
+		wage = wage.replace(",", ".");
 	}
 	if (error)
 		return;
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage+"&changed="+changed+"&annehmen="+annehmen, gotoOfferManagement);
+			+ hoursperweek + "&wage=" + wage + "&changed=" + changed
+			+ "&annehmen=" + annehmen, gotoOfferManagement);
 }
 
 /**
-*  Weiterleitung an offermanagement.
-**/
+ * Weiterleitung an offermanagement.
+ */
 function gotoOfferManagement() {
-    window.location = "/hiwi/clerk/offermanagement.jsp";
+	window.location = "/hiwi/clerk/offermanagement.jsp";
 }
 
-function checkButtonOne () {
-	if(!changed)
-		togglePopup('offer_reject',true);
-	else if (!annehmen){
-		changed=false;
-		document.getElementById("state").innerHTML="Ungeprüft";
-	}else{
-		togglePopup('offer_reject',true);
+function checkButtonOne() {
+	if (!changed)
+		togglePopup('offer_reject', true);
+	else if (!annehmen) {
+		changed = false;
+		document.getElementById("state").innerHTML = "Ungeprüft";
+	} else {
+		togglePopup('offer_reject', true);
 	}
 }
 
 function checkButtonTwo() {
 
-	if(!changed){
-		togglePopup('offer_approve',true);
-	}
-	else if(annehmen){
-		changed=false;
-		document.getElementById("state").innerHTML="Ungeprüft";
-	}else{
-		togglePopup('offer_approve',true);
+	if (!changed) {
+		togglePopup('offer_approve', true);
+	} else if (annehmen) {
+		changed = false;
+		document.getElementById("state").innerHTML = "Ungeprüft";
+	} else {
+		togglePopup('offer_approve', true);
 	}
 }
 /**
  * Setzen des bestaetigen status
  */
-function approve(){
-	annehmen=true;
-	changed=true;
-	togglePopup('offer_approve',false);
+function approve() {
+	annehmen = true;
+	changed = true;
+	togglePopup('offer_approve', false);
 	document.getElementById("state").innerHTML = "Angenommen (ungespeichert)";
-	
+
 }
 /**
  * Setzen des ablehnen status
  */
-function reject(){
-	annehmen=false;
-	changed=true;
+function reject() {
+	annehmen = false;
+	changed = true;
 	togglePopup('offer_reject', false);
 	document.getElementById("state").innerHTML = "Abgelehnt (ungespeichert)";
 }
-
-
 
 /**
  * TODO comment!
@@ -353,10 +348,10 @@ function prepareButton() {
 		// ist
 		document.getElementById("angebotpruefen").onclick = function() {
 			// wenn angebotpruefen geklickt und kein angebot selektiert
-			if(selectedItem == null){ // wenn selektiert und gleich wieder deselektiert wird
+			if (selectedItem == null) { // wenn selektiert und gleich wieder
+				// deselektiert wird
 				// DO NOTHING
-			}
-			else
+			} else
 				window.location = 'editoffer.jsp?AID=' + selectedItem;
 		};
 	}
@@ -418,66 +413,6 @@ function handleDocumentChangeResponse(mime, data) {
 }
 
 /**
- * Function remembers which document has been clicked.
- * 
- * @param id
- *            The ID of the clicked entry.
- */
-
-function markDocumentSelected(id) {
-
- // alert("alte docid: "+selectedDocument);
- // Remove marking from previous selected, if applicable:
- if (selectedDocument != null)
- document.getElementById(selectedDocument).setAttribute("class", "");
- // If clicked again, unselect:
- if (selectedDocument == id) {
- selectedDocument = null;
- document.getElementById("dokumentloeschenbutton").disabled = "disabled";
- //document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
- return;
- }
- // Else save & mark new one:
- selectedDocument = id;
- document.getElementById(id).setAttribute("class", "selected");
- document.getElementById("dokumentloeschenbutton").disabled = "";
- //document.getElementById("dokumentHinzufuegenButton").disabled = "";
- // alert("aktuelle docid: "+selectedDocument);	
- // updating 'Angebot pruefen' button
- prepareButton();
-
- }
-/*ORGINAL:*/
-// function markDocumentSelected(id) {
-//
-// // alert("alte docid: "+selectedDocument);
-// // Remove marking from previous selected, if applicable:
-// if (selectedDocument != null)
-// document.getElementById(selectedDocument).setAttribute("class", "");
-// // If clicked again, unselect:
-// if (selectedDocument == id) {
-// selectedDocument = null;
-// document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-// document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
-// return;
-// }
-// // Else save & mark new one:
-// selectedDocument = id;
-//
-//	
-// document.getElementById("dokumentloeschenbutton").disabled = "";
-// document.getElementById("dokumentHinzufuegenButton").disabled = "";
-// // alert("aktuelle docid: "+selectedDocument);
-//
-// document.getElementById(id).setAttribute("class", "selected");
-//
-//
-//	
-// // updating 'Angebot pruefen' button
-// prepareButton();
-//
-// }
-/**
  * Function remembers which offer/ applicant has been clicked.
  * 
  * @param id
@@ -536,29 +471,6 @@ function deleteDocument() {
 }
 
 /**
- * Deletes a document from an application
- */
-function deleteAppDocument() {
-	if (selectedDocument != null) {
-		// alert("to delete: "+selectedDocument);
-		togglePopup('document_del', false);
-		connect("/hiwi/Clerk/js/deleteAppDocument", "uid=" + selectedDocument
-				+ "&user=" + User + "&aid=" + Aid, deleteAppDocumentResponse);
-	}
-
-}
-
-/**
- * TODO comment!
- */
-function deleteAppDocumentResponse() {
-	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-	selectedDocument = null;
-	applicationDocuments();
-	// TODO Dokument l�schen button ausgrauen
-}
-
-/**
  * Handles the response to a deletion request.
  * 
  * @param mime
@@ -576,64 +488,35 @@ function handleDeleteDocumentResponse(mime, data) {
 /**
  * TODO comment!
  */
-//function createDocument() {
-//	var form = document.getElementById("adddocform");
-//	if (form == null)
-//		return;
-//	var error = false;
-//	// var uid = form.uid.value;
-//	// if (uid == null || uid == "") {
-//	// toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
-//	// error = true;
-//	// } else
-//	// toggleWarning("error_addDocument_uid", false, "");
-//	var title = form.title.value;
-//	if (title == null || title == "") {
-//		toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
-//		error = true;
-//	} else
-//		toggleWarning("error_addDocument_title", false, "");
-//	var description = form.description.value;
-//	if (description == null || description == "") {
-//		toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
-//		error = true;
-//	} else
-//		toggleWarning("error_addDocument_descr", false, "");
-//	if (error)
-//		return;
+// function createDocument() {
+// var form = document.getElementById("adddocform");
+// if (form == null)
+// return;
+// var error = false;
+// // var uid = form.uid.value;
+// // if (uid == null || uid == "") {
+// // toggleWarning("error_addDocument_uid", true, "Bitte ausfüllen!");
+// // error = true;
+// // } else
+// // toggleWarning("error_addDocument_uid", false, "");
+// var title = form.title.value;
+// if (title == null || title == "") {
+// toggleWarning("error_addDocument_title", true, "Bitte ausfüllen!");
+// error = true;
+// } else
+// toggleWarning("error_addDocument_title", false, "");
+// var description = form.description.value;
+// if (description == null || description == "") {
+// toggleWarning("error_addDocument_descr", true, "Bitte ausfüllen!");
+// error = true;
+// } else
+// toggleWarning("error_addDocument_descr", false, "");
+// if (error)
+// return;
 //
-//	connect("/hiwi/Clerk/js/createDocument", /* "uid=" + uid + "& */"title="
-//			+ title + "&description=" + description, applicationDocuments);
-//}
-
-/**
- * TODO comment!
- */
-function addDocument() {
-
-	var chosenDocument = document.getElementById("selectAppDocumentsToAdd").value;
-
-	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-	selectedDocument = null;
-	togglePopup("document_add", false);
-
-	connect("/hiwi/Clerk/js/addAppDocument", "uid=" + chosenDocument + "&aid="
-			+ Aid + "&username=" + User, applicationDocuments);
-
-}
-
-/**
- * TODO comment!
- */
-function handleAddDocumentResponse(mime, data) {
-	if (mime == "text/url") {
-		window.location = data;
-		return;
-	} else if (mime == "text/error") {
-		alert(data);
-	}
-}
-
+// connect("/hiwi/Clerk/js/createDocument", /* "uid=" + uid + "& */"title="
+// + title + "&description=" + description, applicationDocuments);
+// }
 /**
  * This function loads all the applicants of all offers from the clerk's
  * institute in the system from the database and displays them.
@@ -672,194 +555,5 @@ function handleShowApplicationResponse(mime, data) {
 					+ "\');\"><td>" + JSONarray[i].username + "</td><td>"
 					+ JSONarray[i].angebotsname + "</td></tr>";
 		}
-	}
-} // --> preparing Button --> editapplication.jsp --> applicationDocuments()
-
-/**
- * This function loads all the documents of the chosen application in the system
- * from the database and displays them. (editapplication.jsp)
- */
-function applicationDocuments() {
-	User = getURLParameter("User");
-	Aid = getURLParameter("AID");
-	selectedItem = null;
-	selectedDocument = null;
-	connect("/hiwi/Clerk/js/applicationDocuments", "User=" + User + "&AID="
-			+ Aid, handleApplicationDocumentsResponse);
-}
-
-/**
- * This function displays all the documents of the chosen application in the
- * system.
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
- */
-function handleApplicationDocumentsResponse(mime, data) {
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "showthedocuments/json") {
-
-		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-
-		// Erstelle Array aus JSON array:
-		var JSONarray = eval("(" + data + ")");
-		// Get the table:
-		var table2 = document.getElementById("documentsTable");
-		// Stores the 'present' value of the AppDocument element
-		var checked;
-		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Abgegeben</th><th>Dokumente</th></tr>";
-		for ( var i = 0; i < JSONarray.length; i = i + 2) {
-			if (JSONarray[i + 1].present) {
-				checked = "checked";
-			} else {
-				checked = "";
-			}
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
-					+ "\"  onclick=\"markDocumentSelected(\'" + JSONarray[i].uid
-					+ "\');\"> <td> <input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+ JSONarray[i+1].offerID+")\" " 
-					+ checked + "> </td><td>"
-					+ JSONarray[i].name + "</td></tr>";
-			
-/*			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
-			+ "\" onclick=\"setDocCheck('" + JSONarray[i + 1].username
-			+ "'," + JSONarray[i + 1].docID + ","
-			+ JSONarray[i + 1].offerID + ")\" " + checked + "><td>"
-			+ JSONarray[i].name + "</td></tr>"; */
-		}
-		showApplicationTable2();
-	}
-}
-
-/**
- * Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer die angezeigte
- * Bewerbung benoetigt werden
- * 
- * @param mime
- * @param data
- */
-function handledocumentsToAddToAppResponse(mime, data) {
-
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "docstoaddtoapp/json") {
-
-		var docs = eval("(" + data + ")");
-
-		var select = document.getElementById("selectAppDocumentsToAdd");
-		select.innerHTML = "";
-		for ( var i = 0; i < docs.length; i++) {
-			select.innerHTML += "<option value=\"" + docs[i].uid + "\">"
-					+ docs[i].name + "</option>";
-		}
-	}
-}
-
-/**
- * This function forwards the parameters values to the ClerkServlet, where the
- * AppDocument, linked to those values, will be overwritten
- * 
- * @param username
- * @param docid
- * @param offerid
- */
-function setDocCheck(username, docid, offerid) {
-
-	// urspr�nglich nur die connect --> aber f�r Markierung das hinzugefuegt!!!
-	if (selectedDocument != null)
-		document.getElementById(selectedDocument).setAttribute("class", "");
-	// alert("man");
-	// If clicked again, unselect:
-	if (selectedDocument == docid) {
-		selectedDocument = null;
-		// alert("man oh man");
-		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-		//document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
-		return;
-	}
-	// Else save & mark new one:
-	// alert("hier");
-	selectedDocument = docid;
-	// alert("daa");
-	// alert("aktuelle id: "+selectedDocument);
-	document.getElementById(docid).setAttribute("class", "selected");
-
-	document.getElementById("dokumentloeschenbutton").disabled = "";
-//	document.getElementById("dokumentHinzufuegenButton").disabled = "";
-
-	prepareButton();
-
-	connect("/hiwi/Clerk/js/setDocCheck", "username=" + username + "&docid="
-			+ docid + "&offerid=" + offerid, null);
-}
-
-/**
- * This function loads the applicantname and the offername in the system from
- * the database and displays them. (editapplication.jsp)
- */
-function showApplicationTable2() {
-	var User = getURLParameter("User");
-	var Aid = getURLParameter("AID");
-	selectedItem = null;
-	connect("/hiwi/Clerk/js/showApplicationTable2", "User=" + User + "&AID="
-			+ Aid, handleShowApplicationTable2Response);
-}
-
-/**
- * This function displays the applicantname and the offername in the system.
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
- */
-function handleShowApplicationTable2Response(mime, data) {
-
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "showapplicationtable2/json") {
-		// Erstelle Array aus JSON array:
-		var JSONarray = eval("(" + data + ")");
-		// Get the table:
-		var table2 = document.getElementById("applicantTable");
-		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><td>Name:</td></tr><tr><td>" + JSONarray[0]
-				+ "</td></tr><tr><td>Beworben fuer:</td></tr><tr><td>"
-				+ JSONarray[1] + "</td></tr>";
-	}
-
-	connect("/hiwi/Clerk/js/documentsToAddToApplication", "aid=" + Aid
-			+ "&username=" + User, handledocumentsToAddToAppResponse);
-}
-
-/**
- * This function checks if a applicant has delivered all of the rquired
- * documents.
- */
-
-function doApplicationCompletion() {
-
-	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID=" + aid
-			+ "&username=" + username, handleApplicationCompletion);
-}
-
-/**
- * TODO comment!
- * 
- * @param mime
- * @param data
- */
-function handleApplicationCompletion(mime, data) {
-	if (mime == "text/url") {
-		window.location = data;
-	} else if (mime == "error/url") {
-		alert(data);
-		toggleWarning(id, true,
-				"Unvollständige Dokumente. Abschluss nicht möglich");
-	} else if (mime == "text/error") {
-		alert(data);
 	}
 }
