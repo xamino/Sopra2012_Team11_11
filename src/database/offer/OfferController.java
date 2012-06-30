@@ -288,6 +288,7 @@ public class OfferController {
 	 * @return Alle Jobangebote in der Datenbank, die dem Wert von "checked"
 	 *         entsprechen werden in Form eines Vectors zurueckgegeben.
 	 */
+	//TODO: Methode wirft NullPointer!
 	public Vector<Offer> getCheckedOffers() {
 		Vector<Offer> offervec = new Vector<Offer>();
 		String[] select = { "*" };
