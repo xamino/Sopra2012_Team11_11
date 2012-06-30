@@ -208,7 +208,9 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertosave, offertosave.getClass()));
 			return;
-		} else if (path.equals("/js/documentsFromOffer")) {
+			}
+			else if (path.equals("/js/documentsFromOffer")) {
+
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
 			Vector<Offer> offersid = OfferController.getInstance()

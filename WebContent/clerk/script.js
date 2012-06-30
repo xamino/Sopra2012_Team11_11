@@ -223,10 +223,12 @@ function checkButtonOne () {
 	}
 }
 
-function checkButtonTwo () {
-	if(!changed)
+function checkButtonTwo() {
+
+	if(!changed){
 		togglePopup('offer_approve',true);
-	else if (annehmen){
+	}
+	else if(annehmen){
 		changed=false;
 		document.getElementById("state").innerHTML="Ungeprüft";
 	}else{
@@ -241,6 +243,34 @@ function approve(){
 	changed=true;
 	togglePopup('offer_approve',false);
 	document.getElementById("state").innerHTML = "Angenommen (ungespeichert)";
+	
+	var aid = getURLParameter("AID");
+	var hoursperweek = document.getElementById("inputhoursperweek").value;
+	var wage = document.getElementById("inputwage").value;
+	var error = false;
+
+	if (hoursperweek == null || hoursperweek == "") {
+		toggleWarning("hours_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkInt(hoursperweek)) {
+		toggleWarning("hours_error", true, "Bitte eine ganze Zahl angeben!");
+		error = true;
+	} else
+		toggleWarning("hours_error", false, "");
+	if (wage == null || wage == "") {
+		toggleWarning("gage_error", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkFloat(wage)) {
+		toggleWarning("gage_error", true, "Bitte eine Zahl angeben!");
+		error = true;
+	} else{
+		toggleWarning("gage_error", false, "");
+		wage = wage.replace(",",".");
+	}
+	if (error)
+		return;
+	connect("/hiwi/Clerk/js/approveOffer", "aid=" + aid + "&hoursperweek="
+			+ hoursperweek + "&wage=" + wage+"&changed="+changed+"&annehmen="+annehmen, gotoOfferManagement);
 	
 }
 /**
@@ -439,7 +469,7 @@ function markDocumentSelected(id) {
  selectedDocument = id;
  document.getElementById(id).setAttribute("class", "selected");
  document.getElementById("dokumentloeschenbutton").disabled = "";
- document.getElementById("dokumentHinzufuegenButton").disabled = "";
+ //document.getElementById("dokumentHinzufuegenButton").disabled = "";
  // alert("aktuelle docid: "+selectedDocument);	
  // updating 'Angebot pruefen' button
  prepareButton();
@@ -786,7 +816,7 @@ function setDocCheck(username, docid, offerid) {
 	document.getElementById(docid).setAttribute("class", "selected");
 
 	document.getElementById("dokumentloeschenbutton").disabled = "";
-	document.getElementById("dokumentHinzufuegenButton").disabled = "";
+//	document.getElementById("dokumentHinzufuegenButton").disabled = "";
 
 	prepareButton();
 
