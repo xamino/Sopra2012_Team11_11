@@ -208,8 +208,7 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(offertosave, offertosave.getClass()));
 			return;
-			}
-			else if (path.equals("/js/documentsFromOffer")) {
+		} else if (path.equals("/js/documentsFromOffer")) {
 
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
@@ -331,59 +330,56 @@ public class ClerkServlet extends HttpServlet {
 			return;
 		}
 		// Creates an String for the table in editapplication.jsp
-		else if (path.equals("/js/showApplicationTable2")) {
+		else if (path.equals("/js/getApplicantInfo")) {
 			String user = request.getParameter("User");
-			// System.out.println("User:"+user);
 			String aid = request.getParameter("AID");
-			// System.out.println("Aid:"+aid);
+			// TODO: try-catch
 			int aid1 = Integer.parseInt(aid);
-
-			String richtigername = AccountController.getInstance()
+			String realName = AccountController.getInstance()
 					.getAccountByUsername(user).getName();
-			String angebotsname = OfferController.getInstance()
-					.getOfferById(aid1).getName();
-			// = Name des bewebers, Angebotsname, Benutzername des Bewerbers,
-			// AngebotsID
-			String[] datanamen = { richtigername, angebotsname, user, aid };
-			response.setContentType("showapplicationtable2/json");
+			String offerName = OfferController.getInstance().getOfferById(aid1)
+					.getName();
+			response.setContentType("application/json");
 			response.getWriter().write(
-					gson.toJson(datanamen, datanamen.getClass()));
+					Helper.jsonAtor(new String[] { "realName", "offerName" },
+							new Object[] { realName, offerName }));
 		}
 		// Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
-//		else if (path.equals("/js/createDocument")) {
-//			String title = request.getParameter("title");
-//			String description = request.getParameter("description");
-//			// int uid = -1;
-//			// try {
-//			// uid = Integer.parseInt(request.getParameter("uid"));
-//			// } catch (NumberFormatException e) {
-//			// log.write("ClerkServlet",
-//			// "NumberFormatException while parsing URL!");
-//			// response.setContentType("text/error");
-//			// response.getWriter()
-//			// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
-//			// return;
-//			// }
-//			if (title == null || title.isEmpty() || description == null
-//					|| description.isEmpty() /* || uid < 0 */) {
-//				log.write("ClerkServlet", "Error in parameters!");
-//				response.setContentType("text/error");
-//				response.getWriter().write(
-//						"Fehler bei Eingabe! Fehlende Eingaben.");
-//				return;
-//			}
-//			// all okay... continue:
-//			if (!DocumentController.getInstance().generateDocument(title,
-//					description)) {
-//				response.setContentType("text/error");
-//				response.getWriter()
-//						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
-//				return;
-//			}
-//			response.setContentType("text/url");
-//			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-//			return;
-//		} 
+		// else if (path.equals("/js/createDocument")) {
+		// String title = request.getParameter("title");
+		// String description = request.getParameter("description");
+		// // int uid = -1;
+		// // try {
+		// // uid = Integer.parseInt(request.getParameter("uid"));
+		// // } catch (NumberFormatException e) {
+		// // log.write("ClerkServlet",
+		// // "NumberFormatException while parsing URL!");
+		// // response.setContentType("text/error");
+		// // response.getWriter()
+		// //
+		// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+		// // return;
+		// // }
+		// if (title == null || title.isEmpty() || description == null
+		// || description.isEmpty() /* || uid < 0 */) {
+		// log.write("ClerkServlet", "Error in parameters!");
+		// response.setContentType("text/error");
+		// response.getWriter().write(
+		// "Fehler bei Eingabe! Fehlende Eingaben.");
+		// return;
+		// }
+		// // all okay... continue:
+		// if (!DocumentController.getInstance().generateDocument(title,
+		// description)) {
+		// response.setContentType("text/error");
+		// response.getWriter()
+		// .write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+		// return;
+		// }
+		// response.setContentType("text/url");
+		// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+		// return;
+		// }
 		else if (path.equals("/js/deleteAppDocument")) {
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			String username = request.getParameter("user");
@@ -631,8 +627,8 @@ public class ClerkServlet extends HttpServlet {
 	}
 
 	/**
-	 * GET-Aufruffe werden hier nur zum Download der Excel-Datei verwendet. Ansonsten leitet
-	 * es an public/index.jsp weiter.
+	 * GET-Aufruffe werden hier nur zum Download der Excel-Datei verwendet.
+	 * Ansonsten leitet es an public/index.jsp weiter.
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {

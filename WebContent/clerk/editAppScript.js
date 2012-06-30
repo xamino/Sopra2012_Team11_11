@@ -60,8 +60,8 @@ function showApplicationTable2() {
 	var User = getURLParameter("User");
 	var Aid = getURLParameter("AID");
 	selectedItem = null;
-	connect("/hiwi/Clerk/js/showApplicationTable2", "User=" + User + "&AID="
-			+ Aid, handleShowApplicationTable2Response);
+	connect("/hiwi/Clerk/js/getApplicantInfo", "User=" + User + "&AID=" + Aid,
+			handleShowApplicationTable2Response);
 }
 
 /**
@@ -73,22 +73,23 @@ function showApplicationTable2() {
  *            The data.
  */
 function handleShowApplicationTable2Response(mime, data) {
-
 	if (mime == "text/url") {
 		window.location = data;
-	} else if (mime == "showapplicationtable2/json") {
+	} else if (mime == "text/error") {
+		alert(data);
+	} else if (mime == "application/json") {
+		alert(data);
 		// Erstelle Array aus JSON array:
-		var JSONarray = eval("(" + data + ")");
+		var obj = eval("(" + data + ")");
 		// Get the table:
 		var table2 = document.getElementById("applicantTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><td>Name:</td></tr><tr><td>" + JSONarray[0]
-				+ "</td></tr><tr><td>Beworben fuer:</td></tr><tr><td>"
-				+ JSONarray[1] + "</td></tr>";
+		table2.innerHTML = "<tr><td>Name:</td><td>" + obj.realName
+				+ "</td></tr><tr><td>Beworben für:</td><td>" + obj.offerName
+				+ "</td></tr>";
+		connect("/hiwi/Clerk/js/documentsToAddToApplication", "aid=" + Aid
+				+ "&username=" + User, handledocumentsToAddToAppResponse);
 	}
-
-	connect("/hiwi/Clerk/js/documentsToAddToApplication", "aid=" + Aid
-			+ "&username=" + User, handledocumentsToAddToAppResponse);
 }
 
 /**
