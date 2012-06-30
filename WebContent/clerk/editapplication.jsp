@@ -69,17 +69,15 @@
 							<br> <input type="button" value="Bewerbungsabschluss"
 								onclick="doApplicationCompletion();" />
 						</div>
-						<form class="listform">
-							<table class="" id="documentsTable">
-								<!-- Documents go here -->
-							</table>
-							<input type="button" value="Dokument hinzufügen"
-								id="dokumentHinzufuegenButton"
-								onclick="togglePopup('document_add',true);" /> <input
-								type="button" value="Dokument löschen"
-								id="dokumentloeschenbutton"
-								onclick="togglePopup('document_del',true);" />
-						</form>
+						<table class="" id="documentsTable">
+							<!-- Documents go here -->
+						</table>
+						<input type="button" value="Dokument hinzufügen"
+							id="dokumentHinzufuegenButton"
+							onclick="togglePopup('document_add',true);" /> <input
+							type="button" value="Dokument löschen"
+							id="dokumentloeschenbutton"
+							onclick="togglePopup('document_del',true);" />
 					</div>
 				</div>
 			</div>

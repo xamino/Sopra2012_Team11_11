@@ -316,15 +316,16 @@ public class ClerkServlet extends HttpServlet {
 		// Updates the status of an AppDocument
 		else if (path.equals("/js/setDocCheck")) {
 			String username = request.getParameter("username");
+			// TODO: try-catch!
 			int offerid = Integer.parseInt(request.getParameter("offerid"));
 			int docid = Integer.parseInt(request.getParameter("docid"));
-
 			AppDocument appdoc = DocumentController.getInstance()
 					.getDocumentByUsernameAIDandUID(username, offerid, docid);
 			if (appdoc.getPresent()) {
 				appdoc.setPresent(false);
 			} else {
-				appdoc.setPresent(true);
+				// TODO: hier fehlt was... :(
+				System.out.println("set to true");
 			}
 			DocumentController.getInstance().updateAppDocument(appdoc);
 			return;

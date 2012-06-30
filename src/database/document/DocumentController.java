@@ -98,8 +98,9 @@ public class DocumentController {
 		String[] from = { tableNameU };
 
 		ResultSet rs = db.select(select, from, null);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't generate Document");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't generate Document");
 			return false;
 		}
 		try {
@@ -154,8 +155,9 @@ public class DocumentController {
 		Document doc = null;
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, "UID=" + uid);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get document");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get document");
 			return null;
 		}
 		try {
@@ -179,8 +181,8 @@ public class DocumentController {
 	}
 
 	/**
-	 * Diese Methode sammelt alle Administrator Unterlagen zu einem bestimmten
-	 * Jobangebot aus der Datenbank und speichert diese in einem Vector.
+	 * Diese Methode sammelt alle Unterlagen zu einem bestimmten Jobangebot aus
+	 * der Datenbank und speichert diese in einem Vector.
 	 * 
 	 * @param aid
 	 *            Parameter <code>aid</code> (Angebots-Id) ist die Id des
@@ -195,15 +197,15 @@ public class DocumentController {
 		Vector<OfferDocument> docVect = new Vector<OfferDocument>();
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameS }, "AID=" + aid);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return docVect;
 		}
 		try {
 			while (rs.next()) {
 				docVect.add(new OfferDocument(rs.getInt("AID"), rs
-						.getInt("UID"))); // !!! Mit ResultSet ein
-				// Document-Objekt machen !!!
+						.getInt("UID")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -211,47 +213,27 @@ public class DocumentController {
 					.println("There was an error while trying to cast from ResultSet to Document-Object.");
 			e.printStackTrace();
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out
-					.println("There was an error while trying to close the ResultSet.");
-			e.printStackTrace();
-		}
-
-		/*
-		 * //Nur zum Testen, ob alle Standardunterlagen mit aid im Vector sind
-		 * for (int i=0;i<docVect.size();i++){ try{ OfferDocument offDoc =
-		 * docVect.elementAt(i);
-		 * System.out.println("AID="+offDoc.getOfferID()+" UID="
-		 * +offDoc.getDocumentid()); } catch (ArrayIndexOutOfBoundsException
-		 * ae){
-		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-		 * }
-		 * 
-		 * }
-		 */
-
 		return docVect;
-
 	}
-	
+
 	/**
 	 * Die Methode liefert zu einer Bewerbung alle abgegebenen Dokumente.
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
 	 * @return
-	 */			
-	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername, int aid) {
+	 */
+	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername,
+			int aid) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
-		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'TRUE'";
+		String where = "benutzername='" + benutzername + "' AND AID = " + aid
+				+ " AND status = 'TRUE'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return appdoc;
 		}
 		try {
@@ -270,22 +252,25 @@ public class DocumentController {
 		return appdoc;
 
 	}
-	
+
 	/**
 	 * Die Methode liefert zu einer Bewerbung alle nicht abgegebenen Dokumente.
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
 	 * @return
-	 */			
-	public Vector<AppDocument> getAppDocsWithStatusZero(String benutzername, int aid) {
+	 */
+	public Vector<AppDocument> getAppDocsWithStatusZero(String benutzername,
+			int aid) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
-		String where = "benutzername='" + benutzername + "' AND AID = "+aid+" AND status = 'FALSE'";
+		String where = "benutzername='" + benutzername + "' AND AID = " + aid
+				+ " AND status = 'FALSE'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return appdoc;
 		}
 		try {
@@ -305,25 +290,29 @@ public class DocumentController {
 
 	}
 
-
 	/**
 	 * Diese Methode sammelt alle Bewerber-Unterlagen zu einem bestimmten
-	 * Jobangebot aus der Datenbank und speichert diese in einem Vector.
+	 * Jobangebot und Bewerber aus der Datenbank und speichert diese in einem
+	 * Vector.
 	 * 
 	 * @param aid
 	 *            Parameter "aid" (Angebots-Id) ist die Id des Jobangebots.
+	 * @param username
+	 *            Der Benutzername des Bewerers.
 	 * @return Es wird ein Vector mit allen Unterlagen zu einem bestimmten
 	 *         Jobangebot aus der Datenbank zurueckgegeben.
 	 */
-	public Vector<AppDocument> getAppDocumentByOffer(int aid) { // checked
+	public Vector<AppDocument> getAppDocument(int aid, String username) {
 
 		// Vector fuer die Rueckgabe der Bewerbungsunterlagen eines bestimmten
 		// Angebots bei gegebener Angebots-ID
 		Vector<AppDocument> appDocVect = new Vector<AppDocument>();
 		ResultSet rs = db.select(new String[] { "*" },
-				new String[] { tableNameB }, "AID=" + aid);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+				new String[] { tableNameB }, "AID=" + aid
+						+ " AND benutzername='" + username + "'");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return appDocVect;
 		}
 		try {
@@ -391,8 +380,9 @@ public class DocumentController {
 				new String[] { tableNameB },
 				"benutzername='" + account.getUsername() + "' AND AID="
 						+ offer.getAid());
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return userOffDocVect;
 		}
 		try {
@@ -454,8 +444,9 @@ public class DocumentController {
 		Vector<Document> allDocVect = new Vector<Document>();
 		ResultSet rs = db.select(new String[] { "*" },
 				new String[] { tableNameU }, null);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return allDocVect;
 		}
 
@@ -563,8 +554,9 @@ public class DocumentController {
 				+ " AND UID =" + uid;
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get document");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get document");
 			return null;
 		}
 		try {
@@ -672,8 +664,6 @@ public class DocumentController {
 	 */
 	public Vector<Document> getDocumentsToAddToOffer(int aid) {
 
-		
-
 		Vector<Document> docsToAdd = new Vector<Document>();
 
 		String[] select = { "*" };
@@ -682,8 +672,9 @@ public class DocumentController {
 				+ " WHERE AID = " + aid + ")";
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return docsToAdd;
 		}
 		try {
@@ -721,8 +712,9 @@ public class DocumentController {
 				+ "')";
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return docsToAdd;
 		}
 		try {
@@ -753,8 +745,9 @@ public class DocumentController {
 		String where = "benutzername='" + benutzername + "'";
 		Vector<AppDocument> appdoc = new Vector<AppDocument>();
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get documents");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get documents");
 			return appdoc;
 		}
 		try {
@@ -787,11 +780,14 @@ public class DocumentController {
 		String where = "UID=" + UID;
 		AppDocument appdoc;
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("DocumentController", "No connection: couldn't get document");
+		if (rs == null) {
+			log.write("DocumentController",
+					"No connection: couldn't get document");
 			return null;
 		}
 		try {
+			// TODO: Fehler -> hier werden mehr als nur 1 Dokument
+			// zurückgeliefert!
 			if (rs.next()) {
 				appdoc = new AppDocument(rs.getString("benutzername"),
 						rs.getInt("AID"), rs.getInt("UID"),

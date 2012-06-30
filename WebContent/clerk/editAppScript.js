@@ -32,7 +32,7 @@ function handleApplicationDocumentsResponse(mime, data) {
 		// Stores the 'present' value of the AppDocument element
 		var checked;
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Abgegeben</th><th>Dokumente</th></tr>";
+		table2.innerHTML = "<tr><th>Vorhanden?</th><th></th></tr>";
 		for ( var i = 0; i < JSONarray.length; i = i + 2) {
 			if (JSONarray[i + 1].present) {
 				checked = "checked";
@@ -78,7 +78,7 @@ function handleShowApplicationTable2Response(mime, data) {
 	} else if (mime == "text/error") {
 		alert(data);
 	} else if (mime == "application/json") {
-		alert(data);
+		// alert(data);
 		// Erstelle Array aus JSON array:
 		var obj = eval("(" + data + ")");
 		// Get the table:
@@ -273,7 +273,6 @@ function deleteAppDocumentResponse() {
 	document.getElementById("dokumentloeschenbutton").disabled = "disabled";
 	selectedDocument = null;
 	applicationDocuments();
-	// TODO Dokument l�schen button ausgrauen
 }
 
 /**
@@ -282,7 +281,6 @@ function deleteAppDocumentResponse() {
  */
 
 function doApplicationCompletion() {
-
 	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID=" + aid
 			+ "&username=" + username, handleApplicationCompletion);
 }

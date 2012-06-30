@@ -276,7 +276,7 @@ public class OfferController {
 				if (currentoff.isChecked())
 					offervec.add(currentoff);
 			}
-			rs.close();
+			// rs.close();
 		} catch (SQLException e) {
 			log.write("OfferController", "Error retrieving all checked offers!");
 			return null;
@@ -310,11 +310,11 @@ public class OfferController {
 		}
 		try {
 			while (rs.next()) {
-				Offer currentoff = convertToOffer(rs);
-				offervec.add(currentoff);
+				offervec.add(convertToOffer(rs));
 			}
 			// Mit close gibt das errors... :P
 			// rs.close();
+			// P.S: und ohne auch... ><
 		} catch (SQLException e) {
 			e.printStackTrace();
 			log.write("OfferController", "Error retrieving all checked offers!");
@@ -636,6 +636,8 @@ public class OfferController {
 	 * @throws SQLException
 	 */
 	private Offer convertToOffer(ResultSet rs) throws SQLException {
+		if (rs == null)
+			throw new SQLException("ResultSet is NULL!");
 		return new Offer(rs.getInt("AID"), rs.getString("Ersteller"),
 				rs.getString("Name"), rs.getString("Notiz"),
 				rs.getBoolean("Geprueft"), rs.getInt("Plaetze"),
