@@ -132,7 +132,7 @@
 			<h3>Angebot bestätigen</h3>
 			<hr>
 			<div class="textblock">
-				Wollen sie das ausgewählte<br>Angebot wirklich bestätigen?
+				Wollen sie das ausgewählte<br>Angebot wirklich bestätigen?<br>(Wird beim "Angebot speichern" übernommen.)
 			</div>
 			<hr>
 			<div class="textblock">
@@ -146,7 +146,7 @@
 			<h3>Angebot ablehnen</h3>
 			<hr>
 			<div class="textblock">
-				Wollen sie das ausgewählte<br>Angebot wirklich ablehnen?
+				Wollen sie das ausgewählte<br>Angebot wirklich ablehnen? <br>(Wird beim "Angebot speichern" übernommen.)
 			</div>
 			<hr>
 			<div class="textblock">
