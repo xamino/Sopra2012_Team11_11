@@ -128,9 +128,9 @@ CREATE TABLE `Unterlagen` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-DROP TABLE IF EXISTS `standardangebot`;
-CREATE TABLE `standardangebot` (
-  `stdProMonat` text,
-  `startDatum` text,
-  `endDatum` text
+DROP TABLE IF EXISTS `Standardangebot`;
+CREATE TABLE `Standardangebot` (
+  `StdProMonat` int(11),
+  `StartDatum` text,
+  `EndDatum` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
