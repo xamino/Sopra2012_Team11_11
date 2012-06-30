@@ -55,7 +55,7 @@
 				<h2>Angebot bearbeiten</h2>
 				<div class="text">
 					Hier sehen Sie die Details des gewählten Angebots.<br>Sie können das Angebot bestätigen und abändern.<br>
-					Des Weiteren werden hier die benötigten Unterlagen zum jeweiligen Angebot aufgeführt. Auch diese können Sie bearbeiten.
+					Des Weiteren werden hier die benötigten Unterlagen zum jeweiligen Angebot aufgeführt. Auch diese können Sie bearbeiten. Der Bestätigungsstatus wird erst mit betätigung des "Angebot speichern" Buttons übernommen.
 				</div>
 			</div>
 			<hr>
@@ -132,7 +132,7 @@
 			<h3>Angebot bestätigen</h3>
 			<hr>
 			<div class="textblock">
-				Wollen sie das ausgewählte<br>Angebot wirklich bestätigen?<br>(Wird beim "Angebot speichern" übernommen.)
+				Wollen sie das ausgewählte<br>Angebot wirklich bestätigen?
 			</div>
 			<hr>
 			<div class="textblock">
@@ -146,7 +146,7 @@
 			<h3>Angebot ablehnen</h3>
 			<hr>
 			<div class="textblock">
-				Wollen sie das ausgewählte<br>Angebot wirklich ablehnen? <br>(Wird beim "Angebot speichern" übernommen.)
+				Wollen sie das ausgewählte<br>Angebot wirklich ablehnen?
 			</div>
 			<hr>
 			<div class="textblock">

@@ -240,7 +240,7 @@ function approve(){
 	annehmen=true;
 	changed=true;
 	togglePopup('offer_approve',false);
-	document.getElementById("state").innerHTML = "Angenommen (wird erst beim speichern übernommen)";
+	document.getElementById("state").innerHTML = "Angenommen (ungespeichert)";
 	
 }
 /**
@@ -250,7 +250,7 @@ function reject(){
 	annehmen=false;
 	changed=true;
 	togglePopup('offer_reject', false);
-	document.getElementById("state").innerHTML = "Abgelehnt (wird erst beim speichern übernommen)";
+	document.getElementById("state").innerHTML = "Abgelehnt (ungespeichert)";
 }
 
 
