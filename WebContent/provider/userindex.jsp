@@ -53,34 +53,15 @@
 					<div class="text">
 						Hier finden Sie Ihre angebotenen Stellen und Informationen hierzu.<br>
 						Des Weiteren können Sie ein neues Angebot erstellen. <br>
-						Hilfe finden Sie <a href="<%=Helper.D_PROVIDER_HELP%>" title="Hilfe"> hier</a>.
+						Hilfe finden Sie <a href="<%=Helper.D_PROVIDER_HELP%>"
+							title="Hilfe"> hier</a>.
 					</div>
 				</div>
 				<hr>
 				<div class="textblock">
 					<div class="haupttext">
-						<table class="sized" id="providerTable">
-							<!-- <tr>
-						<th>Meine Stellenangebote:</th>
-						<th>Bewerber/Stelle</th>
-						<th>Ändern</th>
-						<th>Widerrufen</th>
-					</tr>
-					<!-- This is how the entrys will be generated with javascript:
-					<tr id="username" onclick="function(username)">
-						<td>realname</td>
-						<td>username</td>
-						<td>account type</td>
-					</tr> 
-					-->
-							<!-- <tr id="manohman" onclick="">
-						<td>TUT xy</td>
-						<td>14/10<br><input type="submit" value="Bewerberauswahl" onclick="window.location='applicantlist.jsp'" /></td>
-						<td><br><input type="submit" value="Angebot ändern" onclick="window.location='editoffer.jsp'"/> </td>
-						<td><br><input type="button" value="Angebot zurückziehen"
-						onclick="togglePopup('offer_cancel',true);" /> </td>
-						<!-- <td><br><input type="submit" value="Angebot zurückziehen" /> </td>-->
-							<!-- </tr>-->
+						<table class="" id="providerTable">
+							<!-- Offers are listed here -->
 						</table>
 						<br> <input type="submit" value="Neues Angebot erstellen"
 							onclick="window.location='createoffer.jsp'" />

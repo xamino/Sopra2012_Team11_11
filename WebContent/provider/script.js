@@ -60,20 +60,26 @@ function handleLoadOffersResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("providerTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber/Stelle</th><th>Aendern</th><th>Widerrufen</th></tr>";
+		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber</th><th>Ändern</th><th>Widerrufen</th><th>Bestätigt?</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
+			var obj = JSONarray[i];
 			table.innerHTML += "<tr class=\"\" id=\""
-					+ JSONarray[i].aid
+					+ obj.aid
 					+ "\"><td>"
-					+ JSONarray[i].name
+					+ obj.name
 					+ "</td><td><br><input id=\""
-					+ JSONarray[i].aid
-					+ "\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
-					+ JSONarray[i].aid
+					+ obj.aid
+					+ "OfferApplicants\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
+					+ obj.aid
 					+ "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"prepareButtonUpdateOffer(\'"
-					+ JSONarray[i].aid
+					+ obj.aid
 					+ "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
-					+ JSONarray[i].aid + "\');\" /> </td></tr>";
+					+ obj.aid + "\');\" /> </td><td>"
+					+ ((obj.checked) ? "Ja" : "Nein") + "</td></tr>";
+			// Logic to disable button if not checked:
+			if (!obj.checked) {
+				document.getElementById(obj.aid + "OfferApplicants").disabled = true;
+			}
 		}
 	}
 }
@@ -128,8 +134,7 @@ function applicantChoice() {
 	// alert("id= "+aid);
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
-	toggleWarning("error_noOfferSelected", true,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 	connect("/hiwi/Provider/js/applicantChoice", "aid=" + aid,
 			handleApplicantChoiceResponse);
 }
@@ -189,14 +194,12 @@ function markOfferSelected(id) {
 	// If clicked again, unselect:
 	if (selectedOffer == id) {
 		selectedOffer = null;
-		toggleWarning("error_noOfferSelected", true,
-		"Kein Angebot selektiert!");
+		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 		return;
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
-	toggleWarning("error_noOfferSelected", false,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", false, "Kein Angebot selektiert!");
 
 	// alert("aktuelle id: "+selectedOffer);
 
@@ -269,9 +272,9 @@ function updateOfferChanges(form) {
 	offerToUpdate = getURLParameter("aid");
 	if (form == null)
 		return;
-	
+
 	var error = false;
-	
+
 	var titelFeld = form.titelFeld.value;
 	if (titelFeld == null || titelFeld == "") {
 		toggleWarning("error_titelFeld", true, "Bitte ausfuellen!");
