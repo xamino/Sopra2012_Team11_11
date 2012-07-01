@@ -248,7 +248,11 @@ function clickMail(toAddress, subject) {
 function checkDate(date){
 	if(date=="")
 		return false;
+<<<<<<< Updated upstream
 	var regex = /^(0?[1-9]|[12][0-9]|3[01])[-\/.](0?[1-9]|1[012])[-\/.](19|20)\d\d$/;
+=======
+	var regex = /^(0[1-9]|[12][0-9]|3[01])[-\/.](0[1-9]|1[012])[-\/.](19|20)\d\d$/;
+>>>>>>> Stashed changes
 	return (regex.test(date));
 }
 /**

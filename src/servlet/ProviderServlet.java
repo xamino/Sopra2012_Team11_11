@@ -224,6 +224,7 @@ public class ProviderServlet extends HttpServlet {
 			// wird vom clerk gesetzt, aber default wert wird ausgelesen (von
 			// admin gesetzt).
 			double lohn = provider.readDefWage();
+
 			boolean checked = false;
 			int stellen;
 			try {

@@ -75,7 +75,11 @@ function addOffer(form) {
 		toggleWarning("error_startDate", true, "Bitte ausfuellen!");
 		error = true;
 	} else if (!checkDate(startDate)) {
+<<<<<<< Updated upstream
 		toggleWarning("error_startDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt. Jahre nur zwischen 1990 und 2099");
+=======
+		toggleWarning("error_startDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
+>>>>>>> Stashed changes
 		error = true;
 	} else{
 		toggleWarning("error_startDate", false, "");
@@ -87,7 +91,11 @@ function addOffer(form) {
 		toggleWarning("error_endDate", true, "Bitte ausfuellen!");
 		error = true;
 	} else if (!checkDate(endDate)) {
+<<<<<<< Updated upstream
 		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt. Jahre nur zwischen 1990 und 2099");
+=======
+		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
+>>>>>>> Stashed changes
 		error = true;
 	} else{
 		toggleWarning("error_endDate", false, "");
@@ -140,10 +148,13 @@ function handleCreateOfferResponse(mime, data) {
 			toggleWarning("error_startDate", true, "Ungültiges Datum!");
 		}else if(data== "invalid endDate"){
 			toggleWarning("error_endDate", true, "Ungültiges Datum!");
+<<<<<<< Updated upstream
 		}else if (data == "Angebot ist bereits vorhanden (NAME)!"){
 			toggleWarning("error_titel",true,"Titel schon vorhanden!")
 		}else if(data == "order"){
 			toggleWarning("error_startDate",true, "Enddatum liegt vor dem Startdatum!")
+=======
+>>>>>>> Stashed changes
 		}
 		
 		return;

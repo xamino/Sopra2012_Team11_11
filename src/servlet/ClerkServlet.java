@@ -212,7 +212,7 @@ public class ClerkServlet extends HttpServlet {
 						.write("invalid endDate");
 				return;
 			}
-			
+
 			if(offertosave.getStartdate().after(offertosave.getEnddate())&&!offertosave.getEnddate().equals(offertosave.getStartdate())){
 				log.write("ClerkServlet",
 						"StartDate after Enddate!");
