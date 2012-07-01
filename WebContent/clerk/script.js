@@ -211,11 +211,7 @@ function angebotspeichern() {
 		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
 	} else if (!checkDate(endDate)) {
-<<<<<<< Updated upstream
 		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
-=======
-		toggleWarning("error_endDate", true, "Bitte keine Sonderzeichen!");
->>>>>>> Stashed changes
 		error = true;
 	} else{
 		toggleWarning("error_endDate", false, "");
