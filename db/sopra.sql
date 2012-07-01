@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 05/06/2012 14:44:35 PM
+ Date: 07/01/2012 18:06:59 PM
 */
 
 SET NAMES utf8;
@@ -47,8 +47,8 @@ CREATE TABLE `Angebote` (
   `Plaetze` int(11) NOT NULL,
   `Stundenprowoche` double NOT NULL,
   `Beschreibung` text NOT NULL,
-  `Beginn` text NOT NULL,
-  `Ende` text NOT NULL,
+  `Beginn` date NOT NULL,
+  `Ende` date NOT NULL,
   `Stundenlohn` double DEFAULT NULL,
   `Institut` int(11) DEFAULT NULL,
   `aenderungsdatum` date NOT NULL,
@@ -103,6 +103,17 @@ CREATE TABLE `Institute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+--  Table structure for `Standardangebot`
+-- ----------------------------
+DROP TABLE IF EXISTS `Standardangebot`;
+CREATE TABLE `Standardangebot` (
+  `StdProMonat` int(11) DEFAULT NULL,
+  `StartDatum` text,
+  `EndDatum` text,
+  `Lohn` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
 --  Table structure for `Standardunterlagen`
 -- ----------------------------
 DROP TABLE IF EXISTS `Standardunterlagen`;
@@ -127,11 +138,3 @@ CREATE TABLE `Unterlagen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-DROP TABLE IF EXISTS `Standardangebot`;
-CREATE TABLE `Standardangebot` (
-  `StdProMonat` int(11),
-  `StartDatum` text,
-  `EndDatum` text,
-  `Lohn` float
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
