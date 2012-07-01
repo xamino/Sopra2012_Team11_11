@@ -14,76 +14,76 @@
 
 <body onload="loadOffers();">
 	<div class="footerunten">
-	<div class="header">
-		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
-		</h1>
-	</div>
-	<div class="right">
-		<div class="commentform">
-			<h3>Anmeldung</h3>
-			<form name="login">
-				<span> <label for="userName">Benutzername</label>
-				</span>
-				<div class="form">
-					<input type="text" name="userName" size="15" maxlength="100" />
-				</div>
-				<br> <span> <label for="userPassword">Passwort</label>
-				</span>
-				<div class="form">
-					<input type="password" name="userPassword" size="15"
-						maxlength="100" />
-				</div>
-				<div class="clear"></div>
-				<div class="text">
-					<div id="error_login" class="hiddenerror"></div>
-				</div>
-				<p>
-					<!-- return false on submit so that the form doesn't reload the form – this is handled
+		<div class="header">
+			<h1>
+				<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			</h1>
+		</div>
+		<div class="right">
+			<div class="commentform">
+				<h3>Anmeldung</h3>
+				<form name="login">
+					<span> <label for="userName">Benutzername</label>
+					</span>
+					<div class="form">
+						<input type="text" name="userName" size="15" maxlength="100" />
+					</div>
+					<br> <span> <label for="userPassword">Passwort</label>
+					</span>
+					<div class="form">
+						<input type="password" name="userPassword" size="15"
+							maxlength="100" />
+					</div>
+					<div class="clear"></div>
+					<div class="text">
+						<div id="error_login" class="hiddenerror"></div>
+					</div>
+					<p>
+						<!-- return false on submit so that the form doesn't reload the form – this is handled
 					by the javascript function accordingly. -->
-					<input type="reset" value="Zurücksetzen"
-						onclick="toggleWarning('error_login', false, '')" /> <input
-						type="submit" value="Anmelden"
-						onclick="checkLogin(login); return false;" />
-				</p>
-			</form>
-			<a class="hintlink" href="register.jsp"
-				title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <a
-				class="hintlink" href="javascript:void(0)"
-				onclick="prepareForgetful();" href="">Passwort vergessen?</a>
-		</div>
-		<div class="nav">
-			<h3>Navigation</h3>
-			<div class="text">
-				&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_PUBLIC_REGISTER%>"
-					title="Hier geht es zum Registrieren">Registrieren</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=Helper.D_PUBLIC_HELP%>"
-					title="Hier finden Sie die Hilfe">Hilfe</a>
+						<input type="reset" value="Zurücksetzen"
+							onclick="toggleWarning('error_login', false, '')" /> <input
+							type="submit" value="Anmelden"
+							onclick="checkLogin(login); return false;" />
+					</p>
+				</form>
+				<a class="hintlink" href="register.jsp"
+					title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <a
+					class="hintlink" href="javascript:void(0)"
+					onclick="prepareForgetful();" href="">Passwort vergessen?</a>
 			</div>
-		</div>
-	</div>
-	<div class="content">
-		<div class="rightborder">
-			<div class="textblock">
-				<h2>Willkommen auf der Hiwi-Börse</h2>
+			<div class="nav">
+				<h3>Navigation</h3>
 				<div class="text">
-					Hier finden Sie alle im Moment angebotenen Stellen. <br> Um
-					sich zu bewerben, registrieren Sie sich bitte, oder loggen Sie sich
-					ein.<br>
-					Hilfe finden Sie <a	href="<%=Helper.D_PUBLIC_HELP %>" title="Hilfe"> hier</a>.
-				</div>
-			</div>
-			<hr>
-			<div class="textblock">
-				<div class="haupttext">
-					<!-- Javascript loads entrys! -->
-					<table id="offersTable">
-					</table>
+					&rarr; Startseite <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_PUBLIC_REGISTER%>"
+						title="Hier geht es zum Registrieren">Registrieren</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=Helper.D_PUBLIC_HELP%>"
+						title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="content">
+			<div class="rightborder">
+				<div class="textblock">
+					<h2>Willkommen auf der Hiwi-Börse</h2>
+					<div class="text">
+						Hier finden Sie alle im Moment angebotenen Stellen. <br> Um
+						sich zu bewerben, registrieren Sie sich bitte, oder loggen Sie
+						sich ein.<br> Hilfe finden Sie <a
+							href="<%=Helper.D_PUBLIC_HELP%>" title="Hilfe"> hier</a>.
+					</div>
+				</div>
+				<hr>
+				<div class="textblock">
+					<div class="haupttext">
+						<table id="offersTable">
+							<!-- Javascript loads entrys! -->
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="clear"></div>

@@ -62,9 +62,9 @@ public class Servlet extends HttpServlet {
 	}
 
 	/**
-	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Normalerweise werden vom
-	 * System nur POST-Anfragen kommen, also wird hier auf alle Javascript aufrufe
-	 * eingegangen.
+	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Normalerweise werden
+	 * vom System nur POST-Anfragen kommen, also wird hier auf alle Javascript
+	 * aufrufe eingegangen.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -87,8 +87,12 @@ public class Servlet extends HttpServlet {
 				return;
 			}
 			// On filled:
-			// TODO: what information do we have to filter here? Can/should it
-			// all be transmitted?
+			// Replace username with real one (for security & better
+			// readability)
+			for (Offer off : offers) {
+				off.setAuthor(AccountController.getInstance()
+						.getAccountByUsername(off.getAuthor()).getName());
+			}
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 			return;
@@ -132,9 +136,11 @@ public class Servlet extends HttpServlet {
 				}
 				// Write new password hash to DB:
 				if (!DatabaseController.getInstance().update("Accounts",
-						new String[] {"passworthash"}, new Object[] {encoded},
+						new String[] { "passworthash" },
+						new Object[] { encoded },
 						"benutzername LIKE '" + acc.getUsername() + "'")) {
-					log.write("Servlet", "Error updating password in DB! Aborting!");
+					log.write("Servlet",
+							"Error updating password in DB! Aborting!");
 					return;
 				}
 				// Send mail:
@@ -153,10 +159,11 @@ public class Servlet extends HttpServlet {
 		}
 	}
 
-    /**
-    * Diese Methode handhabt die Abarbeitung von Aufrufen. Hier wird nur an die Indexseite
-    * weitergeleitet, da das System normalerweise alles via POST macht.
-    **/
+	/**
+	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Hier wird nur an die
+	 * Indexseite weitergeleitet, da das System normalerweise alles via POST
+	 * macht.
+	 **/
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
