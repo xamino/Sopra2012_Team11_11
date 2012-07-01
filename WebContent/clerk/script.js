@@ -336,6 +336,38 @@ function handledocumentsFromOfferResponse(mime, data) {
 }
 
 /**
+ * Function remembers which document has been clicked.
+ * 
+ * @param id
+ *            The ID of the clicked entry.
+ */
+
+function markDocumentSelected(id) {
+
+	// alert("alte docid: "+selectedDocument);
+	// Remove marking from previous selected, if applicable:
+	if (selectedDocument != null)
+		document.getElementById(selectedDocument).setAttribute("class", "");
+	// If clicked again, unselect:
+	if (selectedDocument == id) {
+		selectedDocument = null;
+		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
+		// document.getElementById("dokumentHinzufuegenButton").disabled =
+		// "disabled";
+		return;
+	}
+	// Else save & mark new one:
+	selectedDocument = id;
+	document.getElementById(id).setAttribute("class", "selected");
+	document.getElementById("dokumentloeschenbutton").disabled = "";
+	// document.getElementById("dokumentHinzufuegenButton").disabled = "";
+	// alert("aktuelle docid: "+selectedDocument);
+	// updating 'Angebot pruefen' button
+	prepareButton();
+
+}
+
+/**
  * Laedt die Dokumente in ein Drop Down Menue, welche nicht fuer das angezeigte
  * Angebot benoetigt werden. Initialisiert auch den mailto button.
  * 
