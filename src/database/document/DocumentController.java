@@ -170,13 +170,6 @@ public class DocumentController {
 					"Error in getting document with UID=" + uid);
 			// e.printStackTrace();
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			log.write("DocumentController",
-					"There was an error while trying to close the ResultSet.");
-			// e.printStackTrace();
-		}
 		return doc;
 	}
 
@@ -327,29 +320,6 @@ public class DocumentController {
 					.println("There was an error while trying to cast from ResultSet to Document-Object.");
 			e.printStackTrace();
 		}
-
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out
-					.println("There was an error while trying to close the ResultSet.");
-			e.printStackTrace();
-		}
-		/*
-		 * //Nur zum Testen, ob alle Bewerbungsunterlagen mit aid im Vector sind
-		 * for (int i=0;i<appDocVect.size();i++){ try{ AppDocument offDoc =
-		 * appDocVect.elementAt(i);
-		 * System.out.println("Benutzername="+offDoc.getUsername
-		 * ()+"  AID="+offDoc
-		 * .getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent()); }
-		 * catch (ArrayIndexOutOfBoundsException ae){
-		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-		 * }
-		 * 
-		 * }
-		 */
-
 		return appDocVect;
 
 	}
@@ -396,37 +366,6 @@ public class DocumentController {
 					"There was an error while trying to cast from ResultSet to Document-Object.");
 			e.printStackTrace();
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			log.write("DocumentController",
-					"There was an error while trying to close the ResultSet.");
-			e.printStackTrace();
-		}
-		/*
-		 * //Nur zum Testen, ob alle Bewerbungsunterlagen mit aid und account im
-		 * Vector sind for (int i=0;i<userOffDocVect.size();i++){ try{
-		 * AppDocument offDoc = userOffDocVect.elementAt(i);
-		 * System.out.println("Benutzername="
-		 * +offDoc.getUsername()+"  AID="+offDoc
-		 * .getoID()+" UID="+offDoc.getdID()+" Status="+offDoc.getPresent()); }
-		 * catch (ArrayIndexOutOfBoundsException ae){
-		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-		 * }
-		 * 
-		 * }
-		 * 
-		 * Kommt in Secure rein zum Testen: Account acci = new
-		 * Account("max.payne","adfe3",3,"sfdsf@dqd.com","Max Payne",100,"");
-		 * Offer offi = new
-		 * Offer(901,"agent47","The Cleaning","Bitte schnell online stellen."
-		 * ,false,3,47.3,
-		 * "Spuren beseitigen, tatort reinigen, DNA Spurenbeseitigung.",new
-		 * Date(3456),new Date(4367),34.5,8,new Date(3452));
-		 * 
-		 * DocumentController.getInstance().getDocumentsByUserAndOffer(acci,offi)
-		 * ;
-		 */
 		return userOffDocVect;
 	}
 
@@ -461,27 +400,6 @@ public class DocumentController {
 					.println("There was an error while trying to cast from ResultSet to Document-Object.");
 			e.printStackTrace();
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out
-					.println("There was an error while trying to close the ResultSet.");
-			e.printStackTrace();
-		}
-
-		/*
-		 * //Nur zum Testen, ob alle Unterlagen im Vector sind for (int
-		 * i=0;i<allDocVect.size();i++){ try{ Document offDoc =
-		 * allDocVect.elementAt(i);
-		 * System.out.println("UID="+offDoc.getUid()+"  Name="
-		 * +offDoc.getName()+" Beschreibung="+offDoc.getDescription()); } catch
-		 * (ArrayIndexOutOfBoundsException ae){
-		 * System.out.println("Paramater ausserhalb des Bereichs vom Vector!");
-		 * }
-		 * 
-		 * }
-		 */
 		return allDocVect;
 	}
 
@@ -682,9 +600,6 @@ public class DocumentController {
 				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
 						.getString(3)));
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -722,9 +637,6 @@ public class DocumentController {
 				docsToAdd.add(new Document(rs.getInt(1), rs.getString(2), rs
 						.getString(3)));
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

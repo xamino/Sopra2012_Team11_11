@@ -225,7 +225,6 @@ public class OfferController {
 				currentoff = convertToOffer(rs);
 				offervec.add(currentoff);
 			}
-			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,7 +261,6 @@ public class OfferController {
 				if (currentoff.isChecked())
 					offervec.add(currentoff);
 			}
-			// rs.close();
 		} catch (SQLException e) {
 			log.write("OfferController", "Error retrieving all checked offers!");
 			return null;
@@ -298,9 +296,6 @@ public class OfferController {
 			while (rs.next()) {
 				offervec.add(convertToOffer(rs));
 			}
-			// Mit close gibt das errors... :P
-			// rs.close();
-			// P.S: und ohne auch... ><
 		} catch (SQLException e) {
 			e.printStackTrace();
 			log.write("OfferController", "Error retrieving all checked offers!");
@@ -335,7 +330,6 @@ public class OfferController {
 				Offer currentoff = convertToOffer(rs);
 				offervec.add(currentoff);
 			}
-			// rs.close();
 		} catch (SQLException e) {
 			log.write("OfferController", "Error reading free offers!");
 			return null;
@@ -380,7 +374,6 @@ public class OfferController {
 					if (currentoff.isChecked())
 						offervec.add(currentoff);
 				}
-				// rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
