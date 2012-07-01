@@ -27,6 +27,7 @@ import mail.Mailer;
 import user.Clerk;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import database.DatabaseController;
 import database.HilfsDatenClerk;
@@ -99,7 +100,7 @@ public class ClerkServlet extends HttpServlet {
 	public ClerkServlet() {
 		super();
 		log = Helper.log;
-		gson = new Gson();
+		gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
 		acccon = AccountController.getInstance();
 		doccon = DocumentController.getInstance();
 		appcon = ApplicationController.getInstance();
@@ -188,7 +189,9 @@ public class ClerkServlet extends HttpServlet {
 			offertosave.setHoursperweek(hoursperweek);
 			// write dates to offer:
 			try {
-				offertosave.setStartdate(new SimpleDateFormat("dd-MM-yyyy").parse(startDate));
+				SimpleDateFormat x = new SimpleDateFormat("dd-MM-yyyy");
+				x.setLenient(false);
+				offertosave.setStartdate(x.parse(startDate));
 			} catch (ParseException e) {
 				log.write("ClerkServlet",
 						"There was an error while PARSING StartDate");
@@ -198,13 +201,24 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			try {
-				offertosave.setEnddate(new SimpleDateFormat("dd-MM-yyyy").parse(endDate));
+				SimpleDateFormat x = new SimpleDateFormat("dd-MM-yyyy");
+				x.setLenient(false);
+				offertosave.setEnddate(x.parse(endDate));
 			} catch (ParseException e) {
 				log.write("ClerkServlet",
 						"There was an error while PARSING EndDate");
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("invalid endDate");
+				return;
+			}
+			
+			if(offertosave.getStartdate().after(offertosave.getEnddate())&&!offertosave.getEnddate().equals(offertosave.getStartdate())){
+				log.write("ClerkServlet",
+						"StartDate after Enddate!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("order");
 				return;
 			}
 			// logic for checked:
@@ -243,9 +257,8 @@ public class ClerkServlet extends HttpServlet {
 			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
 			// da was schief.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
-			response.setContentType("offers/json");
-			response.getWriter().write(
-					gson.toJson(offertosave, offertosave.getClass()));
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_CLERK_OFFERMANAGEMENT);
 			return;
 		} else if (path.equals("/js/documentsFromOffer")) {
 
