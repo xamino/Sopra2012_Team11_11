@@ -57,12 +57,12 @@ public class Offer {
 	/**
 	 * Der Beginn des Angebots.
 	 */
-	private String startdate;
+	private Date startdate;
 
 	/**
 	 * Das Ende des Angebots.
 	 */
-	private String enddate;
+	private Date enddate;
 
 	/**
 	 * Der Gehalt pro Stunde des Angebots.
@@ -116,7 +116,7 @@ public class Offer {
 	 */
 	public Offer(int aid, String author, String name, String note,
 			boolean checked, int slots, double hoursperweek,
-			String description, String startDate, String endDate, double wage,
+			String description, Date startDate, Date endDate, double wage,
 			int institute, Date modificationdate, boolean finished) {
 		super();
 		this.aid = aid;
@@ -311,7 +311,7 @@ public class Offer {
 	 * 
 	 * @return Beginn des Angebots.
 	 */
-	public String getStartdate() {
+	public Date getStartdate() {
 		return startdate;
 	}
 
@@ -321,7 +321,7 @@ public class Offer {
 	 * @param startdate
 	 *            Beginn des Angebots.
 	 */
-	public void setStartdate(String startdate) {
+	public void setStartdate(Date startdate) {
 		this.startdate = startdate;
 	}
 
@@ -330,7 +330,7 @@ public class Offer {
 	 * 
 	 * @return Ende des Angebots.
 	 */
-	public String getEnddate() {
+	public Date getEnddate() {
 		return enddate;
 	}
 
@@ -340,7 +340,7 @@ public class Offer {
 	 * @param enddate
 	 *            Ende des Angebots.
 	 */
-	public void setEnddate(String enddate) {
+	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
 	}
 

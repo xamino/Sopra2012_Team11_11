@@ -200,19 +200,23 @@ function angebotspeichern() {
 	if (startDate == null || startDate == "") {
 		toggleWarning("error_startDate", true, "Bitte ausfüllen!");
 		error = true;
-	} else if (!checkText(startDate)) {
-		toggleWarning("error_startDate", true, "Bitte keine Sonderzeichen!");
+	} else if (!checkDate(startDate)) {
+		toggleWarning("error_startDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
-	} else
+	}  else{
 		toggleWarning("error_startDate", false, "");
+		startDate=unifyDate(startDate);
+	}	
 	if (endDate == null || endDate == "") {
 		toggleWarning("error_endDate", true, "Bitte ausfüllen!");
 		error = true;
-	} else if (!checkText(endDate)) {
-		toggleWarning("error_endDate", true, "Bitte keine Sonderzeichen!");
+	} else if (!checkDate(endDate)) {
+		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
-	} else
+	} else{
 		toggleWarning("error_endDate", false, "");
+		endDate=unifyDate(endDate);
+	}	
 	if (wage == null || wage == "") {
 		toggleWarning("gage_error", true, "Bitte ausfüllen!");
 		error = true;

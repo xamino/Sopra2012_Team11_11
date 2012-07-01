@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 06/05/2012 11:12:12 AM
+ Date: 07/01/2012 18:07:09 PM
 */
 
 SET NAMES utf8;
@@ -54,8 +54,8 @@ CREATE TABLE `Angebote` (
   `Plaetze` int(11) NOT NULL,
   `Stundenprowoche` double NOT NULL,
   `Beschreibung` text NOT NULL,
-  `Beginn` text NOT NULL,
-  `Ende` text NOT NULL,
+  `Beginn` date NOT NULL,
+  `Ende` date NOT NULL,
   `Stundenlohn` double DEFAULT NULL,
   `Institut` int(11) DEFAULT NULL,
   `aenderungsdatum` date NOT NULL,
@@ -138,6 +138,24 @@ INSERT INTO `Institute` VALUES ('0', 'default'), ('1', 'Informatik'), ('2', 'Psy
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `Standardangebot`
+-- ----------------------------
+DROP TABLE IF EXISTS `Standardangebot`;
+CREATE TABLE `Standardangebot` (
+  `StdProMonat` int(11) DEFAULT NULL,
+  `StartDatum` text,
+  `EndDatum` text,
+  `Lohn` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `Standardangebot`
+-- ----------------------------
+BEGIN;
+INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo', '370.54');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `Standardunterlagen`
 -- ----------------------------
 DROP TABLE IF EXISTS `Standardunterlagen`;
@@ -173,18 +191,6 @@ CREATE TABLE `Unterlagen` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `Unterlagen` VALUES ('111', 'Normvertrag', 'Normvertrag für Bewerber'), ('222', 'Prüfungsbescheinigung', 'Bescheinigung über bestandene Prüfung'), ('888', 'Spezialbescheinigung', 'Spezielle Spezialbescheinigung für Spezialfälle'), ('999', 'Superheldenbescheinigung', 'Hiermit werden Superkräfte atestiert.');
-COMMIT;
-
-DROP TABLE IF EXISTS `Standardangebot`;
-CREATE TABLE `Standardangebot` (
-  `StdProMonat` int(11),
-  `StartDatum` text,
-  `EndDatum` text,
-  `Lohn` float
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-BEGIN;
-INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo', '370.54');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

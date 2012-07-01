@@ -9,6 +9,8 @@ package servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -185,8 +187,26 @@ public class ClerkServlet extends HttpServlet {
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
 			// write dates to offer:
-			offertosave.setStartdate(startDate);
-			offertosave.setEnddate(endDate);
+			try {
+				offertosave.setStartdate(new SimpleDateFormat("dd-MM-yyyy").parse(startDate));
+			} catch (ParseException e) {
+				log.write("ClerkServlet",
+						"There was an error while PARSING StartDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid startDate");
+				return;
+			}
+			try {
+				offertosave.setEnddate(new SimpleDateFormat("dd-MM-yyyy").parse(endDate));
+			} catch (ParseException e) {
+				log.write("ClerkServlet",
+						"There was an error while PARSING EndDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid endDate");
+				return;
+			}
 			// logic for checked:
 			if (changed && accepted) {
 				offertosave.setChecked(true);

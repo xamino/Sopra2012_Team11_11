@@ -632,7 +632,7 @@ public class OfferController {
 				rs.getString("Name"), rs.getString("Notiz"),
 				rs.getBoolean("Geprueft"), rs.getInt("Plaetze"),
 				rs.getDouble("Stundenprowoche"), rs.getString("Beschreibung"),
-				rs.getString("Beginn"), rs.getString("Ende"),
+				rs.getDate("Beginn"), rs.getDate("Ende"),
 				rs.getDouble("Stundenlohn"), rs.getInt("Institut"),
 				rs.getDate("aenderungsdatum"), rs.getBoolean("abgeschlossen"));
 	}

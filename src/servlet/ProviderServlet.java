@@ -8,6 +8,8 @@ package servlet;
 import static servlet.Helper.validate;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -193,8 +195,32 @@ public class ProviderServlet extends HttpServlet {
 			String name = request.getParameter("titel");
 			String notiz = request.getParameter("notiz");
 			String beschreibung = request.getParameter("beschreibung");
-			String startDate = request.getParameter("startDate");
-			String endDate = request.getParameter("endDate");
+			String startDateS = request.getParameter("startDate");
+			String endDateS = request.getParameter("endDate");
+			Date startDate;
+			try{
+			startDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateS);
+			}catch(Exception e){
+				e.printStackTrace();
+				log.write("ProviderServlet",
+						"There was an error while PARSING StartDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid startDate");
+				return;
+			}
+			Date endDate;
+			try {
+				endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateS);
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.write("ProviderServlet",
+						"There was an error while PARSING EndDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid endDate");
+				return;
+			}
 			// wird vom clerk gesetzt, aber default wert wird ausgelesen (von
 			// admin gesetzt).
 			double lohn = provider.readDefWage();
@@ -236,7 +262,6 @@ public class ProviderServlet extends HttpServlet {
 			// in log schreiben
 			if (!validate(name) || stunden == 0 || stellen == 0
 					|| !validate(beschreibung) || !validate(notiz)
-					|| !validate(startDate) || !validate(endDate)
 					|| aenderungsdatum == null || institut < 0) {
 				log.write("ProviderServlet", "Error in parameters!");
 				response.setContentType("text/error");
@@ -271,9 +296,6 @@ public class ProviderServlet extends HttpServlet {
 					institut, aenderungsdatum, false);
 			// System.out.println(offer);
 			OfferController.getInstance().createOffer(offer);
-			log.write("ProviderServlet", "<"
-					+ provider.getUserData().getUsername()
-					+ "> created new offer <" + offer.getAid() + ">");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;

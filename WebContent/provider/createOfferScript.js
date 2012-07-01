@@ -74,21 +74,25 @@ function addOffer(form) {
 	if (startDate == null || startDate == "") {
 		toggleWarning("error_startDate", true, "Bitte ausfuellen!");
 		error = true;
-	} else if (!checkText(startDate)) {
-		toggleWarning("error_startDate", true, "Bitte nur ganze Zahlen!");
+	} else if (!checkDate(startDate)) {
+		toggleWarning("error_startDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt. Jahre nur zwischen 1990 und 2099");
 		error = true;
-	} else
+	} else{
 		toggleWarning("error_startDate", false, "");
+		startDate=unifyDate(startDate);
+	}	
 
 	var endDate = form.endDate.value;
 	if (endDate == null || endDate == "") {
 		toggleWarning("error_endDate", true, "Bitte ausfuellen!");
 		error = true;
-	} else if (!checkText(endDate)) {
-		toggleWarning("error_endDate", true, "Bitte nur ganze Zahlen!");
+	} else if (!checkDate(endDate)) {
+		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt. Jahre nur zwischen 1990 und 2099");
 		error = true;
-	} else
+	} else{
 		toggleWarning("error_endDate", false, "");
+		endDate=unifyDate(endDate);
+	}	
 
 	var beschreibung = form.beschreibung.value;
 	if (beschreibung == null || beschreibung == "") {
@@ -132,10 +136,16 @@ function handleCreateOfferResponse(mime, data) {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		// TODO: hier fehler als html errormessage einbauen ?? Echt? Sind doch
-		// alle da... (Tamino)
-		// alert("HTML ERRORMESSAGE für die falscheingabe fehler!");
-		alert(data);
+		if (data == "invalid startDate"){
+			toggleWarning("error_startDate", true, "Ungültiges Datum!");
+		}else if(data== "invalid endDate"){
+			toggleWarning("error_endDate", true, "Ungültiges Datum!");
+		}else if (data == "Angebot ist bereits vorhanden (NAME)!"){
+			toggleWarning("error_titel",true,"Titel schon vorhanden!")
+		}else if(data == "order"){
+			toggleWarning("error_startDate",true, "Enddatum liegt vor dem Startdatum!")
+		}
+		
 		return;
 	}
 }
