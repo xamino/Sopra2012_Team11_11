@@ -86,19 +86,19 @@ public class Applicant extends User {
 
 	}
 
-	public boolean deleteApplication(int applicationID, int offerID) {
-		Application app = new Application(this.getUserData().getUsername(),
-				applicationID, false, "", false);
-		Account account = new Account(this.getUserData().getUsername(), "", 0, "", "", 0, "");
-		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null,false);
-		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(account, offer);
-		Iterator<AppDocument> it = vec.iterator();
-		
-		int i = 0;
-		while(it.hasNext()){
-			doccon.deleteAppDocument(vec.elementAt(i));
-		}
-		
-		return appcon.deleteApplication(app);
-	}
+//	public boolean deleteApplication(int applicationID, int offerID) {
+//		Application app = new Application(this.getUserData().getUsername(),
+//				applicationID, false, "", false);
+//		Account account = new Account(this.getUserData().getUsername(), "", 0, "", "", 0, "");
+//		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null,false);
+//		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(account, offer);
+//		Iterator<AppDocument> it = vec.iterator();
+//		
+//		int i = 0;
+//		while(it.hasNext()){
+//			doccon.deleteAppDocument(vec.elementAt(i));
+//		}
+//		
+//		return appcon.deleteApplication(app);
+//	}
 }

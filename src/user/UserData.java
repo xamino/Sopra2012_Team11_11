@@ -9,7 +9,14 @@ import javax.servlet.http.HttpSession;
  * 
  */
 public class UserData {
-
+	/**
+	 * Konstruktor
+	 * @param username Benutzername
+	 * @param email Email
+	 * @param name Realer Name
+	 * @param representative Username des Stellvertreters
+	 * @param session HttpSession
+	 */
 	public UserData(String username, String email, String name,
 			String representative, HttpSession session) {
 		this.username = username;
@@ -18,7 +25,9 @@ public class UserData {
 		this.representant = representative;
 		this.session = session;
 	}
-
+	/**
+	 * Name des Benutzers
+	 */
 	private String name;
 	/**
 	 * Benutzername des Benutzers

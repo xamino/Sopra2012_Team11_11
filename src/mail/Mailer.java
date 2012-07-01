@@ -38,7 +38,7 @@ public class Mailer {
 	private static Mailer instance;
 	/**
 	 * Gibt die Instanz des Mailers zurueck und erstellt falls noch nicht vorhanden eine solche.
-	 * @return
+	 * @return Mailer Instanz
 	 */
 	public static Mailer getInstance(){
 		if(instance==null)instance = new Mailer();

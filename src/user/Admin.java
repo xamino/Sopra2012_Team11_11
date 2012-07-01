@@ -79,19 +79,19 @@ public class Admin extends User {
 		return true;
 	}
 
-	/**
-	 * Methode zum Löschen seines Accounts
-	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-	 */
-	public boolean deleteOwnAccount() {
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = acccon.deleteAccount(acc);
-		invalidate();
-
-		return check;
-	}
+//	/**
+//	 * Methode zum Löschen seines Accounts
+//	 * 
+//	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+//	 */
+//	public boolean deleteOwnAccount() {
+//		String username = this.getUserData().getUsername();
+//		Account acc = acccon.getAccountByUsername(username);
+//		boolean check = acccon.deleteAccount(acc);
+//		invalidate();
+//
+//		return check;
+//	}
 
 	/**
 	 * Erstellt einen Account.
@@ -186,10 +186,10 @@ public class Admin extends User {
 	}
 
 	/**
-	 * TODO!
+	 * Fuegt ein neues Institut dem System hinzu.
 	 * 
-	 * @param institute
-	 * @return
+	 * @param institute Institut das hinzugefuegt werden soll.
+	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
 	 */
 	public boolean addInstitute(Institute institute) {
 		if (!instcon.addInstitute(institute)) {
@@ -203,10 +203,10 @@ public class Admin extends User {
 	}
 
 	/**
-	 * TODO!
+	 * Loescht ein Institut aus dem System. 
 	 * 
-	 * @param institute
-	 * @return
+	 * @param institute zu loeschendes Institut.
+	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
 	 */
 	public boolean deleteInstitute(Institute institute) {
 		if (!instcon.deleteInstitute(institute)) {

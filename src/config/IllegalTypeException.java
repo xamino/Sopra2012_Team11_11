@@ -9,11 +9,9 @@ package config;
  * Exception Klasse fuer Fehlerhaften zugriff auf eine Optrion
  *
  */
+@SuppressWarnings("serial")
 public class IllegalTypeException extends Exception {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7679246204885544615L;
+
 	/**
 	 * StandardKonstruktor
 	 */

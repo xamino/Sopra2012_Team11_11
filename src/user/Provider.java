@@ -56,26 +56,26 @@ public class Provider extends User {
 		return true;
 	}
 
-	/**
-	 * Methode zum annehmen eines Bewerbers.
-	 * 
-	 * @param AID
-	 *            ID der Bewerbung
-	 * @throws SQLException
-	 */
-	public void acceptApplication(int AID) throws SQLException {
-		Application app = appcon.getApplicationById(AID);
-		app.setChosen(true);
-		appcon.updateApplication(app);
-	}
+//	/**
+//	 * Methode zum annehmen eines Bewerbers.
+//	 * 
+//	 * @param AID
+//	 *            ID der Bewerbung
+//	 * @throws SQLException
+//	 */
+//	public void acceptApplication(int AID) throws SQLException {
+//		Application app = appcon.getApplicationById(AID);
+//		app.setChosen(true);
+//		appcon.updateApplication(app);
+//	}
 
-	/**
-	 * Loescht ein Angebot aus dem System.
-	 */
-	public void deleteOffer(Offer offer) {
-		offcon.deleteOffer(offer);
-
-	}
+//	/**
+//	 * Loescht ein Angebot aus dem System.
+//	 */
+//	public void deleteOffer(Offer offer) {
+//		offcon.deleteOffer(offer);
+//
+//	}
 
 	// /**
 	// * Erstellt ein neues, noch zu pruefendes Angebot im System.
@@ -133,9 +133,9 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Reads the default wage from the database.
+	 * Liest den Standardlohn aus der Datenbank aus.
 	 * 
-	 * @return The wage.
+	 * @return Standardlohn.
 	 */
 	public double readDefWage() {
 		ResultSet rs = DatabaseController.getInstance().select(
