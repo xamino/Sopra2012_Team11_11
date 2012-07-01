@@ -25,6 +25,7 @@ function handleLoadResponse(mime, data) {
 		angebotErstellen.std.value = obj.hoursMonth;
 		angebotErstellen.startDate.value = obj.startDate;
 		angebotErstellen.endDate.value = obj.endDate;
+		document.getElementById("wage").innerText = obj.wage + "€";
 	}
 }
 

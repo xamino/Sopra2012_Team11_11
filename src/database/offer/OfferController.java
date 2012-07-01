@@ -523,6 +523,10 @@ public class OfferController {
 		java.util.Date startdatum_1 = new java.util.Date();
 		java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
 
+		// Damit der Log logisch erscheint:
+		log.write("OfferController",
+				"Searching for free AID, INSERT errors can happen! This is wanted.");
+
 		while (!check) {
 			if (count == 100) {
 				log.write("OfferController",

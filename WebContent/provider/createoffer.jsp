@@ -55,10 +55,11 @@
 				<div class="textblock">
 					<h2>Angebot erstellen</h2>
 					<div class="text">
-						Hier können Sie ein neues Angebot erstellen.<br>Füllen Sie
-						hierzu alle Felder aus und klicken Sie auf "Angebot einstellen".<br>
-						Sobald der Verwalter dem Angebot zugestimmt hat, wird dieses in
-						der Hiwi-Börse aufgeführt.
+						Hier können Sie ein neues Angebot erstellen. Füllen Sie hierzu
+						alle Felder aus und klicken Sie auf "Angebot einstellen". Bitte
+						beachten sie, dass der Lohn nur vom Sachbearbeiter gesetzt werden
+						kann.<br> <br> Sobald der Verwalter dem Angebot
+						zugestimmt hat, wird dieses in der Hiwi-Börse aufgeführt.
 					</div>
 				</div>
 				<hr>
@@ -66,16 +67,12 @@
 					<div class="haupttext">
 						<div class="register">
 							<form id="angebotErstellen" name="angebotErstellen">
-								<div class="regform2">
-									<label for="titel">Titel</label>
-								</div>
-								<div class="float2">
-									<input type="text" id="titel" name="titel" size="57"
-										maxlength="100" />
-									<!-- Oemer -->
-									<div id="error_titel" class="invisibleWarning"></div>
-									<!-- Oemer -->
-								</div>
+								<div class="regform2">Titel:</div>
+								<input type="text" id="titel" name="titel" size="57"
+									maxlength="100" />
+								<!-- Oemer -->
+								<div id="error_titel" class="invisibleWarning"></div>
+								<!-- Oemer -->
 								<table class="hidden">
 									<tr>
 										<td>Std/Monat:</td>
@@ -96,6 +93,12 @@
 										<td><input type="text" name="endDate" size="20"
 											maxlength="100" />
 											<div id="error_endDate" class="invisibleWarning"></div></td>
+									</tr>
+									<tr>
+										<td>Standard Lohn:</td>
+										<td id="wage"></td>
+										<td></td>
+										<td></td>
 									</tr>
 								</table>
 								<!-- Oemer -->

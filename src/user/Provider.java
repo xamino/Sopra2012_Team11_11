@@ -77,15 +77,15 @@ public class Provider extends User {
 
 	}
 
-//	/**
-//	 * Erstellt ein neues, noch zu pruefendes Angebot im System.
-//	 */
-//	public void createOffer(int pId, String pAuthor, String pName,
-//			String pNote, boolean pChecked, int pSlots, double pHours,
-//			String pDescription, Date pStartDate, Date pEndDate, double pWage,
-//			int pInstitute, Date pModificationdate) {
-//
-//	}
+	// /**
+	// * Erstellt ein neues, noch zu pruefendes Angebot im System.
+	// */
+	// public void createOffer(int pId, String pAuthor, String pName,
+	// String pNote, boolean pChecked, int pSlots, double pHours,
+	// String pDescription, Date pStartDate, Date pEndDate, double pWage,
+	// int pInstitute, Date pModificationdate) {
+	//
+	// }
 
 	/**
 	 * Methode zum Löschen seines Accounts
@@ -96,10 +96,11 @@ public class Provider extends User {
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
-		Account thisaccount = AccountController.getInstance().getAccountByUsername(this.getUserData().getUsername());
+		Account thisaccount = AccountController.getInstance()
+				.getAccountByUsername(this.getUserData().getUsername());
 		return acccon.deleteProviderAccount(thisaccount);
 	}
-	
+
 	/**
 	 * Liest die Standardwerte eines Angebots aus der Datenbank und gibt sie als
 	 * JSON-Objekt zurueck.
@@ -112,9 +113,14 @@ public class Provider extends User {
 				new String[] { "*" }, new String[] { "Standardangebot" }, null);
 		try {
 			if (rs.next()) {
-				ret = Helper.jsonAtor(new String[] { "hoursMonth", "startDate",
-						"endDate" }, new Object[] { rs.getInt("StdProMonat"),
-						rs.getString("StartDatum"), rs.getString("EndDatum") });
+				ret = Helper
+						.jsonAtor(
+								new String[] { "hoursMonth", "startDate",
+										"endDate", "wage" },
+								new Object[] { rs.getInt("StdProMonat"),
+										rs.getString("StartDatum"),
+										rs.getString("EndDatum"),
+										rs.getFloat("Lohn") });
 			}
 		} catch (SQLException e) {
 			// e.printStackTrace();
@@ -124,5 +130,25 @@ public class Provider extends User {
 			return null;
 		}
 		return ret;
+	}
+
+	/**
+	 * Reads the default wage from the database.
+	 * 
+	 * @return The wage.
+	 */
+	public double readDefWage() {
+		ResultSet rs = DatabaseController.getInstance().select(
+				new String[] { "Lohn" }, new String[] { "Standardangebot" },
+				null);
+		try {
+			if (rs.next()) {
+				return rs.getFloat("Lohn");
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			log.write("Provider", "Error reading default wage!");
+		}
+		return 0;
 	}
 }

@@ -195,8 +195,9 @@ public class ProviderServlet extends HttpServlet {
 			String beschreibung = request.getParameter("beschreibung");
 			String startDate = request.getParameter("startDate");
 			String endDate = request.getParameter("endDate");
-			// wird vom clerk gesetzt defaultwert ist 0.0
-			double lohn = 0.0;
+			// wird vom clerk gesetzt, aber default wert wird ausgelesen (von
+			// admin gesetzt).
+			double lohn = provider.readDefWage();
 			boolean checked = false;
 			int stellen;
 			try {
@@ -268,8 +269,11 @@ public class ProviderServlet extends HttpServlet {
 			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
 					stellen, stunden, beschreibung, startDate, endDate, lohn,
 					institut, aenderungsdatum, false);
-			log.write("ProviderServlet", "Creating new offer in progress...");
+			// System.out.println(offer);
 			OfferController.getInstance().createOffer(offer);
+			log.write("ProviderServlet", "<"
+					+ provider.getUserData().getUsername()
+					+ "> created new offer <" + offer.getAid() + ">");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
