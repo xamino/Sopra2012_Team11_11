@@ -402,7 +402,7 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_ADMIN_INSTITUTESMANAGMENT);
 			return;
 		}
-		// TODO!
+		// Read default values from DB:
 		else if (path.equals("/js/getDefValues")) {
 			String obj = admin.readDefValues();
 			if (obj == null || obj.isEmpty()) {
@@ -415,28 +415,31 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write(obj);
 			return;
 		}
-		// TODO!
+		// Write default values to DB:
 		else if (path.equals("/js/saveDefValues")) {
 			int hoursMonth = -1;
+			float wage = -1;
 			try {
 				hoursMonth = Integer.parseInt(request
 						.getParameter("hoursMonth"));
+				wage = Float.parseFloat(request.getParameter("wage"));
 			} catch (NumberFormatException e) {
 				log.write("AdminServlet",
 						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehlerhafte hoursMonth!");
+				response.getWriter().write("Fehlerhafte Eingaben!");
 				return;
 			}
 			String startDate = request.getParameter("startDate");
 			String endDate = request.getParameter("endDate");
-			if (!validate(startDate) || !validate(endDate) || hoursMonth == -1) {
+			if (!validate(startDate) || !validate(endDate) || hoursMonth == -1
+					|| wage == -1) {
 				response.setContentType("text/error");
 				response.getWriter().write("Invalid parameters!");
 				return;
 			}
 			// System.out.println(hoursMonth + ":" + startDate + ":" + endDate);
-			if (!admin.writeDefValues(hoursMonth, startDate, endDate)) {
+			if (!admin.writeDefValues(hoursMonth, wage, startDate, endDate)) {
 				response.setContentType("text/error");
 				response.getWriter().write(
 						"Error saving new values to database!");

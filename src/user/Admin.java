@@ -231,9 +231,13 @@ public class Admin extends User {
 				new String[] { "*" }, new String[] { "Standardangebot" }, null);
 		try {
 			if (rs.next()) {
-				ret = Helper.jsonAtor(new String[] { "hoursMonth", "startDate",
-						"endDate" }, new Object[] { rs.getInt("StdProMonat"),
-						rs.getString("StartDatum"), rs.getString("EndDatum") });
+				ret = Helper.jsonAtor(
+						new String[] { "hoursMonth", "wage", "startDate",
+								"endDate" },
+						new Object[] { rs.getInt("StdProMonat"),
+								rs.getFloat("Lohn"),
+								rs.getString("StartDatum"),
+								rs.getString("EndDatum") });
 			}
 		} catch (SQLException e) {
 			// e.printStackTrace();
@@ -250,17 +254,22 @@ public class Admin extends User {
 	 * 
 	 * @param hoursMonth
 	 *            Die neue Stundenanzahl.
+	 * @param wage
+	 *            Der standard Lohn.
 	 * @param startDate
 	 *            Das neue start Datum.
 	 * @param endDate
 	 *            Das neue end Datum.
 	 * @return Flag zur kontrolle ob alles geklappt hat.
 	 */
-	public boolean writeDefValues(int hoursMonth, String startDate,
+	public boolean writeDefValues(int hoursMonth, float wage, String startDate,
 			String endDate) {
-		if (!DatabaseController.getInstance().update("Standardangebot",
-				new String[] { "StdProMonat", "StartDatum", "EndDatum" },
-				new Object[] { hoursMonth, startDate, endDate }, "true")) {
+		if (!DatabaseController.getInstance()
+				.update("Standardangebot",
+						new String[] { "StdProMonat", "StartDatum", "EndDatum",
+								"Lohn" },
+						new Object[] { hoursMonth, startDate, endDate, wage },
+						"true")) {
 			log.write("Admin", "Error updating default offer!");
 			return false;
 		} else {

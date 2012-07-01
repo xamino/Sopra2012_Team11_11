@@ -132,5 +132,6 @@ DROP TABLE IF EXISTS `Standardangebot`;
 CREATE TABLE `Standardangebot` (
   `StdProMonat` int(11),
   `StartDatum` text,
-  `EndDatum` text
+  `EndDatum` text,
+  `Lohn` float
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

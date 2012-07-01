@@ -29,6 +29,7 @@ function handleLoadDefValues(mime, data) {
 		inputValForm.hoursMonth.value = dataObj.hoursMonth;
 		inputValForm.startDate.value = dataObj.startDate;
 		inputValForm.endDate.value = dataObj.endDate;
+		inputValForm.wage.value = dataObj.wage;
 	} else
 		return;
 }
@@ -68,12 +69,21 @@ function checkVal() {
 		error = true;
 	} else
 		toggleWarning("error_endDate", false, "");
+	var wage = form.wage.value;
+	if (wage == null || wage == "") {
+		toggleWarning("error_wage", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkFloat(wage)) {
+		toggleWarning("error_wage", true, "Bitte keine Sonderzeichen!");
+		error = true;
+	} else
+		toggleWarning("error_wage", false, "");
 	if (error)
 		return;
 	// alert("All okay!");
 	connect("/hiwi/Admin/js/saveDefValues", "hoursMonth=" + hoursMonth
-			+ "&startDate=" + startDate + "&endDate=" + endDate,
-			handleSaveResponse);
+			+ "&startDate=" + startDate + "&endDate=" + endDate + "&wage="
+			+ wage, handleSaveResponse);
 }
 
 /**

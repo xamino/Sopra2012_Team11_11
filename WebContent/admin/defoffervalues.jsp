@@ -75,6 +75,11 @@
 									<td><input type="text" name="endDate" />
 										<div id="error_endDate" class="invisibleWarning"></div></td>
 								</tr>
+								<tr>
+									<td>Standard Lohn:</td>
+									<td><input type="text" name="wage" />€
+										<div id="error_wage" class="invisibleWarning"></div></td>
+								</tr>
 							</table>
 							<input type="submit" value="Werte Speichern"
 								onclick="checkVal(); return false;" />

@@ -179,11 +179,12 @@ DROP TABLE IF EXISTS `Standardangebot`;
 CREATE TABLE `Standardangebot` (
   `StdProMonat` int(11),
   `StartDatum` text,
-  `EndDatum` text
+  `EndDatum` text,
+  `Lohn` float
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 BEGIN;
-INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo');
+INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo', '370.54');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
