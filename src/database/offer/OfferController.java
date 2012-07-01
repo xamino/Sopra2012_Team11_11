@@ -151,21 +151,6 @@ public class OfferController {
 	 *            dazugehoerigen Attributen.
 	 */
 	public boolean updateOffer(Offer offer) {
-
-		// Dates entfernt, da problematisch
-
-		// String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-		// "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-		// "Stundenlohn", "Institut", "aenderungsdatum" };
-		//
-		// Object[] values ={ offer.getAuthor(), offer.getName(),
-		// offer.getNote(), offer.isChecked(), offer.getSlots(),
-		// offer.getHoursperweek(), offer.getDescription(),
-		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-		// offer.getInstitute(), offer.getModificationdate() };
-
-		// Benachrichtigung an Anbieter bei freischaltung oder ablehnen:
-
 		// Hier ist die Mail benachrichtigung:
 		ResultSet rs = db.select(new String[] { "acc.email" }, new String[] {
 				"Accounts as acc", "Bewerbungen as b", "Angebote as a" },
@@ -194,8 +179,8 @@ public class OfferController {
 		// Ende benachrichtigung und anfang updaten.
 
 		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
-				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut", "aenderungsdatum", "abgeschlossen" };
+				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+				"Stundenlohn", "Institut", "aenderungsdatum", "abgeschlossen" };
 
 		java.util.Date aenderungsdatum_1 = new java.util.Date();
 		java.sql.Date aenderungsdatum = new java.sql.Date(
@@ -205,8 +190,9 @@ public class OfferController {
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute(),
-				offer.getModificationdate(), offer.isFinished() };
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate(),
+				offer.isFinished() };
 
 		String where = "AID = " + offer.getAid();
 

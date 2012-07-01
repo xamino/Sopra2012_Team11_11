@@ -152,10 +152,18 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "<td><input id=\"inputhoursperweek\" type=\"text\" value=\""
 				+ offer.hoursperweek
 				+ "\" /> std. <div id=\"hours_error\"class=\"hiddenerror\"></div></td></tr>"
+				+ "<tr><td>Start Datum:</td>"
+				+ "<td><input id=\"startDate\" type=\"text\" value=\""
+				+ offer.startdate
+				+ "\" /><div id=\"error_startDate\"class=\"hiddenerror\"></div></td></tr>"
+				+ "<tr><td>End Datum:</td>"
+				+ "<td><input id=\"endDate\" type=\"text\" value=\""
+				+ offer.enddate
+				+ "\" /><div id=\"error_endDate\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Lohn:</td>"
 				+ "<td><input id=\"inputwage\" type=\"text\" value=\""
 				+ offer.wage
-				+ "\" />€ <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
+				+ "\" /> € <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Anbieternotiz:</td>"
 				+ "<td style=\"background-color: lightgray;\">"
 				+ anbieternotiz
@@ -176,6 +184,9 @@ function angebotspeichern() {
 	var aid = getURLParameter("AID");
 	var hoursperweek = document.getElementById("inputhoursperweek").value;
 	var wage = document.getElementById("inputwage").value;
+	var startDate = document.getElementById("startDate").value;
+	var endDate = document.getElementById("endDate").value;
+
 	var error = false;
 
 	if (hoursperweek == null || hoursperweek == "") {
@@ -186,6 +197,22 @@ function angebotspeichern() {
 		error = true;
 	} else
 		toggleWarning("hours_error", false, "");
+	if (startDate == null || startDate == "") {
+		toggleWarning("error_startDate", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkText(startDate)) {
+		toggleWarning("error_startDate", true, "Bitte keine Sonderzeichen!");
+		error = true;
+	} else
+		toggleWarning("error_startDate", false, "");
+	if (endDate == null || endDate == "") {
+		toggleWarning("error_endDate", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkText(endDate)) {
+		toggleWarning("error_endDate", true, "Bitte keine Sonderzeichen!");
+		error = true;
+	} else
+		toggleWarning("error_endDate", false, "");
 	if (wage == null || wage == "") {
 		toggleWarning("gage_error", true, "Bitte ausfüllen!");
 		error = true;
@@ -199,8 +226,9 @@ function angebotspeichern() {
 	if (error)
 		return;
 	connect("/hiwi/Clerk/js/saveOffer", "aid=" + aid + "&hoursperweek="
-			+ hoursperweek + "&wage=" + wage + "&changed=" + changed
-			+ "&annehmen=" + annehmen, gotoOfferManagement);
+			+ hoursperweek + "&wage=" + wage + "&startDate=" + startDate
+			+ "&endDate=" + endDate + "&changed=" + changed + "&annehmen="
+			+ annehmen, gotoOfferManagement);
 }
 
 /**

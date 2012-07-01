@@ -40,6 +40,8 @@ import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
 
+import static servlet.Helper.validate;
+
 /**
  * Das <code>Clerk</code> Servlet behandelt alle Aktionen von angemeldeten
  * (Sach-)Bearbeitern (Clerk).
@@ -163,15 +165,29 @@ public class ClerkServlet extends HttpServlet {
 						.write("Fehler bei Eingabe! Nur double Werte erlaubt fuer wage.");
 				return;
 			}
+			// Read dates:
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDate");
+			if (!validate(startDate) || !validate(endDate)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler bei Eingabe! Datum nicht lesbar!");
+				return;
+			}
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
+			// note: is done in OfferController, no need to set twice...
 			// set modificationdate to current date
-			java.util.Date aenderungsdatum = new java.util.Date();
-			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
-					aenderungsdatum.getTime());
+			// java.util.Date aenderungsdatum = new java.util.Date();
+			// java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
+			// aenderungsdatum.getTime());
 			// sets modificationdate and updates it
-			offertosave.setModificationdate(aenderungsdatum_toUp);
+			// offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
+			// write dates to offer:
+			offertosave.setStartdate(startDate);
+			offertosave.setEnddate(endDate);
+			// logic for checked:
 			if (changed && accepted) {
 				offertosave.setChecked(true);
 				offertosave.setFinished(false);
@@ -198,7 +214,10 @@ public class ClerkServlet extends HttpServlet {
 						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
 								+ offertosave.getName()
 								+ "\" durch einen Verwalter abgelehnt wurde.");
+			// System.out.println(offertosave);
 			OfferController.getInstance().updateOffer(offertosave);
+			log.write("ClerkServlet", "<" + clerk.getUserData().getUsername()
+					+ "> changed offer <" + offertosave.getAid() + ">");
 			// wir wollten doch einen String als date?
 			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
 			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
