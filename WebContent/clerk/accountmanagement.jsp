@@ -53,9 +53,9 @@
 				<div class="textblock">
 					<h2>Account verwalten</h2>
 					<div class="text">
-						Hier können Sie Ihre persönlichen Daten
-						bearbeiten. <br> Wenn die zu ändernden Daten hier nicht aufgeführt
-						werden, wenden Sie sich bitte an den Administrator.
+						Hier können Sie Ihre persönlichen Daten bearbeiten. <br> Wenn
+						die zu ändernden Daten hier nicht aufgeführt werden, wenden Sie
+						sich bitte an den Administrator.
 					</div>
 				</div>
 				<hr>
@@ -99,11 +99,8 @@
 										</label>
 										</span>
 										<div class="regform">
-														<select id="selectStellvertreter" size="1">
-															<!-- <option value="wert1">Eintrag1</option>
-															<option value="wert2">Eintrag2</option> -->
-														</select>
-											<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
+											<select id="selectStellvertreter" size="1">
+											</select>
 											<div id="error_stellvertreter" class="hiddenerror"></div>
 										</div>
 										<br>
