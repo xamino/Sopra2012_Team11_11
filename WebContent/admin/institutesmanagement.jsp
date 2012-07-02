@@ -53,7 +53,8 @@
 					<h2>Institute Verwalten</h2>
 					<div class="text">
 						Hier können sie die Institute im System verwalten.<br>Die IID
-						muss eindeutig sein.
+						muss eindeutig sein.<br>
+						Das default - Institut kann nicht gelöscht werden!
 					</div>
 				</div>
 				<hr>
@@ -94,7 +95,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" onclick="addInstitute()" /> <input
+				<input type="button" value="Speichern" onclick="addInstitute()" /> <input
 					type="button" value="Abbrechen"
 					onclick="clearAddInstitutePopup(); togglePopup('institute_add', false);" />
 			</div>

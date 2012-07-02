@@ -134,7 +134,7 @@ function applicantChoice() {
 	// alert("id= "+aid);
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
-	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+	toggleWarning("error_noAppSelected", true, "Kein Bewerber selektiert!");
 	connect("/hiwi/Provider/js/applicantChoice", "aid=" + aid,
 			handleApplicantChoiceResponse);
 }
@@ -194,12 +194,12 @@ function markOfferSelected(id) {
 	// If clicked again, unselect:
 	if (selectedOffer == id) {
 		selectedOffer = null;
-		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
+		toggleWarning("error_noAppSelected", true, "Kein Bewerber selektiert!");
 		return;
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
-	toggleWarning("error_noOfferSelected", false, "Kein Angebot selektiert!");
+	toggleWarning("error_noAppSelected", false, "Kein Bewerber selektiert!");
 
 	// alert("aktuelle id: "+selectedOffer);
 
