@@ -51,7 +51,7 @@ public class AppDocument {
 	}
 
 	/**
-	 * Hollt den Benutzernamen.
+	 * Holt den Benutzernamen.
 	 * 
 	 * @return Benutzername.
 	 */
@@ -70,7 +70,7 @@ public class AppDocument {
 	}
 
 	/**
-	 * Hollt die AngebotsID.
+	 * Holt die AngebotsID.
 	 * 
 	 * @return AngebotsID.
 	 */
@@ -89,7 +89,7 @@ public class AppDocument {
 	}
 
 	/**
-	 * Hollt die UnterlagenID.
+	 * Holt die UnterlagenID.
 	 * 
 	 * @return UnterlagenID.
 	 */
@@ -108,7 +108,7 @@ public class AppDocument {
 	}
 
 	/**
-	 * Hollt die Information ob die Unterlage vorhanden ist.
+	 * Holt die Information ob die Unterlage vorhanden ist.
 	 * 
 	 * @return <code>TRUE</code> Unterlage vorhanden, sonst <code>FALSE</code>.
 	 */
@@ -117,7 +117,7 @@ public class AppDocument {
 	}
 
 	/**
-	 * Setzt die Information ob die Unterlage vorhanden ist.
+	 * Setzt die Information, ob die Unterlage vorhanden ist.
 	 * 
 	 * @param present
 	 *            <code>TRUE</code> Unterlage vorhanden, sonst

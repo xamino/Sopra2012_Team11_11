@@ -3,6 +3,7 @@
  * @author Tamino Hartmann
  * @author Patryk Boczon
  * @author Oemer Sahin
+ * @author Laura Irlinger
  */
 
 package database.offer;
@@ -50,7 +51,7 @@ public class Offer {
 	private double hoursperweek;
 
 	/**
-	 * Die beschreibung zum Angebot.
+	 * Die Beschreibung zum Angebot.
 	 */
 	private String description;
 
@@ -84,6 +85,7 @@ public class Offer {
 	private boolean finished;
 
 	/**
+	 * Konstruktor
 	 * 
 	 * @param aid
 	 *            Die id des Angebots.
@@ -100,19 +102,11 @@ public class Offer {
 	 * @param hoursperweek
 	 *            Die Anzahl der Stunden pro Woche des Angebots.
 	 * @param description
-<<<<<<< HEAD
 	 * 		Die Beschreibung zum Angebot.
 	 * @param startdate
 	 * 		Der Beginn des Angebots.
 	 * @param enddate
 	 * 		Das Ende des Angebots.
-=======
-	 *            Die beschreibung zum Angebot.
-	 * @param startDate
-	 *            Der Beginn des Angebots.
-	 * @param endDate
-	 *            Das Ende des Angebots.
->>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
 	 * @param wage
 	 *            Der Gehalt pro Stunde des Angebots.
 	 * @param institute
@@ -153,7 +147,7 @@ public class Offer {
 	}
 
 	/**
-	 * Setzt, ob das Angebot beendet ist.
+	 * Setzt, das Angebot auf beendet/ nicht beendet.
 	 * 
 	 * @param finished
 	 *            Wahrheitswert ob beendet.

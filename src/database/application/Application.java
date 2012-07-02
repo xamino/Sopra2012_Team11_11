@@ -128,7 +128,7 @@ public class Application {
 	 * Setzt den Sachbearbeiter fuer diese Bewerbung.
 	 * 
 	 * @param clerk
-	 *            Gewuenschte Sachbearbeiter.
+	 *            Gewuenschter Sachbearbeiter.
 	 */
 	public void setClerk(String clerk) {
 		this.clerk = clerk;
