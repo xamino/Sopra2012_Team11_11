@@ -47,31 +47,10 @@
 						href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
-			<hr>
-			<div class="textblock">
-			<div class="haupttext">
-				<div style="float: right;">
-					<table class="hidden" id="applicantTable">
-						<!-- <tr>
-							<td>Name:</td>
-							<td>Hans Marting</td>
-						</tr>
-						<tr>
-							<td>Bewirbt sich für:</td>
-							<td>World of Warcraft Tutorium</td>
-						</tr>
-						<tr>
-							<td>Fachsemester:</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>Abschluss:</td>
-							<td>Bachlor</td>
-						</tr>-->
-					</table>
-					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
 
 		</div>
+
+
 		<div class="content">
 			<div class="rightborder">
 				<div class="textblock">
@@ -92,6 +71,7 @@
 							</table>
 							<br> <input type="button" value="Bewerbungsabschluss"
 								onclick="doApplicationCompletion();" />
+								<div id="error_appcompl" class="popup_hidden"></div>
 						</div>
 						<table class="" id="documentsTable">
 							<!-- Documents go here -->
@@ -108,6 +88,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="clear"></div>
 	<div class="footer"></div>
 	<!-- Here are the popups -->
@@ -156,17 +137,5 @@
 		</form>
 	</div>
 	
-	<div id="error_appcompl" class="popup_hidden">
-			<h3>Angebot ablehnen</h3>
-			<hr>
-			<div class="textblock">
-				Der Bewerbungsabschluss kann nicht efolgen.<br>Es müssen alle Dokumente abgegeben sein.
-			</div>
-			<hr>
-			<div class="textblock">
-				 <input type="button"
-					value="OK" onclick="togglePopup('error_appcompl', false);" />
-			</div>
-	</div>
 </body>
 </html>

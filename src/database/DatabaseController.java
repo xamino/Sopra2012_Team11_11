@@ -407,13 +407,13 @@ public class DatabaseController {
 			return null;
 		}
 		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID "
-				+ "FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "
+				+ "FROM Bewerbungen, Angebote, Accounts WHERE Bewerbungen.AID = Angebote.AID AND Bewerbungen.ausgewaehlt = 1 AND Angebote.Institut = "
 				+ institute
-				+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
+				+ " AND Accounts.benutzername = Bewerbungen.benutzername";
 
 		ResultSet rs;
 		// Auskommentiert da nervig (Tamino)
-		// System.out.println(sel);
+//		 System.out.println(sel);
 		try {
 			rs = st.executeQuery(sel);
 			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
@@ -421,6 +421,7 @@ public class DatabaseController {
 				// System.out.println(rs.getString(1));
 				hdc.add(new HilfsDatenClerk(rs.getString(1), rs.getString(2),
 						rs.getString(3), rs.getInt(4)));
+//				System.out.println(rs.getString(1)+ rs.getString(2)+rs.getString(3)+ rs.getInt(4));
 			}
 			return hdc;
 		} catch (SQLException e) {

@@ -318,8 +318,20 @@ public class ClerkServlet extends HttpServlet {
 			String username = clerk.getUserData().getUsername();
 			Account clerka = AccountController.getInstance()
 					.getAccountByUsername(username);
-			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance()
+			Vector<HilfsDatenClerk> daten1 = DatabaseController.getInstance()
 					.getChosenApplicationDataByInstitute(clerka.getInstitute());
+
+			
+			Vector<HilfsDatenClerk> daten = new Vector<HilfsDatenClerk>();
+			
+			for(int i = 0; i < daten1.size(); i++){
+				Application temp = ApplicationController.getInstance().getApplicationByOfferAndUser(daten1.elementAt(i).getAid(), daten1.elementAt(i).getUsername());
+				if(!temp.isFinished()){ //status == 0
+					daten.add(daten1.elementAt(i));
+				}
+			}
+
+			
 			if (daten == null || daten.isEmpty()) {
 				response.setContentType("text/error");
 				response.getWriter().write("Keine Einträge in der DB!");
@@ -550,17 +562,13 @@ public class ClerkServlet extends HttpServlet {
 			System.out.println(clerkname);
 
 			if (clerk.checkAllDocFromApplicant(username, aid)) {
-				System.out.println("true");
 				response.setContentType("text/url");
 				appli.setFinished(true);
 				appli.setClerk(clerkname);
 				ApplicationController.getInstance().updateApplication(appli);
-				System.out.println("true ende");
 			} else {
-				System.out.println("false");
 				response.setContentType("error/url");
 				response.getWriter().write("Unvollstaendige Dokumente. Abschluss nicht moeglich");
-				System.out.println("false ende");
 			}
 			return;
 		}

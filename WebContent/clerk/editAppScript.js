@@ -305,11 +305,14 @@ function doApplicationCompletion() {
  */
 function handleApplicationCompletion(mime, data) {
 	if (mime == "text/url") {
+//		alert("alles abgegeben");
 		toggleWarning("error_appcompl", false, "");
-		window.location = data;
+		window.location = 'applicationmanagement.jsp';
 	} else if (mime == "error/url") {
-		toggleWarning("error_appcompl", true, "");
+//		alert("noch nicht alles abgegeben");
+		toggleWarning("error_appcompl", true, data);
 	} else{
+//		alert("else fall");
 		alert(data);
 	}
 }

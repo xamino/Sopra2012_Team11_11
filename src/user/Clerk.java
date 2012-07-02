@@ -217,22 +217,15 @@ public class Clerk extends User {
 		Offer off = offcon.getOfferById(offerID);
 
 		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
+		System.out.println("dokumente: "+vec.size());
 
-		Iterator<AppDocument> it = vec.iterator();
-
-		AppDocument aktuellesDokument;
-		int i = 0;
-		// Falls nur ein Dokument fehlt wird der Vorgang abgebrochen.
-		// Da dem Clerk eh die Dokumente angezeigt werden die noch fehlen muss
-		// man keine weiteren Informationen
-		// rauslesen (oder doch?)
-		while (it.hasNext()) {
-			aktuellesDokument = vec.get(i);
-			if (!aktuellesDokument.getPresent()) {
-				return false;
+		if(vec != null){
+			for(int i = 0; i < vec.size(); i++){
+				if(!(vec.elementAt(i).getPresent() )){
+					return false;
+				}
 			}
 		}
-
 		return true;
 
 	}
