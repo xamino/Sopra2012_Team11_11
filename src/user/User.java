@@ -1,3 +1,7 @@
+/**
+ * @author Manuel Guentzel
+ * 
+ */
 package user;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +15,7 @@ import database.institute.InstituteController;
 import database.offer.OfferController;
 
 /**
- * Vorlage fuer Admin,Anbieter,Verwalter und Bewerber.
+ * Vorlage fuer Admin, Anbieter, Verwalter und Bewerber.
  */
 public abstract class User {
 	/**
@@ -96,9 +100,9 @@ public abstract class User {
 		uData.getSession().invalidate();
 	}
 
-	/**
-	 * Loescht den eigenen Account
-	 */
+//	/**
+//	 * Loescht den eigenen Account
+//	 */
 
 	/**
 	 * Aendert die Daten des eigenen Accounts
@@ -110,6 +114,7 @@ public abstract class User {
 	 * @param pw
 	 *            Neues Passwort (gehashed!)
 	 * @param rep
+	 * 			Stellvertreter
 	 * @return Wahrheitswert ob erfolgreich
 	 */
 	public boolean editOwnAccount(String name, String email, String pw,

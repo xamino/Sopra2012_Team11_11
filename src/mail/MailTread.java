@@ -1,3 +1,6 @@
+/**
+ * @author Manuel Guentzel
+ */
 package mail;
 
 import javax.mail.Message;
@@ -9,8 +12,7 @@ import javax.mail.internet.MimeMessage;
 import logger.Log;
 
 /**
- * Thread für den eigentlichen Mailversand
- * @author Guentzel
+ * Thread fuer den eigentlichen Mailversand
  *
  */
 public class MailTread extends Thread {
@@ -59,11 +61,16 @@ public class MailTread extends Thread {
 	
     /**
      * Methode die die Parameter festlegt.
-     * @param ses Session zum versenden
-     * @param sender Absender der Mail
-     * @param addr Adresse des Ziels
-     * @param subject Betreff der Nachricht
-     * @param text Text der Nachricht 
+     * @param ses 
+     * 			Session zum versenden
+     * @param sender 
+     * 			Absender der Mail
+     * @param addr 
+     * 			Adresse des Ziels
+     * @param subject 
+     * 			Betreff der Nachricht
+     * @param text 
+     * 			Text der Nachricht 
      */
 	public  void config(Session ses,String sender,String addr, String subject, String text) {
 		this.ses=ses;

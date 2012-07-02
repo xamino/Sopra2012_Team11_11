@@ -1,7 +1,7 @@
 /**
  * @author Tamino Hartmann
  * @author Laura Irlinger
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  */
 package servlet;
 

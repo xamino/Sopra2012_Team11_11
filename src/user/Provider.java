@@ -1,3 +1,6 @@
+/**
+ * @author Tamino Hartmann
+ */
 package user;
 
 import java.sql.ResultSet;
@@ -48,6 +51,7 @@ public class Provider extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account
+	 * @return Gibt an, ob die Operation erfolgreich war.         
 	 */
 	public boolean editAccount(Account acc) {
 		if (!acccon.updateAccount(acc)) {
@@ -91,11 +95,11 @@ public class Provider extends User {
 	// }
 
 	/**
-	 * Methode zum Löschen seines Accounts
+	 * Methode zum Loeschen seines Accounts
 	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
-	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
-	 *         zurückgegeben.
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurueckgegeben. Falls
+	 *         irgendwo ein Fehler aufgetreten ist wird ein FALSE
+	 *         zurueckgegeben.
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
@@ -156,7 +160,7 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Laedt alle Angebote eines Anbieters aus der Datenbank.
+	 * Laedt alle Angebote des Anbieters aus der Datenbank.
 	 * 
 	 * @return Ein Vektor mit den Angeboten.
 	 */
@@ -205,7 +209,7 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Erstellt ein neues zu pruefende Angebot.
+	 * Erstellt ein neues zu pruefendes Angebot.
 	 * 
 	 * @param name
 	 *            Der Name des Angebots.
@@ -218,10 +222,10 @@ public class Provider extends User {
 	 * @param beschreibung
 	 *            Die Beschreibung des Angebots.
 	 * @param startDate
-	 *            Das anfangs Datum des Angebots.
+	 *            Das Anfangsdatum des Angebots.
 	 * @param endDate
 	 *            Das Enddatum des Angebots.
-	 * @return Ein flag fuer Fehler.
+	 * @return Ein Flag fuer Fehler.
 	 */
 	public boolean createOffer(String name, String notiz, int stellen,
 			double stunden, String beschreibung, Date startDate, Date endDate) {
@@ -302,8 +306,10 @@ public class Provider extends User {
 
 	/**
 	 * Akzeptiert die Bewerbung eines Bewerbers auf ein Angebot.
-	 * @param aid Die AID des Angebots.
-	 * @param username Der Benutzername des Bewerbers.
+	 * @param aid 
+	 * 			Die AID des Angebots.
+	 * @param username 
+	 * 			Der Benutzername des Bewerbers.
 	 * @return Flag fuer Fehler.
 	 */
 	public boolean selectApplicant(int aid, String username) {

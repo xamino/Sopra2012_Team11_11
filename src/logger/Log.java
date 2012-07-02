@@ -63,7 +63,7 @@ public class Log {
 	 * Method for getting a valid instance of Log. The returned instance can
 	 * then be used to write all the data.
 	 * 
-	 * @return The instance with which to work.
+	 * @return The instance to work with.
 	 */
 	synchronized public static Log getInstance() {
 		if (Log.instance == null)
@@ -240,7 +240,7 @@ public class Log {
 	 * handles the creation of the log file and handles some of the possible
 	 * errors.
 	 * 
-	 * @return The BufferedWriter to which to write the log.
+	 * @return The BufferedWriter to write the log with.
 	 */
 	private BufferedWriter createFile() {
 		// If a fileStream already exists, a file has already been created in

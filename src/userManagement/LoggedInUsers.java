@@ -11,7 +11,7 @@ import user.User;
 import file.FileController;
 
 /**
- * Verwaltet alle eingelogten User.
+ * Verwaltet alle eingeloggten User.
  */
 public abstract class LoggedInUsers {
 
