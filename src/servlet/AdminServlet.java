@@ -40,19 +40,19 @@ public class AdminServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Variable zum speicher der Log Instanz.
+	 * Variable zum speichern der Log Instanz.
 	 */
 	private Log log;
 	/**
-	 * Variable zum speicher der Instanz des AccountController.
+	 * Variable zum speichern der Instanz des AccountController.
 	 */
 	private AccountController accountController;
 	/**
-	 * Variable zum speicher der Instanz des DocumentController.
+	 * Variable zum speichern der Instanz des DocumentController.
 	 */
 	private DocumentController docController;
 	/**
-	 * Variable zum speicher der Instanz des InstituteController.
+	 * Variable zum speichern der Instanz des InstituteController.
 	 */
 	private InstituteController instController;
 	/**
@@ -63,7 +63,7 @@ public class AdminServlet extends HttpServlet {
 	/**
 	 * Konstruktor des AdminServlet. Hier werden die wichtigen Referenzen
 	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
-	 * um die Initialisierung zu ersichtlich zu machen.
+	 * um die Initialisierung ersichtlich zu machen.
 	 **/
 	public AdminServlet() {
 		super();
