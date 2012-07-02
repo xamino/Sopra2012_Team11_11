@@ -262,7 +262,7 @@ public class OfferController {
 					offervec.add(currentoff);
 			}
 		} catch (SQLException e) {
-			log.write("OfferController", "Error retrieving all checked offers!");
+			log.write("OfferController", "Error retrieving all old offers!");
 			return null;
 		}
 		return offervec;
