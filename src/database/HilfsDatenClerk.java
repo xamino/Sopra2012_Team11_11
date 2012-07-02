@@ -4,7 +4,6 @@
 
 package database;
 
-// TODO: Warum sind die Var zwar private, aber es gibt keine Getter? So kann man die nie auslesen!
 /**
  * Hilfsklasse zur Speicherung eines Datensatzes einer Datenbankabfrage. Wird
  * vom Clerk, zur Anzeige von angenommenen Bewerbungen eines bestimmten
@@ -61,7 +60,8 @@ public class HilfsDatenClerk {
 	}
 
 	/**
-	 * @param bewerbername the bewerbername to set
+	 * @param bewerbername
+	 *            the bewerbername to set
 	 */
 	public void setBewerbername(String bewerbername) {
 		this.bewerbername = bewerbername;
@@ -75,7 +75,8 @@ public class HilfsDatenClerk {
 	}
 
 	/**
-	 * @param angebotsname the angebotsname to set
+	 * @param angebotsname
+	 *            the angebotsname to set
 	 */
 	public void setAngebotsname(String angebotsname) {
 		this.angebotsname = angebotsname;
@@ -89,7 +90,8 @@ public class HilfsDatenClerk {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -103,7 +105,8 @@ public class HilfsDatenClerk {
 	}
 
 	/**
-	 * @param aid the aid to set
+	 * @param aid
+	 *            the aid to set
 	 */
 	public void setAid(int aid) {
 		this.aid = aid;

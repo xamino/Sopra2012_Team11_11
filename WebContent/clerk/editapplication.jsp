@@ -50,7 +50,6 @@
 
 		</div>
 
-
 		<div class="content">
 			<div class="rightborder">
 				<div class="textblock">

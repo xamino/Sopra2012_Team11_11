@@ -114,7 +114,7 @@ public abstract class User {
 	 */
 	public boolean editOwnAccount(String name, String email, String pw,
 			String rep) {
-		Account own = acccon.getAccountByUsername(uData.getUsername());
+		Account own = this.getAccount();
 		if (email != null) {
 			own.setEmail(email);
 			uData.setEmail(email);
@@ -132,6 +132,14 @@ public abstract class User {
 		if (acccon.updateAccount(own))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Gibt den Account des Users zurueck.
+	 * @return Der Account.
+	 */
+	public Account getAccount() {
+		return acccon.getAccountByUsername(uData.getUsername());
 	}
 
 	/**
