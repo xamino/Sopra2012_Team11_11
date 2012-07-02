@@ -22,7 +22,7 @@ public class GarbageCollector {
 	 * 
 	 * @return
 	 */
-	static GarbageCollector getInstance(){
+	public static GarbageCollector getInstance(){
 		if(instance==null)instance=new GarbageCollector();
 		return instance;
 	}
