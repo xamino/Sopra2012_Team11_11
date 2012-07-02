@@ -21,7 +21,7 @@ var selectedItem;
 var User;
 
 /**
- * Stores the Offer in editapplication:
+ * Stores the OfferId in editapplication:
  */
 var Aid;
 
@@ -838,10 +838,12 @@ function handleShowApplicationTable2Response(mime, data) {
  * documents.
  */
 
-function doApplicationCompletion() {
-
-	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID=" + aid
-			+ "&username=" + username, handleApplicationCompletion);
+function doApplicationCompletion(field) {
+	Aid = getURLParameter("AID");
+	User = getURLParameter("User");
+	//alert(Aid+" "+User);
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "aid=" + Aid
+			+ "&User=" + User, handleApplicationCompletion);
 }
 
 /**
@@ -852,6 +854,7 @@ function doApplicationCompletion() {
  */
 function handleApplicationCompletion(mime, data) {
 	if (mime == "text/url") {
+		//alert("Gut");
 		window.location = data;
 	} else if (mime == "error/url") {
 		alert(data);

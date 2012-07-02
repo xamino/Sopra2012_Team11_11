@@ -24,8 +24,8 @@ public class Account {
 	// im System entsteht!
 	private transient String passwordhash;
 	/**
-	 * Der Berechtigungstyp des Accounts. 0 - Admin 1 - Anbieter 2 - Verwalter 3
-	 * - Bewerber
+	 * Der Berechtigungstyp des Accounts. 0 - Admin 1 - Anbieter 2 - Verwalter 
+	 * 3 - Bewerber
 	 */
 	private int accounttype;
 	// Constants for easy access:

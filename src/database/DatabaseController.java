@@ -134,10 +134,10 @@ public class DatabaseController {
 	 * @param columns
 	 *            Name der Spalten welche aktualisiert werden sollen.
 	 * @param values
-	 *            Daten, welche in die entsprechenden Spalten gefühlt werden
+	 *            Daten, welche in die entsprechenden Spalten gefuehlt werden
 	 *            sollen.
 	 * @param where
-	 *            Bedingung für die Aktualisierung.
+	 *            Bedingung fuer die Aktualisierung.
 	 * @return <code>True</code> wenn erfolgreich, sonst <code>false</code>.
 	 */
 	synchronized public boolean update(String table, String[] columns,
@@ -167,7 +167,7 @@ public class DatabaseController {
 	 *            Tabelle von der geloescht werden soll.
 	 * @param where
 	 *            Where Bedingung.
-	 * @return boolean Ob die Aktion fehlerfrei geklappt hat.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	synchronized public boolean delete(String table, String where) {
 		// Sicherheitsüberprüfung:
@@ -192,8 +192,8 @@ public class DatabaseController {
 	 * @param table
 	 *            Name der Tabelle.
 	 * @param values
-	 *            Einzufügende Werte.
-	 * @return Boolean welcher angibt, ob INSERT erfolgreich war.
+	 *            Einzufuegende Werte.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	synchronized public boolean insert(String table, Object[] values) {
 		// Sicherheitsüberprüfung:
@@ -216,7 +216,7 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Gibt die anzahl der Zeilen einer Tabelle aus die die Where Bedingung
+	 * Gibt die Anzahl der Zeilen einer Tabelle aus, die die "Where"- Bedingung
 	 * erfuellen
 	 * 
 	 * @param from
@@ -249,13 +249,13 @@ public class DatabaseController {
 	 * Methode welche ein SQL "select" Statement ausfuehrt.
 	 * 
 	 * @param select
-	 *            Welche Werte ausgewählt werden sollen.
+	 *            Welche Werte ausgewaehlt werden sollen.
 	 * @param from
 	 *            Namen der Tabellen.
 	 * @param where
-	 *            Zusätzliche Bedingung. Wird keine benötigt kann
+	 *            Zusaetzliche Bedingung. Wird keine benoetigt wird kann
 	 *            <code>null</code> gesetzt werden.
-	 * @return Gibt ein <code>ResultSet</code> mit den Antworddaten zurück.
+	 * @return Gibt ein <code>ResultSet</code> mit den Antworddaten zurueck.
 	 */
 	synchronized public ResultSet select(String[] select, String[] from,
 			String where) {
@@ -288,9 +288,9 @@ public class DatabaseController {
 	 * @param columns
 	 *            Namen der Spalten.
 	 * @param values
-	 *            Ensprechende Werte welche eingefügt oder aktualiesiert werden
+	 *            Ensprechende Werte welche eingefuegt oder aktualiesiert werden
 	 *            sollen.
-	 * @return <code>True</code> wenn erfolgreich, ansonsten <code>false</code>.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	synchronized public boolean insertOnNullElseUpdate(String table,
 			String[] columns, Object[] values) {
@@ -428,7 +428,8 @@ public class DatabaseController {
 		return null;
 	}
 	/**
-	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei wird falls noetig der .sopra Ordner fuer die KonfigurationsDateien und die confconf und config dateien erstellt. 
+	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei wird falls noetig der 
+	 * .sopra Ordner fuer die Konfigurationsdateien und die confconf und config dateien erstellt. 
 	 */
 	public void generateStandardConfig(){
 		File configFolder = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra");

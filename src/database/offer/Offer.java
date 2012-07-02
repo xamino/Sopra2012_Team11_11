@@ -101,7 +101,7 @@ public class Offer {
 	 * @param hoursperweek
 	 * 		Die Anzahl der Stunden pro Woche des Angebots.
 	 * @param description
-	 * 		Die beschreibung zum Angebot.
+	 * 		Die Beschreibung zum Angebot.
 	 * @param startdate
 	 * 		Der Beginn des Angebots.
 	 * @param enddate

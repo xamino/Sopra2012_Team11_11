@@ -18,7 +18,7 @@ import database.offer.OfferController;
 public class InstituteController {
 
 	/**
-	 * Variable für die Instanz der Klasse.
+	 * Variable fuer die Instanz der Klasse.
 	 */
 	private static InstituteController instController;
 	/**
@@ -32,7 +32,7 @@ public class InstituteController {
 	private Log log;
 
 	/**
-	 * Gibt eine Instanz des InstituteContoller zurück.
+	 * Gibt eine Instanz des InstituteContoller zurueck.
 	 * 
 	 * @return Es wird die Instanz zurueckgegeben.
 	 */

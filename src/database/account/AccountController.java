@@ -34,7 +34,7 @@ public class AccountController {
 	 * Klassenattribut "acccontr" beinhaltet eine AccountController-Instanz,
 	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
 	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
-	 * AccountController. existiert.
+	 * AccountController existiert.
 	 */
 	private static AccountController acccontr;
 	/**
@@ -93,11 +93,12 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum löschen eines ApplicantAccounts.
+	 * Methode zum loeschen eines ApplicantAccounts.
 	 * 
 	 * @param applicant
-	 *            Applicant-Objekt
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 *            	Applicant-Objekt
+	 * @return boolean 
+	 * 				Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean deleteApplicantAccount(Applicant applicant) {
 		String username = applicant.getUserData().getUsername();
@@ -116,11 +117,12 @@ public class AccountController {
 	
 	
 	/**
-	 * Methode zum löschen eines ApplicantAccounts.
+	 * Methode zum loeschen eines ApplicantAccounts.
 	 * 
 	 * @param applicant
-	 *            Account-Objekt
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 *            	Account-Objekt
+	 * @return boolean 
+	 * 			 	Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean deleteApplicantAccount(Account applicant) {
 		String username = applicant.getUsername();
@@ -139,11 +141,11 @@ public class AccountController {
 	
 
 	/**
-	 * Methode zum löschen eines ClerkAccounts
+	 * Methode zum loeschen eines ClerkAccounts
 	 * 
 	 * @param clerk
 	 *            Clerk-Objekt
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 
 	public boolean deleteClerkAccount(Clerk clerk) {
@@ -178,11 +180,11 @@ public class AccountController {
 	}
 	
 	/**
-	 * Methode zum löschen eines ClerkAccounts
+	 * Methode zum loeschen eines ClerkAccounts
 	 * 
 	 * @param clerk
 	 *            Account-Objekt
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 
 	public boolean deleteClerkAccount(Account clerk) {
@@ -217,11 +219,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum löschen eines ProviderAccounts
+	 * Methode zum loeschen eines ProviderAccounts
 	 * 
 	 * @param provider
 	 *            Provider-Objekt
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonsten FALSE
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean deleteProviderAccount(Account provider) {
 		String username = provider.getUsername();
@@ -264,7 +266,7 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean deleteAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
@@ -278,7 +280,7 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return Gibt an, ob die Operation erfolgreich war.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean updateAccount(Account account) { // checked
 
@@ -296,7 +298,7 @@ public class AccountController {
 	}
 
 	/**
-	 * Gibt die Anzahl der registrierten Accounts zurück.
+	 * Gibt die Anzahl der registrierten Accounts zurueck.
 	 * 
 	 * @return Anzahl der Accounts
 	 */
@@ -306,7 +308,7 @@ public class AccountController {
 	}
 
 	/**
-	 * Diese Methode gibt alle in der Datenbank gespeicherten Accounts zurück.
+	 * Diese Methode gibt alle in der Datenbank gespeicherten Accounts zurueck.
 	 * 
 	 * @return Account-Objekt das diesem Username entspricht. Falls nicht
 	 *         existent <code>null</code>.
@@ -647,7 +649,7 @@ public class AccountController {
 	 * @param username
 	 * 			Nutzer mit username wird nicht im Resultat enthalten sein
 	 * @return
-	 * 			Vector, der alle usernames beinhaltet, ausser den �bergebenen
+	 * 			Vector, der alle usernames beinhaltet, ausser den Uebergebenen
 	 */
 	public Vector<String> getPotentialRepresentatives(String username){
 		int accounttype = 3;
@@ -685,7 +687,7 @@ public class AccountController {
 	 * Methode zum holen eines Accounts anhand der Emailaddresse. Wird verwendet
 	 * um die "Passwort vergessen" Funktion zu implementieren. Gibt es mehre
 	 * Accounts mit der gleichen Emailaddresse wird ein leerer Account
-	 * zurückgegeben.
+	 * zurueckgegeben.
 	 * 
 	 * @param email
 	 *            Die Emailaddresse anhand welcher der Account ausgewaehlt wird.

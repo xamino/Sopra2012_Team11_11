@@ -97,9 +97,9 @@ public class Application {
 	}
 
 	/**
-	 * Gibt den zurueck ob die Bewerbung abgeschlossen ist.
+	 * Gibt den Status der Bewerbung an.
 	 * 
-	 * @return true falls abgeschlossen, false falls noch laufend.
+	 * @return TURE falls abgeschlossen, FALSE falls noch laufend.
 	 */
 	public boolean isFinished() {
 		return finished;

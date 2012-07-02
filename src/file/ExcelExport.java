@@ -41,7 +41,7 @@ public abstract class ExcelExport {
 	
 	/**
 	 * Erstellt eine neue Excel Datei mit den getaetigten Einstellungen des
-	 * Verwalters und gibt ein File objekt zurück.
+	 * Verwalters und gibt ein File objekt zurueck.
 	 * 
 	 * @param data
 	 *            UserData Objekt des Benutzers.

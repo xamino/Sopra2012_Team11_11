@@ -72,7 +72,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return Gibt an, ob das Document erstellt werden konnte.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean createDocument(Document document) { // checked
 		return db.insert(
@@ -89,7 +89,7 @@ public class DocumentController {
 	 *            Name des Dokuments
 	 * @param beschreibung
 	 *            Beschreibung des Dokuments
-	 * @return Gibt an, ob das Document erstellt werden konnte.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean generateDocument(String name, String beschreibung) { // checked
 
@@ -122,7 +122,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return Gibt an, ob das löschen erfolgreich war.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean deleteDocument(Document document) { // checked
 		/*
@@ -142,7 +142,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return Gibt an, ob das Update erfolgreich war.
+	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	public boolean updateDocument(Document document) { // checked
 		return db.update(tableNameU, new String[] { "Name", "Beschreibung" },
@@ -242,7 +242,7 @@ public class DocumentController {
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
-	 * @return
+	 * @return Gibt alle Bewerbungsunterlagen mit abgeschlossenem Status (=1) zurueck.
 	 */			
 	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername, int aid) {
 		String[] select = { "*" };

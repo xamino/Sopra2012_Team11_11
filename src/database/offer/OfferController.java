@@ -582,8 +582,10 @@ public class OfferController {
 	//TODO: Doc
 	/**
 	 * Liest alle Angebote von einem Institut aus.
-	 * @param iid
+	 * @param iid 
+	 * 			Die ID des Institutes.
 	 * @return
+	 * 			Alle Angebote die zu einem Institut gehoeren.
 	 */
 	public Vector<Offer> getOffersByInstitute(int iid) {
 		Vector<Offer> offers = new Vector<Offer>();
