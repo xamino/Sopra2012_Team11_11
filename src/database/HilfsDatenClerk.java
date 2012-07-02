@@ -53,60 +53,69 @@ public class HilfsDatenClerk {
 	}
 
 	/**
-	 * @return the bewerbername
+	 * Gibt den Bewerbernamen zurueck.
+	 * @return Bewerbername
 	 */
 	public String getBewerbername() {
 		return bewerbername;
 	}
 
 	/**
+	 * Setzt den Bewerbername.
+	 * 
 	 * @param bewerbername
-	 *            the bewerbername to set
+	 *            zu setzender Bewerbername.
 	 */
 	public void setBewerbername(String bewerbername) {
 		this.bewerbername = bewerbername;
 	}
 
 	/**
-	 * @return the angebotsname
+	 * Gibt den Angebotsnamen zurueck
+	 * @return Angebotsname
 	 */
 	public String getAngebotsname() {
 		return angebotsname;
 	}
 
 	/**
+	 * Setzt den Angebootsnamen.
 	 * @param angebotsname
-	 *            the angebotsname to set
+	 *            Zu setzender Angebotsname.
 	 */
 	public void setAngebotsname(String angebotsname) {
 		this.angebotsname = angebotsname;
 	}
 
 	/**
-	 * @return the username
+	 * Gibt den Benutzernamen zurueck.
+	 * @return Benutzername
 	 */
 	public String getUsername() {
 		return username;
 	}
 
 	/**
+	 * Setzt den Benutzername.
 	 * @param username
-	 *            the username to set
+	 *            Zu setzender Benutzername.
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	/**
-	 * @return the aid
+	 * Gibt die AngebotsId zurueck.
+	 * @return AngebotsId
 	 */
 	public int getAid() {
 		return aid;
 	}
 
 	/**
+	 * Setzt die AngebotsId
 	 * @param aid
-	 *            the aid to set
+	 *            Zu setzende AngebotsId.
 	 */
 	public void setAid(int aid) {
 		this.aid = aid;

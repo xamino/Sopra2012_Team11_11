@@ -1,7 +1,7 @@
 /**
  * @author Patryk Boczon
  * @author Oemer Sahin
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  */
 
 package database.document;
@@ -26,8 +26,20 @@ public class DocumentController {
 	 */
 	private DatabaseController db;
 
+	/**
+	 * Name der Tabelle
+	 * 
+	 */
 	final static String tableNameS = "Standardunterlagen";// tabellenname
+	/**
+	 * Name der Tabelle
+	 * 
+	 */
 	final static String tableNameB = "Bewerbungsunterlagen";// tabellenname
+	/**
+	 * Name der Tabelle
+	 * 
+	 */
 	final static String tableNameU = "Unterlagen";// tabellenname
 
 	/**
@@ -72,7 +84,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createDocument(Document document) { // checked
 		return db.insert(
@@ -89,7 +101,7 @@ public class DocumentController {
 	 *            Name des Dokuments
 	 * @param beschreibung
 	 *            Beschreibung des Dokuments
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean generateDocument(String name, String beschreibung) { // checked
 
@@ -123,7 +135,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteDocument(Document document) { // checked
 		/*
@@ -143,7 +155,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein Document-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateDocument(Document document) { // checked
 		return db.update(tableNameU, new String[] { "Name", "Beschreibung" },
@@ -252,7 +264,8 @@ public class DocumentController {
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
-	 * @return
+	 * @return Gibt alle Bewerbungsunterlagen mit nicht abgeschlossenem Status (=0)
+	 *         zurueck.
 	 */
 	public Vector<AppDocument> getAppDocsWithStatusZero(String benutzername,
 			int aid) {
@@ -412,7 +425,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein AppDocument-Objekt mit
 	 *            allen dazugehoerigen Attributen.
-	 * @return
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createAppDocument(AppDocument document) { // checked
 		return db.insert(tableNameB, new Object[] { document.getUsername(),
@@ -427,6 +440,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
+	 * @return  Gibt an, ob die Operation erfolgreich war.           
 	 */
 	public boolean deleteAppDocument(AppDocument document) { // checked
 		return db.delete(tableNameB,
@@ -442,7 +456,7 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
-	 * @return
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateAppDocument(AppDocument document) { // checked; Update
 																// von
@@ -470,12 +484,16 @@ public class DocumentController {
 	}
 
 	/**
-	 * TODO!
+	 * Diese Methode liefert alle Dokumente zu einer uebergebenen AID, 
+	 * einem uebergebenem username und einer uebergebenen UID zurueck.
 	 * 
 	 * @param username
+	 * 			Benutzername
 	 * @param aid
+	 * 			AngebotsID
 	 * @param uid
-	 * @return
+	 * 			UnterlagenID
+	 * @return liefert die geuchten Dokumente zurueck
 	 */
 	public AppDocument getDocumentByUsernameAIDandUID(String username, int aid,
 			int uid) {
@@ -513,7 +531,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
-	 * @return
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createOfferDocument(OfferDocument document) { // checked
 		return db.insert(tableNameS, new Object[] { document.getOfferID(),
@@ -527,7 +545,7 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein AngebotDokument-Objekt
 	 *            mit allen dazugehoerigen Attributen.
-	 * @return
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteOfferDocument(OfferDocument document) { // checked
 		return db.delete(tableNameS, "AID=" + document.getOfferID()
@@ -573,25 +591,25 @@ public class DocumentController {
 		db.update(tableNameS, columns, values, where);
 	}
 
-	/**
-	 * Diese Methode dient dazu, den Status der eingesehenen
-	 * Bewerbungsunterlagen anzugeben?
-	 */
-	public void updateStatus() { // not useful
-		/*
-		 * Diese Funktionalit�t wird schon in der Methode
-		 * updateAppDocument(AppDocument document) realisiert.
-		 */
-	}
+//	/**
+//	 * Diese Methode dient dazu, den Status der eingesehenen
+//	 * Bewerbungsunterlagen anzugeben
+//	 */
+//	public void updateStatus() { // not useful
+//		/*
+//		 * Diese Funktionalit�t wird schon in der Methode
+//		 * updateAppDocument(AppDocument document) realisiert.
+//		 */
+//	}
 
 	/**
 	 * Diese Methode gibt alle Dokumente zurueck, die ein Angebot nicht als
-	 * Standartunterlagen angegeben hat
+	 * Standartunterlagen angegeben hat.
 	 * 
 	 * @param aid
 	 *            AngebotsID des Angebots
 	 * @return Dokumente, die ein Angebot nicht als Standartunterlagen angegeben
-	 *         hat
+	 *         haben.
 	 */
 	public Vector<Document> getDocumentsToAddToOffer(int aid) {
 
@@ -622,13 +640,13 @@ public class DocumentController {
 
 	/**
 	 * Diese Methode gibt alle Dokumente zurueck, die eine Bewerbung nicht als
-	 * Unterlagen angegeben hat
+	 * Unterlagen angegeben hat.
 	 * 
 	 * @param aid
 	 *            AngebotsID des Angebots
 	 * @param username
 	 *            Benutzername des Bewerbers
-	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben hat
+	 * @return Dokumente, die eine Bewerbung nicht als Unterlagen angegeben haben.
 	 */
 	public Vector<Document> getDocumentsToAddToApp(int aid, String username) {
 		Vector<Document> docsToAdd = new Vector<Document>();
@@ -662,7 +680,7 @@ public class DocumentController {
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
-	 * @return
+	 * @return Vektor mit allen Dokumenten zu einem Username.
 	 */
 	public Vector<AppDocument> getAllAppDocsByApplicant(String benutzername) {
 		String[] select = { "*" };
@@ -727,9 +745,9 @@ public class DocumentController {
 	}
 
 	/**
-	 * Generate a new ID.
+	 * Generiert eine neue ID.
 	 * 
-	 * @return generated ID
+	 * @return generierte ID
 	 */
 	public int getNewDocID(String tablename) {
 		int newID = 0;
@@ -744,13 +762,13 @@ public class DocumentController {
 	}
 
 	/**
-	 * Generate a random number.
+	 * Generiert eine neue Zufallszahl.
 	 * 
 	 * @param aStart
-	 *            Start of the number.
+	 *            Start der Zahl.
 	 * @param aEnd
-	 *            End of the number.
-	 * @return generated number.
+	 *            Ende der Zahl.
+	 * @return generierte Zahl.
 	 */
 	private int generateRandomNr(int aStart, int aEnd) {
 

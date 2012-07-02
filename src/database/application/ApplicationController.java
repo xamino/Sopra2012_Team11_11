@@ -3,13 +3,11 @@
  * @author Oemer Sahin
  * @author Manuel Güntzel
  * @author Anatoli Brill
+ * @author Laura Irlinger
  */
 
 package database.application;
 
-/**
- * Verwaltet alle Datenbankzugriffe auf Bewerbungs-bezogene Daten.
- */
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -26,18 +24,40 @@ import database.document.OfferDocument;
 import database.offer.Offer;
 import database.offer.OfferController;
 
+/**
+ * Verwaltet alle Datenbankzugriffe auf Bewerbungs-bezogene Daten.
+ */
 public class ApplicationController {
 
 	/**
-	 * Klassenattribut "appcon" beinhaltet eine ApplicationController-Instanz,
+	 * Klassenattribut "appcon" beinhaltet eine ApplicationController-Instanzen,
 	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
 	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
-	 * ApplicationController existiert. Das selbe gilt auch fuer die anderen
-	 * Controller.
+	 * ApplicationController existiert.
 	 */
 	private static ApplicationController appcon;
+	/**
+	 * Klassenattribut "accon" beinhaltet eine AccountController-Instanzen,
+	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
+	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
+	 * AccountController existiert. Das selbe gilt auch fuer die anderen
+	 * Controller.
+	 */
 	private static AccountController acccon;
+	/**
+	 * Klassenattribut "doccon" beinhaltet eine DocumentController-Instanzen,
+	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
+	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
+	 * DocumentController existiert. 
+	 */
 	private static DocumentController doccon;
+	/**
+	 * Klassenattribut "db" beinhaltet eine DatabaseController-Instanzen,
+	 * falls keine vorhanden war und mit der Methode getInstance angelegt wird.
+	 * Dies dient zur Gewaehrleistung, dass nur eine Instanz von
+	 * DatabaseController existiert. Das selbe gilt auch fuer die anderen
+	 * Controller.
+	 */
 	private static DatabaseController db;
 	/**
 	 * Instanz des Loggers.
@@ -47,7 +67,7 @@ public class ApplicationController {
 	/**
 	 * Diese Methode prueft ob ein ApplicationController-Objekt existiert. Falls
 	 * nicht wird eine neue ApplicationOffer-Instanz angelegt, zurueckgegeben
-	 * und in dem Klassenattribut "appcontr" abgespeichert. Dies dient zur
+	 * und in dem Klassenattribut "appcon" abgespeichert. Dies dient zur
 	 * Gewaehrleistung, dass nur eine Instanz von ApplicationController
 	 * existiert.
 	 * 
@@ -71,6 +91,9 @@ public class ApplicationController {
 		log.write("ApplicationController", "Instance created.");
 	}
 
+	/**
+	 * Tabellenname
+	 */
 	final static String tableName = "Bewerbungen";// tabellenname
 
 	/**
@@ -80,6 +103,7 @@ public class ApplicationController {
 	 * @param application
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
+	 * @return  Gibt an, ob die Operation erfolgreich war.          
 	 */
 	public boolean createApplication(Application application) { // checked
 		Vector<Boolean> check = new Vector<Boolean>();
@@ -110,6 +134,7 @@ public class ApplicationController {
 	 * @param application
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
+	 * @return  Gibt an, ob die Operation erfolgreich war.           
 	 */
 
 	public boolean deleteApplication(Application application) {
@@ -140,6 +165,7 @@ public class ApplicationController {
 	 * @param application
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
+	 * @return  Gibt an, ob die Operation erfolgreich war.           
 	 */
 	public boolean updateApplication(Application application) {
 

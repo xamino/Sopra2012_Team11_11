@@ -29,9 +29,21 @@ public class Account {
 	 */
 	private int accounttype;
 	// Constants for easy access:
+	/**
+	 * Der Berechtigungstyp des Accounts: 0 - Admin 
+	 */
 	public static final int ADMIN = 0;
+	/**
+	 * Der Berechtigungstyp des Accounts: 1 - Anbieter 
+	 */
 	public static final int ANBIETER = 1;
+	/**
+	 * Der Berechtigungstyp des Accounts: 2 - Verwalter 
+	 */
 	public static final int VERWALTER = 2;
+	/**
+	 * Der Berechtigungstyp des Accounts:  3 - Bewerber
+	 */
 	public static final int BEWERBER = 3;
 	/**
 	 * Email Adresse des Benutzers.
@@ -47,7 +59,7 @@ public class Account {
 	 */
 	private int institute;
 	/**
-	 * Repraesentant
+	 * Stellvertreter
 	 */
 	private String representative;
 
@@ -65,7 +77,9 @@ public class Account {
 	 * @param name
 	 *            Realer Name des Accountinhabers.
 	 * @param institute
+	 * 			Institut
 	 * @param representative
+	 * 			Stellvertreter
 	 */
 	public Account(String username, String passwordhash, int accounttype,
 			String email, String name, int institute, String representative) {
@@ -212,7 +226,7 @@ public class Account {
 	}
 
 	/**
-	 * Einfache toString methode. Gibt nicht alle Parameter zurueck.
+	 * Einfache toString Methode. Gibt nicht alle Parameter zurueck.
 	 */
 	public String toString() {
 		return "[" + username + ":" + name + ":" + email + "]";
