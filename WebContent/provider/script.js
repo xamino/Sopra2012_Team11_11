@@ -156,7 +156,7 @@ function handleApplicantChoiceResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("applicantsTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Benutzername:</th><th>Name</th><th>E-Mail</th></tr>";
+		table.innerHTML = "<tr><th>Benutzername</th><th>Name</th><th>E-Mail</th><th>Status</th></tr>";
 		/*
 		 * orginal von lau lau: for ( var i = 0; i < JSONarray.length; i++) {
 		 * table.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].name + "\"
@@ -169,8 +169,20 @@ function handleApplicantChoiceResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].username + "\');\">" + "<td>"
 					+ JSONarray[i].username + "</td><td>" + JSONarray[i].name
-					+ "</td><td>" + JSONarray[i].email + "</td></tr>";
+					+ "</td><td>" + JSONarray[i].email + "</td><td>"+JSONarray[i].angenommen+"</td></tr>";
 		}
+		
+		var aid = getURLParameter("AID");
+		
+		connect("/hiwi/Provider/js/getTotalSlots", "aid=" + aid,
+				handleTotalSlotsResponse);
+	}
+}
+
+function handleTotalSlotsResponse(mime, data){
+	if(mime == "showfreeandtotalslots/json"){
+		var headline = document.getElementById("freeslots");
+		headline.innerHTML += " - "+data;
 	}
 }
 
@@ -181,7 +193,7 @@ function handleApplicantChoiceResponse(mime, data) {
  *            The username ID of the clicked entry.
  */
 function markOfferSelected(id) {
-
+	toggleWarning("error_already_chosen", false, "");
 	tmpApplicantUserName = id; // braucht man, damit man auf den username des
 	// bewerbers fuer die berwerberauswahl in
 	// function takeSelectedApplicant() zugreifen
@@ -204,6 +216,7 @@ function markOfferSelected(id) {
 	// alert("aktuelle id: "+selectedOffer);
 
 	document.getElementById(id).setAttribute("class", "selected");
+
 }
 
 /**
@@ -346,11 +359,11 @@ function takeSelectedApplicant() {
 function handleTakeSelectedApplicantResponse(mime, data) {
 	// alert("Applicant selected funzt net weil ich net weiss, wie ich auf den
 	// Benutzernamen vom selektierten Bewerber zugreifen soll.");
+	aid = getURLParameter("AID");
 	if (mime == "text/url") {
-		window.location = data;
-		return;
+		toggleWarning("error_already_chosen", false, data);
+		window.location = 'applicantlist.jsp?AID=' + aid;
 	} else if (mime == "text/error") {
-		alert(data);
-		return;
+		toggleWarning("error_already_chosen", true, data);
 	}
 }

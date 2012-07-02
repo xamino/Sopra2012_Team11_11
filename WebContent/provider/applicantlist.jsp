@@ -59,7 +59,7 @@
 				<hr>
 				<div class="textblock">
 					<div class="haupttext">
-						<h4>Bewerbungen</h4>
+						<h4 id="freeslots">Bewerbungen</h4>
 						<table class="sized" id="applicantsTable">
 							<!-- <tr>
 						<th></th>
@@ -83,6 +83,7 @@
 						</table>
 						<input type="button" value="Annehmen"
 							onclick="togglePopup('accept',true);" />
+						<div id="error_already_chosen" class="hiddenerror"></div>
 						<div id="error_noAppSelected" class="hiddenerror"></div>
 						<!-- <input type="submit" value="Ausgewählte annehmen" />-->
 					</div>

@@ -15,6 +15,7 @@ import servlet.Helper;
 import com.google.gson.Gson;
 
 import database.DatabaseController;
+import database.HilfsDatenProvider;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -201,13 +202,31 @@ public class Provider extends User {
 	 */
 	public String getApplicants(int aid) {
 		Vector<Application> apps = appcon.getApplicationsByOffer(aid);
-		Vector<Account> acc = new Vector<Account>();
-		for (Application app : apps) {
-			acc.add(acccon.getAccountByUsername(app.getUsername()));
+		Vector<HilfsDatenProvider> vec = new Vector<HilfsDatenProvider>(apps.size());
+		String name, username, email, angenommen;
+		for (int i = 0; i < apps.size(); i++) {
+			username = apps.elementAt(i).getUsername();
+			name = acccon.getAccountByUsername(username).getName();
+			email = acccon.getAccountByUsername(username).getEmail();
+			if(apps.elementAt(i).isChosen()){
+				angenommen = "angenommen";
+			} else {
+				angenommen = "nicht angenommen";
+			}
+			HilfsDatenProvider temp = new HilfsDatenProvider(name,username,email,angenommen);	
+			vec.add(temp);
 		}
-		return new Gson().toJson(acc, acc.getClass());
+
+		return new Gson().toJson(vec, vec.getClass());
 	}
 
+	public String getFreeSlotsOufOfTotal(int aid){
+		int free = offcon.getOfferById(aid).getSlots();
+		int total = offcon.getTotalSlotsOfOffer(aid);
+		
+		return free+"/"+total+" freie Stellen";
+	}
+	
 	/**
 	 * Erstellt ein neues zu pruefendes Angebot.
 	 * 
@@ -324,7 +343,7 @@ public class Provider extends User {
 		log.write("ProviderServlet",
 				" Setting free slots for offer in progress...");
 		// No free slots
-		if (offcon.getFreeSlotsOfOffer(aid) < 1) {
+		if (freeSlots < 1) {
 			return false;
 		}
 		// reduce freeSlots and update it

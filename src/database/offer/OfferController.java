@@ -547,11 +547,11 @@ public class OfferController {
 	 *            aid of the offer
 	 * @return free slots of the offer
 	 */
-	public int getFreeSlotsOfOffer(int aid) {
+	public int getTotalSlotsOfOffer(int aid) {
 
-		int number = 0;
+		int total = 0;
 		Offer off = getOfferById(aid);
-		int total = off.getSlots();
+		int free = off.getSlots();
 		int taken = 0;
 		Vector<Application> apps = ApplicationController.getInstance()
 				.getApplicationsByOffer(aid);
@@ -561,9 +561,9 @@ public class OfferController {
 			}
 		}
 
-		number = total - taken;
+		total = free + taken;
 
-		return number;
+		return total;
 	}
 
 	/**
