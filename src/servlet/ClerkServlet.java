@@ -61,29 +61,29 @@ public class ClerkServlet extends HttpServlet {
 	 */
 	private Log log;
 
-	/**
-	 * Variable zum speichern einer Instanz vom DocumentController;
-	 */
-	private DocumentController doccon;
-
-	/**
-	 * Variable zum speichern einer Instanz vom ApplicationController;
-	 */
-	private ApplicationController appcon;
-
-	/**
-	 * Variable zum speichern einer Instanz vom OfferController;
-	 */
-	private OfferController offcon;
-
-	/**
-	 * Variable zum speichern einer Instanz vom InstituteController
-	 */
-	private InstituteController instcon;
-	/**
-	 * Variable zum speichern einer Instanz vom InstituteController
-	 */
-	private AccountController acccon;
+	// /**
+	// * Variable zum speichern einer Instanz vom DocumentController;
+	// */
+	// private DocumentController doccon;
+	//
+	// /**
+	// * Variable zum speichern einer Instanz vom ApplicationController;
+	// */
+	// private ApplicationController appcon;
+	//
+	// /**
+	// * Variable zum speichern einer Instanz vom OfferController;
+	// */
+	// private OfferController offcon;
+	//
+	// /**
+	// * Variable zum speichern einer Instanz vom InstituteController
+	// */
+	// private InstituteController instcon;
+	// /**
+	// * Variable zum speichern einer Instanz vom InstituteController
+	// */
+	// private AccountController acccon;
 	/**
 	 * Variable zum speichern einer Instanz vom Mailer
 	 */
@@ -101,11 +101,6 @@ public class ClerkServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 		gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
-		acccon = AccountController.getInstance();
-		doccon = DocumentController.getInstance();
-		appcon = ApplicationController.getInstance();
-		offcon = OfferController.getInstance();
-		instcon = InstituteController.getInstance();
 		mail = Mailer.getInstance();
 	}
 
@@ -144,7 +139,7 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			// AID should be != -1 here, so continue:
-			Offer offertoedit = OfferController.getInstance().getOfferById(aid);
+			Offer offertoedit = clerk.getOfferByAID(aid);
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(offertoedit, offertoedit.getClass()));
@@ -177,7 +172,7 @@ public class ClerkServlet extends HttpServlet {
 						"Fehler bei Eingabe! Datum nicht lesbar!");
 				return;
 			}
-			Offer offertosave = OfferController.getInstance().getOfferById(aid);
+			Offer offertosave = clerk.getOfferByAID(aid);
 			// note: is done in OfferController, no need to set twice...
 			// set modificationdate to current date
 			// java.util.Date aenderungsdatum = new java.util.Date();
@@ -196,8 +191,7 @@ public class ClerkServlet extends HttpServlet {
 				log.write("ClerkServlet",
 						"There was an error while PARSING StartDate");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("invalid startDate");
+				response.getWriter().write("invalid startDate");
 				return;
 			}
 			try {
@@ -208,17 +202,16 @@ public class ClerkServlet extends HttpServlet {
 				log.write("ClerkServlet",
 						"There was an error while PARSING EndDate");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("invalid endDate");
+				response.getWriter().write("invalid endDate");
 				return;
 			}
 
-			if(offertosave.getStartdate().after(offertosave.getEnddate())&&!offertosave.getEnddate().equals(offertosave.getStartdate())){
-				log.write("ClerkServlet",
-						"StartDate after Enddate!");
+			if (offertosave.getStartdate().after(offertosave.getEnddate())
+					&& !offertosave.getEnddate().equals(
+							offertosave.getStartdate())) {
+				log.write("ClerkServlet", "StartDate after Enddate!");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("order");
+				response.getWriter().write("order");
 				return;
 			}
 			// logic for checked:
@@ -232,24 +225,12 @@ public class ClerkServlet extends HttpServlet {
 				offertosave.setChecked(false);
 				offertosave.setFinished(false);
 			}
-			Account author = acccon.getAccountByUsername(offertosave
-					.getAuthor());
-			String address = author.getEmail();
-			if (offertosave.isChecked() && !offertosave.isFinished())
-				mail.sendMail(address, "Freischaltung des Angebots \""
-						+ offertosave.getName() + "\"",
-						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
-								+ offertosave.getName()
-								+ "\" für Bewerber freigeschaltet wurde.");
-			if (!offertosave.isChecked() && offertosave.isFinished())
-				mail.sendMail(address,
-						"Ablehnen des Angebots \"" + offertosave.getName()
-								+ "\"",
-						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
-								+ offertosave.getName()
-								+ "\" durch einen Verwalter abgelehnt wurde.");
 			// System.out.println(offertosave);
-			OfferController.getInstance().updateOffer(offertosave);
+			if (!clerk.updateOffer(offertosave)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim update der Datenbank!");
+				return;
+			}
 			log.write("ClerkServlet", "<" + clerk.getUserData().getUsername()
 					+ "> changed offer <" + offertosave.getAid() + ">");
 			// wir wollten doch einen String als date?
@@ -261,76 +242,68 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(Helper.D_CLERK_OFFERMANAGEMENT);
 			return;
 		} else if (path.equals("/js/documentsFromOffer")) {
-
-			String aid = request.getParameter("aid");
-			int aid1 = Integer.parseInt(aid);
-			Vector<Offer> offersid = OfferController.getInstance()
-					.getAllOffers();
-			// String offername;
-			Vector<OfferDocument> offerdocuments = new Vector<OfferDocument>();
-			for (int i = 0; i < offersid.size(); i++) {
-				if (aid1 == offersid.elementAt(i).getAid()) {
-					offerdocuments = DocumentController.getInstance()
-							.getDocumentsByOffer(Integer.parseInt(aid));
-				}
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen von AID!");
+				return;
 			}
-			Vector<Document> documents = new Vector<Document>();
-			for (int i = 0; i < offerdocuments.size(); i++) {
-				documents.add(DocumentController.getInstance()
-						.getDocumentByUID(
-								offerdocuments.elementAt(i).getDocumentid()));
-			}
+			Vector<Document> documents = clerk.getDocumentsFromOffer(aid);
 			response.setContentType("documentsoffer/json");
 			response.getWriter().write(
 					gson.toJson(documents, documents.getClass()));
 
 		}
-
 		// Creates a Vector of Documents which can be added to an offer
 		else if (path.endsWith("/js/documentsToAddToOffer")) {
-
-			int aid = Integer.parseInt(request.getParameter("aid"));
-
-			Vector<Document> docsToAdd = DocumentController.getInstance()
-					.getDocumentsToAddToOffer(aid);
-
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen von AID!");
+				return;
+			}
+			Vector<Document> docsToAdd = clerk.getUnusedDocForOffer(aid);
 			response.setContentType("documentstoaddoffer/json");
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
-
 		// Creates a Vector of Documents which can be added to an application
 		else if (path.endsWith("/js/documentsToAddToApplication")) {
-
-			int aid = Integer.parseInt(request.getParameter("aid"));
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen von AID!");
+				return;
+			}
 			String username = request.getParameter("username");
-
-			Vector<Document> docsToAdd = DocumentController.getInstance()
-					.getDocumentsToAddToApp(aid, username);
-
+			if (!validate(username) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler in den Parametern!");
+				return;
+			}
+			Vector<Document> docsToAdd = clerk.getDocsForApplication(aid,
+					username);
 			response.setContentType("docstoaddtoapp/json");
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
 		}
-
-		// Creates a Vector for the table in applicationmanagement.jsp
 		else if (path.equals("/js/showApplication")) {
-			String username = clerk.getUserData().getUsername();
-			Account clerka = AccountController.getInstance()
-					.getAccountByUsername(username);
-			Vector<HilfsDatenClerk> daten = DatabaseController.getInstance()
-					.getChosenApplicationDataByInstitute(clerka.getInstitute());
+			Account clerkAccount = clerk.getAccount();
+			Vector<HilfsDatenClerk> daten = clerk.getVoodoo(clerkAccount);
 			if (daten == null || daten.isEmpty()) {
 				response.setContentType("text/error");
 				response.getWriter().write("Keine Einträge in der DB!");
 				return;
 			}
-			// System.out.println("Ergebnis: "+daten.size());
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
-
 		}
-		// Creates an Vector for the table in editapplication.jsp
 		else if (path.equals("/js/applicationDocuments")) {
 			String user = request.getParameter("User");
 			// System.out.println("User:"+user);

@@ -6,7 +6,6 @@ package user;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -14,10 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+import mail.Mailer;
+import database.HilfsDatenClerk;
 import database.account.Account;
-import database.application.Application;
 import database.document.AppDocument;
 import database.document.Document;
+import database.document.OfferDocument;
 import database.offer.Offer;
 import file.ExcelExport;
 
@@ -25,6 +26,11 @@ import file.ExcelExport;
  * Verwaltet alle Aufgaben und Daten eines Verwalters.
  */
 public class Clerk extends User {
+
+	/**
+	 * Instanz des Mailers.
+	 */
+	private Mailer mail;
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -44,6 +50,7 @@ public class Clerk extends User {
 	public Clerk(String username, String email, String name,
 			String representative, HttpSession session) {
 		super(username, email, name, representative, session);
+		mail = Mailer.getInstance();
 		userManagement.LoggedInUsers.addUser(this);
 	}
 
@@ -76,118 +83,70 @@ public class Clerk extends User {
 		return acccon.deleteClerkAccount(this);
 	}
 
-//	/**
-//	 * Methode zum bearbeiten von Bewerbungen.
-//	 */
-//	public void editApplication() {
-//		
-//	}
+	/**
+	 * Gibt ein Angebot anhand der AID zurueck.
+	 * 
+	 * @param AID
+	 *            Die AID des Angebots.
+	 * @return Das Angebot.
+	 */
+	public Offer getOfferByAID(int AID) {
+		return offcon.getOfferById(AID);
+	}
 
-//	/**
-//	 * Methode zum ablehnen eines Angebots.
-//	 * 
-//	 * @throws SQLException
-//	 */
-//	public void rejectOffer(int offerID) throws SQLException {
-//		Offer off = offcon.getOfferById(offerID);
-//		offcon.deleteOffer(off);
-//		// TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert
-//		// werden.
-//
-//	}
+	/**
+	 * Aktualisiert ein Angebot in der Datenbank und schickt entsprechend emails
+	 * an die Betroffenen.
+	 * 
+	 * @param off
+	 *            Das zu aendernde Angebot.
+	 * @return Flag fuer Fehler.
+	 */
+	public boolean updateOffer(Offer off) {
+		Account author = acccon.getAccountByUsername(off.getAuthor());
+		String address = author.getEmail();
+		if (off.isChecked() && !off.isFinished())
+			mail.sendMail(
+					address,
+					"Freischaltung des Angebots \"" + off.getName() + "\"",
+					"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
+							+ off.getName()
+							+ "\" für Bewerber freigeschaltet wurde.");
+		if (!off.isChecked() && off.isFinished())
+			mail.sendMail(address, "Ablehnen des Angebots \"" + off.getName()
+					+ "\"", "Hiermit teilen wir ihnen mit, dass ihr Angebot \""
+					+ off.getName()
+					+ "\" durch einen Verwalter abgelehnt wurde.");
+		return offcon.updateOffer(off);
+	}
 
-//	/**
-//	 * Methode zum aktualiesieren eines Angebots.
-//	 */
-//	public void updateOffer(Offer off) {
-//		offcon.updateOffer(off);
-//
-//	}
-
-//	/**
-//	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
-//	 * Bewerber einzeln Dokumente hinzugefuegt werden.
-//	 * 
-//	 * @param username
-//	 *            Benutzername wird zur eindeutigen Zuordnung des Dokuments
-//	 *            benoetigt.
-//	 * @param aID
-//	 *            ID des Bewerbers
-//	 */
-//	public void addAppDoc(String username, int aID, int uID, boolean present) {
-//		AppDocument doc = new AppDocument(username, aID, uID, present);
-//		doccon.createAppDocument(doc);
-//
-//	}
-
-//	/**
-//	 * Methode zum hinzufuegen von Dokumenten.
-//	 * 
-//	 * @param UID
-//	 *            ID der Unterlage
-//	 * @param name
-//	 *            Name der Unterlage
-//	 * @param description
-//	 *            Beschreibung zur Unterlage
-//	 */
-//	public boolean addDoc(Document doc) {
-//		if (!doccon.createDocument(doc)) {
-//			log.write("Clerk", "Error adding a document!");
-//			return false;
-//		} else {
-//			log.write("Clerk", "<" + getUserData().getUsername()
-//					+ "> added document <" + doc.getName() + ">.");
-//			return true;
-//		}
-//	}
-
-	// Nur der Admin kann Unterlagen erstellen
+	/**
+	 * Liefert alle Dokumente zu einem Angebot zurueck.
+	 * 
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @return Die Dokumente.
+	 */
+	public Vector<Document> getDocumentsFromOffer(int aid) {
+		Vector<Offer> offersid = offcon.getAllOffers();
+		Vector<OfferDocument> offerdocuments = new Vector<OfferDocument>();
+		for (Offer offer : offersid) {
+			if (aid == offer.getAid())
+				offerdocuments = doccon.getDocumentsByOffer(aid);
+		}
+		Vector<Document> documents = new Vector<Document>();
+		for (OfferDocument offDoc : offerdocuments) {
+			documents.add(doccon.getDocumentByUID(offDoc.getDocumentid()));
+		}
+		return documents;
+	}
 
 	/**
 	 * Methode zum entfernen von Dokumenten.
 	 */
 	public void delDoc(Document doc) {
-
 		doccon.deleteDocument(doc);
 	}
-
-	// Siehe oben
-
-//	 /**
-//	 * Methode zum annehmen eines Bewerbers.
-//	 * @param AID
-//	 * ID der Bewerbung
-//	 * @throws SQLException
-//	 */
-//	 public void acceptApplication(int AID) throws SQLException {
-//	 Application app = appcon.getApplicationById(AID);
-//	 app.setChosen(true);
-//	 appcon.updateApplication(app);
-//	 }
-	// Der Provider nimmt bewerbungen an
-
-//	/**
-//	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
-//	 * einzeln Dokumente entfernt werden.
-//	 * 
-//	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
-//	 */
-//	public boolean deleteAppDoc(AppDocument doc) {
-//		return doccon.deleteAppDocument(doc);
-//	}
-
-//	/**
-//	 * Methode zum beenden des Berwerbungsvorgangs.
-//	 * 
-//	 * @param AID
-//	 *            ID der Bewerbung
-//	 * @throws SQLException
-//	 */
-//	public void finishApplication(int AID) throws SQLException {
-//		Application app = appcon.getApplicationById(AID);
-//		app.setFinished(true);
-//		appcon.updateApplication(app);
-//	}
 
 	/**
 	 * Export fuer die Excel-File
@@ -197,7 +156,6 @@ public class Clerk extends User {
 	 * @throws WriteException
 	 * @throws RowsExceededException
 	 */
-
 	public File doExport() throws IOException, RowsExceededException,
 			WriteException {
 		return ExcelExport.export(this.getUserData());
@@ -244,14 +202,16 @@ public class Clerk extends User {
 	 */
 	public Vector<Offer> getAllUncheckedOffers() {
 		Vector<Offer> offers = new Vector<Offer>();
-		Account rep = acccon.getRepresentativeAccount(this.getUserData().getUsername());
+		Account rep = acccon.getRepresentativeAccount(this.getUserData()
+				.getUsername());
 		// Check if field is used:
 		if (rep != null) {
 			// Cancel if rep is null (error somewhere), wrong accounttype, or is
 			// own name.
 			if (rep == null || rep.getAccounttype() != Account.VERWALTER
 					|| rep.getUsername() == getUserData().getUsername()) {
-				log.write("Clerk", "ERROR getting representative, is the value valid?");
+				log.write("Clerk",
+						"ERROR getting representative, is the value valid?");
 			} else {
 				log.write("Clerk", "<" + this.getUserData().getUsername()
 						+ "> is representative for <" + rep.getUsername()
@@ -266,5 +226,43 @@ public class Clerk extends User {
 				.getUsername());
 		offers.addAll(offcon.getUncheckedOffersByClerk(ownAccount));
 		return offers;
+	}
+
+	/**
+	 * Gibt alle Dokumente zurueck, welche in einem Angebot noch nicht verwendet
+	 * werden.
+	 * 
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @return Die unverwendeten Dokumente.
+	 */
+	public Vector<Document> getUnusedDocForOffer(int aid) {
+		return doccon.getDocumentsToAddToOffer(aid);
+	}
+
+	/**
+	 * Gibt alle zu vergebende Dokumente auf eine Bewerbung zurueck.
+	 * 
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @param username
+	 *            Der Benutzername des Bewerbers.
+	 * @return Die Dokumente verpackt in einen wunderschoenen Vektor.
+	 */
+	public Vector<Document> getDocsForApplication(int aid, String username) {
+		return doccon.getDocumentsToAddToApp(aid, username);
+	}
+
+	/**
+	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des
+	 * uebergebenen Instituts in Form eines Vectors des Datentyps
+	 * HilfsDatenClerk zurueck.
+	 * 
+	 * @param clerkAccount
+	 * @return
+	 */
+	public Vector<HilfsDatenClerk> getVoodoo(Account clerkAccount) {
+		return appcon.getChosenApplicationDataByInstitute(clerkAccount
+				.getInstitute());
 	}
 }

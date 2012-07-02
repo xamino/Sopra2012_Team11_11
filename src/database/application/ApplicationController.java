@@ -17,6 +17,7 @@ import java.util.Vector;
 import logger.Log;
 
 import database.DatabaseController;
+import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
 import database.document.AppDocument;
@@ -66,9 +67,8 @@ public class ApplicationController {
 		db = DatabaseController.getInstance();
 		acccon = AccountController.getInstance();
 		doccon = DocumentController.getInstance();
-		log= Log.getInstance();
-		log.write("ApplicationController",
-				"Instance created.");
+		log = Log.getInstance();
+		log.write("ApplicationController", "Instance created.");
 	}
 
 	final static String tableName = "Bewerbungen";// tabellenname
@@ -111,20 +111,22 @@ public class ApplicationController {
 	 */
 
 	public boolean deleteApplication(Application application) {
-		String where = "AID = " + application.getAid() + " AND benutzername = '"
-				+ application.getUsername() + "'";
-        
-		Account useracc = acccon.getAccountByUsername(application.getUsername());
-		Offer offer = OfferController.getInstance().getOfferById(application.getAid());
-		
-		//deletes all appdocuments from this application
-		Vector<AppDocument> docs = doccon.getDocumentsByUserAndOffer(useracc, offer);
-		if(docs != null){
+		String where = "AID = " + application.getAid()
+				+ " AND benutzername = '" + application.getUsername() + "'";
+
+		Account useracc = acccon
+				.getAccountByUsername(application.getUsername());
+		Offer offer = OfferController.getInstance().getOfferById(
+				application.getAid());
+
+		// deletes all appdocuments from this application
+		Vector<AppDocument> docs = doccon.getDocumentsByUserAndOffer(useracc,
+				offer);
+		if (docs != null) {
 			for (int i = 0; i < docs.size(); i++) {
 				doccon.deleteAppDocument(docs.elementAt(i));
 			}
 		}
-
 
 		return db.delete(tableName, where);
 	}
@@ -165,8 +167,9 @@ public class ApplicationController {
 		String[] from = { tableName };
 
 		ResultSet rs = db.select(select, from, null);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get applications");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get applications");
 			return applicationvec;
 		}
 		try {
@@ -203,8 +206,9 @@ public class ApplicationController {
 		String where = "benutzername = '" + username + "'";
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get applications");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get applications");
 			return applicationvec;
 		}
 		try {
@@ -242,8 +246,9 @@ public class ApplicationController {
 		String where = "AID = " + aid;
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get applications");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get applications");
 			return applicationvec;
 		}
 		try {
@@ -280,8 +285,9 @@ public class ApplicationController {
 		String where = "sachbearbeiter = '" + clerkname + "'";
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get applications");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get applications");
 			return applicationvec;
 		}
 		try {
@@ -308,21 +314,23 @@ public class ApplicationController {
 	 *            Id einer Bewerbung
 	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
 	 */
-	public Application getApplicationById(int AId){
+	public Application getApplicationById(int AId) {
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "AID = " + AId;
-				
+
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get application");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get application");
 			return null;
 		}
 
 		try {
 			if (rs.next()) {
-				Application app = new Application(rs.getString(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+				Application app = new Application(rs.getString(1),
+						rs.getInt(2), rs.getBoolean(3), rs.getString(4),
+						rs.getBoolean(5));
 				return app;
 			} else
 				return null;
@@ -331,21 +339,21 @@ public class ApplicationController {
 					"Error while reading application by aid from Database");
 		}
 		return null;
-		
-//changed by oemer. orginal:		
-//		public Application getApplicationById(int AId) throws SQLException {
-//			String[] select = { "AID" };
-//			String[] from = { tableName };
-//			String where = null;
-//
-//			ResultSet rs = db.select(select, from, where);
-//			Application app = new Application(rs.getString(1), rs.getInt(2),
-//					rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
-//			return app;
-//		}
-	
+
+		// changed by oemer. orginal:
+		// public Application getApplicationById(int AId) throws SQLException {
+		// String[] select = { "AID" };
+		// String[] from = { tableName };
+		// String where = null;
+		//
+		// ResultSet rs = db.select(select, from, where);
+		// Application app = new Application(rs.getString(1), rs.getInt(2),
+		// rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+		// return app;
+		// }
+
 	}
-	
+
 	/**
 	 * Gibt eine Bestimmte Bewerbung zurueck. Die Bewerbung wird eindeutig durch
 	 * die AngebotsID und dem Benutzernamen bestimmt.
@@ -356,21 +364,24 @@ public class ApplicationController {
 	 *            Benutzername eines Bewerbers
 	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
 	 */
-	public Application getApplicationByOfferAndUser(int AnId, String username){
+	public Application getApplicationByOfferAndUser(int AnId, String username) {
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "AID = " + AnId + " AND benutzername ='"+username+"'";
-				
+		String where = "AID = " + AnId + " AND benutzername ='" + username
+				+ "'";
+
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
-			log.write("ApplicationController", "No connection: couldnt get application");
+		if (rs == null) {
+			log.write("ApplicationController",
+					"No connection: couldnt get application");
 			return null;
 		}
 
 		try {
 			if (rs.next()) {
-				Application app = new Application(rs.getString(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+				Application app = new Application(rs.getString(1),
+						rs.getInt(2), rs.getBoolean(3), rs.getString(4),
+						rs.getBoolean(5));
 				return app;
 			} else
 				return null;
@@ -379,6 +390,42 @@ public class ApplicationController {
 					"Error while reading application by aid from Database");
 		}
 		return null;
-		
+	}
+
+	/**
+	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des
+	 * uebergebenen Instituts in Form eines Vectors des Datentyps
+	 * HilfsDatenClerk zurueck.
+	 * 
+	 * @param institute
+	 *            Filtert den zurueckgegebenen Datensatz (nur uebergebenes
+	 *            Institut)
+	 * @return Vector mit Bewerbername und Angebotsname aller angenommenen
+	 *         Bewerbungen des uebergebenen Instituts
+	 */
+	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
+			int institute) {
+		ResultSet rs;
+		try {
+			rs = db.select(
+					new String[] { "Accounts.name", "Angebote.Name",
+							"Accounts.benutzername", "Angebote.AID" },
+					new String[] { "Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID"
+							+ " AND ausgewaehlt = 1 AND Angebote.Institut = "
+							+ institute
+							+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername" },
+					null);
+			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
+			while (rs.next()) {
+				// System.out.println(rs.getString(1));
+				hdc.add(new HilfsDatenClerk(rs.getString(1), rs.getString(2),
+						rs.getString(3), rs.getInt(4)));
+			}
+			return hdc;
+		} catch (SQLException e) {
+			log.write("ApplicationController",
+					"Fehler bei getChosenApplicationDataByInstitute()!");
+		}
+		return null;
 	}
 }

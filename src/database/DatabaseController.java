@@ -17,12 +17,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.Vector;
-
-import config.Configurator;
-import database.garbage.GarbageCollector;
 
 import logger.Log;
+import config.Configurator;
+import database.garbage.GarbageCollector;
 
 /**
  * Verbindung zur Datenbank mit allen Modifikationsbefehlen.
@@ -114,7 +112,7 @@ public class DatabaseController {
 			st = con.createStatement();
 
 			log.write("DatabaseController", "Connection successful.");
-			//falls kein default institut existiert wird dies nun erstellt.
+			// falls kein default institut existiert wird dies nun erstellt.
 			generateDefaultInstitute();
 			// falls kein admin account existiert wird nun einer erstellt.
 			generateAdminAccount();
@@ -389,61 +387,25 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des
-	 * uebergebenen Instituts in Form eines Vectors des Datentyps
-	 * HilfsDatenClerk zurueck.
-	 * 
-	 * @param institute
-	 *            Filtert den zurueckgegebenen Datensatz (nur uebergebenes
-	 *            Institut)
-	 * @return Vector mit Bewerbername und Angebotsname aller angenommenen
-	 *         Bewerbungen des uebergebenen Instituts
+	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei
+	 * wird falls noetig der .sopra Ordner fuer die Konfigurationsdateien und
+	 * die confconf und config dateien erstellt.
 	 */
-	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
-			int institute) {
-		// Sicherheitsüberprüfung:
-		if (con == null) {
-			log.write("DatabaseController", "No instance of CON detected!");
-			return null;
-		}
-		String sel = "SELECT Accounts.name, Angebote.Name, Accounts.benutzername, Angebote.AID "
-				+ "FROM Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID AND ausgewaehlt = 1 AND Angebote.Institut = "
-				+ institute
-				+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername";
-
-		ResultSet rs;
-		// Auskommentiert da nervig (Tamino)
-		// System.out.println(sel);
-		try {
-			rs = st.executeQuery(sel);
-			Vector<HilfsDatenClerk> hdc = new Vector<HilfsDatenClerk>();
-			while (rs.next()) {
-				// System.out.println(rs.getString(1));
-				hdc.add(new HilfsDatenClerk(rs.getString(1), rs.getString(2),
-						rs.getString(3), rs.getInt(4)));
-			}
-			return hdc;
-		} catch (SQLException e) {
-			log.write("DatabaseController", "SELECT error! <" + sel + ">");
-			e.printStackTrace();
-		}
-		return null;
-	}
-	/**
-	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei wird falls noetig der 
-	 * .sopra Ordner fuer die Konfigurationsdateien und die confconf und config dateien erstellt. 
-	 */
-	public void generateStandardConfig(){
-		File configFolder = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra");
-		if(!configFolder.exists()){
+	public void generateStandardConfig() {
+		File configFolder = new File(System.getProperty("user.home")
+				+ System.getProperty("file.separator") + ".sopra");
+		if (!configFolder.exists()) {
 			configFolder.mkdir();
 			log.write("DatabaseController", ".sopra folder created.");
 		}
-		File confconf = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra"+System.getProperty("file.separator")+"confconf");
-		if(!confconf.exists()){
+		File confconf = new File(System.getProperty("user.home")
+				+ System.getProperty("file.separator") + ".sopra"
+				+ System.getProperty("file.separator") + "confconf");
+		if (!confconf.exists()) {
 			try {
 				confconf.createNewFile();
-				BufferedWriter writer = new BufferedWriter(new FileWriter(confconf));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(
+						confconf));
 				writer.write("# Die erste Zeile gibt an, an welchem Ort die zu interpretierende");
 				writer.newLine();
 				writer.write("# Konfigurationsdatei Liegt.");
@@ -462,24 +424,24 @@ public class DatabaseController {
 				writer.newLine();
 				writer.write("#");
 				writer.newLine();
-			    writer.write("# Typ | name | Standardwert");
+				writer.write("# Typ | name | Standardwert");
 				writer.newLine();
-			   	writer.write("#");
+				writer.write("#");
 				writer.newLine();
-			   	writer.write("# Bleibt der Standardwert frei, so werden folgende Standards gesetzt:");
+				writer.write("# Bleibt der Standardwert frei, so werden folgende Standards gesetzt:");
 				writer.newLine();
-			   	writer.write("#");
+				writer.write("#");
 				writer.newLine();
-			   	writer.write("# int: 0");
+				writer.write("# int: 0");
 				writer.newLine();
-			   	writer.write("# String: \"\"");
+				writer.write("# String: \"\"");
 				writer.newLine();
-			    writer.write("# boolean: false");
+				writer.write("# boolean: false");
 				writer.newLine();
-			   	writer.write("# path: \"\"");
+				writer.write("# path: \"\"");
 				writer.newLine();
-			   	writer.newLine();
-			    writer.write("$HOME | .sopra | sopraconf");
+				writer.newLine();
+				writer.write("$HOME | .sopra | sopraconf");
 				writer.newLine();
 				writer.write("# Port der Mysql Datenbank");
 				writer.newLine();
@@ -519,14 +481,16 @@ public class DatabaseController {
 				writer.newLine();
 				writer.write("String | GMailPassword | Team11_11rockt");
 				writer.close();
-				log.write("DatabaseController","confconf created.");
+				log.write("DatabaseController", "confconf created.");
 			} catch (IOException e) {
 				log.write("DatebaseController", "failed to create confconf!");
 				e.printStackTrace();
 			}
 		}
-		File sopraconf = new File(System.getProperty("user.home")+System.getProperty("file.separator")+".sopra"+System.getProperty("file.separator")+"sopraconf");
-		if(!sopraconf.exists()){
+		File sopraconf = new File(System.getProperty("user.home")
+				+ System.getProperty("file.separator") + ".sopra"
+				+ System.getProperty("file.separator") + "sopraconf");
+		if (!sopraconf.exists()) {
 			try {
 				sopraconf.createNewFile();
 				log.write("DatabaseController", "sopraconf created.");
@@ -536,42 +500,54 @@ public class DatabaseController {
 			}
 		}
 	}
+
 	/**
 	 * Funktion die falls kein Admin Account vorhanden ist einen erstellt.
 	 */
-	public void generateAdminAccount(){
-		ResultSet rs = select(new String[]{"count(accounttyp)"}, new String[]{"Accounts"}, "accounttyp=0");
-		if(rs==null){
-			log.write("DatabaseController","No connection: couldn't create admin account.");
+	public void generateAdminAccount() {
+		ResultSet rs = select(new String[] { "count(accounttyp)" },
+				new String[] { "Accounts" }, "accounttyp=0");
+		if (rs == null) {
+			log.write("DatabaseController",
+					"No connection: couldn't create admin account.");
 			return;
 		}
 		try {
 			rs.next();
-			if(rs.getInt(1)==0){
-				insert("Accounts", new Object[]{"admin","ISMvKXpXpadDiUoOSoAfww",0,"donotreply.hiwiboerse@googlemail.com","Admin Account",0,null});
-				log.write("DatabaseController", "Admin account \"admin\" with password \"admin\" created.");
+			if (rs.getInt(1) == 0) {
+				insert("Accounts", new Object[] { "admin",
+						"ISMvKXpXpadDiUoOSoAfww", 0,
+						"donotreply.hiwiboerse@googlemail.com",
+						"Admin Account", 0, null });
+				log.write("DatabaseController",
+						"Admin account \"admin\" with password \"admin\" created.");
 			}
 		} catch (SQLException e) {
-			log.write("DatabaseController","failed to create Admin Account. Please check config.");
+			log.write("DatabaseController",
+					"failed to create Admin Account. Please check config.");
 		}
 	}
+
 	/**
 	 * Funktion die falls nicht vorhanden das default Institut erstellt.
 	 */
-	public void generateDefaultInstitute(){
-		ResultSet rs = select(new String[]{"iid"}, new String[]{"Institute"}, "iid=0");
-		if(rs==null){
-			log.write("DatabaseController", "No connection: couldn't create default Institute.");
+	public void generateDefaultInstitute() {
+		ResultSet rs = select(new String[] { "iid" },
+				new String[] { "Institute" }, "iid=0");
+		if (rs == null) {
+			log.write("DatabaseController",
+					"No connection: couldn't create default Institute.");
 			return;
 		}
 		try {
-			if(!rs.next()){
-				insert("Institute", new Object[]{0,"default"});
+			if (!rs.next()) {
+				insert("Institute", new Object[] { 0, "default" });
 				log.write("DatabaseController", "default institute created.");
 			}
 		} catch (SQLException e) {
-			log.write("DatabaseController","failed to create default institute. Please check config.");
+			log.write("DatabaseController",
+					"failed to create default institute. Please check config.");
 		}
 	}
-	
+
 }
