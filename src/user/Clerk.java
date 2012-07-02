@@ -16,6 +16,7 @@ import mail.Mailer;
 import servlet.Helper;
 import database.HilfsDatenClerk;
 import database.account.Account;
+import database.application.Application;
 import database.document.AppDocument;
 import database.document.Document;
 import database.document.OfferDocument;
@@ -363,5 +364,93 @@ public class Clerk extends User {
 	public Vector<String> loadRepresentatives() {
 		String username = getUserData().getUsername();
 		return acccon.getPotentialRepresentatives(username);
+	}
+
+	/**
+	 * Loescht ein AngebotsDokument aus der Datenbank.
+	 * 
+	 * @param uid
+	 *            Die UID des Dokuments.
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @return Flag fuer Fehler.
+	 */
+	public boolean deleteOfferDoc(int uid, int aid) {
+		return doccon.deleteOfferDocument(new OfferDocument(aid, uid));
+	}
+
+	/**
+	 * Erstellt ein AngebotsDokument in der Datenbank.
+	 * 
+	 * @param uid
+	 *            Die UID des Dokuments.
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @return Flag fuer Fehler.
+	 */
+	public boolean addOfferDoc(int uid, int aid) {
+		return doccon.createOfferDocument(new OfferDocument(aid, uid));
+	}
+
+	/**
+	 * Fuegt ein AppDoc in die Datenbank hinzu,
+	 * 
+	 * @param username
+	 *            Der Benutzername des Bewerbers.
+	 * @param uid
+	 *            Die UID des Dokuments.
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @return Flag fuer Fehler.
+	 */
+	public boolean addAppDoc(String username, int uid, int aid) {
+		return doccon.createAppDocument(new AppDocument(username, aid, uid,
+				false));
+	}
+
+	/**
+	 * Liest Informationen bezueglich Angboten aus der Datenbank als
+	 * JSON-Objekt.
+	 * 
+	 * @return Das JSON-Objekt mit den Informationen.
+	 */
+	public String getOfferInfo() {
+		Vector<Offer> off = new Vector<Offer>();
+		Vector<Integer> institutes = instcon
+				.getAllRepresentingInstitutes(getUserData().getUsername());
+		institutes.add(0);
+		for (Integer i : institutes)
+			off.addAll(offcon.getUncheckedOffersByInstitute(i));
+		int unchecked = off.size();
+		int apps = 0;
+		for (Offer o : offcon.getCheckedOffers()) {
+			if (!o.isFinished()) {
+				Vector<Application> aps = appcon.getApplicationsByOffer(o
+						.getAid());
+				for (Application a : aps) {
+					if (a.isChosen() && !a.isFinished())
+						apps++;
+				}
+			}
+		}
+		return Helper.jsonAtor(new String[] { "offers", "apps" }, new Object[] {
+				unchecked, apps });
+	}
+
+	/**
+	 * Holt die Emailaddresse eines Benutzers aus der Datenbank.
+	 * 
+	 * @param user
+	 *            Der Benutzer dessen Email gefragt ist.
+	 * @return Die Emailaddresse.
+	 */
+	public String getEmail(String user) {
+		try {
+			return acccon.getAccountByUsername(user).getEmail();
+		} catch (NullPointerException e) {
+			log.write("ClerkServlet", "Error getting e-mail adress of user <"
+					+ user + ">");
+			return null;
+		}
 	}
 }

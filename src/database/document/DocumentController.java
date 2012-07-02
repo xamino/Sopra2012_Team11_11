@@ -214,9 +214,11 @@ public class DocumentController {
 	 * 
 	 * @param benutzername
 	 *            Username vom Bewerber.
-	 * @return Gibt alle Bewerbungsunterlagen mit abgeschlossenem Status (=1) zurueck.
-	 */			
-	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername, int aid) {
+	 * @return Gibt alle Bewerbungsunterlagen mit abgeschlossenem Status (=1)
+	 *         zurueck.
+	 */
+	public Vector<AppDocument> getAppDocsWithStatusOne(String benutzername,
+			int aid) {
 		String[] select = { "*" };
 		String[] from = { tableNameB };
 		String where = "benutzername='" + benutzername + "' AND AID = " + aid
@@ -410,11 +412,11 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein AppDocument-Objekt mit
 	 *            allen dazugehoerigen Attributen.
+	 * @return
 	 */
-	public void createAppDocument(AppDocument document) { // checked
-		db.insert(tableNameB,
-				new Object[] { document.getUsername(), document.getoID(),
-						document.getdID(), document.getPresent() });
+	public boolean createAppDocument(AppDocument document) { // checked
+		return db.insert(tableNameB, new Object[] { document.getUsername(),
+				document.getoID(), document.getdID(), document.getPresent() });
 	}
 
 	/**
@@ -440,11 +442,12 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
-	 * @return 
+	 * @return
 	 */
-	public boolean updateAppDocument(AppDocument document) { // checked; Update von
-															// Status
-															// funktioniert
+	public boolean updateAppDocument(AppDocument document) { // checked; Update
+																// von
+																// Status
+																// funktioniert
 
 		String where = "benutzername='" + document.getUsername() + "' AND AID="
 				+ document.getoID() + " AND UID=" + document.getdID();
@@ -468,6 +471,7 @@ public class DocumentController {
 
 	/**
 	 * TODO!
+	 * 
 	 * @param username
 	 * @param aid
 	 * @param uid
@@ -509,11 +513,11 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein
 	 *            Angebotsdokument-Objekt mit allen dazugehoerigen Attributen.
+	 * @return
 	 */
-	public void createOfferDocument(OfferDocument document) { // checked
-		db.insert(
-				tableNameS,
-				new Object[] { document.getOfferID(), document.getDocumentid() });
+	public boolean createOfferDocument(OfferDocument document) { // checked
+		return db.insert(tableNameS, new Object[] { document.getOfferID(),
+				document.getDocumentid() });
 	}
 
 	/**
@@ -523,11 +527,11 @@ public class DocumentController {
 	 * @param document
 	 *            Parameter <code>document</code> ist ein AngebotDokument-Objekt
 	 *            mit allen dazugehoerigen Attributen.
+	 * @return
 	 */
-	public void deleteOfferDocument(OfferDocument document) { // checked
-
-		db.delete(tableNameS, "AID=" + document.getOfferID() + " AND UID="
-				+ document.getDocumentid());
+	public boolean deleteOfferDocument(OfferDocument document) { // checked
+		return db.delete(tableNameS, "AID=" + document.getOfferID()
+				+ " AND UID=" + document.getDocumentid());
 	}
 
 	/**

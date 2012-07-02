@@ -32,13 +32,9 @@ import com.google.gson.GsonBuilder;
 
 import database.HilfsDatenClerk;
 import database.account.Account;
-import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
-import database.document.AppDocument;
 import database.document.Document;
-import database.document.DocumentController;
-import database.document.OfferDocument;
 import database.offer.Offer;
 
 /**
@@ -431,6 +427,8 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(representatives, representatives.getClass()));
 		} else if (path.equals("/js/doApplicationCompletion")) {
+			// TODO: @Tamino wenn es implementiert ist... :P (Sags mir auch
+			// bitte, Patryk!)
 			System.out.println("Test");
 			int aid = 0;
 			String username;
@@ -469,47 +467,75 @@ public class ClerkServlet extends HttpServlet {
 		}
 		// Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/deleteOfferDocument")) {
-
-			int uid = Integer.parseInt(request.getParameter("uid"));
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			DocumentController.getInstance().deleteOfferDocument(
-					new OfferDocument(aid, uid));
+			int uid = -1;
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von AID oder UID!");
+				return;
+			}
+			if (!clerk.deleteOfferDoc(uid, aid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim löschen eines OfferDocuments!");
+				return;
+			}
 			return;
 		}
-
 		// Funktion zum hinzufuegen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/addOfferDocument")) {
-			int uid;
-			int aid;
+			int uid = -1;
+			int aid = -1;
 			try {
-				uid = Integer.parseInt(request.getParameter("uid"));
 				aid = Integer.parseInt(request.getParameter("aid"));
+				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
 				log.write("ClerkServlet",
 						"Error add offer document! UID or AID invalid!");
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von AID oder UID!");
 				return;
 			}
-			DocumentController.getInstance().createOfferDocument(
-					new OfferDocument(aid, uid));
+			if (!clerk.addOfferDoc(uid, aid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim erstellen eines OfferDocuments!");
+				return;
+			}
 			return;
 		}
-
 		// Funktion zum hinzufuegen eines AppDocuments der gewaehlten
 		// Application
 		else if (path.equals("/js/addAppDocument")) {
-			int uid;
-			int aid;
-			String username = request.getParameter("username");
+			int uid = -1;
+			int aid = -1;
 			try {
-				uid = Integer.parseInt(request.getParameter("uid"));
 				aid = Integer.parseInt(request.getParameter("aid"));
+				uid = Integer.parseInt(request.getParameter("uid"));
 			} catch (NumberFormatException e) {
-				log.write("ClerkServlet",
-						"Error add offer document! UID or AID invalid!");
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von AID oder UID!");
 				return;
 			}
-			DocumentController.getInstance().createAppDocument(
-					new AppDocument(username, aid, uid, false));
+			String username = request.getParameter("username");
+			if (!validate(username) || uid == -1 || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
+			if (!clerk.addAppDoc(username, uid, aid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim erstellen eines AppDocuments!");
+				return;
+			}
 			return;
 		}
 
@@ -542,29 +568,8 @@ public class ClerkServlet extends HttpServlet {
 		// }
 		// }
 		else if (path.equals("/js/loadInfo")) {
-			Vector<Offer> off = new Vector<Offer>();
-			Vector<Integer> institutes = instcon
-					.getAllRepresentingInstitutes(clerk.getUserData()
-							.getUsername());
-			institutes.add(0);
-			for (Integer i : institutes)
-				off.addAll(offcon.getUncheckedOffersByInstitute(i));
-			int unchecked = off.size();
-			int apps = 0;
-			for (Offer o : offcon.getCheckedOffers()) {
-				if (!o.isFinished()) {
-					Vector<Application> aps = appcon.getApplicationsByOffer(o
-							.getAid());
-					for (Application a : aps) {
-						if (a.isChosen() && !a.isFinished())
-							apps++;
-					}
-				}
-			}
-			String gsonny = Helper.jsonAtor(new String[] { "offers", "apps" },
-					new Object[] { unchecked, apps });
 			response.setContentType("application/json");
-			response.getWriter().write(gsonny);
+			response.getWriter().write(clerk.getOfferInfo());
 			return;
 		}
 		// Get email addresses if required:
@@ -575,17 +580,8 @@ public class ClerkServlet extends HttpServlet {
 				response.getWriter().write("Invalid user parameter!");
 				return;
 			}
-			String email = null;
-			try {
-				email = AccountController.getInstance()
-						.getAccountByUsername(user).getEmail();
-			} catch (NullPointerException e) {
-				log.write("ClerkServlet",
-						"Error getting e-mail adress of user in: " + path);
-				return;
-			}
 			response.setContentType("text/email");
-			response.getWriter().write(email);
+			response.getWriter().write(clerk.getEmail(user));
 		} else {
 			log.write("ClerkServlet", "Unknown path <" + path + ">");
 		}
