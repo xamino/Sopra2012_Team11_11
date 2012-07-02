@@ -1,7 +1,8 @@
 /**
- * Dies ist der TimerTask, der das eigentliche loeschen der Angebote uebernimmt.
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  */
+
+package database.garbage;
 import java.util.TimerTask;
 import java.util.Vector;
 
@@ -9,6 +10,9 @@ import logger.Log;
 import database.offer.Offer;
 import database.offer.OfferController;
 
+/**
+ * Dies ist der TimerTask, der das eigentliche loeschen der Angebote uebernimmt.
+ */
 public class CollectorTask extends TimerTask{
 
 	@Override

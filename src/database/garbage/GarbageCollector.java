@@ -1,14 +1,16 @@
-package database.garbage;
 /**
- * Diese Klasse sorgt dafuer, dass 2 Jahre alte Angebote mit all ihren dazugehoerigen Daten geloescht werden.
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  */
+package database.garbage;
+
 import java.util.Date;
 import java.util.Timer;
-
+/**
+ * Diese Klasse sorgt dafuer, dass 2 Jahre alte Angebote mit all ihren dazugehoerigen Daten geloescht werden.
+ */
 public class GarbageCollector {
 	/**
-	 * Timer für das Scheduling des CollectorTasks
+	 * Timer fuer das Scheduling des CollectorTasks.
 	 */
 	private Timer t;
 	/**
@@ -30,7 +32,7 @@ public class GarbageCollector {
 		t=new Timer();
 	}
 	/**
-	 * Starten des Timers. Der CollectorTask wird alle 1h gescheduled.
+	 * Starten des Timers. Der CollectorTask wird jede Stunde gescheduled.
 	 */
 	public void start(){
 		stop();
