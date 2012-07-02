@@ -1,3 +1,8 @@
+/**
+ * @author Manuel Guentzel
+ * @author Anatoli Brill
+ * 
+ */
 package file;
 
 import java.io.File;
@@ -17,12 +22,9 @@ import database.application.ApplicationController;
 import database.offer.OfferController;
 
 /**
- * Klasse zur erstellung von Exceldateien mit den getaetigten Einstellungen
+ * Klasse zur Erstellung von Exceldateien mit den getaetigten Einstellungen
  * eines Verwalters.
- * 
- * @author Manuel Guentzel
- * @author Anatoli Brill
- * 
+ *  
  */
 public abstract class ExcelExport {
 	/**
@@ -45,7 +47,7 @@ public abstract class ExcelExport {
 	 * 
 	 * @param data
 	 *            UserData Objekt des Benutzers.
-	 *           @return File objekt das gestreamt werden kann. 
+	 * @return File Objekt das gestreamt werden kann. 
 	 * @throws IOException 
 	 * @throws WriteException 
 	 * @throws RowsExceededException 

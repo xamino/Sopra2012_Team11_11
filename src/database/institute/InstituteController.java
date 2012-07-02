@@ -1,3 +1,10 @@
+/**
+ * @author Patryk Boczon
+ * @author Oemer Sahin
+ * @author Manuel Guentzel
+ * @author Tamino Hartmann
+ * @author Laura Irlinger
+ */
 package database.institute;
 
 import java.sql.ResultSet;
@@ -43,6 +50,9 @@ public class InstituteController {
 
 	}
 
+	/**
+	 * Konstruktor
+	 */	
 	private InstituteController() {
 		db = DatabaseController.getInstance();
 		acccon = AccountController.getInstance();
@@ -56,14 +66,15 @@ public class InstituteController {
 	 */
 	public DatabaseController db;
 
+	/**
+	 * Gibt den Naen der Tabelle an.
+	 */
 	final static String tableName = "Institute";// tabellenname
 
-	
-
 	/**
-	 * Gets all institutes in the database.
+	 * Gibt alle Institute der Datenbank zurueck.
 	 * 
-	 * @return A vector with all the institutes.
+	 * @return Ein Vektor mit allen Instituten.
 	 */
 	public Vector<Institute> getAllInstitutes() {
 		ResultSet rs = db.select(new String[] { "*" },
@@ -85,11 +96,11 @@ public class InstituteController {
 	}
 
 	/**
-	 * Inserts an institute in the database.
+	 * Fuegt ein Institut in die Datenbank ein.
 	 * 
 	 * @param institute
-	 *            The institute object to insert.
-	 * @return A boolean flag showing if the action was successful.
+	 *            das einzufuegende Institut
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean addInstitute(Institute institute) {
 		return db.insert(tableName, new Object[] { institute.getIID(),
@@ -97,12 +108,12 @@ public class InstituteController {
 	}
 
 	/**
-	 * Deletes an institute from the database. All accounts with said Institute
-	 * will have institute set to 0.
+	 * Loescht ein Institut aus der Datenbank. Alle Accounts mit diesem Institut werden 
+	 * dem Institut default zugewiesen.
 	 * 
 	 * @param institute
-	 *            The institute to delete.
-	 * @return A flag whether the operation was successful.
+	 *            Das zu loeschende Institut.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteInstitute(Institute institute) {
 		// Update all accounts:
@@ -139,11 +150,11 @@ public class InstituteController {
 	}
 
 	/**
-	 * Gibt alle Institute zurueck die ein Clerk repraesentiert
+	 * Gibt alle Institute zurueck die ein Clerk repraesentiert.
 	 * 
 	 * @param username
 	 *            Username des Clerks
-	 * @return Alle Institutsnummern in einem Vector
+	 * @return Alle Institutsnummern in einem Vector.
 	 */
 	public Vector<Integer> getAllRepresentingInstitutes(String username) {
 		Vector<Integer> ret = new Vector<Integer>();

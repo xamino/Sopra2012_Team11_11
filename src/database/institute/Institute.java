@@ -1,3 +1,7 @@
+/**
+ * @author Patryk Boczon
+ * 
+ */
 package database.institute;
 
 public class Institute {
@@ -16,30 +20,38 @@ public class Institute {
 	}
 
 	/**
-	 * @return the iID
+	 * Gibt die IID zurück.
+	 * 
+	 * @return die IID
 	 */
 	public int getIID() {
 		return IID;
 	}
 
 	/**
-	 * @param iID
-	 *            the iID to set
+	 * Setzt die IID.
+	 * 
+	 * @param IID
+	 *            die zu setzende IID
 	 */
 	public void setIID(int iID) {
 		IID = iID;
 	}
 
 	/**
-	 * @return the name
+	 * Gibt den Name zurück.
+	 * 
+	 * @return der name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
+	 * Setzt den Namen.
+	 * 
 	 * @param name
-	 *            the name to set
+	 *            Der zu setzende Name
 	 */
 	public void setName(String name) {
 		this.name = name;

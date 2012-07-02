@@ -1,16 +1,21 @@
-package database.garbage;
 /**
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  */
+package database.garbage;
+
 import java.util.TimerTask;
 import java.util.Vector;
 
 import logger.Log;
 import database.offer.Offer;
 import database.offer.OfferController;
-
+/**
+ * 
+ */
 public class CollectorTask extends TimerTask{
-
+	/**
+	 * 
+	 */
 	@Override
 	public void run() {
 		Log.getInstance().write("CollectorTask", "Deleting old offers...");
