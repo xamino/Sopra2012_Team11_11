@@ -171,14 +171,12 @@ public class ApplicantServlet extends HttpServlet {
 			// und generell soll man NIE den client trauen!)
 			String name = applicant.getUserData().getUsername();
 			if (applicant.deleteOwnAccount()) {
-				System.out.println("delete appli");
 				log.write("ApplicantServlet", name
 						+ " has deleted his account.");
 				// Simply now for debugging:
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 			} else {
-				System.out.println("not delete appli");
 				response.setContentType("text/error");
 				response.getWriter().write("Error while deleting account!");
 			}

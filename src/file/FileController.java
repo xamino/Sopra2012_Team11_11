@@ -46,14 +46,19 @@ public abstract class FileController {
 	public static File createFile(String username) {
 		File f = null;
 		String path = "";
+		String opath = "";
 		try {
-		path = Configurator.getInstance().getPath("excel")+System.getProperty("file.separator")+username+".xls";
+		opath = Configurator.getInstance().getPath("excel");
+		path = opath+System.getProperty("file.separator")+username+".xls";
+		File o= new File(opath);
 		f= new File(path);
+		if(!o.exists())o.mkdirs();
 		if(f.exists()){
 			f.delete();
 			f.createNewFile();
 			
 		}else {
+			
 			f.createNewFile();
 		}
 		} catch (Exception e) {
