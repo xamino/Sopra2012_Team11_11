@@ -272,7 +272,7 @@ public class ClerkServlet extends HttpServlet {
 		} else if (path.equals("/js/applicationDocuments")) {
 			int aid = -1;
 			try {
-				aid = Integer.parseInt(request.getParameter("aid"));
+				aid = Integer.parseInt(request.getParameter("AID"));
 			} catch (NumberFormatException e) {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim parsen von AID!");
@@ -280,6 +280,7 @@ public class ClerkServlet extends HttpServlet {
 			}
 			String user = request.getParameter("User");
 			if (!validate(user) || aid == -1) {
+				System.out.println("Fehler in den Parametern!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler in den Parametern!");
 				return;
@@ -324,7 +325,7 @@ public class ClerkServlet extends HttpServlet {
 			String user = request.getParameter("User");
 			int aid = -1;
 			try {
-				aid = Integer.parseInt(request.getParameter("aid"));
+				aid = Integer.parseInt(request.getParameter("AID"));
 			} catch (NumberFormatException e) {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim parsen von AID!");
