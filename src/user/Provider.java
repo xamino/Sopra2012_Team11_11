@@ -1,9 +1,13 @@
 package user;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import servlet.Helper;
+
+import database.DatabaseController;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -52,36 +56,36 @@ public class Provider extends User {
 		return true;
 	}
 
-	/**
-	 * Methode zum annehmen eines Bewerbers.
-	 * 
-	 * @param AID
-	 *            ID der Bewerbung
-	 * @throws SQLException
-	 */
-	public void acceptApplication(int AID) throws SQLException {
-		Application app = appcon.getApplicationById(AID);
-		app.setChosen(true);
-		appcon.updateApplication(app);
-	}
-
-	/**
-	 * Loescht ein Angebot aus dem System.
-	 */
-	public void deleteOffer(Offer offer) {
-		offcon.deleteOffer(offer);
-
-	}
+//	/**
+//	 * Methode zum annehmen eines Bewerbers.
+//	 * 
+//	 * @param AID
+//	 *            ID der Bewerbung
+//	 * @throws SQLException
+//	 */
+//	public void acceptApplication(int AID) throws SQLException {
+//		Application app = appcon.getApplicationById(AID);
+//		app.setChosen(true);
+//		appcon.updateApplication(app);
+//	}
 
 //	/**
-//	 * Erstellt ein neues, noch zu pruefendes Angebot im System.
+//	 * Loescht ein Angebot aus dem System.
 //	 */
-//	public void createOffer(int pId, String pAuthor, String pName,
-//			String pNote, boolean pChecked, int pSlots, double pHours,
-//			String pDescription, Date pStartDate, Date pEndDate, double pWage,
-//			int pInstitute, Date pModificationdate) {
+//	public void deleteOffer(Offer offer) {
+//		offcon.deleteOffer(offer);
 //
 //	}
+
+	// /**
+	// * Erstellt ein neues, noch zu pruefendes Angebot im System.
+	// */
+	// public void createOffer(int pId, String pAuthor, String pName,
+	// String pNote, boolean pChecked, int pSlots, double pHours,
+	// String pDescription, Date pStartDate, Date pEndDate, double pWage,
+	// int pInstitute, Date pModificationdate) {
+	//
+	// }
 
 	/**
 	 * Methode zum Löschen seines Accounts
@@ -92,7 +96,59 @@ public class Provider extends User {
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
-		Account thisaccount = AccountController.getInstance().getAccountByUsername(this.getUserData().getUsername());
+		Account thisaccount = AccountController.getInstance()
+				.getAccountByUsername(this.getUserData().getUsername());
 		return acccon.deleteProviderAccount(thisaccount);
+	}
+
+	/**
+	 * Liest die Standardwerte eines Angebots aus der Datenbank und gibt sie als
+	 * JSON-Objekt zurueck.
+	 * 
+	 * @return Das JSON-Objekt mit den Werten.
+	 */
+	public String readDefValues() {
+		String ret = new String();
+		ResultSet rs = DatabaseController.getInstance().select(
+				new String[] { "*" }, new String[] { "Standardangebot" }, null);
+		try {
+			if (rs.next()) {
+				ret = Helper
+						.jsonAtor(
+								new String[] { "hoursMonth", "startDate",
+										"endDate", "wage" },
+								new Object[] { rs.getInt("StdProMonat"),
+										rs.getString("StartDatum"),
+										rs.getString("EndDatum"),
+										rs.getFloat("Lohn") });
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		}
+		if (ret.isEmpty()) {
+			log.write("Provider", "Error reading default offer values!");
+			return null;
+		}
+		return ret;
+	}
+
+	/**
+	 * Liest den Standardlohn aus der Datenbank aus.
+	 * 
+	 * @return Standardlohn.
+	 */
+	public double readDefWage() {
+		ResultSet rs = DatabaseController.getInstance().select(
+				new String[] { "Lohn" }, new String[] { "Standardangebot" },
+				null);
+		try {
+			if (rs.next()) {
+				return rs.getFloat("Lohn");
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			log.write("Provider", "Error reading default wage!");
+		}
+		return 0;
 	}
 }

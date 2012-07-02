@@ -238,4 +238,28 @@ function checkUsername(username) {
  */
 function clickMail(toAddress, subject) {
 	window.location.href = "mailto:" + toAddress + "?Subject=" + subject;
+
+}
+/**
+ * Funktion für die ueberpruefung von Daten. Erlaubte daten sind alle zwischen 01-01-1900 und 31-12-2099. Es wird z.b. nicht geprueft ob der Monat die ensprechende Zahl von Tagen hat. bsp: 31.2.1980 ist gueltig.
+ * @param date zu pruefendes Datum
+ * @returns Boolean ob ok (true) oder nicht (false)
+ */
+function checkDate(date){
+	if(date=="")
+		return false;
+
+	var regex = /^(0?[1-9]|[12][0-9]|3[01])[-\/.](0?[1-9]|1[012])[-\/.](19|20)\d\d$/;
+
+	return (regex.test(date));
+}
+/**
+ * Funktion die einen Datumsstring vereinheitlicht, sodass er geparsed werden kann.
+ * @param date Dazum zum vereinheitlichen
+ * @returns parsebarer String im format: DD-MM-YYYY
+ */
+function unifyDate(date){
+	date=date.split('.').join('-');
+	date=date.split('/').join('-');
+	return date;
 }

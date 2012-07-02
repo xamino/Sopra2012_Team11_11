@@ -5,5 +5,7 @@ package mail;
  * @author Guentzel
  *
  */
+@SuppressWarnings("serial")
 public class MalformedAddressException extends Exception {
+
 }

@@ -12,20 +12,30 @@ function loadDefValues() {
 }
 
 /**
- * TODO!
+ * Handles the server response to loadDefValues.
  * 
  * @param mime
+ *            The MIME-type of the data.
  * @param data
+ *            The data.
  */
 function handleLoadDefValues(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
-	else
-		alert(mime + "\n\n" + data);
+	else if (mime == "text/error")
+		alert(data);
+	else if (mime == "application/json") {
+		var dataObj = eval("(" + data + ")");
+		inputValForm.hoursMonth.value = dataObj.hoursMonth;
+		inputValForm.startDate.value = dataObj.startDate;
+		inputValForm.endDate.value = dataObj.endDate;
+		inputValForm.wage.value = dataObj.wage;
+	} else
+		return;
 }
 
 /**
- * TODO!
+ * Checks the inputed values and saves them to the DB if correct.
  */
 function checkVal() {
 	var form = inputValForm;
@@ -59,16 +69,25 @@ function checkVal() {
 		error = true;
 	} else
 		toggleWarning("error_endDate", false, "");
+	var wage = form.wage.value;
+	if (wage == null || wage == "") {
+		toggleWarning("error_wage", true, "Bitte ausfüllen!");
+		error = true;
+	} else if (!checkFloat(wage)) {
+		toggleWarning("error_wage", true, "Bitte keine Sonderzeichen!");
+		error = true;
+	} else
+		toggleWarning("error_wage", false, "");
 	if (error)
 		return;
 	// alert("All okay!");
 	connect("/hiwi/Admin/js/saveDefValues", "hoursMonth=" + hoursMonth
-			+ "&startDate=" + startDate + "&endDate=" + endDate,
-			handleSaveResponse);
+			+ "&startDate=" + startDate + "&endDate=" + endDate + "&wage="
+			+ wage, handleSaveResponse);
 }
 
 /**
- * TODO!
+ * Handles the response from checkVal if data was sent to the server.
  * 
  * @param mime
  * @param data
@@ -76,6 +95,10 @@ function checkVal() {
 function handleSaveResponse(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
-	else
-		alert(mime + "\n\n" + data);
+	else if (mime == "text/error")
+		alert(data);
+	else if (mime == "text/plain") {
+		if (data == "true")
+			window.location = "/hiwi/admin/userindex.jsp";
+	}
 }

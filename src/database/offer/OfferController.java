@@ -49,7 +49,7 @@ public class OfferController {
 	private OfferController() {
 		db = DatabaseController.getInstance();
 		log = Log.getInstance();
-		mail=Mailer.getInstance();
+		mail = Mailer.getInstance();
 		log.write("OfferController", "Instance created.");
 	}
 
@@ -68,7 +68,7 @@ public class OfferController {
 	private DatabaseController db;
 
 	private Mailer mail;
-	
+
 	final static String tableName = "Angebote";// tabellenname
 
 	/**
@@ -99,7 +99,8 @@ public class OfferController {
 
 	/**
 	 * Diese Methode loescht ein Jobangebot aus der Datenbank, welches mit den
-	 * Daten des uebergebenem Offer-Objekts uebereinstimmt. Alle Bewerber auf dieses Angebot werden informiert.
+	 * Daten des uebergebenem Offer-Objekts uebereinstimmt. Alle Bewerber auf
+	 * dieses Angebot werden informiert.
 	 * 
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
@@ -107,25 +108,33 @@ public class OfferController {
 	 *            entfernt.
 	 */
 	public void deleteOffer(Offer offer) {
-		
+
 		// Hier ist die Mail benachrichtigung:
-		ResultSet rs = db.select(new String[]{"acc.email"}
-		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
-		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
-		if(rs==null){
+		ResultSet rs = db.select(new String[] { "acc.email" }, new String[] {
+				"Accounts as acc", "Bewerbungen as b", "Angebote as a" },
+				"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="
+						+ offer.getAid() + " AND a.abgeschlossen=false");
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't delete offer");
 			return;
 		}
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				String addi = rs.getString(1);
-				mail.sendMail(addi, "Warnung: Angebot \""+offer.getName()+"\" wurde gelöscht!", 
-						"Dies ist eine automatische Mitteilung, dass das Angebot \""+offer.getName()+"\" aus der Hiwi-Börse entfernt wurde. \nIhre Bewerbung wurde daraufhin automatisch gelöscht.");
+				mail.sendMail(
+						addi,
+						"Warnung: Angebot \"" + offer.getName()
+								+ "\" wurde gelöscht!",
+						"Dies ist eine automatische Mitteilung, dass das Angebot \""
+								+ offer.getName()
+								+ "\" aus der Hiwi-Börse entfernt wurde. \nIhre Bewerbung wurde daraufhin automatisch gelöscht.");
 			}
 		} catch (SQLException e) {
-			log.write("OfferController", "Error during mailnotification while deleting Offer "+offer.getAid());
+			log.write("OfferController",
+					"Error during mailnotification while deleting Offer "
+							+ offer.getAid());
 		}
-		//Ende benachrichtigung und anfang löschen
+		// Ende benachrichtigung und anfang löschen
 		db.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
 		db.delete("Standardunterlagen", "AID=" + offer.getAid());
 		db.delete("Bewerbungen", "AID=" + offer.getAid());
@@ -142,53 +151,48 @@ public class OfferController {
 	 *            dazugehoerigen Attributen.
 	 */
 	public boolean updateOffer(Offer offer) {
-
-		// Dates entfernt, da problematisch
-
-		// String[] columns = {"Ersteller", "Name", "Notiz", "Geprueft",
-		// "Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
-		// "Stundenlohn", "Institut", "aenderungsdatum" };
-		//
-		// Object[] values ={ offer.getAuthor(), offer.getName(),
-		// offer.getNote(), offer.isChecked(), offer.getSlots(),
-		// offer.getHoursperweek(), offer.getDescription(),
-		// offer.getStartdate(), offer.getEnddate(), offer.getWage(),
-		// offer.getInstitute(), offer.getModificationdate() };
-
-		//Benachrichtigung an Anbieter bei freischaltung oder ablehnen:
-	
 		// Hier ist die Mail benachrichtigung:
-		ResultSet rs = db.select(new String[]{"acc.email"}
-		         ,new String[]{"Accounts as acc", "Bewerbungen as b", "Angebote as a"}
-		         ,"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="+offer.getAid());
-		if(rs==null){
+		ResultSet rs = db.select(new String[] { "acc.email" }, new String[] {
+				"Accounts as acc", "Bewerbungen as b", "Angebote as a" },
+				"a.AID=b.AID AND b.benutzername=acc.benutzername AND a.AID="
+						+ offer.getAid());
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't update offer");
 			return false;
 		}
 		try {
-			while(rs.next()){
+			while (rs.next()) {
 				String addi = rs.getString(1);
-				mail.sendMail(addi, "Warnung: Angebot \""+offer.getName()+"\" wurde aktualisiert!", 
-						"Dies ist eine automatische Mitteilung, dass das Angebot \""+offer.getName()+"\" geändert wurde. \nBitte überprüfen sie, ob das Angebot immernoch ihren Vorstellungen entspricht.");
+				mail.sendMail(
+						addi,
+						"Warnung: Angebot \"" + offer.getName()
+								+ "\" wurde aktualisiert!",
+						"Dies ist eine automatische Mitteilung, dass das Angebot \""
+								+ offer.getName()
+								+ "\" geändert wurde. \nBitte überprüfen sie, ob das Angebot immernoch ihren Vorstellungen entspricht.");
 			}
 		} catch (SQLException e) {
-			log.write("OfferController", "Error during mailnotification while updating Offer "+offer.getAid());
+			log.write("OfferController",
+					"Error during mailnotification while updating Offer "
+							+ offer.getAid());
 		}
-		//Ende benachrichtigung und anfang updaten.
-		
-		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
-				"Plaetze", "Stundenprowoche", "Beschreibung", "Stundenlohn",
-				"Institut", "aenderungsdatum", "abgeschlossen" };
+		// Ende benachrichtigung und anfang updaten.
 
-		 java.util.Date aenderungsdatum_1 = new java.util.Date();
-		 java.sql.Date aenderungsdatum = new java.sql.Date(aenderungsdatum_1.getTime());
-		 offer.setModificationdate(aenderungsdatum);
+		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
+				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+				"Stundenlohn", "Institut", "aenderungsdatum", "abgeschlossen" };
+
+		java.util.Date aenderungsdatum_1 = new java.util.Date();
+		java.sql.Date aenderungsdatum = new java.sql.Date(
+				aenderungsdatum_1.getTime());
+		offer.setModificationdate(aenderungsdatum);
 
 		Object[] values = { offer.getAuthor(), offer.getName(),
 				offer.getNote(), offer.isChecked(), offer.getSlots(),
 				offer.getHoursperweek(), offer.getDescription(),
-				offer.getWage(), offer.getInstitute(),
-				offer.getModificationdate(), offer.isFinished() };
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate(),
+				offer.isFinished() };
 
 		String where = "AID = " + offer.getAid();
 
@@ -211,29 +215,56 @@ public class OfferController {
 		String[] from = { tableName };
 
 		ResultSet rs = db.select(select, from, null);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offervec;
 		}
 		try {
 			while (rs.next()) {
 				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getBoolean(5),
-						rs.getInt(6), rs.getDouble(7), rs.getString(8),
-						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
-
+				currentoff = convertToOffer(rs);
 				offervec.add(currentoff);
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return offervec;
+	}
 
+	/**
+	 * Diese Methode sammelt alle 2 Jahre alten Jobangebote aus der Datenbank
+	 * und speichert diese in einem Vector.
+	 * 
+	 * @param years
+	 *            Gibt an wie viele Jahre das Angebot zurueckliegen muss um
+	 *            zurueckgegeben zu werden.
+	 * 
+	 * @return Alle Jobangebote in der Datenbank, die bereits 2 Jahre im System
+	 *         waren werden in Form eines Vectors zurueckgegeben.
+	 */
+	public Vector<Offer> getOldOffers(int years) {
+		Vector<Offer> offervec = new Vector<Offer>();
+		String[] select = { "*" };
+		String[] from = { tableName };
+		// War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
+		String where = "(Year(Now())-YEAR(aenderungsdatum)) >= " + years;
+		ResultSet rs = db.select(select, from, where);
+		if (rs == null) {
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offervec;
+		}
+		try {
+			while (rs.next()) {
+				// TODO: Stimmt die logik hier so mit isChecked?
+				Offer currentoff = convertToOffer(rs);
+				if (currentoff.isChecked())
+					offervec.add(currentoff);
+			}
+		} catch (SQLException e) {
+			log.write("OfferController", "Error retrieving all checked offers!");
+			return null;
+		}
 		return offervec;
 	}
 
@@ -249,31 +280,24 @@ public class OfferController {
 	 * @return Alle Jobangebote in der Datenbank, die dem Wert von "checked"
 	 *         entsprechen werden in Form eines Vectors zurueckgegeben.
 	 */
+	// TODO: Methode wirft NullPointer!
 	public Vector<Offer> getCheckedOffers() {
 		Vector<Offer> offervec = new Vector<Offer>();
 		String[] select = { "*" };
 		String[] from = { tableName };
-		//War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
+		// War ebenfalls als fehler vermerkt. Mehrfach getestet geht!.
 		String where = "Geprueft = 1 and abgeschlossen = 0";
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offervec;
 		}
 		try {
 			while (rs.next()) {
-				Offer currentoff;
-				boolean check = rs.getBoolean(14);
-				currentoff = new Offer(rs.getInt(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getBoolean(5),
-						rs.getInt(6), rs.getDouble(7), rs.getString(8),
-						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), check);
-				if (!check)
-					offervec.add(currentoff);
+				offervec.add(convertToOffer(rs));
 			}
-			rs.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.write("OfferController", "Error retrieving all checked offers!");
 			return null;
 		}
@@ -297,21 +321,15 @@ public class OfferController {
 		String where = "abgeschlossen=0 and Ersteller = '"
 				+ provider.getUsername() + "'";
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offervec;
 		}
 		try {
 			while (rs.next()) {
-				Offer currentoff;
-				currentoff = new Offer(rs.getInt(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getBoolean(5),
-						rs.getInt(6), rs.getDouble(7), rs.getString(8),
-						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
+				Offer currentoff = convertToOffer(rs);
 				offervec.add(currentoff);
 			}
-			rs.close();
 		} catch (SQLException e) {
 			log.write("OfferController", "Error reading free offers!");
 			return null;
@@ -340,27 +358,22 @@ public class OfferController {
 		String where;
 
 		for (int i = 0; i < applications.size(); i++) {
-			//Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet und es geht.
+			// Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet
+			// und es geht.
 			where = "abgeschlossen = 0 and AID = "
 					+ applications.elementAt(i).getAid();
 			ResultSet rs = db.select(select, from, where);
-			if(rs==null){
-				log.write("OfferController", "No connection: couldn't get offers");
+			if (rs == null) {
+				log.write("OfferController",
+						"No connection: couldn't get offers");
 				return offervec;
 			}
 			try {
 				while (rs.next()) {
-					Offer currentoff;
-					boolean check = rs.getBoolean(14);
-					currentoff = new Offer(rs.getInt(1), rs.getString(2),
-							rs.getString(3), rs.getString(4), rs.getBoolean(5),
-							rs.getInt(6), rs.getDouble(7), rs.getString(8),
-							rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-							rs.getInt(12), rs.getDate(13), check);
-					if (!check)
+					Offer currentoff = convertToOffer(rs);
+					if (currentoff.isChecked())
 						offervec.add(currentoff);
 				}
-				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -383,19 +396,14 @@ public class OfferController {
 		String where = "AID = " + ID;
 
 		ResultSet rs = db.select(select, from, where);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offer");
 			return null;
 		}
 
 		try {
 			if (rs.next()) {
-				Offer off = new Offer(rs.getInt(1), rs.getString(2),
-						rs.getString(3), rs.getString(4), rs.getBoolean(5),
-						rs.getInt(6), rs.getDouble(7), rs.getString(8),
-						rs.getDate(9), rs.getDate(10), rs.getDouble(11),
-						rs.getInt(12), rs.getDate(13), rs.getBoolean(14));
-				return off;
+				return convertToOffer(rs);
 			} else
 				return null;
 		} catch (SQLException e) {
@@ -432,11 +440,12 @@ public class OfferController {
 
 			rs = db.select(new String[] { "*" }, new String[] { tableName },
 					"abgeschlossen=0 and Geprueft=0");
-			if(rs==null){
-				log.write("OfferController", "No connection: couldn't get offers");
+			if (rs == null) {
+				log.write("OfferController",
+						"No connection: couldn't get offers");
 				return offers;
 			}
-
+			// TODO: fehlt hier nicht was? was ist, wenn rs != null ?!
 		} else {
 			// Institut in (accountInstitut, 0) secures that Offers of Institut
 			// 0 are universally seeable.
@@ -444,22 +453,16 @@ public class OfferController {
 			rs = db.select(new String[] { "*" }, new String[] { tableName },
 					"abgeschlossen = 0 and Geprueft=0 AND Institut IN ("
 							+ account.getInstitute() + ",0)");
-			if(rs==null){
-				log.write("OfferController", "No connection: couldn't get offers");
+			if (rs == null) {
+				log.write("OfferController",
+						"No connection: couldn't get offers");
 				return offers;
 			}
 
 		}
 		try {
 			while (rs.next()) {
-				offers.add(new Offer(rs.getInt("AID"), rs
-						.getString("Ersteller"), rs.getString("Name"), rs
-						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
-						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
-						.getString("Beschreibung"), rs.getDate("Beginn"), rs
-						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
-						.getBoolean("abgeschlossen")));
+				offers.add(convertToOffer(rs));
 			}
 			return offers;
 		} catch (SQLException e) {
@@ -483,21 +486,14 @@ public class OfferController {
 
 		rs = db.select(new String[] { "*" }, new String[] { tableName },
 				"Geprueft=0 AND Institut =" + institute);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offers;
 		}
 
 		try {
 			while (rs.next()) {
-				offers.add(new Offer(rs.getInt("AID"), rs
-						.getString("Ersteller"), rs.getString("Name"), rs
-						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
-						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
-						.getString("Beschreibung"), rs.getDate("Beginn"), rs
-						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
-						.getBoolean("abgeschlossen")));
+				offers.add(convertToOffer(rs));
 			}
 			return offers;
 		} catch (SQLException e) {
@@ -516,47 +512,55 @@ public class OfferController {
 		int newID = 0;
 		boolean check = false;
 		int count = 0;// um endlosschleife zu vermeiden
-		
+
 		java.util.Date startdatum_1 = new java.util.Date();
 		java.sql.Date startdatum = new java.sql.Date(startdatum_1.getTime());
-		
+
+		// Damit der Log logisch erscheint:
+		log.write("OfferController",
+				"Searching for free AID, INSERT errors can happen! This is wanted.");
+
 		while (!check) {
-			if(count==100){
-				log.write("OfferController","Error while generating random AID after "+count+ " attempts. Process was aborted...");
+			if (count == 100) {
+				log.write("OfferController",
+						"Error while generating random AID after " + count
+								+ " attempts. Process was aborted...");
 				return -1;
 			}
-				
+
 			newID = generateRandomNr(1, 10);
-			Object[] data = { newID, "", "", "", false, 0, 0, "",startdatum, startdatum,
-					0, 0, startdatum, false };
+			Object[] data = { newID, "", "", "", false, 0, 0, "", startdatum,
+					startdatum, 0, 0, startdatum, false };
 			check = db.insert(tablename, data);
 			count++;
 		}
 		db.delete(tablename, "AID= " + newID);
 		return newID;
 	}
-	
+
 	/**
 	 * Return the free slots of an offer
+	 * 
 	 * @param aid
-	 * 			aid of the offer
+	 *            aid of the offer
 	 * @return free slots of the offer
 	 */
-	public int getFreeSlotsOfOffer(int aid){
-		
+	public int getFreeSlotsOfOffer(int aid) {
+
 		int number = 0;
 		Offer off = getOfferById(aid);
 		int total = off.getSlots();
 		int taken = 0;
-		Vector<Application> apps = ApplicationController.getInstance().getApplicationsByOffer(aid);
-		for(int i = 0; i < apps.size(); i++){
-			if(apps.elementAt(i).isChosen()){
+		Vector<Application> apps = ApplicationController.getInstance()
+				.getApplicationsByOffer(aid);
+		for (int i = 0; i < apps.size(); i++) {
+			if (apps.elementAt(i).isChosen()) {
 				taken++;
 			}
 		}
-		
+
 		number = total - taken;
-		
+
 		return number;
 	}
 
@@ -579,11 +583,15 @@ public class OfferController {
 		return randomNumber;
 	}
 
-	//TODO: Doc
 	/**
 	 * Liest alle Angebote von einem Institut aus.
+<<<<<<< HEAD
 	 * @param iid 
 	 * 			Die ID des Institutes.
+=======
+	 * 
+	 * @param iid
+>>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
 	 * @return
 	 * 			Alle Angebote die zu einem Institut gehoeren.
 	 */
@@ -592,20 +600,13 @@ public class OfferController {
 		ResultSet rs;
 		rs = db.select(new String[] { "*" }, new String[] { tableName },
 				"Institut =" + iid);
-		if(rs==null){
+		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offers;
 		}
 		try {
 			while (rs.next()) {
-				offers.add(new Offer(rs.getInt("AID"), rs
-						.getString("Ersteller"), rs.getString("Name"), rs
-						.getString("Notiz"), rs.getBoolean("Geprueft"), rs
-						.getInt("Plaetze"), rs.getDouble("Stundenprowoche"), rs
-						.getString("Beschreibung"), rs.getDate("Beginn"), rs
-						.getDate("Ende"), rs.getDouble("Stundenlohn"), rs
-						.getInt("Institut"), rs.getDate("aenderungsdatum"), rs
-						.getBoolean("abgeschlossen")));
+				offers.add(convertToOffer(rs));
 			}
 			return offers;
 		} catch (SQLException e) {
@@ -613,5 +614,25 @@ public class OfferController {
 					"Error reading ResultSet in getOffersByInstitute()!");
 			return null;
 		}
+	}
+
+	/**
+	 * Hilfsmethode welche aus einem ResultSet ein offer castet.
+	 * 
+	 * @param rs
+	 *            Das ResultSet.
+	 * @return Das Offer.
+	 * @throws SQLException
+	 */
+	private Offer convertToOffer(ResultSet rs) throws SQLException {
+		if (rs == null)
+			throw new SQLException("ResultSet is NULL!");
+		return new Offer(rs.getInt("AID"), rs.getString("Ersteller"),
+				rs.getString("Name"), rs.getString("Notiz"),
+				rs.getBoolean("Geprueft"), rs.getInt("Plaetze"),
+				rs.getDouble("Stundenprowoche"), rs.getString("Beschreibung"),
+				rs.getDate("Beginn"), rs.getDate("Ende"),
+				rs.getDouble("Stundenlohn"), rs.getInt("Institut"),
+				rs.getDate("aenderungsdatum"), rs.getBoolean("abgeschlossen"));
 	}
 }

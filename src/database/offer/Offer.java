@@ -18,62 +18,62 @@ public class Offer {
 	 * Die id des Angebots.
 	 */
 	private int aid;
-	
+
 	/**
 	 * Der Ersteller des Angebots.
 	 */
 	private String author;
-	
+
 	/**
 	 * Der Name des Angebots.
 	 */
 	private String name;
-	
+
 	/**
 	 * Die Notiz zum Angebot.
 	 */
 	private String note;
-	
+
 	/**
 	 * Der Status des Angebots.
 	 */
 	private boolean checked;
-	
+
 	/**
 	 * Die Anzahl der freien Plaetze zum Angebot.
 	 */
 	private int slots;
-	
+
 	/**
 	 * Die Anzahl der Stunden pro Woche des Angebots.
 	 */
 	private double hoursperweek;
-	
+
 	/**
 	 * Die beschreibung zum Angebot.
 	 */
 	private String description;
-	
+
 	/**
 	 * Der Beginn des Angebots.
 	 */
 	private Date startdate;
-	
+
 	/**
 	 * Das Ende des Angebots.
 	 */
 	private Date enddate;
-	
+
 	/**
 	 * Der Gehalt pro Stunde des Angebots.
 	 */
 	private double wage;
-	
+
 	/**
 	 * Das Institut des Angebots.
 	 */
 	private int institute;
-	
+
 	/**
 	 * Das letzte Datum, an dem das Angebot bearbeitet wurde.
 	 */
@@ -83,41 +83,48 @@ public class Offer {
 	 */
 	private boolean finished;
 
-	
 	/**
 	 * 
 	 * @param aid
-	 * 		Die id des Angebots.
+	 *            Die id des Angebots.
 	 * @param author
-	 * 		Der Ersteller des Angebots.
+	 *            Der Ersteller des Angebots.
 	 * @param name
-	 * 		Der Name des Angebots.
+	 *            Der Name des Angebots.
 	 * @param note
-	 * 		Die Notiz zum Angebot.
+	 *            Die Notiz zum Angebot.
 	 * @param checked
-	 * 		Der Status des Angebots.
+	 *            Der Status des Angebots.
 	 * @param slots
-	 * 		Die Anzahl der freien Plaetze zum Angebot.
+	 *            Die Anzahl der freien Plaetze zum Angebot.
 	 * @param hoursperweek
-	 * 		Die Anzahl der Stunden pro Woche des Angebots.
+	 *            Die Anzahl der Stunden pro Woche des Angebots.
 	 * @param description
+<<<<<<< HEAD
 	 * 		Die Beschreibung zum Angebot.
 	 * @param startdate
 	 * 		Der Beginn des Angebots.
 	 * @param enddate
 	 * 		Das Ende des Angebots.
+=======
+	 *            Die beschreibung zum Angebot.
+	 * @param startDate
+	 *            Der Beginn des Angebots.
+	 * @param endDate
+	 *            Das Ende des Angebots.
+>>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
 	 * @param wage
-	 * 		Der Gehalt pro Stunde des Angebots.
+	 *            Der Gehalt pro Stunde des Angebots.
 	 * @param institute
-	 * 		Das Institut des Angebots.
+	 *            Das Institut des Angebots.
 	 * @param modificationdate
-	 * 		Das letzte Datum, an dem das Angebot bearbeitet wurde.
+	 *            Das letzte Datum, an dem das Angebot bearbeitet wurde.
 	 * @param finished
-	 * 		Ob das Angebot schon abgeschlossen ist.
+	 *            Ob das Angebot schon abgeschlossen ist.
 	 */
 	public Offer(int aid, String author, String name, String note,
 			boolean checked, int slots, double hoursperweek,
-			String description, Date startdate, Date enddate, double wage,
+			String description, Date startDate, Date endDate, double wage,
 			int institute, Date modificationdate, boolean finished) {
 		super();
 		this.aid = aid;
@@ -128,16 +135,17 @@ public class Offer {
 		this.slots = slots;
 		this.hoursperweek = hoursperweek;
 		this.description = description;
-		this.startdate = startdate;
-		this.enddate = enddate;
+		this.startdate = startDate;
+		this.enddate = endDate;
 		this.wage = wage;
 		this.institute = institute;
 		this.modificationdate = modificationdate;
-		this.finished=finished;
+		this.finished = finished;
 	}
-	
+
 	/**
 	 * Gibt zurueck ob das Angebot beendet ist.
+	 * 
 	 * @return boolean ob das Angebot beendet ist.
 	 */
 	public boolean isFinished() {
@@ -146,12 +154,13 @@ public class Offer {
 
 	/**
 	 * Setzt, ob das Angebot beendet ist.
-	 * @param finished Wahrheitswert ob beendet.
+	 * 
+	 * @param finished
+	 *            Wahrheitswert ob beendet.
 	 */
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
-
 
 	/**
 	 * Gibt die id des Angebots zurueck.
@@ -400,15 +409,19 @@ public class Offer {
 		this.modificationdate = modificationdate;
 	}
 
-
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Offer [name=" + name + ", checked=" + checked + ", institute="
-				+ institute + "]";
+		return "Offer [aid=" + aid + ", author=" + author + ", name=" + name
+				+ ", note=" + note + ", checked=" + checked + ", slots="
+				+ slots + ", hoursperweek=" + hoursperweek + ", description="
+				+ description + ", startdate=" + startdate + ", enddate="
+				+ enddate + ", wage=" + wage + ", institute=" + institute
+				+ ", modificationdate=" + modificationdate + ", finished="
+				+ finished + "]";
 	}
-
-
-	
-	
-	
 }

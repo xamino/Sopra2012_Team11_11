@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 06/05/2012 11:12:12 AM
+ Date: 07/01/2012 18:07:09 PM
 */
 
 SET NAMES utf8;
@@ -135,6 +135,24 @@ CREATE TABLE `Institute` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `Institute` VALUES ('0', 'default'), ('1', 'Informatik'), ('2', 'Psychologie');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `Standardangebot`
+-- ----------------------------
+DROP TABLE IF EXISTS `Standardangebot`;
+CREATE TABLE `Standardangebot` (
+  `StdProMonat` int(11) DEFAULT NULL,
+  `StartDatum` text,
+  `EndDatum` text,
+  `Lohn` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `Standardangebot`
+-- ----------------------------
+BEGIN;
+INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo', '370.54');
 COMMIT;
 
 -- ----------------------------

@@ -127,4 +127,13 @@ public class AppDocument {
 		this.present = present;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "AppDocument [username=" + username + ", offerID=" + offerID
+				+ ", docID=" + docID + ", present=" + present + "]";
+	}
+
 }

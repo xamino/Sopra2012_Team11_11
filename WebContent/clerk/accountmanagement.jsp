@@ -112,7 +112,7 @@
 									<div class="abstand">
 										<input id="dataconfirm" type="checkbox" name="dataagreement"
 											value="dataAkzeptieren"> <a target="_blank"
-											href="<%=Helper.D_PUBLIC_DATAAGREEMENTUSER%>"
+											href="<%=Helper.D_PUBLIC_DATAAGREEMENT%>"
 											title="Hier geht es zu den Datenschutzbestimmungen">Datenschutzbestimmungen</a>
 										widerrufen
 									</div>

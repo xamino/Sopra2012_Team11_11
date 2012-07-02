@@ -20,19 +20,18 @@ function loadOffers() {
  * @param data
  *            The data.
  */
-// TODO: Too much data, needs to be trimmed SERVER-SIDE! Also exchange
-// offers[i].author with realname, not username!
 function handleLoadOffers(mime, data) {
 	if (mime == "application/json") {
 		// alert(data);
 		var offers = eval(data);
 		var table = document.getElementById("offersTable");
-		table.innerHTML = "<tr><th>Datum</th><th>Bezeichnung</th><th>Beschreibung</th><th>Anbieter</th><th>Stellen</th></tr>";
+		table.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th><th>Anbieter</th><th>Stellen</th></tr>";
 		for ( var i = 0; i < offers.length; i++) {
 			table.innerHTML += "<tr><td>" + offers[i].startdate + "</td><td>"
-					+ offers[i].name + "</td><td>" + offers[i].description
-					+ "</td><td>" + offers[i].author + "</td><td>"
-					+ offers[i].slots + "</td></tr>";
+					+ offers[i].enddate + "</td><td>" + offers[i].name
+					+ "</td><td>" + offers[i].description + "</td><td>"
+					+ offers[i].author + "</td><td>" + offers[i].slots
+					+ "</td></tr>";
 		}
 		return;
 	} else if (mime == "text/plain") {

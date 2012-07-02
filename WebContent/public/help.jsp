@@ -72,7 +72,23 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<div class="haupttext">Hier steht Kram!!</div>
+				<div class="haupttext">
+				<strong>Anmelden</strong><br>
+				Zur Anmeldung müssen Benutzername und Password in die entsprechenden Felder eintragen werden. 
+				Anschließend werden die Daten mit einem Klick auf "Anmelden" geprüft und bei korrekten Daten erfolgt die Anmeldung.
+				Mit einem Klick auf den Zurücksetzten Button, lassen sich die vorgenommenen Einträge in die Textfelder "Benutzername" und "Password" entfernen.<br>
+				<br>
+				<strong>Passwort vergessen</strong><br>
+				Wurde das Passwort Vergessen, kann durch den Klick auf "Passwort vergessen?" ein neues angefordert werden.
+				Hierzu muss die E-Mail Adresse des Accounts in das Popup eingetragen werden. Mit einem Klick auf "Neues Passwort senden"
+				wird ein neues Passwort an die angegebene E-Mail Adresse geschickt.<br>
+				<br>
+				<strong>Registrieren</strong><br>
+				Das Formular zum Registrieren befindet sich hinter dem entsprechenden Link.
+				Hier sind alle Felder obligatorisch. Zudem müssen die Datenschutzbestimmungen akzeptiert werden (diese können hier auch eingesehen werden). 
+				Mit einem Klick auf Registrieren, wird der Benutzer im System aufgenommen.<br>
+				<br>
+			</div>
 			</div>
 		</div>
 	</div>

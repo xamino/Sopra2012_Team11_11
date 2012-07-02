@@ -38,12 +38,14 @@ function handleLoadOffersResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("offerTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
+		table.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table.innerHTML += "<tr class=\"\" id=\""
 					+ JSONarray[i].aid
 					+ "\"><td>"
 					+ JSONarray[i].startdate
+					+ "</td><td>"
+					+ JSONarray[i].enddate
 					+ "</td><td>"
 					+ JSONarray[i].name
 					+ "</td><td><div class=\"float2\">"
@@ -83,12 +85,14 @@ function handleLoadMyOffersResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("myofferTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Beginn</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
+		table2.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\""
 					+ JSONarray[i].aid
 					+ "\"><td>"
 					+ JSONarray[i].startdate
+					+ "</td><td>"
+					+ JSONarray[i].enddate
 					+ "</td><td>"
 					+ JSONarray[i].name
 					+ "</td><td><div class=\"float2\">"
@@ -150,7 +154,7 @@ function handleLoadMyApplicationResponse(mime, data) {
 		stupidThing = obj.author;
 		var table = document.getElementById("applications");
 		// Write table – probably replaces old data!
-		table.innerHTML = "Bewerbung für " + obj.offerName;
+		table.innerHTML = "Bewerbung für " + obj.offerName + obj.status;
 		selectDocuments();
 	}
 }
@@ -168,7 +172,7 @@ function selectDocuments() {
 	// reset selectedID (account could have been deleted in meantime)
 	// selectedOffer = null;
 	// alert("ohne alert funzt es ned =( ");
-	connect("/hiwi/Applicant/js/selectDocuments", "id=" + id,
+	connect("/hiwi/Applicant/js/selectDocuments", "aid=" + id,
 			handleselectDocumentsResponse);
 	// alert("ohne alert funzt es ned =( 2");
 }
@@ -186,9 +190,7 @@ function handleselectDocumentsResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
 	} else if (mime == "application/json") {
-		// alert("richtig="+data);
-		// data=[{"offerID":101,"documentID":2},{"offerID":101,"documentID":5}]
-		// //richtig
+		// alert(data);
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("(" + data + ")");
 		// alert("data= "+JSONarray);
@@ -197,13 +199,14 @@ function handleselectDocumentsResponse(mime, data) {
 		// Write table – probably replaces old data!
 		table2.innerHTML = "<th>Status</th><th>Unterlage</th>";
 		for ( var i = 0; i < JSONarray.length; i++) {
+			var obj = eval("(" + JSONarray[i] + ")");
 			var isChecked;
-			if (JSONarray[i].isChecked == 0)
+			if (obj.isChecked == 0)
 				isChecked = "Fehlt";
 			else
 				isChecked = "Vorhanden";
-			table2.innerHTML += "<tr><td>" + isChecked + "</td><td>"
-					+ JSONarray[i].name + "</td>";
+			table2.innerHTML += "<tr><td>" + isChecked + "</td><td>" + obj.name
+					+ "</td>";
 		}
 		// Prepare mailTo button:
 		connect("/hiwi/Applicant/js/getEmail", "user=" + stupidThing, function(
@@ -217,7 +220,7 @@ function handleselectDocumentsResponse(mime, data) {
 			else if (mime == "text/email") {
 				var button = document.getElementById("mailToProvider");
 				// Check mail address:
-				alert(data);
+				// alert(data);
 				// Note that clickMail() is defined in the library.js!
 				button.setAttribute("onclick", "clickMail('" + data
 						+ "', '[Hiwi-Börse:"
@@ -256,6 +259,11 @@ function handleDeleteApplication(mime, data) {
 		window.location = data;
 }
 
+/**
+ * TODO!
+ * 
+ * @param aid
+ */
 function prepareApply(aid) {
 	// alert(aid);
 	selectedOfferToApply = aid;

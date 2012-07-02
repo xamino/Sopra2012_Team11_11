@@ -76,70 +76,70 @@ public class Clerk extends User {
 		return acccon.deleteClerkAccount(this);
 	}
 
-	/**
-	 * Methode zum bearbeiten von Bewerbungen.
-	 */
-	public void editApplication() {
+//	/**
+//	 * Methode zum bearbeiten von Bewerbungen.
+//	 */
+//	public void editApplication() {
+//		
+//	}
 
-	}
+//	/**
+//	 * Methode zum ablehnen eines Angebots.
+//	 * 
+//	 * @throws SQLException
+//	 */
+//	public void rejectOffer(int offerID) throws SQLException {
+//		Offer off = offcon.getOfferById(offerID);
+//		offcon.deleteOffer(off);
+//		// TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert
+//		// werden.
+//
+//	}
 
-	/**
-	 * Methode zum ablehnen eines Angebots.
-	 * 
-	 * @throws SQLException
-	 */
-	public void rejectOffer(int offerID) throws SQLException {
-		Offer off = offcon.getOfferById(offerID);
-		offcon.deleteOffer(off);
-		// TODO Wen ein Angebot abgelehnt wird muss der Anbieter informiert
-		// werden.
+//	/**
+//	 * Methode zum aktualiesieren eines Angebots.
+//	 */
+//	public void updateOffer(Offer off) {
+//		offcon.updateOffer(off);
+//
+//	}
 
-	}
+//	/**
+//	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
+//	 * Bewerber einzeln Dokumente hinzugefuegt werden.
+//	 * 
+//	 * @param username
+//	 *            Benutzername wird zur eindeutigen Zuordnung des Dokuments
+//	 *            benoetigt.
+//	 * @param aID
+//	 *            ID des Bewerbers
+//	 */
+//	public void addAppDoc(String username, int aID, int uID, boolean present) {
+//		AppDocument doc = new AppDocument(username, aID, uID, present);
+//		doccon.createAppDocument(doc);
+//
+//	}
 
-	/**
-	 * Methode zum aktualiesieren eines Angebots.
-	 */
-	public void updateOffer(Offer off) {
-		offcon.updateOffer(off);
-
-	}
-
-	/**
-	 * Methode zum hinzufuegen von Bewerber-Dokumenten. Dabei kann jedem
-	 * Bewerber einzeln Dokumente hinzugefuegt werden.
-	 * 
-	 * @param username
-	 *            Benutzername wird zur eindeutigen Zuordnung des Dokuments
-	 *            benoetigt.
-	 * @param aID
-	 *            ID des Bewerbers
-	 */
-	public void addAppDoc(String username, int aID, int uID, boolean present) {
-		AppDocument doc = new AppDocument(username, aID, uID, present);
-		doccon.createAppDocument(doc);
-
-	}
-
-	/**
-	 * Methode zum hinzufuegen von Dokumenten.
-	 * 
-	 * @param UID
-	 *            ID der Unterlage
-	 * @param name
-	 *            Name der Unterlage
-	 * @param description
-	 *            Beschreibung zur Unterlage
-	 */
-	public boolean addDoc(Document doc) {
-		if (!doccon.createDocument(doc)) {
-			log.write("Clerk", "Error adding a document!");
-			return false;
-		} else {
-			log.write("Clerk", "<" + getUserData().getUsername()
-					+ "> added document <" + doc.getName() + ">.");
-			return true;
-		}
-	}
+//	/**
+//	 * Methode zum hinzufuegen von Dokumenten.
+//	 * 
+//	 * @param UID
+//	 *            ID der Unterlage
+//	 * @param name
+//	 *            Name der Unterlage
+//	 * @param description
+//	 *            Beschreibung zur Unterlage
+//	 */
+//	public boolean addDoc(Document doc) {
+//		if (!doccon.createDocument(doc)) {
+//			log.write("Clerk", "Error adding a document!");
+//			return false;
+//		} else {
+//			log.write("Clerk", "<" + getUserData().getUsername()
+//					+ "> added document <" + doc.getName() + ">.");
+//			return true;
+//		}
+//	}
 
 	// Nur der Admin kann Unterlagen erstellen
 
@@ -153,41 +153,41 @@ public class Clerk extends User {
 
 	// Siehe oben
 
-	// /**
-	// * Methode zum annehmen eines Bewerbers.
-	// * @param AID
-	// * ID der Bewerbung
-	// * @throws SQLException
-	// */
-	// public void acceptApplication(int AID) throws SQLException {
-	// Application app = appcon.getApplicationById(AID);
-	// app.setChosen(true);
-	// appcon.updateApplication(app);
-	// }
+//	 /**
+//	 * Methode zum annehmen eines Bewerbers.
+//	 * @param AID
+//	 * ID der Bewerbung
+//	 * @throws SQLException
+//	 */
+//	 public void acceptApplication(int AID) throws SQLException {
+//	 Application app = appcon.getApplicationById(AID);
+//	 app.setChosen(true);
+//	 appcon.updateApplication(app);
+//	 }
 	// Der Provider nimmt bewerbungen an
 
-	/**
-	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
-	 * einzeln Dokumente entfernt werden.
-	 * 
-	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
-	 */
-	public boolean deleteAppDoc(AppDocument doc) {
-		return doccon.deleteAppDocument(doc);
-	}
+//	/**
+//	 * Methode zum entfernen von Bewerber-Dokumenten. Dabei kann jedem Bewerber
+//	 * einzeln Dokumente entfernt werden.
+//	 * 
+//	 * @return TRUE falls das Löschen erfolgreich war. Ansonten FALSE
+//	 */
+//	public boolean deleteAppDoc(AppDocument doc) {
+//		return doccon.deleteAppDocument(doc);
+//	}
 
-	/**
-	 * Methode zum beenden des Berwerbungsvorgangs.
-	 * 
-	 * @param AID
-	 *            ID der Bewerbung
-	 * @throws SQLException
-	 */
-	public void finishApplication(int AID) throws SQLException {
-		Application app = appcon.getApplicationById(AID);
-		app.setFinished(true);
-		appcon.updateApplication(app);
-	}
+//	/**
+//	 * Methode zum beenden des Berwerbungsvorgangs.
+//	 * 
+//	 * @param AID
+//	 *            ID der Bewerbung
+//	 * @throws SQLException
+//	 */
+//	public void finishApplication(int AID) throws SQLException {
+//		Application app = appcon.getApplicationById(AID);
+//		app.setFinished(true);
+//		appcon.updateApplication(app);
+//	}
 
 	/**
 	 * Export fuer die Excel-File

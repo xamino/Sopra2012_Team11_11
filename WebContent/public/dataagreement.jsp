@@ -16,58 +16,11 @@
 <div class="footerunten">
 	<div class="header">
 		<h1>
-			<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+			<a class="banner">Hiwi-Börse</a>
 		</h1>
 	</div>
-	<div class="right">
-		<div class="commentform">
-			<h3>Anmeldung</h3>
-			<form name="login">
-				<span> <label for="userName">Benutzername</label>
-				</span>
-				<div class="form">
-					<input type="text" name="userName" size="15" maxlength="100" />
-				</div>
-				<br> <span> <label for="userPassword">Passwort</label>
-				</span>
-				<div class="form">
-					<input type="password" name="userPassword" size="15"
-						maxlength="100" />
-				</div>
-				<div class="clear"></div>
-				<div class="text">
-					<div id="error_login" class="hiddenerror"></div>
-				</div>
-				<p>
-					<!-- return false on submit so that the form doesn't reload the form – this is handled
-					by the javascript function accordingly. -->
-					<input type="reset" value="Zurücksetzen"
-						onclick="toggleWarning('error_login', false, '')" /> <input
-						type="submit" value="Anmelden"
-						onclick="checkLogin(login); return false;" />
-				</p>
-			</form>
-			<a class="hintlink" href="register.jsp"
-				title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <a
-				class="hintlink" href="javascript:void(0)"
-				onclick="prepareForgetful();" href="">Passwort vergessen?</a>
-		</div>
-		<div class="nav">
-			<h3>Navigation</h3>
-			<div class="text">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<%=Helper.D_INDEX%>"
-					title="Hier gelangen Sie auf unsere Startseite">Startseite</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_PUBLIC_REGISTER%>"
-					title="Hier geht es zum Registrieren">Registrieren</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
-				Datenschutzbestimmungen <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_PUBLIC_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
-			</div>
-		</div>
-	</div>
+	<div class="datamitte">
 	<div class="content">
-		<div class="rightborder">
 			<div class="textblock">
 				<h2>Datenschutzerklärungen</h2>
 				<div class="text">Hier können Sie die aktuellen
@@ -75,14 +28,31 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<div class="haupttext">Hier steht Kram!!</div>
+				<div class="haupttext">Wir erheben und verwenden Ihre personenbezogenen Daten ausschließlich im Rahmen der Bestimmungen des Datenschutzrechts der 
+				Bundesrepublik Deutschland. Im Folgenden unterrichten wir Sie über Art, Umfang und Zwecke der Erhebung und Verwendung personenbezogener Daten. 
+				Sie können diese Unterrichtung jederzeit auf der Hiwi-Börse unter Ihrer Accountverwaltung abrufen und widerrufen.<br>
+				<br>
+				<strong>Datenübermittlung und -protokollierung zu systeminternen und statistischen Zwecken</strong><br>
+				Ihr Internet-Browser übermittelt beim Zugriff auf unsere Webseite aus technischen Gründen automatisch Daten an unseren Webserver. 
+				Es handelt sich dabei unter anderem um Datum und Uhrzeit des Zugriffs, URL der verweisenden Webseite, abgerufene Datei, Menge der gesendeten Daten, 
+				Browsertyp und -version, Betriebssystem sowie Ihre IP-Adresse. Diese Daten werden nicht gespeichert. <br>
+				Eine Zuordnung dieser Daten zu einer bestimmten Person ist uns nicht möglich. <br>
+				<br> 
+				<strong>Nutzungsdaten</strong><br>
+				Wir erheben und verwenden personenbezogene Daten von Ihnen, soweit dies erforderlich ist, um die Inanspruchnahme unseres Internetangebotes zu ermöglichen.
+				Diese Daten werden zwei Jahre für Dokumentationszwecke gespeichert.
+				Wenn Sie die Datenschutzbestimmungen widerrufen bzw. Ihren Account löschen, werden alle personenbezogenen Daten von Ihenen umgehend gelöscht.<br>
+				Ihre personenbezogenen Daten werden an in keinem Fall an Dritte weitergegeben oder sonst übermittelt.
+ 				</div>
 			</div>
-		</div>
 	</div>
 	</div>
+	</div>
+	
 	<div class="clear"></div>
 
 	<div class="footer"></div>
+	
 	<!-- Forgotten password popup -->
 	<div id="password_forgotten" class="popup_hidden">
 		<form name="forgottenForm">

@@ -60,20 +60,26 @@ function handleLoadOffersResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("providerTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber/Stelle</th><th>Aendern</th><th>Widerrufen</th></tr>";
+		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber</th><th>Ändern</th><th>Widerrufen</th><th>Bestätigt?</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
+			var obj = JSONarray[i];
 			table.innerHTML += "<tr class=\"\" id=\""
-					+ JSONarray[i].aid
+					+ obj.aid
 					+ "\"><td>"
-					+ JSONarray[i].name
+					+ obj.name
 					+ "</td><td><br><input id=\""
-					+ JSONarray[i].aid
-					+ "\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
-					+ JSONarray[i].aid
+					+ obj.aid
+					+ "OfferApplicants\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
+					+ obj.aid
 					+ "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"prepareButtonUpdateOffer(\'"
-					+ JSONarray[i].aid
+					+ obj.aid
 					+ "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
-					+ JSONarray[i].aid + "\');\" /> </td></tr>";
+					+ obj.aid + "\');\" /> </td><td>"
+					+ ((obj.checked) ? "Ja" : "Nein") + "</td></tr>";
+			// Logic to disable button if not checked:
+			if (!obj.checked) {
+				document.getElementById(obj.aid + "OfferApplicants").disabled = true;
+			}
 		}
 	}
 }
@@ -128,8 +134,7 @@ function applicantChoice() {
 	// alert("id= "+aid);
 	// reset selectedID (account could have been deleted in meantime)
 	selectedOffer = null;
-	toggleWarning("error_noOfferSelected", true,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 	connect("/hiwi/Provider/js/applicantChoice", "aid=" + aid,
 			handleApplicantChoiceResponse);
 }
@@ -189,86 +194,16 @@ function markOfferSelected(id) {
 	// If clicked again, unselect:
 	if (selectedOffer == id) {
 		selectedOffer = null;
-		toggleWarning("error_noOfferSelected", true,
-		"Kein Angebot selektiert!");
+		toggleWarning("error_noOfferSelected", true, "Kein Angebot selektiert!");
 		return;
 	}
 	// Else save & mark new one:
 	selectedOffer = id;
-	toggleWarning("error_noOfferSelected", false,
-	"Kein Angebot selektiert!");
+	toggleWarning("error_noOfferSelected", false, "Kein Angebot selektiert!");
 
 	// alert("aktuelle id: "+selectedOffer);
 
 	document.getElementById(id).setAttribute("class", "selected");
-}
-
-/**
- * This function adds an new Offer from the provider account in createoffer.jsp
- * 
- * @param form
- *            is the HTML formular which is being filled with significant values
- *            of an offer-object.
- */
-function addOffer(form) {
-	if (form == null)
-		return;
-	var error = false;
-
-	var titel = form.titel.value;
-	if (titel == null || titel == "") {
-		toggleWarning("error_titel", true, "Bitte ausfuellen!");
-		error = true;
-	} else if (!checkText(titel)) {
-		toggleWarning("error_titel", true, "Unerlaubtes Sonderzeichen!");
-	} else
-		toggleWarning("error_titel", false, "");
-
-	var std = form.std.value;
-	if (std == null || std == "") {
-		toggleWarning("error_std", true, "Bitte ausfuellen!");
-		error = true;
-	} else if (!checkInt(std)) {
-		toggleWarning("error_std", true, "Bitte nur ganze Zahlen!");
-		error = true;
-	} else
-		toggleWarning("error_std", false, "");
-
-	var stellen = form.stellen.value;
-	if (stellen == null || stellen == "") {
-		toggleWarning("error_stellen", true, "Bitte ausfuellen!");
-		error = true;
-	} else if (!checkInt(stellen)) {
-		toggleWarning("error_stellen", true, "Bitte nur ganze Zahlen!");
-		error = true;
-	} else
-		toggleWarning("error_stellen", false, "");
-
-	var beschreibung = form.beschreibung.value;
-	if (beschreibung == null || beschreibung == "") {
-		toggleWarning("error_beschreibung", true, "Bitte ausfuellen!");
-		error = true;
-	} else if (!checkText(beschreibung)) {
-		toggleWarning("error_beschreibung", true, "Unerlaubtes Sonderzeichen!");
-		error = true;
-	} else {
-		toggleWarning("error_beschreibung", false, "");
-	}
-	var notiz = form.notiz.value;
-	if (notiz == null || notiz == "") {
-		toggleWarning("error_notiz", true, "Bitte ausfuellen!");
-		error = true;
-	} else if (!checkText(notiz)) {
-		toggleWarning("error_notiz", true, "Unerlaubtes Sonderzeichen!");
-		error = true;
-	} else
-		toggleWarning("error_notiz", false, "");
-	if (error)
-		return;
-	// alert("Sending...");
-	connect("/hiwi/Provider/js/addOffer", "titel=" + titel + "&std=" + std
-			+ "&stellen=" + stellen + "&beschreibung=" + beschreibung
-			+ "&notiz=" + notiz, handleCreateOfferResponse);
 }
 
 /**
@@ -328,31 +263,6 @@ function handleLoadEditOfferResponse(mime, data) {
 }
 
 /**
- * This function works with the response of the ProviderServlet to create an
- * offer.
- * 
- * @param mime
- *            The MIME type of the data.
- * @param data
- *            The data.
- */
-function handleCreateOfferResponse(mime, data) {
-	// alert("ANTWORT VOM SERVLET ADD OFFER");
-	if (mime == "text/url") { // im Servlet:
-		// response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
-		// veranlasst nach dem Anlegen eines neues Offer
-		// Objekts die weiterleitung auf die hauptseite
-		// des providers
-		window.location = data;
-		return;
-	} else if (mime == "text/error") {
-		// hier fehler als html errormessage einbauen
-		alert("TODO: HTML ERRORMESSAGE für die falscheingabe fehler!");
-		return;
-	}
-}
-
-/**
  * This function updates an offer.
  */
 
@@ -362,9 +272,9 @@ function updateOfferChanges(form) {
 	offerToUpdate = getURLParameter("aid");
 	if (form == null)
 		return;
-	
+
 	var error = false;
-	
+
 	var titelFeld = form.titelFeld.value;
 	if (titelFeld == null || titelFeld == "") {
 		toggleWarning("error_titelFeld", true, "Bitte ausfuellen!");

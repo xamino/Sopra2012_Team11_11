@@ -22,8 +22,9 @@ import com.google.gson.Gson;
 import database.account.AccountController;
 import database.application.Application;
 import database.application.ApplicationController;
+import database.document.AppDocument;
+import database.document.Document;
 import database.document.DocumentController;
-import database.document.OfferDocument;
 import database.offer.Offer;
 import database.offer.OfferController;
 
@@ -49,14 +50,14 @@ public class ApplicantServlet extends HttpServlet {
 	 */
 	private Gson gson;
 
-    /**
-    * Variable zum speicher der Instanz des OfferControllers.
-    **/
+	/**
+	 * Variable zum speicher der Instanz des OfferControllers.
+	 **/
 	private OfferController offcon;
 
-    /**
-    * Konstruktor.
-    **/
+	/**
+	 * Konstruktor.
+	 **/
 	public ApplicantServlet() {
 		super();
 		gson = new Gson();
@@ -176,47 +177,59 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
 			int aid = Integer.parseInt(request.getParameter("id"));
+
+			String username = applicant.getUserData().getUsername();
+			Application appli = ApplicationController.getInstance()
+					.getApplicationByOfferAndUser(aid, username);
+			String status = "fehler";
+			if (appli.isChosen()) {
+				status = " - angenommen";
+			} else {
+				status = " - nicht angenommen";
+			}
+
 			Offer off = offcon.getOfferById(aid);
 			response.setContentType("application/json");
 			response.getWriter().write(
-					Helper.jsonAtor(new String[] { "offerName", "author" },
-							new Object[] { off.getName(), off.getAuthor() }));
+					Helper.jsonAtor(new String[] { "offerName", "author",
+							"status" },
+							new Object[] { off.getName(), off.getAuthor(),
+									status }));
 			return;
 
 		}
 		// Load my information about one application(documents):
 		else if (path.equals("/js/selectDocuments")) {
-			String aid = request.getParameter("id");
-			int aid1 = Integer.parseInt(request.getParameter("id"));
-			Vector<Offer> offersid = offcon.getAllOffers();
-			// String offername;
-			Vector<OfferDocument> documents = null;
-			// System.out.println("hier?");
-			for (int i = 0; i < offersid.size(); i++) {
-				if (aid1 == offersid.elementAt(i).getAid()) {
-					documents = DocumentController.getInstance()
-							.getDocumentsByOffer(Integer.parseInt(aid));
-				}
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				log.write("ApplicantServlet",
+						"NumberFormatException parsing parameter!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID!");
+				return;
 			}
 			// Create JSON version of custom data:
-			String documentsObject = "[";
-			for (int j = 0; j < documents.size(); j++) {
-				int UID = documents.elementAt(j).getDocumentid();
+			Vector<String> docDataObject = new Vector<String>();
+			for (AppDocument appDoc : DocumentController.getInstance()
+					.getAppDocument(aid, applicant.getUserData().getUsername())) {
+				int UID = appDoc.getdID();
+				Document doc = DocumentController.getInstance()
+						.getDocumentByUID(UID);
 				String dataObject = "{name:\"";
 				// Write name to dataObject:
-				dataObject += DocumentController.getInstance()
-						.getDocumentByUID(UID).getName();
+				dataObject += doc.getName();
 				dataObject += "\",isChecked:";
 				// Write if it has been checked:
-				dataObject += (DocumentController.getInstance()
-						.getAppDocumentByUID(UID).getPresent()) ? 1 : 0;
+				dataObject += (appDoc.getPresent()) ? 1 : 0;
 				dataObject += "}";
-				documentsObject += dataObject
-						+ ((j == documents.size() - 1) ? "" : ",");
+				// Do nice things to wrap it up:
+				docDataObject.add(dataObject);
 			}
-			documentsObject += "]";
 			response.setContentType("application/json");
-			response.getWriter().write(documentsObject);
+			response.getWriter().write(
+					gson.toJson(docDataObject, docDataObject.getClass()));
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {

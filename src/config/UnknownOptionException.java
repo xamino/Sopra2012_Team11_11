@@ -9,7 +9,9 @@ package config;
  * Exception Klasse fuer Zugriff auf nicht vorhandene Optionen
  *
  */
+@SuppressWarnings("serial")
 public class UnknownOptionException extends Exception {
+
 	/**
 	 * StandardKonstruktor
 	 */

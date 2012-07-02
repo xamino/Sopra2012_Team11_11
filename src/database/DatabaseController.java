@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import config.Configurator;
+import database.garbage.GarbageCollector;
 
 import logger.Log;
 
@@ -124,6 +125,7 @@ public class DatabaseController {
 			// Commented out by Tamino (it was making me edgy... :D )
 			// e.printStackTrace();
 		}
+		GarbageCollector.getInstance().start();
 	}
 
 	/**

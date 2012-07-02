@@ -21,7 +21,7 @@ public abstract class LoggedInUsers {
 	private static Log log = Log.getInstance();
 
 	/**
-	 * Hashmap mit der eingeloggten session ids mit zugehörigem User Objekt
+	 * Hashmap mit der eingeloggten session IDs mit zugehörigem User Objekt
 	 */
 	private static HashMap<String, User> userMap = new HashMap<String, User>();
 	

@@ -6,56 +6,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/clerk/editAppScript.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Bewerbung Bearbeiten | Hiwi Job Börse</title>
 </head>
 <body onload="applicationDocuments()">
-<div class="footerunten">
-	<div class="header">
-		<h1>
-			<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
-		</h1>
-	</div>
-	<div class="right">
-		<div class="commentform">
-			<h3>Abmeldung</h3>
-			<form name="abmeldung">
-				<p>
-					<label for="logout">Sie sind als Sachbearbeiter angemeldet.</label>
-				</p>
-				<br>
-				<p>
-					<input type="button" value="Abmelden" name="logout" onclick="doLogout();"/>
-				</p>
-			</form>
+	<div class="footerunten">
+		<div class="header">
+			<h1>
+				<a class="banner" href="../provider/userindex.jsp">Hiwi-Börse</a>
+			</h1>
 		</div>
-		<div class="nav">
-			<h3>Navigation</h3>
-			<div class="text">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_USERINDEX%>">Startseite</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="doExcelExport();">ExcelExport</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_OFFERMANAGEMENT%>">Angebotsverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
-				Bewerbung bearbeiten
-				<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-					href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
+		<div class="right">
+			<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Sachbearbeiter
+							angemeldet.</label>
+					</p>
+					<br>
+					<p>
+						<input type="button" value="Abmelden" name="logout"
+							onclick="doLogout();" />
+					</p>
+				</form>
 			</div>
-		</div>
-	</div>
-	<div class="content">
-		<div class="rightborder">
-			<div class="textblock">
-				<h2>Bewerbung bearbeiten</h2>
+			<div class="nav">
+				<h3>Navigation</h3>
 				<div class="text">
-					Hier können Sie alle für eine Bewerbung benötigten Unterlagen bearbeiten. Des Weiteren können Sie Unterlagen als abgegeben markieren.<br>
-					Hier können Sie auch die Bewerbung abschließen.
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_CLERK_USERINDEX%>">Startseite</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="doExcelExport();">ExcelExport</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_CLERK_ACCOUNTMANAGEMENT%>">Accountverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_CLERK_OFFERMANAGEMENT%>">Angebotsverwaltung</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_CLERK_APPLICATIONMANAGEMENT%>">Bewerbungsverwaltung</a><br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;
+					Bewerbung bearbeiten <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+						href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
+<<<<<<< HEAD
 			<hr>
 			<div class="textblock">
 			<div class="haupttext">
@@ -79,55 +71,43 @@
 						</tr>-->
 					</table>
 					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion(documentsTable);"/>
+=======
+		</div>
+		<div class="content">
+			<div class="rightborder">
+				<div class="textblock">
+					<h2>Bewerbung bearbeiten</h2>
+					<div class="text">
+						Hier können Sie alle für eine Bewerbung benötigten Unterlagen
+						bearbeiten. Des Weiteren können Sie Unterlagen als abgegeben
+						markieren.<br> Hier können Sie auch die Bewerbung
+						abschließen.
+					</div>
 				</div>
-				<form class="listform">
-					<table class="" id="documentsTable">
-						<!-- <tr>
-							<th></th>
-							<th>Dokumente</th>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Normvertrag</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Superheldenbescheinigung</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Arbeitserlaubnis</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Leistungsnachweis</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Levelbescheinigung</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Internetslang für Fortgeschrittene Nachweis</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Lohnsteuerkarte</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>Passbild</td>
-						</tr>-->
-					</table>
-					<input type="button" value="Dokument hinzufügen" id="dokumentHinzufuegenButton"
-						onclick="togglePopup('document_add',true);" /> <input
-						type="button" value="Dokument löschen" id="dokumentloeschenbutton"
-						onclick="togglePopup('document_del',true);" />
-				</form>
-			</div>
+				<hr>
+				<div class="textblock">
+					<div class="haupttext">
+						<div style="float: right;">
+							<table class="hidden" id="applicantTable">
+								<!-- Info goes here -->
+							</table>
+							<br> <input type="button" value="Bewerbungsabschluss"
+								onclick="doApplicationCompletion();" />
+						</div>
+						<table class="" id="documentsTable">
+							<!-- Documents go here -->
+						</table>
+						<input type="button" value="Dokument hinzufügen"
+							id="dokumentHinzufuegenButton"
+							onclick="togglePopup('document_add',true);" /> <input
+							type="button" value="Dokument löschen"
+							id="dokumentloeschenbutton"
+							onclick="togglePopup('document_del',true);" />
+					</div>
+>>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 	<div class="clear"></div>
 	<div class="footer"></div>
@@ -144,7 +124,7 @@
 			<div class="textblock">
 				<!--  UID: <br> <input name="uid" type="text" /> -->
 				<div id="error_addDocument_uid" class="hiddenerror"></div>
-			<!--Titel: <br>
+				<!--Titel: <br>
 				<textarea name="title" rows="1" cols="30"></textarea>
 				<div id="error_addDocument_title" class="hiddenerror"></div>
 				Beschreibung: <br>
@@ -153,9 +133,9 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" onclick="addDocument()" /> 
+				<input type="button" value="Speichern" onclick="addDocument()" />
 				<!--<input type="button" value="Erstellen" onclick="createDocument()" />-->
-				<input	type="button" value="Abbrechen"
+				<input type="button" value="Abbrechen"
 					onclick="togglePopup('document_add', false);" />
 			</div>
 		</form>

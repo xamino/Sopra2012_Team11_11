@@ -1,9 +1,14 @@
 package user;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
 import logger.Log;
+import servlet.Helper;
 import userManagement.LoggedInUsers;
+import database.DatabaseController;
 import database.account.Account;
 import database.document.Document;
 import database.institute.Institute;
@@ -27,7 +32,7 @@ public class Admin extends User {
 	 *            Session des Benutzers.
 	 */
 	public Admin(String username, String email, String name, HttpSession session) {
-		super(username, email, name, null,session);
+		super(username, email, name, null, session);
 		userManagement.LoggedInUsers.addUser(this);
 		this.log = Log.getInstance();
 	}
@@ -55,38 +60,38 @@ public class Admin extends User {
 					+ "> as currently logged in!");
 			return false;
 		}
-		//check if it's a provider account
-		if(account.getAccounttype() == 1){
+		// check if it's a provider account
+		if (account.getAccounttype() == 1) {
 			acccon.deleteProviderAccount(account);
-		}//check if it's a clerk account
-		else if(account.getAccounttype() == 2){
+		}// check if it's a clerk account
+		else if (account.getAccounttype() == 2) {
 			acccon.deleteClerkAccount(account);
-		}//check if it's an applicant account
-		else if(account.getAccounttype() == 3){
+		}// check if it's an applicant account
+		else if (account.getAccounttype() == 3) {
 			acccon.deleteApplicantAccount(account);
-		}//check if it's an admin account
-		else if(account.getAccounttype() == 0){
+		}// check if it's an admin account
+		else if (account.getAccounttype() == 0) {
 			acccon.deleteAccount(account);
 		}
 		log.write("Admin", "<" + getUserData().getUsername()
-					+ "> deleted account with username <" + username + ">");
+				+ "> deleted account with username <" + username + ">");
 
 		return true;
 	}
 
-	/**
-	 * Methode zum Löschen seines Accounts
-	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-	 */
-	public boolean deleteOwnAccount() {
-		String username = this.getUserData().getUsername();
-		Account acc = acccon.getAccountByUsername(username);
-		boolean check = acccon.deleteAccount(acc);
-		invalidate();
-
-		return check;
-	}
+//	/**
+//	 * Methode zum Löschen seines Accounts
+//	 * 
+//	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
+//	 */
+//	public boolean deleteOwnAccount() {
+//		String username = this.getUserData().getUsername();
+//		Account acc = acccon.getAccountByUsername(username);
+//		boolean check = acccon.deleteAccount(acc);
+//		invalidate();
+//
+//		return check;
+//	}
 
 	/**
 	 * Erstellt einen Account.
@@ -181,9 +186,10 @@ public class Admin extends User {
 	}
 
 	/**
+	 * Fuegt ein neues Institut dem System hinzu.
 	 * 
-	 * @param institute
-	 * @return
+	 * @param institute Institut das hinzugefuegt werden soll.
+	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
 	 */
 	public boolean addInstitute(Institute institute) {
 		if (!instcon.addInstitute(institute)) {
@@ -195,7 +201,13 @@ public class Admin extends User {
 			return true;
 		}
 	}
-	
+
+	/**
+	 * Loescht ein Institut aus dem System. 
+	 * 
+	 * @param institute zu loeschendes Institut.
+	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
+	 */
 	public boolean deleteInstitute(Institute institute) {
 		if (!instcon.deleteInstitute(institute)) {
 			log.write("Admin", "Error deleting institute!");
@@ -203,6 +215,66 @@ public class Admin extends User {
 		} else {
 			log.write("Admin", "<" + getUserData().getUsername()
 					+ "> deleted institute <" + institute.getName() + ">.");
+			return true;
+		}
+	}
+
+	/**
+	 * Liest die Standardwerte eines Angebots aus der Datenbank und gibt sie als
+	 * JSON-Objekt zurueck.
+	 * 
+	 * @return Das JSON-Objekt mit den Werten.
+	 */
+	public String readDefValues() {
+		String ret = new String();
+		ResultSet rs = DatabaseController.getInstance().select(
+				new String[] { "*" }, new String[] { "Standardangebot" }, null);
+		try {
+			if (rs.next()) {
+				ret = Helper.jsonAtor(
+						new String[] { "hoursMonth", "wage", "startDate",
+								"endDate" },
+						new Object[] { rs.getInt("StdProMonat"),
+								rs.getFloat("Lohn"),
+								rs.getString("StartDatum"),
+								rs.getString("EndDatum") });
+			}
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		}
+		if (ret.isEmpty()) {
+			log.write("Admin", "Error reading default offer values!");
+			return null;
+		}
+		return ret;
+	}
+
+	/**
+	 * Speichert die neuen Werte fuer das standard Angebot in der Datenbank.
+	 * 
+	 * @param hoursMonth
+	 *            Die neue Stundenanzahl.
+	 * @param wage
+	 *            Der standard Lohn.
+	 * @param startDate
+	 *            Das neue start Datum.
+	 * @param endDate
+	 *            Das neue end Datum.
+	 * @return Flag zur kontrolle ob alles geklappt hat.
+	 */
+	public boolean writeDefValues(int hoursMonth, float wage, String startDate,
+			String endDate) {
+		if (!DatabaseController.getInstance()
+				.update("Standardangebot",
+						new String[] { "StdProMonat", "StartDatum", "EndDatum",
+								"Lohn" },
+						new Object[] { hoursMonth, startDate, endDate, wage },
+						"true")) {
+			log.write("Admin", "Error updating default offer!");
+			return false;
+		} else {
+			// log.write("Admin", "<" + getUserData().getUsername()+
+			// "> modified default offer.");
 			return true;
 		}
 	}

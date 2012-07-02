@@ -177,16 +177,11 @@ public class ApplicationController {
 
 				applicationvec.add(currentapp);
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return applicationvec;
-
 	}
 
 	/**
@@ -220,9 +215,6 @@ public class ApplicationController {
 
 				applicationvec.add(currentapp);
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -262,9 +254,6 @@ public class ApplicationController {
 
 				applicationvec.add(currentapp);
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,9 +292,6 @@ public class ApplicationController {
 
 				applicationvec.add(currentapp);
 			}
-
-			rs.close();
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -358,5 +344,41 @@ public class ApplicationController {
 //			return app;
 //		}
 	
+	}
+	
+	/**
+	 * Gibt eine Bestimmte Bewerbung zurueck. Die Bewerbung wird eindeutig durch
+	 * die AngebotsID und dem Benutzernamen bestimmt.
+	 * 
+	 * @param AnId
+	 *            Id eines Angebots
+	 * @param username
+	 *            Benutzername eines Bewerbers
+	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
+	 */
+	public Application getApplicationByOfferAndUser(int AnId, String username){
+		String[] select = { "*" };
+		String[] from = { tableName };
+		String where = "AID = " + AnId + " AND benutzername ='"+username+"'";
+				
+		ResultSet rs = db.select(select, from, where);
+		if(rs==null){
+			log.write("ApplicationController", "No connection: couldnt get application");
+			return null;
+		}
+
+		try {
+			if (rs.next()) {
+				Application app = new Application(rs.getString(1), rs.getInt(2),
+						rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
+				return app;
+			} else
+				return null;
+		} catch (SQLException e) {
+			logger.Log.getInstance().write("ApplicantionController",
+					"Error while reading application by aid from Database");
+		}
+		return null;
+		
 	}
 }

@@ -9,7 +9,9 @@ package config;
  * Exception Klasse fuer Fehlerhaften zugriff auf eine Optrion
  *
  */
+@SuppressWarnings("serial")
 public class IllegalTypeException extends Exception {
+
 	/**
 	 * StandardKonstruktor
 	 */

@@ -101,8 +101,12 @@ public class Document {
 		this.description = description;
 	}
 
-
-	
-	
-
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Document [uid=" + uid + ", name=" + name + ", description="
+				+ description + "]";
+	}
 }

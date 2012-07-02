@@ -9,6 +9,8 @@ package servlet;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -25,6 +27,7 @@ import mail.Mailer;
 import user.Clerk;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import database.DatabaseController;
 import database.HilfsDatenClerk;
@@ -39,6 +42,8 @@ import database.document.OfferDocument;
 import database.institute.InstituteController;
 import database.offer.Offer;
 import database.offer.OfferController;
+
+import static servlet.Helper.validate;
 
 /**
  * Das <code>Clerk</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -95,7 +100,7 @@ public class ClerkServlet extends HttpServlet {
 	public ClerkServlet() {
 		super();
 		log = Helper.log;
-		gson = new Gson();
+		gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
 		acccon = AccountController.getInstance();
 		doccon = DocumentController.getInstance();
 		appcon = ApplicationController.getInstance();
@@ -163,15 +168,60 @@ public class ClerkServlet extends HttpServlet {
 						.write("Fehler bei Eingabe! Nur double Werte erlaubt fuer wage.");
 				return;
 			}
+			// Read dates:
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDate");
+			if (!validate(startDate) || !validate(endDate)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler bei Eingabe! Datum nicht lesbar!");
+				return;
+			}
 			Offer offertosave = OfferController.getInstance().getOfferById(aid);
+			// note: is done in OfferController, no need to set twice...
 			// set modificationdate to current date
-			java.util.Date aenderungsdatum = new java.util.Date();
-			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
-					aenderungsdatum.getTime());
+			// java.util.Date aenderungsdatum = new java.util.Date();
+			// java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
+			// aenderungsdatum.getTime());
 			// sets modificationdate and updates it
-			offertosave.setModificationdate(aenderungsdatum_toUp);
+			// offertosave.setModificationdate(aenderungsdatum_toUp);
 			offertosave.setWage(wage);
 			offertosave.setHoursperweek(hoursperweek);
+			// write dates to offer:
+			try {
+				SimpleDateFormat x = new SimpleDateFormat("dd-MM-yyyy");
+				x.setLenient(false);
+				offertosave.setStartdate(x.parse(startDate));
+			} catch (ParseException e) {
+				log.write("ClerkServlet",
+						"There was an error while PARSING StartDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid startDate");
+				return;
+			}
+			try {
+				SimpleDateFormat x = new SimpleDateFormat("dd-MM-yyyy");
+				x.setLenient(false);
+				offertosave.setEnddate(x.parse(endDate));
+			} catch (ParseException e) {
+				log.write("ClerkServlet",
+						"There was an error while PARSING EndDate");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("invalid endDate");
+				return;
+			}
+
+			if(offertosave.getStartdate().after(offertosave.getEnddate())&&!offertosave.getEnddate().equals(offertosave.getStartdate())){
+				log.write("ClerkServlet",
+						"StartDate after Enddate!");
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("order");
+				return;
+			}
+			// logic for checked:
 			if (changed && accepted) {
 				offertosave.setChecked(true);
 				offertosave.setFinished(false);
@@ -198,17 +248,20 @@ public class ClerkServlet extends HttpServlet {
 						"Hiermit teilen wir ihnen mit, dass ihr Angebot \""
 								+ offertosave.getName()
 								+ "\" durch einen Verwalter abgelehnt wurde.");
+			// System.out.println(offertosave);
 			OfferController.getInstance().updateOffer(offertosave);
+			log.write("ClerkServlet", "<" + clerk.getUserData().getUsername()
+					+ "> changed offer <" + offertosave.getAid() + ">");
 			// wir wollten doch einen String als date?
 			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
 			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
 			// da was schief.
 			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
-			response.setContentType("offers/json");
-			response.getWriter().write(
-					gson.toJson(offertosave, offertosave.getClass()));
+			response.setContentType("text/url");
+			response.getWriter().write(Helper.D_CLERK_OFFERMANAGEMENT);
 			return;
 		} else if (path.equals("/js/documentsFromOffer")) {
+
 			String aid = request.getParameter("aid");
 			int aid1 = Integer.parseInt(aid);
 			Vector<Offer> offersid = OfferController.getInstance()
@@ -315,73 +368,73 @@ public class ClerkServlet extends HttpServlet {
 		// Updates the status of an AppDocument
 		else if (path.equals("/js/setDocCheck")) {
 			String username = request.getParameter("username");
+			// TODO: try-catch!
 			int offerid = Integer.parseInt(request.getParameter("offerid"));
 			int docid = Integer.parseInt(request.getParameter("docid"));
-
 			AppDocument appdoc = DocumentController.getInstance()
 					.getDocumentByUsernameAIDandUID(username, offerid, docid);
 			if (appdoc.getPresent()) {
 				appdoc.setPresent(false);
 			} else {
 				appdoc.setPresent(true);
+				// System.out.println("set to true");
 			}
 			DocumentController.getInstance().updateAppDocument(appdoc);
+			log.write("ClerkServelt", "<" + clerk.getUserData().getUsername()
+					+ "> changed AppDoc.");
 			return;
 		}
 		// Creates an String for the table in editapplication.jsp
-		else if (path.equals("/js/showApplicationTable2")) {
+		else if (path.equals("/js/getApplicantInfo")) {
 			String user = request.getParameter("User");
-			// System.out.println("User:"+user);
 			String aid = request.getParameter("AID");
-			// System.out.println("Aid:"+aid);
+			// TODO: try-catch
 			int aid1 = Integer.parseInt(aid);
-
-			String richtigername = AccountController.getInstance()
+			String realName = AccountController.getInstance()
 					.getAccountByUsername(user).getName();
-			String angebotsname = OfferController.getInstance()
-					.getOfferById(aid1).getName();
-			// = Name des bewebers, Angebotsname, Benutzername des Bewerbers,
-			// AngebotsID
-			String[] datanamen = { richtigername, angebotsname, user, aid };
-			response.setContentType("showapplicationtable2/json");
+			String offerName = OfferController.getInstance().getOfferById(aid1)
+					.getName();
+			response.setContentType("application/json");
 			response.getWriter().write(
-					gson.toJson(datanamen, datanamen.getClass()));
+					Helper.jsonAtor(new String[] { "realName", "offerName" },
+							new Object[] { realName, offerName }));
 		}
 		// Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
-//		else if (path.equals("/js/createDocument")) {
-//			String title = request.getParameter("title");
-//			String description = request.getParameter("description");
-//			// int uid = -1;
-//			// try {
-//			// uid = Integer.parseInt(request.getParameter("uid"));
-//			// } catch (NumberFormatException e) {
-//			// log.write("ClerkServlet",
-//			// "NumberFormatException while parsing URL!");
-//			// response.setContentType("text/error");
-//			// response.getWriter()
-//			// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
-//			// return;
-//			// }
-//			if (title == null || title.isEmpty() || description == null
-//					|| description.isEmpty() /* || uid < 0 */) {
-//				log.write("ClerkServlet", "Error in parameters!");
-//				response.setContentType("text/error");
-//				response.getWriter().write(
-//						"Fehler bei Eingabe! Fehlende Eingaben.");
-//				return;
-//			}
-//			// all okay... continue:
-//			if (!DocumentController.getInstance().generateDocument(title,
-//					description)) {
-//				response.setContentType("text/error");
-//				response.getWriter()
-//						.write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
-//				return;
-//			}
-//			response.setContentType("text/url");
-//			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-//			return;
-//		} 
+		// else if (path.equals("/js/createDocument")) {
+		// String title = request.getParameter("title");
+		// String description = request.getParameter("description");
+		// // int uid = -1;
+		// // try {
+		// // uid = Integer.parseInt(request.getParameter("uid"));
+		// // } catch (NumberFormatException e) {
+		// // log.write("ClerkServlet",
+		// // "NumberFormatException while parsing URL!");
+		// // response.setContentType("text/error");
+		// // response.getWriter()
+		// //
+		// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
+		// // return;
+		// // }
+		// if (title == null || title.isEmpty() || description == null
+		// || description.isEmpty() /* || uid < 0 */) {
+		// log.write("ClerkServlet", "Error in parameters!");
+		// response.setContentType("text/error");
+		// response.getWriter().write(
+		// "Fehler bei Eingabe! Fehlende Eingaben.");
+		// return;
+		// }
+		// // all okay... continue:
+		// if (!DocumentController.getInstance().generateDocument(title,
+		// description)) {
+		// response.setContentType("text/error");
+		// response.getWriter()
+		// .write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
+		// return;
+		// }
+		// response.setContentType("text/url");
+		// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+		// return;
+		// }
 		else if (path.equals("/js/deleteAppDocument")) {
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			String username = request.getParameter("user");
@@ -630,8 +683,8 @@ public class ClerkServlet extends HttpServlet {
 	}
 
 	/**
-	 * GET-Aufruffe werden hier nur zum Download der Excel-Datei verwendet. Ansonsten leitet
-	 * es an public/index.jsp weiter.
+	 * GET-Aufruffe werden hier nur zum Download der Excel-Datei verwendet.
+	 * Ansonsten leitet es an public/index.jsp weiter.
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
