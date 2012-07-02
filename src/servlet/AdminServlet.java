@@ -44,18 +44,6 @@ public class AdminServlet extends HttpServlet {
 	 */
 	private Log log;
 	/**
-	 * Variable zum speichern der Instanz des AccountController.
-	 */
-	private AccountController accountController;
-	/**
-	 * Variable zum speichern der Instanz des DocumentController.
-	 */
-	private DocumentController docController;
-	/**
-	 * Variable zum speichern der Instanz des InstituteController.
-	 */
-	private InstituteController instController;
-	/**
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
@@ -69,9 +57,6 @@ public class AdminServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 		gson = new Gson();
-		accountController = AccountController.getInstance();
-		docController = DocumentController.getInstance();
-		instController = InstituteController.getInstance();
 		log.write("AdminServlet", "Instance created.");
 	}
 
@@ -93,7 +78,7 @@ public class AdminServlet extends HttpServlet {
 		// Only activate this if you need to debug the path:
 		// log.write("AdminServlet", "Received request <" + path+">.");
 		if (path.equals("/js/loadAccounts")) {
-			Vector<Account> accounts = accountController.getAllAccounts();
+			Vector<Account> accounts = admin.getAccounts();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(accounts, accounts.getClass()));
@@ -127,7 +112,7 @@ public class AdminServlet extends HttpServlet {
 			}
 			log.write("AdminServlet", "Getting data of account with username <"
 					+ username + ">");
-			Account account = accountController.getAccountByUsername(username);
+			Account account = admin.getUserAccount(username);
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(account, Account.class));
 		} else if (path.equals("/js/addAccount")) {
@@ -159,7 +144,7 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// If already exists:
-			if (accountController.getAccountByUsername(userName) != null) {
+			if (admin.getUserAccount(userName) != null) {
 				log.write("AdminServlet",
 						"Error creating account – username alreay exists!");
 				response.setContentType("text/plain");
@@ -179,15 +164,9 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/getSystemInformation")) {
+			String info= admin.getSysteminfo();
 			response.setContentType("application/json");
-			Runtime r = Runtime.getRuntime();
-			String[] names = new String[] { "loggedInUsers", "allUsers",
-					"totalRAM", "maxRAM" };
-			Object[] objects = new Object[] { LoggedInUsers.getUsers().size(),
-					accountController.accountCount(),
-					"~" + r.totalMemory() / (1024 * 1024) + " MB",
-					"~" + r.maxMemory() / (1024 * 1024) + " MB" };
-			response.getWriter().write(Helper.jsonAtor(names, objects));
+			response.getWriter().write(info);
 		} else if (path.equals("/js/editAccount")) {
 			String realName = request.getParameter("realName");
 			String email = request.getParameter("email");
@@ -214,13 +193,13 @@ public class AdminServlet extends HttpServlet {
 				return;
 			}
 			// This can happen and is legal if the password isn't to be changed:
+			Account useracc = admin.getUserAccount(userName);
 			if (!validate(password))
-				password = accountController.getAccountByUsername(userName)
-						.getPasswordhash();
-			accountType = accountController.getAccountByUsername(userName)
-					.getAccounttype();
+				password = useracc.getPasswordhash();
+			accountType = useracc.getAccounttype();
+			String representative = useracc.getRepresentative();
 			if (!admin.editAccount(new Account(userName, password, accountType,
-					email, realName, institute, null))) {
+					email, realName, institute, representative))) {
 				response.setContentType("text/error");
 				response.getWriter().write(
 						"Fehler beim Update in der Datenbank!");
@@ -230,7 +209,7 @@ public class AdminServlet extends HttpServlet {
 			response.getWriter().write("true");
 			return;
 		} else if (path.equals("/js/loadDocuments")) {
-			Vector<Document> documents = docController.getAllDocuments();
+			Vector<Document> documents = admin.getDocuments();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(documents, documents.getClass()));
@@ -277,9 +256,13 @@ public class AdminServlet extends HttpServlet {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehlerhafte UID!");
 				return;
+			};
+			if(!admin.deleteDoc(uid)){
+				log.write("AdminServlet",
+						"Error deleting document!");
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Löschen des Dokuments");
 			}
-			Document doc = docController.getDocumentByUID(uid);
-			admin.deleteDoc(doc);
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_ADMIN_DOCUMENTSMANAGEMENT);
 			return;
@@ -294,7 +277,7 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write("Fehlerhafte UID!");
 				return;
 			}
-			Document doc = docController.getDocumentByUID(uid);
+			Document doc = admin.getSpecificDocument(uid);
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(doc, Document.class));
 			return;
@@ -332,7 +315,7 @@ public class AdminServlet extends HttpServlet {
 		}
 		// Load institutes as JSON data string:
 		else if (path.equals("/js/loadInstitutes")) {
-			Vector<Institute> inst = instController.getAllInstitutes();
+			Vector<Institute> inst =admin.getInstitutes();
 			if (inst == null) {
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim laden der Institute!");
@@ -390,8 +373,7 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write("Fehlerhafte IID!");
 				return;
 			}
-			Institute institute = InstituteController.getInstance()
-					.getInstituteByIID(IID);
+			Institute institute = admin.getSpecificInstitute(IID);
 			if (!admin.deleteInstitute(institute)) {
 				response.setContentType("text/error");
 				response.getWriter().write(

@@ -2,6 +2,7 @@ package user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,19 +80,61 @@ public class Admin extends User {
 		return true;
 	}
 
-//	/**
-//	 * Methode zum Löschen seines Accounts
-//	 * 
-//	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-//	 */
-//	public boolean deleteOwnAccount() {
-//		String username = this.getUserData().getUsername();
-//		Account acc = acccon.getAccountByUsername(username);
-//		boolean check = acccon.deleteAccount(acc);
-//		invalidate();
-//
-//		return check;
-//	}
+	/**
+	 * Gibt alle existierenden Accounts zurück.
+	 * @return Vektor mit Accounts
+	 */
+	public Vector<Account> getAccounts(){
+		return acccon.getAllAccounts();
+	}
+	/**
+	 * Gibt alle DokumentArchetypen des Systems zurueck.
+	 * @return Vektor mit Documents
+	 */
+	public Vector<Document> getDocuments(){
+		return doccon.getAllDocuments();
+	}
+	
+	public Vector<Institute> getInstitutes(){
+		return instcon.getAllInstitutes();
+	}
+	
+	/**
+	 * Gibt ein spezifisches Dokument zurueck.
+	 * @param uid ID des gesuchten Dokuments.
+	 * @return Das Dokument.
+	 */
+	public Document getSpecificDocument(int uid){
+		return doccon.getDocumentByUID(uid);
+	}
+	
+	public Institute getSpecificInstitute(int id){
+		return instcon.getInstituteByIID(id);
+	}
+	
+	/**
+	 * Gibt den Account eines bestimmten Users zurueck.
+	 * @param username Username des zu suchenden Accounts.
+	 * @return Account des Users.
+	 */
+	public Account getUserAccount(String username){
+		return acccon.getAccountByUsername(username);
+	}
+	/**
+	 * Gibt die Systeminformationen als Json String zurueck
+	 * @return Jsonstring mit Systeminformationen
+	 */
+	public String getSysteminfo(){
+		Runtime r = Runtime.getRuntime();
+		String[] names = new String[] { "loggedInUsers", "allUsers",
+				"totalRAM", "maxRAM" };
+		Object[] objects = new Object[] { LoggedInUsers.getUsers().size(),
+				acccon.accountCount(),
+				"~" + r.totalMemory() / (1024 * 1024) + " MB",
+				"~" + r.maxMemory() / (1024 * 1024) + " MB" };
+		return Helper.jsonAtor(names, objects);
+	}
+	
 
 	/**
 	 * Erstellt einen Account.
@@ -135,10 +178,15 @@ public class Admin extends User {
 	/**
 	 * Loescht einen loescht ein Administrator Dokument aus der Datenbank.
 	 * 
-	 * @param doc
-	 *            zu löschendes Dokument.
+	 * @param uid
+	 *            ID des zu löschenden Dokuments.
 	 */
-	public boolean deleteDoc(Document doc) {
+	public boolean deleteDoc(int uid) {
+		Document doc = doccon.getDocumentByUID(uid);
+		if(doc==null){
+			log.write("Admin", "Error deleting document!");
+			return false;
+		}
 		if (!doccon.deleteDocument(doc)) {
 			log.write("Admin", "Error deleting document!");
 			return false;

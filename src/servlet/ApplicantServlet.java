@@ -49,11 +49,19 @@ public class ApplicantServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
+<<<<<<< Updated upstream
 
 	/**
 	 * Variable zum speichern der Instanz des OfferControllers.
 	 **/
 	private OfferController offcon;
+=======
+//
+//	/**
+//	 * Variable zum speicher der Instanz des OfferControllers.
+//	 **/
+//	private OfferController offcon;
+>>>>>>> Stashed changes
 
 	/**
 	 * Konstruktor.
@@ -61,7 +69,7 @@ public class ApplicantServlet extends HttpServlet {
 	public ApplicantServlet() {
 		super();
 		gson = new Gson();
-		offcon = OfferController.getInstance();
+//		offcon = OfferController.getInstance();
 	}
 
 	/**
@@ -108,8 +116,7 @@ public class ApplicantServlet extends HttpServlet {
 																			// des
 																			// bewerbers
 			// alle bewerbungen dieses Bewerbers
-			Vector<Application> applisToDelete = ApplicationController
-					.getInstance().getApplicationsByApplicant(callerUsername);
+			Vector<Application> applisToDelete = appcon.getApplicationsByApplicant(callerUsername);
 			Application appToDelete = null;
 
 			// gehe alle Bewerbungen von diesem User durch und suche nach der
@@ -132,7 +139,7 @@ public class ApplicantServlet extends HttpServlet {
 			}
 
 			log.write("ApplicantServlet", "Deleting application in progress...");
-			ApplicationController.getInstance().deleteApplication(appToDelete);
+			appcon.deleteApplication(appToDelete);
 
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
@@ -179,7 +186,7 @@ public class ApplicantServlet extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("id"));
 
 			String username = applicant.getUserData().getUsername();
-			Application appli = ApplicationController.getInstance()
+			Application appli = appcon
 					.getApplicationByOfferAndUser(aid, username);
 			String status = "fehler";
 			if (appli.isChosen()) {
@@ -212,10 +219,10 @@ public class ApplicantServlet extends HttpServlet {
 			}
 			// Create JSON version of custom data:
 			Vector<String> docDataObject = new Vector<String>();
-			for (AppDocument appDoc : DocumentController.getInstance()
+			for (AppDocument appDoc : doccon
 					.getAppDocument(aid, applicant.getUserData().getUsername())) {
 				int UID = appDoc.getdID();
-				Document doc = DocumentController.getInstance()
+				Document doc = doccon
 						.getDocumentByUID(UID);
 				String dataObject = "{name:\"";
 				// Write name to dataObject:
@@ -288,7 +295,7 @@ public class ApplicantServlet extends HttpServlet {
 			}
 			String email = null;
 			try {
-				email = AccountController.getInstance()
+				email = accon
 						.getAccountByUsername(user).getEmail();
 			} catch (NullPointerException e) {
 				log.write("ClerkServlet",
