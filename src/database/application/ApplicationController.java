@@ -154,42 +154,7 @@ public class ApplicationController {
 		return db.update(tableName, columns, values, where);
 	}
 
-	/**
-	 * Diese Methode sammelt alle Bewerbungen aus der Datenbank und speichert
-	 * diese in einem Vector.
-	 * 
-	 * @return Es wird ein Vector mit allen vorhanden Bewerbungen in der
-	 *         Datenbank zurueckgegeben.
-	 */
-	public Vector<Application> getAllApplications() {
-
-		Vector<Application> applicationvec = new Vector<Application>(50, 10);
-
-		String[] select = { "*" };
-		String[] from = { tableName };
-
-		ResultSet rs = db.select(select, from, null);
-		if (rs == null) {
-			log.write("ApplicationController",
-					"No connection: couldnt get applications");
-			return applicationvec;
-		}
-		try {
-			while (rs.next()) {
-				Application currentapp;
-				currentapp = new Application(rs.getString(1), rs.getInt(2),
-						rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
-
-				applicationvec.add(currentapp);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return applicationvec;
-	}
-
-
+	
 	/**
 	 * Diese Methode sammelt alle Bewerbungen eines bestimmten Bewerbers aus der
 	 * Datenbank und speichert diese in einem Vector.

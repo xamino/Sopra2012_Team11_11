@@ -58,30 +58,7 @@ public class InstituteController {
 
 	final static String tableName = "Institute";// tabellenname
 
-	/**
-	 * Diese Methode gibt den Namen eines Instituts bei uebergebener Id.
-	 * 
-	 * @param id
-	 *            Id ist der Primaerschluessel in der Institute-DB.
-	 * @return Zurueckgegeben wird der Name des Institutes.
-	 */
-	public String getInstituteNameById(int id) {
-		ResultSet rs = db.select(new String[] { "Name" },
-				new String[] { tableName }, "IID=" + id);
-		if(rs==null){
-			log.write("InstituteController", "No connection: couldn't get institutename");
-			return null;
-		}
-		try {
-			if (rs.next()) {
-				return rs.getString("Name");
-			} else
-				return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	
 
 	/**
 	 * Gets all institutes in the database.
@@ -188,42 +165,5 @@ public class InstituteController {
 					"Error getting representing Institutes");
 		}
 		return ret;
-	}
-
-	/**
-	 * Generate a new ID.
-	 * 
-	 * @return generated ID
-	 */
-	public int getNewInstID(String tablename) {
-		int newID = 0;
-		boolean check = false;
-		while (!check) {
-			newID = generateRandomNr(1, 9999);
-			Object[] data = { newID, "" };
-			check = db.insert(tablename, data);
-		}
-		db.delete(tablename, "IID= " + newID);
-		return newID;
-	}
-
-	/**
-	 * Generate a random number.
-	 * 
-	 * @param aStart
-	 *            Start of the number.
-	 * @param aEnd
-	 *            End of the number.
-	 * @return generated number.
-	 */
-	private int generateRandomNr(int aStart, int aEnd) {
-
-		Random random = new Random();
-		// get the range, casting to long to avoid overflow problems
-		long range = (long) aEnd - (long) aStart + 1;
-		// compute a fraction of the range, 0 <= frac < range
-		long fraction = (long) (range * random.nextDouble());
-		int randomNumber = (int) (fraction + aStart);
-		return randomNumber;
 	}
 }
