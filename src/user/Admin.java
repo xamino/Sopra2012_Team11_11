@@ -1,3 +1,6 @@
+/**
+ * @author Manuel Guentzel
+ */
 package user;
 
 import java.sql.ResultSet;
@@ -39,10 +42,10 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Löscht einen neuen Account.
+	 * Loescht einen neuen Account.
 	 * 
 	 * @param username
-	 *            Username des anzulegenden Account.
+	 *            Username des zu loeschenden Accounts.
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 
@@ -81,7 +84,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Gibt alle existierenden Accounts zurück.
+	 * Gibt alle existierenden Accounts zurueck.
 	 * @return Vektor mit Accounts
 	 */
 	public Vector<Account> getAccounts(){
@@ -89,32 +92,42 @@ public class Admin extends User {
 	}
 	/**
 	 * Gibt alle DokumentArchetypen des Systems zurueck.
-	 * @return Vektor mit Documents
+	 * @return Vektor mit Dokumenten
 	 */
 	public Vector<Document> getDocuments(){
 		return doccon.getAllDocuments();
 	}
-	
+	/**
+	 * Gibt alle Institute zurueck.
+	 * @return Vektor mit Instituten
+	 */
 	public Vector<Institute> getInstitutes(){
 		return instcon.getAllInstitutes();
 	}
 	
 	/**
 	 * Gibt ein spezifisches Dokument zurueck.
-	 * @param uid ID des gesuchten Dokuments.
+	 * @param uid 
+	 * 			ID des gesuchten Dokuments.
 	 * @return Das Dokument.
 	 */
 	public Document getSpecificDocument(int uid){
 		return doccon.getDocumentByUID(uid);
 	}
-	
+	/**
+	 * Gibt ein spezifisches Institut zurueck.
+	 * @param id 
+	 * 			ID des gesuchten Instituts.
+	 * @return Das Institut.
+	 */
 	public Institute getSpecificInstitute(int id){
 		return instcon.getInstituteByIID(id);
 	}
 	
 	/**
 	 * Gibt den Account eines bestimmten Users zurueck.
-	 * @param username Username des zu suchenden Accounts.
+	 * @param username 
+	 * 			Username des zu suchenden Accounts.
 	 * @return Account des Users.
 	 */
 	public Account getUserAccount(String username){
@@ -140,7 +153,7 @@ public class Admin extends User {
 	 * Erstellt einen Account.
 	 * 
 	 * @param account
-	 *            zu loeschender Account.
+	 *            zu erstellender Account.
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createAccount(Account account) {
@@ -176,10 +189,11 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Loescht einen loescht ein Administrator Dokument aus der Datenbank.
+	 * Loescht ein Administrator Dokument aus der Datenbank.
 	 * 
 	 * @param uid
-	 *            ID des zu löschenden Dokuments.
+	 *            ID des zu loeschenden Dokuments.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteDoc(int uid) {
 		Document doc = doccon.getDocumentByUID(uid);
@@ -201,8 +215,8 @@ public class Admin extends User {
 	 * Fuegt ein Administrator Dokument hinzu.
 	 * 
 	 * @param doc
-	 *            Das zu erstellende Dokument.
-	 * @return Gibt an, ob das Dokument erstellt worden konnte.
+	 *            Das hinzuzufuegende Dokument.
+	 * @return Gibt an, ob das Dokument hinzugefuegt worden konnte.
 	 */
 	public boolean addDoc(Document doc) {
 		if (!doccon.createDocument(doc)) {
@@ -236,7 +250,8 @@ public class Admin extends User {
 	/**
 	 * Fuegt ein neues Institut dem System hinzu.
 	 * 
-	 * @param institute Institut das hinzugefuegt werden soll.
+	 * @param institute 
+	 * 				Institut das hinzugefuegt werden soll.
 	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
 	 */
 	public boolean addInstitute(Institute institute) {
@@ -253,7 +268,8 @@ public class Admin extends User {
 	/**
 	 * Loescht ein Institut aus dem System. 
 	 * 
-	 * @param institute zu loeschendes Institut.
+	 * @param institute 
+	 * 				zu loeschendes Institut.
 	 * @return Wahrheitswert, ob der Vorgang erfolgreich war.
 	 */
 	public boolean deleteInstitute(Institute institute) {
@@ -298,7 +314,7 @@ public class Admin extends User {
 	}
 
 	/**
-	 * Speichert die neuen Werte fuer das standard Angebot in der Datenbank.
+	 * Speichert die neuen Werte fuer das Standard-Angebot in der Datenbank.
 	 * 
 	 * @param hoursMonth
 	 *            Die neue Stundenanzahl.

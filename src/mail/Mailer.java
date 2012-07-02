@@ -1,3 +1,6 @@
+/**
+ * @author Manuel Guentzel
+ */
 package mail;
 
 import java.util.Properties;
@@ -11,9 +14,8 @@ import config.Configurator;
 import config.IllegalTypeException;
 import config.UnknownOptionException;
  /**
-  * Klasse für den Mailversand
-  * @author Guentzel
-  *
+  * Klasse fuer den Mailversand
+  * 
   */
 public class Mailer {
  /**
@@ -25,7 +27,7 @@ public class Mailer {
 	 */
 	private String password;
 	/**
-	 * Objekt für Einstellungen des Mailversands
+	 * Objekt fuer Einstellungen des Mailversands
 	 */
 	private Properties props;
 	/**
@@ -80,7 +82,8 @@ public class Mailer {
 	}
 	/**
 	 * Funktion zum ueberpruefen der Zieladresse.
-	 * @param address zu pruefende Adresse
+	 * @param address 
+	 * 				zu pruefende Adresse
 	 * @return <code>True</code>, falls die Mail Adresse korrekt ist. <code>False</code>, falls sie es nicht ist.
 	 */
 	private Boolean checkAddress(String address){
@@ -89,9 +92,12 @@ public class Mailer {
 	}
 	/**
 	 * Funktion zum Versenden einer EMail via Googlemail. Im Nachrichtenkoerper koennen via \n Absaetze und Leerzeilen produziert werden.
-	 * @param address Zieladresse
-	 * @param subject Betreff der Mail
-	 * @param message Nachrichtentext.
+	 * @param address 
+	 * 				Zieladresse
+	 * @param subject 
+	 * 				Betreff der Mail
+	 * @param message 
+	 * 				Nachrichtentext
 	 * @return Boolean der beschreibt ob der Vorgang erfolgreich war.
 	 */
 	public Boolean sendMail(String address, String subject, String message) {

@@ -1,21 +1,28 @@
+/**
+ * @author Manuel Guentzel
+ * 
+ */
 package user;
 
 import javax.servlet.http.HttpSession;
 
 /**
- * Datenklasse für die Daten eines Benutzers.
- * 
- * @author Guentzel
+ * Datenklasse fuer die Daten eines Benutzers.
  * 
  */
 public class UserData {
 	/**
 	 * Konstruktor
-	 * @param username Benutzername
-	 * @param email Email
-	 * @param name Realer Name
-	 * @param representative Username des Stellvertreters
-	 * @param session HttpSession
+	 * @param username 
+	 * 				Benutzername
+	 * @param email 
+	 * 			Email
+	 * @param name 
+	 * 			Realer Name
+	 * @param representative 
+	 * 				Username des Stellvertreters
+	 * @param session 
+	 * 			HttpSession
 	 */
 	public UserData(String username, String email, String name,
 			String representative, HttpSession session) {

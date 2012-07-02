@@ -1,5 +1,6 @@
 /**
  * @author Anatoli Brill
+ * @author Manuel Guentzel
  */
 
 package user;
@@ -61,6 +62,7 @@ public class Clerk extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account
+	 * @return Wahrheitswert ob erfolgreich.            
 	 */
 	public boolean editAccount(Account acc) {
 		if (!acccon.updateAccount(acc)) {
@@ -73,11 +75,11 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * Methode zum Löschen seines Accounts
+	 * Methode zum Loeschen seines Accounts
 	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
-	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
-	 *         zurückgegeben.
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurueckgegeben. Falls
+	 *         irgendwo ein Fehler aufgetreten ist wird ein FALSE
+	 *         zurueckgegeben.
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
@@ -96,7 +98,7 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * Aktualisiert ein Angebot in der Datenbank und schickt entsprechend emails
+	 * Aktualisiert ein Angebot in der Datenbank und schickt entsprechend Emails
 	 * an die Betroffenen.
 	 * 
 	 * @param off
@@ -266,7 +268,7 @@ public class Clerk extends User {
 	 *            AID des Angebots.
 	 * @param user
 	 *            Username des Benutzers.
-	 * @return Sehr gruseliger abwechselnder Vector.
+	 * @return Vector
 	 */
 	public Vector<Object> doVoodoo2nd(int aid, String user) {
 		Account acc = acccon.getAccountByUsername(user);

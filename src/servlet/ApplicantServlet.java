@@ -2,6 +2,7 @@
  * @author Laura Irlinger
  * @author Tamino Hartmann
  * @author Oemer Sahin
+ * @author Patryk Boczon
  */
 package servlet;
 
