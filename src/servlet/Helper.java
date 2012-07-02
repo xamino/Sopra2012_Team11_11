@@ -19,7 +19,7 @@ import user.User;
 import userManagement.LoggedInUsers;
 
 /**
- * Hilfsklasse fuer Statische Variablen und Methoden der Servlets.
+ * Hilfsklasse fuer statische Variablen und Methoden der Servlets.
  */
 public final class Helper {
 
@@ -44,13 +44,9 @@ public final class Helper {
 	 */
 	public static final String D_INDEX = "/hiwi/public/index.jsp";
 	/**
-	 * Pfad zu Datenschutzerklärung.
+	 * Pfad zu Datenschutzerklaerung.
 	 */
 	public static final String D_PUBLIC_DATAAGREEMENT = "/hiwi/public/dataagreement.jsp";
-	/**
-	 * Pfad zu Datenschutzerklärung fuer eingeloggte User.
-	 */
-	public static final String D_PUBLIC_DATAAGREEMENTUSER = "/hiwi/public/dataagreementuser.jsp";
 	/**
 	 * Pfad zu /hiwi/public/help.jsp.
 	 */
