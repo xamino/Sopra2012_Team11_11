@@ -254,7 +254,7 @@ public class Clerk extends User {
 	 * @return Die Hilfsdaten.
 	 */
 	public Vector<HilfsDatenClerk> getVoodoo(Account clerkAccount) {
-		return appcon.getChosenApplicationDataByInstitute(clerkAccount
+		return appcon.getChosenAndNotFinishedApplicationDataByInstitute(clerkAccount
 				.getInstitute());
 	}
 

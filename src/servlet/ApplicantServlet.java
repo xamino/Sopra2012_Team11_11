@@ -49,19 +49,12 @@ public class ApplicantServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-<<<<<<< Updated upstream
+
 
 	/**
 	 * Variable zum speichern der Instanz des OfferControllers.
 	 **/
 	private OfferController offcon;
-=======
-//
-//	/**
-//	 * Variable zum speicher der Instanz des OfferControllers.
-//	 **/
-//	private OfferController offcon;
->>>>>>> Stashed changes
 
 	/**
 	 * Konstruktor.
