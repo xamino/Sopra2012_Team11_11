@@ -273,7 +273,6 @@ function deleteAppDocument() {
 		connect("/hiwi/Clerk/js/deleteAppDocument", "uid=" + selectedDocument
 				+ "&user=" + User + "&aid=" + Aid, deleteAppDocumentResponse);
 	}
-
 }
 
 /**
@@ -291,8 +290,11 @@ function deleteAppDocumentResponse() {
  */
 
 function doApplicationCompletion() {
-	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID=" + aid
-			+ "&username=" + username, handleApplicationCompletion);
+	
+	User = getURLParameter("User");
+	Aid = getURLParameter("AID");
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "AID=" + Aid
+			+ "&username=" + User, handleApplicationCompletion);
 }
 
 /**
@@ -303,12 +305,11 @@ function doApplicationCompletion() {
  */
 function handleApplicationCompletion(mime, data) {
 	if (mime == "text/url") {
+		toggleWarning("error_appcompl", false, "");
 		window.location = data;
 	} else if (mime == "error/url") {
-		alert(data);
-		toggleWarning(id, true,
-				"Unvollständige Dokumente. Abschluss nicht möglich");
-	} else if (mime == "text/error") {
+		toggleWarning("error_appcompl", true, "");
+	} else{
 		alert(data);
 	}
 }

@@ -47,7 +47,6 @@
 						href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<hr>
 			<div class="textblock">
 			<div class="haupttext">
@@ -70,8 +69,8 @@
 							<td>Bachlor</td>
 						</tr>-->
 					</table>
-					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion(documentsTable);"/>
-=======
+					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion();"/>
+
 		</div>
 		<div class="content">
 			<div class="rightborder">
@@ -104,7 +103,7 @@
 							id="dokumentloeschenbutton"
 							onclick="togglePopup('document_del',true);" />
 					</div>
->>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
+
 				</div>
 			</div>
 		</div>
@@ -155,6 +154,19 @@
 					onclick="togglePopup('document_del', false);" />
 			</div>
 		</form>
+	</div>
+	
+	<div id="error_appcompl" class="popup_hidden">
+			<h3>Angebot ablehnen</h3>
+			<hr>
+			<div class="textblock">
+				Der Bewerbungsabschluss kann nicht efolgen.<br>Es müssen alle Dokumente abgegeben sein.
+			</div>
+			<hr>
+			<div class="textblock">
+				 <input type="button"
+					value="OK" onclick="togglePopup('error_appcompl', false);" />
+			</div>
 	</div>
 </body>
 </html>

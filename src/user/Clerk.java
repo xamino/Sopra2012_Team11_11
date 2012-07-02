@@ -206,7 +206,10 @@ public class Clerk extends User {
 
 	/**
 	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
-	 * 
+	 * @param username
+	 *          benutzername des Bewerbers
+	 *@param offerID
+	 *			ID des Angebotes der Bewerbung          
 	 * @return True falls alles abgegeben wurde, sonst False.
 	 */
 	public boolean checkAllDocFromApplicant(String username, int offerID) {

@@ -525,14 +525,15 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(representatives, representatives.getClass()));
 		}
-		// TODO
-		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
 		else if (path.equals("/js/doApplicationCompletion")) {
 			System.out.println("Test");
 			int aid = 0;
 			String username;
+			
+			String clerkname = clerk.getUserData().getUsername();
+			
 			try {
-				aid = Integer.parseInt(request.getParameter("aid"));
+				aid = Integer.parseInt(request.getParameter("AID"));
 			} catch (NumberFormatException e) {
 				log.write("ClerkServlet",
 						"NumberFormatException while parsing URL!");
@@ -541,22 +542,27 @@ public class ClerkServlet extends HttpServlet {
 						"Error while parsing String into int");
 				return;
 			}
-			username = request.getParameter("User");
-			// Prueft ob alle Dokumente abgegeben wurden.
-			// Die einzige Bedingung die wir and den Vertragsabschluss-Button
-			// gestellt haben
-			// war das er nur dann erfolgreich ist wen alles vorhanden ist und
-			// nicht das er
-			// die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+			username = request.getParameter("username");
+			
+			Application appli = ApplicationController.getInstance().getApplicationByOfferAndUser(aid, username);
+			System.out.println(aid);
+			System.out.println(username);
+			System.out.println(clerkname);
+
 			if (clerk.checkAllDocFromApplicant(username, aid)) {
+				System.out.println("true");
 				response.setContentType("text/url");
-				// Soll jetzt ab hier den Bewerber als "angenommen" markiert
-				// werden oder wird das dan endgueltig vom
-				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewaehlt)
+				appli.setFinished(true);
+				appli.setClerk(clerkname);
+				ApplicationController.getInstance().updateApplication(appli);
+				System.out.println("true ende");
 			} else {
+				System.out.println("false");
 				response.setContentType("error/url");
-				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+				response.getWriter().write("Unvollstaendige Dokumente. Abschluss nicht moeglich");
+				System.out.println("false ende");
 			}
+			return;
 		}
 		// Funktion zum entfernen eines OfferDocuments des gewaehlten Offers
 		else if (path.equals("/js/deleteOfferDocument")) {
@@ -606,33 +612,33 @@ public class ClerkServlet extends HttpServlet {
 
 		// TODO!
 		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
-		else if (path.equals("/js/doApplicationCompletion")) {
-			int AID = 0;
-			String username;
-			try {
-				AID = Integer.parseInt(request.getParameter("aid"));
-			} catch (NumberFormatException e) {
-				log.write("ClerkServlet",
-						"NumberFormatException while parsing URL!");
-			}
-			username = request.getParameter("username");
+//		else if (path.equals("/js/doApplicationCompletion")) {
+//			int AID = 0;
+//			String username;
+//			try {
+//				AID = Integer.parseInt(request.getParameter("aid"));
+//			} catch (NumberFormatException e) {
+//				log.write("ClerkServlet",
+//						"NumberFormatException while parsing URL!");
+//			}
+//			username = request.getParameter("username");
 			// Prueft ob alle Dokumente abgegeben wurden.
 			// Die einzige Bedingung die wir and den Vertragsabschluss-Button
 			// gestellt haben
 			// war das er nur dann erfolgreich ist wen alles vorhanden ist und
 			// nicht das er
 			// die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
-			if (clerk.checkAllDocFromApplicant(username, AID)) {
-				response.setContentType("test/url");
-				// Soll jetzt ab hier den Bewerber als "angenommen" markiert
-				// werden oder wird das dan endgueltig vom
-				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
-			} else {
-				response.setContentType("error/url");
-				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-			}
-
-		} else if (path.equals("/js/loadInfo")) {
+//			if (clerk.checkAllDocFromApplicant(username, AID)) {
+//				response.setContentType("test/url");
+//				// Soll jetzt ab hier den Bewerber als "angenommen" markiert
+//				// werden oder wird das dan endgueltig vom
+//				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+//			} else {
+//				response.setContentType("error/url");
+//				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+//			}
+//		} 
+		else if (path.equals("/js/loadInfo")) {
 			Vector<Offer> off = new Vector<Offer>();
 			Vector<Integer> institutes = instcon
 					.getAllRepresentingInstitutes(clerk.getUserData()
