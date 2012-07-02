@@ -203,11 +203,6 @@ public class ClerkServlet extends HttpServlet {
 			}
 			log.write("ClerkServlet", "<" + clerk.getUserData().getUsername()
 					+ "> changed offer <" + offertosave.getAid() + ">");
-			// wir wollten doch einen String als date?
-			// Antwort von Tamino: ist es auch... aber irgendwie müssen wir das
-			// Datum auch holen um es abspeichern zu können, bzw. irgendwo geht
-			// da was schief.
-			// OfferController.getInstance().getOfferById(aid).setModificationdate(getDateTime());
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_CLERK_OFFERMANAGEMENT);
 			return;
