@@ -1,5 +1,7 @@
 package database.garbage;
-
+/**
+ * @author Manuel Güntzel
+ */
 import java.util.Date;
 import java.util.Timer;
 
