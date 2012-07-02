@@ -48,31 +48,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Merge!!! ich hoff ich hab das richtige auskommentiert??? -->
-	<!-- 		<hr>
-	 		<div class="textblock">
-			<div class="haupttext">
-				<div style="float: right;">
-					<table class="hidden" id="applicantTable">
-						<!-- <tr>
-							<td>Name:</td>
-							<td>Hans Marting</td>
-						</tr>
-						<tr>
-							<td>Bewirbt sich für:</td>
-							<td>World of Warcraft Tutorium</td>
-						</tr>
-						<tr>
-							<td>Fachsemester:</td>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>Abschluss:</td>
-							<td>Bachlor</td>
-						</tr>-->
-		<!-- 			</table>
-					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion(documentsTable);"/>
-		</div>-->
 		<div class="content">
 			<div class="rightborder">
 				<div class="textblock">
