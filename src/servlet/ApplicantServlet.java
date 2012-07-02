@@ -37,7 +37,7 @@ import database.offer.OfferController;
 public class ApplicantServlet extends HttpServlet {
 
 	/**
-	 * Standart default serial.
+	 * Standard default serial.
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -51,7 +51,7 @@ public class ApplicantServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Variable zum speicher der Instanz des OfferControllers.
+	 * Variable zum speichern der Instanz des OfferControllers.
 	 **/
 	private OfferController offcon;
 
