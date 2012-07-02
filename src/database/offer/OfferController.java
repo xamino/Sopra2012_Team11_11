@@ -544,11 +544,11 @@ public class OfferController {
 	}
 
 	/**
-	 * Gibt die freien Stellen eines Angebots zurück.
+	 * Gibt die Gesamtzahl der Stellen eines Angebots zurück.
 	 * 
 	 * @param aid
 	 *            Aid des Angebots
-	 * @return Freie Stellen des Angebots
+	 * @return Gesamtzahl der Stellen des Angebots
 	 */
 	public int getTotalSlotsOfOffer(int aid) {
 
