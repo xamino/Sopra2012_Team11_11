@@ -1,3 +1,6 @@
+/**
+ * @author Tamino Hartmann
+ */
 package userManagement;
 
 import javax.servlet.http.HttpSession;
