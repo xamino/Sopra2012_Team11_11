@@ -37,7 +37,7 @@ import database.offer.OfferController;
 public class ApplicantServlet extends HttpServlet {
 
 	/**
-	 * Standard default serial.
+	 * Standart default serial.
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -49,19 +49,6 @@ public class ApplicantServlet extends HttpServlet {
 	 * Variable zum speichern der GSON Instanz.
 	 */
 	private Gson gson;
-<<<<<<< Updated upstream
-
-	/**
-	 * Variable zum speichern der Instanz des OfferControllers.
-	 **/
-	private OfferController offcon;
-=======
-//
-//	/**
-//	 * Variable zum speicher der Instanz des OfferControllers.
-//	 **/
-//	private OfferController offcon;
->>>>>>> Stashed changes
 
 	/**
 	 * Konstruktor.
@@ -112,34 +99,14 @@ public class ApplicantServlet extends HttpServlet {
 				return;
 			}
 
-			String callerUsername = applicant.getUserData().getUsername(); // benutzername
-																			// des
-																			// bewerbers
-			// alle bewerbungen dieses Bewerbers
-			Vector<Application> applisToDelete = appcon.getApplicationsByApplicant(callerUsername);
-			Application appToDelete = null;
-
-			// gehe alle Bewerbungen von diesem User durch und suche nach der
-			// AID des Angebots, welches er wiederufen will
-			for (int i = 0; i < applisToDelete.size(); i++) {
-				if (applisToDelete.elementAt(i).getAid() == aid)// gefunden !
-					appToDelete = applisToDelete.elementAt(i);
-			}
-
-			if (appToDelete == null) { // nicht gefunden!
-				log.write(
-						"ApplicantServlet",
-						"There is no application for user:" + callerUsername
-								+ " with aid= " + aid + ". Errorpath: "
-								+ path.toString());
+			Application appToDelete = applicant.getApplication(aid);
+			if(!applicant.deleteApplication(appToDelete)){
+				log.write("ApplicantServlet",
+						"Error deleting application!");
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
+				response.getWriter().write("Fehler beim löschen der Bewerbung");
 				return;
 			}
-
-			log.write("ApplicantServlet", "Deleting application in progress...");
-			appcon.deleteApplication(appToDelete);
 
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
@@ -148,35 +115,14 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my offers:
 		else if (path.equals("/js/loadMyOffers")) {
 			// Offer vom User geholt
-			Vector<Offer> myoffers = offcon.getOffersByApplicant(applicant
-					.getUserData().getUsername());
+			Vector<Offer> myoffers = applicant.myOffers();
 			response.setContentType("myapplication/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
 		}
 		// Load offers:
 		else if (path.equals("/js/loadOffers")) {
-			Vector<Offer> offers = offcon.getCheckedOffers(); // nur gepr�fte
-																// Angebote
-			// bereits beworbene Stellen entfernen
-			// Offer vom User geholt
-			Vector<Offer> myoffers1 = offcon.getOffersByApplicant(applicant
-					.getUserData().getUsername());
-
-			boolean entfernen;
-			for (int i = 0; i < offers.size(); i++) {
-				entfernen = false;
-				for (int j = 0; j < myoffers1.size(); j++) {
-					if (((Offer) offers.elementAt(i)).getAid() == myoffers1
-							.elementAt(j).getAid()) {
-						entfernen = true;
-					}
-					if (entfernen) {
-						offers.remove(i);
-					}
-				}
-			}
-
+			Vector<Offer> offers = applicant.possibleOffers();
 			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offers, offers.getClass()));
 		}
@@ -186,8 +132,7 @@ public class ApplicantServlet extends HttpServlet {
 			int aid = Integer.parseInt(request.getParameter("id"));
 
 			String username = applicant.getUserData().getUsername();
-			Application appli = appcon
-					.getApplicationByOfferAndUser(aid, username);
+			Application appli = applicant.getApplication(aid);
 			String status = "fehler";
 			if (appli.isChosen()) {
 				status = " - angenommen";
@@ -195,7 +140,7 @@ public class ApplicantServlet extends HttpServlet {
 				status = " - nicht angenommen";
 			}
 
-			Offer off = offcon.getOfferById(aid);
+			Offer off = applicant.getOffer(aid);
 			response.setContentType("application/json");
 			response.getWriter().write(
 					Helper.jsonAtor(new String[] { "offerName", "author",
@@ -218,22 +163,7 @@ public class ApplicantServlet extends HttpServlet {
 				return;
 			}
 			// Create JSON version of custom data:
-			Vector<String> docDataObject = new Vector<String>();
-			for (AppDocument appDoc : doccon
-					.getAppDocument(aid, applicant.getUserData().getUsername())) {
-				int UID = appDoc.getdID();
-				Document doc = doccon
-						.getDocumentByUID(UID);
-				String dataObject = "{name:\"";
-				// Write name to dataObject:
-				dataObject += doc.getName();
-				dataObject += "\",isChecked:";
-				// Write if it has been checked:
-				dataObject += (appDoc.getPresent()) ? 1 : 0;
-				dataObject += "}";
-				// Do nice things to wrap it up:
-				docDataObject.add(dataObject);
-			}
+			Vector<String> docDataObject = applicant.getDocuments(aid);
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(docDataObject, docDataObject.getClass()));

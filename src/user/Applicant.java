@@ -16,14 +16,13 @@ import javax.servlet.http.HttpSession;
 import database.account.Account;
 import database.application.Application;
 import database.document.AppDocument;
+import database.document.Document;
 import database.offer.Offer;
 
 /**
  * Verwaltet alle Aufgaben und Daten eines Bewerbers.
  */
 public class Applicant extends User {
-
-
 
 	/**
 	 * Konstruktor. Erstellte Objekte werden automatisch in der LoggedInUsers
@@ -40,7 +39,7 @@ public class Applicant extends User {
 	 */
 	public Applicant(String username, String email, String name,
 			HttpSession session) {
-		super(username, email, name, null,session);
+		super(username, email, name, null, session);
 		userManagement.LoggedInUsers.addUser(this);
 	}
 
@@ -61,23 +60,25 @@ public class Applicant extends User {
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
-	
+
 	/**
 	 * Methode zum Löschen seines Accounts
-	 * @return	Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben.
-	 * 			Falls irgendwo ein Fehler aufgetretten ist wird ein FALSE zurückgegeben.
+	 * 
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
+	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
+	 *         zurückgegeben.
 	 */
-	public boolean deleteOwnAccount(){
+	public boolean deleteOwnAccount() {
 		invalidate();
 		return acccon.deleteApplicantAccount(this);
 	}
-	
+
 	/**
 	 * Bewerben auf ein Angebot
 	 * 
 	 * @param offerID
 	 *            ID des Angebots
-	 * @return 
+	 * @return Wahrheitswert ob erfolgreich.
 	 */
 	public boolean apply(int offerID) {
 		Application app = new Application(getUserData().getUsername(), offerID,
@@ -86,19 +87,76 @@ public class Applicant extends User {
 
 	}
 
-//	public boolean deleteApplication(int applicationID, int offerID) {
-//		Application app = new Application(this.getUserData().getUsername(),
-//				applicationID, false, "", false);
-//		Account account = new Account(this.getUserData().getUsername(), "", 0, "", "", 0, "");
-//		Offer offer = new Offer(offerID, "", "", "", true, 0, 0, "", null, null, 0, 0, null,false);
-//		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(account, offer);
-//		Iterator<AppDocument> it = vec.iterator();
-//		
-//		int i = 0;
-//		while(it.hasNext()){
-//			doccon.deleteAppDocument(vec.elementAt(i));
-//		}
-//		
-//		return appcon.deleteApplication(app);
-//	}
+	/**
+	 * Loescht die Bewerbung.
+	 * 
+	 * @param appToDelete
+	 *            zu loeschende Bewerbung
+	 */
+	public boolean deleteApplication(Application appToDelete) {
+		return appcon.deleteApplication(appToDelete);
+
+	}
+
+	/**
+	 * Gibt eine Bewerbung zurueck
+	 * 
+	 * @param id
+	 *            ID der Bewerbung
+	 * @return Bewerbung.
+	 */
+	public Application getApplication(int id) {
+		return appcon.getApplicationByOfferAndUser(id, getUserData()
+				.getUsername());
+	}
+
+	/**
+	 * Gibt Angebote zurueck auf die der Benutzer sich beworben hat.
+	 * 
+	 * @return Vektor mit Angeboten
+	 */
+	public Vector<Offer> myOffers() {
+		return offcon.getOffersByApplicant(getUserData().getUsername());
+	}
+
+	/**
+	 * Gibt Angebote zurueck auf die der Benutzer sich bewerben kann.
+	 * 
+	 * @return Vektor mit Angeboten
+	 */
+	public Vector<Offer> possibleOffers() {
+		return offcon.getPossibleOffers(getUserData().getUsername());
+	}
+
+	/**
+	 * Gibt ein Angebot zurueck
+	 * 
+	 * @param id
+	 *            ID des Angebots
+	 * @return Das Angebot
+	 */
+	public Offer getOffer(int id) {
+		return offcon.getOfferById(id);
+	}
+
+	public Vector<String> getDocuments(int aid) {
+		// Create JSON version of custom data:
+		Vector<String> docDataObject = new Vector<String>();
+		for (AppDocument appDoc : doccon.getAppDocument(aid, getUserData()
+				.getUsername())) {
+			int UID = appDoc.getdID();
+			Document doc = doccon.getDocumentByUID(UID);
+			String dataObject = "{name:\"";
+			// Write name to dataObject:
+			dataObject += doc.getName();
+			dataObject += "\",isChecked:";
+			// Write if it has been checked:
+			dataObject += (appDoc.getPresent()) ? 1 : 0;
+			dataObject += "}";
+			// Do nice things to wrap it up:
+			docDataObject.add(dataObject);
+		}
+		return docDataObject;
+	}
+
 }

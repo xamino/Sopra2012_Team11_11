@@ -100,6 +100,8 @@ public class ApplicationController {
 				return false;
 		return true;
 	}
+	
+
 
 	/**
 	 * Diese Methode loescht eine Bewerbung aus der Datenbank. Mit ubergebenem
@@ -186,6 +188,7 @@ public class ApplicationController {
 		}
 		return applicationvec;
 	}
+
 
 	/**
 	 * Diese Methode sammelt alle Bewerbungen eines bestimmten Bewerbers aus der
@@ -428,4 +431,5 @@ public class ApplicationController {
 		}
 		return null;
 	}
+	
 }
