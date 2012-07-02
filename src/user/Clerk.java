@@ -168,19 +168,18 @@ public class Clerk extends User {
 	public boolean checkAllDocFromApplicant(String username, int offerID) {
 		Account acc = acccon.getAccountByUsername(username);
 		Offer off = offcon.getOfferById(offerID);
-
 		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
-		System.out.println("dokumente: " + vec.size());
-
-		if (vec != null) {
-			for (int i = 0; i < vec.size(); i++) {
-				if (!(vec.elementAt(i).getPresent())) {
-					return false;
-				}
+		for (AppDocument appDoc : vec) {
+			if (!(appDoc.getPresent())) {
+				return false;
 			}
 		}
-		return true;
-
+		String clerkname = getUserData().getUsername();
+		Application appli = appcon.getApplicationByOfferAndUser(offerID,
+				username);
+		appli.setFinished(true);
+		appli.setClerk(clerkname);
+		return appcon.updateApplication(appli);
 	}
 
 	/**
@@ -254,8 +253,9 @@ public class Clerk extends User {
 	 * @return Die Hilfsdaten.
 	 */
 	public Vector<HilfsDatenClerk> getVoodoo(Account clerkAccount) {
-		return appcon.getChosenAndNotFinishedApplicationDataByInstitute(clerkAccount
-				.getInstitute());
+		return appcon
+				.getChosenAndNotFinishedApplicationDataByInstitute(clerkAccount
+						.getInstitute());
 	}
 
 	/**

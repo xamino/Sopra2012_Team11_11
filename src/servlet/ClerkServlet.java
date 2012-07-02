@@ -32,8 +32,6 @@ import com.google.gson.GsonBuilder;
 
 import database.HilfsDatenClerk;
 import database.account.Account;
-import database.application.Application;
-import database.application.ApplicationController;
 import database.document.Document;
 import database.offer.Offer;
 
@@ -428,37 +426,25 @@ public class ClerkServlet extends HttpServlet {
 			response.getWriter().write(
 					gson.toJson(representatives, representatives.getClass()));
 		} else if (path.equals("/js/doApplicationCompletion")) {
-			// TODO: @Tamino wenn es implementiert ist... :P (Sags mir auch
-			// bitte, Patryk!)
-			System.out.println("Test");
-			int aid = 0;
-			String username;
-
-			String clerkname = clerk.getUserData().getUsername();
-
+			int aid = -1;
 			try {
 				aid = Integer.parseInt(request.getParameter("AID"));
 			} catch (NumberFormatException e) {
-				log.write("ClerkServlet",
-						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
 				response.getWriter().write(
 						"Error while parsing String into int");
 				return;
 			}
-			username = request.getParameter("username");
-
-			Application appli = ApplicationController.getInstance()
-					.getApplicationByOfferAndUser(aid, username);
-			System.out.println(aid);
-			System.out.println(username);
-			System.out.println(clerkname);
-
+			String username = request.getParameter("username");
+			if (!validate(username) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
 			if (clerk.checkAllDocFromApplicant(username, aid)) {
 				response.setContentType("text/url");
-				appli.setFinished(true);
-				appli.setClerk(clerkname);
-				ApplicationController.getInstance().updateApplication(appli);
+				response.getWriter().write(Helper.D_CLERK_APPLICATIONMANAGEMENT);
 			} else {
 				response.setContentType("error/url");
 				response.getWriter().write(
