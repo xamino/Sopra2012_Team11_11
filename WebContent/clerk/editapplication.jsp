@@ -47,9 +47,10 @@
 						href="<%=Helper.D_CLERK_HELP%>" title="Hier finden Sie die Hilfe">Hilfe</a>
 				</div>
 			</div>
-<<<<<<< HEAD
-			<hr>
-			<div class="textblock">
+		</div>
+		<!-- Merge!!! ich hoff ich hab das richtige auskommentiert??? -->
+	<!-- 		<hr>
+	 		<div class="textblock">
 			<div class="haupttext">
 				<div style="float: right;">
 					<table class="hidden" id="applicantTable">
@@ -69,10 +70,9 @@
 							<td>Abschluss:</td>
 							<td>Bachlor</td>
 						</tr>-->
-					</table>
+		<!-- 			</table>
 					<br> <input type="button" value="Bewerbungsabschluss" onclick="doApplicationCompletion(documentsTable);"/>
-=======
-		</div>
+		</div>-->
 		<div class="content">
 			<div class="rightborder">
 				<div class="textblock">
@@ -104,7 +104,6 @@
 							id="dokumentloeschenbutton"
 							onclick="togglePopup('document_del',true);" />
 					</div>
->>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
 				</div>
 			</div>
 		</div>
