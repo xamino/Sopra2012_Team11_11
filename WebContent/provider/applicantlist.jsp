@@ -83,7 +83,7 @@
 						</table>
 						<input type="button" value="Annehmen"
 							onclick="togglePopup('accept',true);" />
-						<div id="error_noOfferSelected" class="hiddenerror"></div>
+						<div id="error_noAppSelected" class="hiddenerror"></div>
 						<!-- <input type="submit" value="Ausgewählte annehmen" />-->
 					</div>
 				</div>

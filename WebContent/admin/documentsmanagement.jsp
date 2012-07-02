@@ -99,7 +99,7 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speicher" onclick="addDocument()" /> <input
+				<input type="button" value="Speichern" onclick="addDocument()" /> <input
 					type="button" value="Abbrechen"
 					onclick="clearAddDocumentPopup(); togglePopup('document_add', false);" />
 			</div>
