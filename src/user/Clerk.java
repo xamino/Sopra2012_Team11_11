@@ -280,6 +280,8 @@ public class Clerk extends User {
 		Vector<Object> customDocs = new Vector<Object>(docs.size() * 2);
 		for (int i = 0; i < docs.size(); i++) {
 			docs2.add(doccon.getDocumentByUID(docs.elementAt(i).getdID()));
+			System.out.println(docs.elementAt(i).getUsername());
+			System.out.println(docs2.elementAt(i).getName());
 			customDocs.add(docs2.elementAt(i));
 			customDocs.add(docs.elementAt(i));
 		}
