@@ -141,7 +141,7 @@ public class ApplicationController {
 	 *            Parameter "application" ist ein Application-Objekt mit allen
 	 *            dazugehoerigen Attributen.
 	 */
-	public void updateApplication(Application application) {
+	public boolean updateApplication(Application application) {
 
 		String[] columns = { /* "benutzername", */"status", "sachbearbeiter",
 				"ausgewaehlt" };
@@ -151,7 +151,7 @@ public class ApplicationController {
 		String where = "AID = " + application.getAid() + " AND benutzername='"
 				+ application.getUsername() + "'";
 
-		db.update(tableName, columns, values, where);
+		return db.update(tableName, columns, values, where);
 	}
 
 	/**
@@ -307,54 +307,6 @@ public class ApplicationController {
 		}
 
 		return applicationvec;
-	}
-
-	/**
-	 * Gibt eine Bestimmte Bewerbung zurueck. Die Bewerbung wird eindeutig durch
-	 * die ID bestimmt.
-	 * 
-	 * @param AId
-	 *            Id einer Bewerbung
-	 * @return Es wird die gesuchte Bewerbung zurueck gegeben.
-	 */
-	public Application getApplicationById(int AId) {
-		String[] select = { "*" };
-		String[] from = { tableName };
-		String where = "AID = " + AId;
-
-		ResultSet rs = db.select(select, from, where);
-		if (rs == null) {
-			log.write("ApplicationController",
-					"No connection: couldnt get application");
-			return null;
-		}
-
-		try {
-			if (rs.next()) {
-				Application app = new Application(rs.getString(1),
-						rs.getInt(2), rs.getBoolean(3), rs.getString(4),
-						rs.getBoolean(5));
-				return app;
-			} else
-				return null;
-		} catch (SQLException e) {
-			logger.Log.getInstance().write("ApplicantionController",
-					"Error while reading application by aid from Database");
-		}
-		return null;
-
-		// changed by oemer. orginal:
-		// public Application getApplicationById(int AId) throws SQLException {
-		// String[] select = { "AID" };
-		// String[] from = { tableName };
-		// String where = null;
-		//
-		// ResultSet rs = db.select(select, from, where);
-		// Application app = new Application(rs.getString(1), rs.getInt(2),
-		// rs.getBoolean(3), rs.getString(4), rs.getBoolean(5));
-		// return app;
-		// }
-
 	}
 
 	/**

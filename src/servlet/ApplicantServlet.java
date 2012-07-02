@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import database.application.Application;
 import database.offer.Offer;
 
-
 /**
  * Das <code>Applicant</code> Servlet behandelt alle Aktionen von angemeldeten
  * Bewerbern (Applicants).
@@ -51,7 +50,7 @@ public class ApplicantServlet extends HttpServlet {
 	public ApplicantServlet() {
 		super();
 		gson = new Gson();
-//		offcon = OfferController.getInstance();
+		// offcon = OfferController.getInstance();
 	}
 
 	/**
@@ -93,11 +92,11 @@ public class ApplicantServlet extends HttpServlet {
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			log.write("ApplicationServlet", "deleting application in progress...");
+			log.write("ApplicationServlet",
+					"deleting application in progress...");
 			Application appToDelete = applicant.getApplication(aid);
-			if(!applicant.deleteApplication(appToDelete)){
-				log.write("ApplicantServlet",
-						"Error deleting application!");
+			if (!applicant.deleteApplication(appToDelete)) {
+				log.write("ApplicantServlet", "Error deleting application!");
 				response.setContentType("text/error");
 				response.getWriter()
 						.write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
@@ -126,7 +125,6 @@ public class ApplicantServlet extends HttpServlet {
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
 			int aid = Integer.parseInt(request.getParameter("id"));
-
 			Application appli = applicant.getApplication(aid);
 			String status = "fehler";
 			if (appli.isChosen()) {
@@ -223,5 +221,4 @@ public class ApplicantServlet extends HttpServlet {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 	}
-
 }

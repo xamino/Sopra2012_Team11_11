@@ -227,7 +227,6 @@ public class AccountController {
 	 */
 	public boolean deleteProviderAccount(Account provider) {
 		String username = provider.getUsername();
-		Account acc = getAccountByUsername(username);
 		
 		//removes the provider as a reprensentative from all the other providers
 		Object[] values = { null };
@@ -235,7 +234,7 @@ public class AccountController {
 		String where = "stellvertreter = '"+username+"'";
 		dbc.update(tableName, columns, values, where);
 		
-		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(acc);
+		Vector<Offer> off = OfferController.getInstance().getOffersByProvider(username);
 		
 		String representative = provider.getRepresentative();
 		
@@ -256,7 +255,7 @@ public class AccountController {
 			}
 		}
 
-		return deleteAccount(acc);
+		return deleteAccount(getAccountByUsername(username));
 	}
 
 	/**

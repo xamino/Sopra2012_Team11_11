@@ -1,6 +1,6 @@
 /**
- * @author Laura Irlinger
  * @author Tamino Hartmann
+ * @author Laura Irlinger
  * @author Oemer Sahin
  */
 package servlet;
@@ -23,12 +23,7 @@ import user.Provider;
 
 import com.google.gson.Gson;
 
-import database.account.Account;
-import database.account.AccountController;
-import database.application.Application;
-import database.application.ApplicationController;
 import database.offer.Offer;
-import database.offer.OfferController;
 
 /**
  * Das <code>Provider</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -52,17 +47,11 @@ public class ProviderServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * OfferController instanz
-	 */
-	private OfferController offcon;
-
-	/**
 	 * Konstruktor.
 	 */
 	public ProviderServlet() {
 		super();
 		gson = new Gson();
-		offcon = OfferController.getInstance();
 	}
 
 	/**
@@ -82,15 +71,7 @@ public class ProviderServlet extends HttpServlet {
 		String path = request.getPathInfo();
 		// Load my offers:
 		if (path.equals("/js/loadOffers")) {
-			Vector<Offer> myoffers = OfferController.getInstance()
-					.getOffersByProvider(
-							AccountController.getInstance()
-									.getAccountByUsername(
-											provider.getUserData()
-													.getUsername())); // Offer
-																		// vom
-																		// Provider
-																		// geholt
+			Vector<Offer> myoffers = provider.getOwnOffers();
 			response.setContentType("offer/json");
 			response.getWriter().write(
 					gson.toJson(myoffers, myoffers.getClass()));
@@ -98,10 +79,15 @@ public class ProviderServlet extends HttpServlet {
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
 			String username = provider.getUserData().getUsername();
+			if (!validate(username)) {
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim parsen von Parametern!");
+				return;
+			}
 			if (provider.deleteOwnAccount()) {
 				log.write("ApplicantServlet", username
 						+ " has deleted his account.");
-				// Simply now for debugging:
 				response.setContentType("text/url");
 				response.getWriter().write(Helper.D_INDEX);
 			} else {
@@ -109,7 +95,7 @@ public class ProviderServlet extends HttpServlet {
 						"There was an error while deleting account with username:"
 								+ username);
 				response.setContentType("text/error");
-				response.getWriter().write("Error while deleting account!");
+				response.getWriter().write("Fehler beim löschen des Accounts!");
 			}
 		}
 		// change own account data
@@ -123,6 +109,12 @@ public class ProviderServlet extends HttpServlet {
 							// funktion das pw nicht auf "" setzt!
 			if (rep == null)
 				rep = "";
+			// pw wird mit absicht nicht überprüft!
+			if (!validate(name) || !validate(email) || !validate(rep)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen der parameter");
+				return;
+			}
 			if (provider.editOwnAccount(name, email, pw, rep)) {
 				log.write("ApplicantServlet", provider.getUserData()
 						.getUsername() + " has modified his account.");
@@ -137,98 +129,37 @@ public class ProviderServlet extends HttpServlet {
 			}
 		} else // Do loadAccount:
 		if (path.equals("/js/loadAccount")) {
-			String realName = provider.getUserData().getName();
-			String email = provider.getUserData().getEmail();
-			String rep = AccountController.getInstance()
-					.getAccountByUsername(provider.getUserData().getUsername())
-					.getRepresentative();
-			String JsonString = Helper.jsonAtor(new String[] { "realName",
-					"email", "rep" }, new String[] { realName, email, rep });
 			response.setContentType("application/json");
-			response.getWriter().write(JsonString);
+			response.getWriter().write(provider.getJSONAccountInfo());
 		}
 		// loads potential representatives for this account
 		else if (path.equals("/js/loadRepresentatives")) {
-			String username = provider.getUserData().getUsername();
-			Vector<String> representatives = AccountController.getInstance()
-					.getPotentialRepresentatives(username);
+			Vector<String> representatives = provider.getRepresentatives();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(representatives, representatives.getClass()));
 		}
 		// Creates an Vector with all applicants from the selected Offer
 		else if (path.equals("/js/applicantChoice")) {
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			// System.out.println(aid);
-			Vector<Application> app = ApplicationController.getInstance()
-					.getApplicationsByOffer(aid);
-			Vector<Account> acc = new Vector<Account>();
-			for (int i = 0; i < app.size(); i++) {
-				acc.add(AccountController.getInstance().getAccountByUsername(
-						app.elementAt(i).getUsername()));
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen der AID!");
+				return;
 			}
-			// System.out.println("Ergebnis: "+docs2);
-			log.write("ProviderServlet",
-					"Creating vector with all applicants from selected offer in progress...");
 			response.setContentType("showtheapplicants/json");
-			response.getWriter().write(gson.toJson(acc, acc.getClass()));
+			response.getWriter().write(provider.getApplicants(aid));
 
 		}
-
 		// Creating a new Offer
 		else if (path.equals("/js/addOffer")) {
-			// Generating AID
-			int aid = offcon.getNewOffID("Angebote");
-			if (aid < 0) {
-				log.write(
-						"ProviderServlet",
-						"The received AID from generator was invalid after several attempts. Loop has been interrupted!");
-				response.setContentType("text/error");
-				response.getWriter().write(
-						"Bei der AID-Generierung ist ein Problem aufgetreten.");
-				return;
-			}
-
-			// Getting the data from delivered connection content to save it as
-			// a new offer-object in the db.
-			String ersteller = provider.getUserData().getUsername();
-			String name = request.getParameter("titel");
-			String notiz = request.getParameter("notiz");
-			String beschreibung = request.getParameter("beschreibung");
-			String startDateS = request.getParameter("startDate");
-			String endDateS = request.getParameter("endDate");
-			Date startDate;
-			try{
-			startDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateS);
-			}catch(Exception e){
-				e.printStackTrace();
-				log.write("ProviderServlet",
-						"There was an error while PARSING StartDate");
-				response.setContentType("text/error");
-				response.getWriter()
-						.write("invalid startDate");
-				return;
-			}
-			Date endDate;
-			try {
-				endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateS);
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.write("ProviderServlet",
-						"There was an error while PARSING EndDate");
-				response.setContentType("text/error");
-				response.getWriter()
-						.write("invalid endDate");
-				return;
-			}
-			// wird vom clerk gesetzt, aber default wert wird ausgelesen (von
-			// admin gesetzt).
-			double lohn = provider.readDefWage();
-
-			boolean checked = false;
-			int stellen;
+			int stellen = -1;
+			double stunden = -1;
 			try {
 				stellen = Integer.parseInt(request.getParameter("stellen"));
+				stunden = Double.parseDouble(request.getParameter("std"));
 			} catch (NumberFormatException e) {
 				// System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
 				log.write("ProviderServlet",
@@ -239,88 +170,68 @@ public class ProviderServlet extends HttpServlet {
 						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [INT Wert von 'Stellen' pruefen]");
 				return;
 			}
-			double stunden;
-			try {
-				// in der DB Std/Woche, in der HTML Std/Monat
-				stunden = Double.parseDouble(request.getParameter("std"));
-			} catch (NumberFormatException e) {
-				// System.out.println("ERROR WHILE PARSING DOUBLE IN ProviderServlet");
-				log.write("ProviderServlet",
-						"There was an error while PARSING double-value(std) in: "
-								+ path.toString());
+			String name = request.getParameter("titel");
+			String notiz = request.getParameter("notiz");
+			String beschreibung = request.getParameter("beschreibung");
+			String startDateS = request.getParameter("startDate");
+			String endDateS = request.getParameter("endDate");
+
+			// Check der Werte:
+			if (!validate(name) || !validate(notiz) || !validate(beschreibung)
+					|| stellen == -1 || stunden == -1) {
 				response.setContentType("text/error");
-				response.getWriter()
-						.write("Fehler beim Parsen! Kein/ungueltiger Wert eingegeben [DOUBLE Wert von 'Std' pruefen]");
+				response.getWriter().write("Fehler beim parsen der Parameter!");
 				return;
-			}
-			// Set modify date:
-			java.util.Date aenderungsdatum_1 = new java.util.Date();
-			java.sql.Date aenderungsdatum = new java.sql.Date(
-					aenderungsdatum_1.getTime());
-			// Load institute:
-			int institut = AccountController.getInstance()
-					.getAccountByUsername(ersteller).getInstitute();
-			// in log schreiben
-			if (!validate(name) || stunden == 0 || stellen == 0
-					|| !validate(beschreibung) || !validate(notiz)
-					|| aenderungsdatum == null || institut < 0) {
-				log.write("ProviderServlet", "Error in parameters!");
-				response.setContentType("text/error");
-				response.getWriter().write("Werte illegal!");
-				return;
-			}
-			// If already exists:
-			// TODO: Can this really happen? Is this required?
-			Vector<Offer> allOffers = OfferController.getInstance()
-					.getAllOffers();
-			for (int i = 0; i < allOffers.size(); i++) {
-				if (allOffers.elementAt(i).getName().equals(name)) {
-					log.write("ProviderServlet",
-							"Error while creating new offer! -->Offer (name) already exists!");
-					response.setContentType("text/error");
-					response.getWriter().write(
-							"Angebot ist bereits vorhanden (NAME)!");
-					return;
-				} else if (allOffers.elementAt(i).getAid() == aid) {
-					log.write("ProviderServlet",
-							"Error while creating new offer! -->Offer (AID) already exists!");
-					response.setContentType("text/error");
-					response.getWriter()
-							.write("Angebot ist bereits vorhanden!");
-					return;
-				}
 			}
 
-			// Save new Offer in the DB and response
-			Offer offer = new Offer(aid, ersteller, name, notiz, checked,
-					stellen, stunden, beschreibung, startDate, endDate, lohn,
-					institut, aenderungsdatum, false);
-			// System.out.println(offer);
-			OfferController.getInstance().createOffer(offer);
+			Date startDate;
+			try {
+				startDate = new SimpleDateFormat("dd-MM-yyyy")
+						.parse(startDateS);
+			} catch (Exception e) {
+				log.write("ProviderServlet",
+						"There was an error while PARSING StartDate");
+				response.setContentType("text/error");
+				response.getWriter().write("invalid startDate");
+				return;
+			}
+			Date endDate;
+			try {
+				endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateS);
+			} catch (Exception e) {
+				log.write("ProviderServlet",
+						"There was an error while PARSING EndDate");
+				response.setContentType("text/error");
+				response.getWriter().write("invalid endDate");
+				return;
+			}
+			if (!provider.createOffer(name, notiz, stellen, stunden,
+					beschreibung, startDate, endDate)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim erstellen des Angebots in der Datenbank!");
+				return;
+			}
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
 		}
 		// Angebot zurueckziehen
 		else if (path.equals("/js/deleteOffer")) {
-			int aid;
-
+			int aid = -1;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
-
 			} catch (NumberFormatException e) {
-				log.write("ProviderServlet",
-						"There was an error while PARSING int-value(AID) in: "
-								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			// System.out.println("DELETE OFFER by aid: "+aid);
-			Offer offtodel = OfferController.getInstance().getOfferById(aid);
-			log.write("ProviderServlet", "Deleting offer in progress...");
-			OfferController.getInstance().deleteOffer(offtodel);
-
+			if (!provider.deleteOffer(aid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim löschen des Angebots in der Datenbank!");
+				return;
+			}
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
@@ -328,64 +239,42 @@ public class ProviderServlet extends HttpServlet {
 		}
 		// Loads selected Offer into the Form elements
 		else if (path.equals("/js/getOffer")) {
-
-			// String test= request.getParameter("aid");
-			// System.out.println("TEST: "+test);
 			int aid;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
-
 			} catch (NumberFormatException e) {
-				log.write("ProviderServlet",
-						"There was an error while PARSING int-value(AID) in: "
-								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			// System.out.println("LOAD OFFER by aid: "+aid);
-
-			Offer offtoup = OfferController.getInstance().getOfferById(aid);
-			// OfferController.getInstance().updateOffer(offtoup);
-
+			Offer offtoup = provider.getOffer(aid);
 			response.setContentType("offer/json");
 			response.getWriter().write(gson.toJson(offtoup, Offer.class));
 			return;
-
 		}
 		// Saves changes from selected Offer and updates it in the db
 		else if (path.equals("/js/updateOffer")) {
-
-			// String test= request.getParameter("aid");
-			// System.out.println("TEST: "+test);
 			int aid;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
-
 			} catch (NumberFormatException e) {
-				log.write("ProviderServlet",
-						"There was an error while PARSING int-value(AID) in: "
-								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			// System.out.println("Update OFFER by aid: "+aid);
-
-			Offer offUp = OfferController.getInstance().getOfferById(aid);
-
-			// set modificationdate to current date
-			java.util.Date aenderungsdatum_2 = new java.util.Date();
-			java.sql.Date aenderungsdatum_toUp = new java.sql.Date(
-					aenderungsdatum_2.getTime());
-
-			offUp.setName(request.getParameter("titel"));
-			offUp.setDescription(request.getParameter("beschreibung"));
-			// sets modificationdate and updates it
-			offUp.setModificationdate(aenderungsdatum_toUp);
-			log.write("ProviderServlet", "Updating offer in progress...");
-			OfferController.getInstance().updateOffer(offUp);
-
+			String titel = request.getParameter("titel");
+			String description = request.getParameter("beschreibung");
+			if (!validate(titel) || !validate(description) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen der Parameter!");
+				return;
+			}
+			if (!provider.updateOffer(aid, titel, description)) {
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim aktualisieren des Angebots in der Datenbank!");
+				return;
+			}
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
@@ -394,81 +283,26 @@ public class ProviderServlet extends HttpServlet {
 		// Sets the boolean value of "ausgewaehlt" in the db table
 		// "berwerbungen" to "true"
 		else if (path.equals("/js/takeSelectedApplicant")) {
-
 			String username = request.getParameter("usernameTakenApplicant");
-
-			int aid;
+			int aid = -1;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
 			} catch (NumberFormatException e) {
-				log.write("ProviderServlet",
-						"There was an error while PARSING int-value(AID) in: "
-								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-
-			// System.out.println("Applicant:" + username + " for OfferID = " +
-			// aid + " selected/taken");
-
-			Vector<Application> appliVect = ApplicationController.getInstance()
-					.getApplicationsByOffer(aid);
-
-			Application applicationToChange;
-
-			for (int i = 0; i < appliVect.size(); i++) {
-
-				applicationToChange = appliVect.elementAt(i);
-
-				// System.out.println("Bewerbername: "+applicationToChange.getUsername()+" AID="+applicationToChange.getAid());
-
-				if ((aid == applicationToChange.getAid())
-						&& (username.equals(applicationToChange.getUsername()))) {
-					System.out.println("Bewerbername: "
-							+ applicationToChange.getUsername() + " AID="
-							+ applicationToChange.getAid());
-					if (applicationToChange.isChosen() == true) {
-						log.write("ProviderServlet",
-								"ERROR: This applicant is already selected/taken! PATH: "
-										+ path.toString());
-						response.setContentType("text/error");
-						response.getWriter().write(
-								"Bewerber wurde schon selektiert!");
-						return;
-					} else {
-						applicationToChange.setChosen(true);
-
-						Offer offertoSetSlots = OfferController.getInstance()
-								.getOfferById(aid);
-						int freeSlots = offertoSetSlots.getSlots();
-
-						log.write("ProviderServlet",
-								" Setting free slots for offer in progress...");
-
-						// No free slots
-						if (OfferController.getInstance().getFreeSlotsOfOffer(
-								aid) < 1) {
-							log.write("ProviderServlet",
-									"No free slots available for: "
-											+ offertoSetSlots.getName());
-							response.setContentType("text/error");
-							response.getWriter().write(
-									"Keine freien PLaetze mehr!");
-							return;
-						}
-						// reduce freeSlots and update it
-						else {
-							offertoSetSlots.setSlots(freeSlots - 1);
-							OfferController.getInstance().updateOffer(
-									offertoSetSlots);
-						}
-						log.write("ProviderServlet",
-								"'Bewerber annehmen' in progress...");
-						ApplicationController.getInstance().updateApplication(
-								applicationToChange);
-					}
-				}
+			if (!validate(username) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen der Parameter!");
+				return;
+			}
+			if (!provider.selectApplicant(aid, username)) {
+				response.setContentType("text/error");
+				response.getWriter()
+						.write("Fehler beim Annehmen eines Bewerbers!\nBewerber "
+								+ "bereits aufgenommen oder keine Stellen mehr frei!");
+				return;
 			}
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);

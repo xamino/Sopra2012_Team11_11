@@ -78,8 +78,9 @@ public class OfferController {
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
 	 *            Attributen.
+	 * @return
 	 */
-	public void createOffer(Offer offer) {
+	public boolean createOffer(Offer offer) {
 
 		// Object[] values = { offer.getAid(), offer.getAuthor(),
 		// offer.getName(),
@@ -94,7 +95,7 @@ public class OfferController {
 				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
 				offer.getInstitute(), offer.getModificationdate(),
 				offer.isFinished() };
-		db.insert(tableName, values);
+		return db.insert(tableName, values);
 	}
 
 	/**
@@ -106,8 +107,9 @@ public class OfferController {
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
 	 *            Attributen. Uebergebene Instanz wird komplett vom System
 	 *            entfernt.
+	 * @return
 	 */
-	public void deleteOffer(Offer offer) {
+	public boolean deleteOffer(Offer offer) {
 
 		// Hier ist die Mail benachrichtigung:
 		ResultSet rs = db.select(new String[] { "acc.email" }, new String[] {
@@ -116,7 +118,7 @@ public class OfferController {
 						+ offer.getAid() + " AND a.abgeschlossen=false");
 		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't delete offer");
-			return;
+			return false;
 		}
 		try {
 			while (rs.next()) {
@@ -134,12 +136,13 @@ public class OfferController {
 					"Error during mailnotification while deleting Offer "
 							+ offer.getAid());
 		}
+		boolean retBool = true;
 		// Ende benachrichtigung und anfang löschen
-		db.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
-		db.delete("Standardunterlagen", "AID=" + offer.getAid());
-		db.delete("Bewerbungen", "AID=" + offer.getAid());
-		db.delete(tableName, "AID=" + offer.getAid());
-
+		retBool &= db.delete("Bewerbungsunterlagen", "AID=" + offer.getAid());
+		retBool &= db.delete("Standardunterlagen", "AID=" + offer.getAid());
+		retBool &= db.delete("Bewerbungen", "AID=" + offer.getAid());
+		retBool &= db.delete(tableName, "AID=" + offer.getAid());
+		return retBool;
 	}
 
 	/**
@@ -308,18 +311,17 @@ public class OfferController {
 	 * Diese Methode sammelt alle Jobangebote eines Providers aus der Datenbank
 	 * und speichert diese in einem Vector.
 	 * 
-	 * @param provider
+	 * @param string
 	 *            Parameter gibt den benoetigten Provider an
 	 * 
 	 * @return Es wird ein Vector mit allen Jobangeboten eines Providers aus der
 	 *         Datenbank zurueckgegeben.
 	 */
-	public Vector<Offer> getOffersByProvider(Account provider) {
+	public Vector<Offer> getOffersByProvider(String string) {
 		Vector<Offer> offervec = new Vector<Offer>(50, 10);
 		String[] select = { "*" };
 		String[] from = { tableName };
-		String where = "abgeschlossen=0 and Ersteller = '"
-				+ provider.getUsername() + "'";
+		String where = "abgeschlossen=0 and Ersteller = '" + string + "'";
 		ResultSet rs = db.select(select, from, where);
 		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
