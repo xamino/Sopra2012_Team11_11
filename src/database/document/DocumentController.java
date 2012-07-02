@@ -440,8 +440,9 @@ public class DocumentController {
 	 *            Parameter <code>document</code> ist ein
 	 *            Applikationsdokument-Objekt mit allen dazugehoerigen
 	 *            Attributen.
+	 * @return 
 	 */
-	public void updateAppDocument(AppDocument document) { // checked; Update von
+	public boolean updateAppDocument(AppDocument document) { // checked; Update von
 															// Status
 															// funktioniert
 
@@ -452,17 +453,26 @@ public class DocumentController {
 		Object[] values = new Object[] { document.getUsername(),
 				document.getoID(), document.getdID(), document.getPresent() };
 
-		/*
-		 * Vielleicht noch in der DB pruefen, ob die Bewerbungsunterlage
-		 * ueberhaupt vorhanden ist in der Bewerbungsunterlagen-Tabelle. Eine
-		 * Fehlermeldung als System.out.println() wuerde reichen. Updatevorgang
-		 * eines nichtvorhandenen Eintrags liefert keine Ausgabe, keine
-		 * Aenderungen am System. Es sieht aus, als ob das System nichts machen
-		 * wuerde.
-		 */
-		db.update(tableNameB, columns, values, where);
+		// /*
+		// * Vielleicht noch in der DB pruefen, ob die Bewerbungsunterlage
+		// * ueberhaupt vorhanden ist in der Bewerbungsunterlagen-Tabelle. Eine
+		// * Fehlermeldung als System.out.println() wuerde reichen.
+		// Updatevorgang
+		// * eines nichtvorhandenen Eintrags liefert keine Ausgabe, keine
+		// * Aenderungen am System. Es sieht aus, als ob das System nichts
+		// machen
+		// * wuerde.
+		// */
+		return db.update(tableNameB, columns, values, where);
 	}
 
+	/**
+	 * TODO!
+	 * @param username
+	 * @param aid
+	 * @param uid
+	 * @return
+	 */
 	public AppDocument getDocumentByUsernameAIDandUID(String username, int aid,
 			int uid) {
 		String[] select = { "*" };

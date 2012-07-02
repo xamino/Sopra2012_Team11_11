@@ -6,6 +6,8 @@
  */
 package servlet;
 
+import static servlet.Helper.validate;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,13 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 import logger.Log;
-import mail.Mailer;
 import user.Clerk;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import database.DatabaseController;
 import database.HilfsDatenClerk;
 import database.account.Account;
 import database.account.AccountController;
@@ -39,11 +39,7 @@ import database.document.AppDocument;
 import database.document.Document;
 import database.document.DocumentController;
 import database.document.OfferDocument;
-import database.institute.InstituteController;
 import database.offer.Offer;
-import database.offer.OfferController;
-
-import static servlet.Helper.validate;
 
 /**
  * Das <code>Clerk</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -60,34 +56,9 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speicher der Log Instanz.
 	 */
 	private Log log;
-
-	// /**
-	// * Variable zum speichern einer Instanz vom DocumentController;
-	// */
-	// private DocumentController doccon;
-	//
-	// /**
-	// * Variable zum speichern einer Instanz vom ApplicationController;
-	// */
-	// private ApplicationController appcon;
-	//
-	// /**
-	// * Variable zum speichern einer Instanz vom OfferController;
-	// */
-	// private OfferController offcon;
-	//
-	// /**
-	// * Variable zum speichern einer Instanz vom InstituteController
-	// */
-	// private InstituteController instcon;
-	// /**
-	// * Variable zum speichern einer Instanz vom InstituteController
-	// */
-	// private AccountController acccon;
 	/**
 	 * Variable zum speichern einer Instanz vom Mailer
 	 */
-	private Mailer mail;
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -101,7 +72,6 @@ public class ClerkServlet extends HttpServlet {
 		super();
 		log = Helper.log;
 		gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
-		mail = Mailer.getInstance();
 	}
 
 	/**
@@ -292,25 +262,7 @@ public class ClerkServlet extends HttpServlet {
 			response.setContentType("docstoaddtoapp/json");
 			response.getWriter().write(
 					gson.toJson(docsToAdd, docsToAdd.getClass()));
-		}
-		else if (path.equals("/js/showApplication")) {
-			String username = clerk.getUserData().getUsername();
-			Account clerka = AccountController.getInstance()
-					.getAccountByUsername(username);
-			Vector<HilfsDatenClerk> daten1 = DatabaseController.getInstance()
-					.getChosenApplicationDataByInstitute(clerka.getInstitute());
-
-			
-			Vector<HilfsDatenClerk> daten = new Vector<HilfsDatenClerk>();
-			
-			for(int i = 0; i < daten1.size(); i++){
-				Application temp = ApplicationController.getInstance().getApplicationByOfferAndUser(daten1.elementAt(i).getAid(), daten1.elementAt(i).getUsername());
-				if(!temp.isFinished()){ //status == 0
-					daten.add(daten1.elementAt(i));
-				}
-			}
-
-
+		} else if (path.equals("/js/showApplication")) {
 			Account clerkAccount = clerk.getAccount();
 			Vector<HilfsDatenClerk> daten = clerk.getVoodoo(clerkAccount);
 			if (daten == null || daten.isEmpty()) {
@@ -320,56 +272,52 @@ public class ClerkServlet extends HttpServlet {
 			}
 			response.setContentType("showapplication/json");
 			response.getWriter().write(gson.toJson(daten, daten.getClass()));
-		}
-		else if (path.equals("/js/applicationDocuments")) {
-			String user = request.getParameter("User");
-			// System.out.println("User:"+user);
-			String aid = request.getParameter("AID");
-			// System.out.println("Aid:"+aid);
-			int aid1 = Integer.parseInt(aid);
-			Account acc = AccountController.getInstance().getAccountByUsername(
-					user); // Account vom ausgew�hlten User
-			// Offer des ausgew�hlten User
-			Offer off = OfferController.getInstance().getOfferById(aid1);
-			Vector<AppDocument> docs = DocumentController.getInstance()
-					.getDocumentsByUserAndOffer(acc, off);
-			Vector<Document> docs2 = new Vector<Document>(docs.size());
-
-			// dieser Vector enth�lt bei geraden Indizes ein Element vom Typ
-			// Document, bei dem
-			// jeweiligen darauffolgenden, ungeraden Index das Pendant zu
-			// diesem, in Form eines AppDocument
-			Vector<Object> customDocs = new Vector<Object>(docs.size() * 2);
-
-			for (int i = 0; i < docs.size(); i++) {
-				docs2.add(DocumentController.getInstance().getDocumentByUID(
-						docs.elementAt(i).getdID()));
-
-				customDocs.add(docs2.elementAt(i));
-				customDocs.add(docs.elementAt(i));
+		} else if (path.equals("/js/applicationDocuments")) {
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen von AID!");
+				return;
 			}
-
-			// System.out.println("Ergebnis: "+docs2);
+			String user = request.getParameter("User");
+			if (!validate(user) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler in den Parametern!");
+				return;
+			}
+			Vector<Object> customDocs = clerk.doVoodoo2nd(aid, user);
 			response.setContentType("showthedocuments/json");
 			response.getWriter().write(
 					gson.toJson(customDocs, customDocs.getClass()));
-
 		}
 		// Updates the status of an AppDocument
 		else if (path.equals("/js/setDocCheck")) {
 			String username = request.getParameter("username");
-			// TODO: try-catch!
-			int offerid = Integer.parseInt(request.getParameter("offerid"));
-			int docid = Integer.parseInt(request.getParameter("docid"));
-			AppDocument appdoc = DocumentController.getInstance()
-					.getDocumentByUsernameAIDandUID(username, offerid, docid);
-			if (appdoc.getPresent()) {
-				appdoc.setPresent(false);
-			} else {
-				appdoc.setPresent(true);
-				// System.out.println("set to true");
+			int offerid = -1;
+			int docid = -1;
+			try {
+				offerid = Integer.parseInt(request.getParameter("offerid"));
+				docid = Integer.parseInt(request.getParameter("docid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von OfferID oder DocID!");
+				return;
 			}
-			DocumentController.getInstance().updateAppDocument(appdoc);
+			if (!validate(username) || offerid == -1 || docid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
+			if (!clerk.updateAppDoc(username, offerid, docid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim updaten von AppDoc in der Datenbank!");
+				return;
+			}
 			log.write("ClerkServelt", "<" + clerk.getUserData().getUsername()
 					+ "> changed AppDoc.");
 			return;
@@ -377,89 +325,58 @@ public class ClerkServlet extends HttpServlet {
 		// Creates an String for the table in editapplication.jsp
 		else if (path.equals("/js/getApplicantInfo")) {
 			String user = request.getParameter("User");
-			String aid = request.getParameter("AID");
-			// TODO: try-catch
-			int aid1 = Integer.parseInt(aid);
-			String realName = AccountController.getInstance()
-					.getAccountByUsername(user).getName();
-			String offerName = OfferController.getInstance().getOfferById(aid1)
-					.getName();
-			response.setContentType("application/json");
-			response.getWriter().write(
-					Helper.jsonAtor(new String[] { "realName", "offerName" },
-							new Object[] { realName, offerName }));
-		}
-		// Funktion zum hinzufuegen eines Dokuments (aehnlich wie beim Admin).
-		// else if (path.equals("/js/createDocument")) {
-		// String title = request.getParameter("title");
-		// String description = request.getParameter("description");
-		// // int uid = -1;
-		// // try {
-		// // uid = Integer.parseInt(request.getParameter("uid"));
-		// // } catch (NumberFormatException e) {
-		// // log.write("ClerkServlet",
-		// // "NumberFormatException while parsing URL!");
-		// // response.setContentType("text/error");
-		// // response.getWriter()
-		// //
-		// .write("Fehler bei Eingabe! Nur ganze Zahlen erlaubt für die UID.");
-		// // return;
-		// // }
-		// if (title == null || title.isEmpty() || description == null
-		// || description.isEmpty() /* || uid < 0 */) {
-		// log.write("ClerkServlet", "Error in parameters!");
-		// response.setContentType("text/error");
-		// response.getWriter().write(
-		// "Fehler bei Eingabe! Fehlende Eingaben.");
-		// return;
-		// }
-		// // all okay... continue:
-		// if (!DocumentController.getInstance().generateDocument(title,
-		// description)) {
-		// response.setContentType("text/error");
-		// response.getWriter()
-		// .write("Fehler beim erstellen des Dokuments! Ist die UID eineindeutig?");
-		// return;
-		// }
-		// response.setContentType("text/url");
-		// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-		// return;
-		// }
-		else if (path.equals("/js/deleteAppDocument")) {
-			int uid = Integer.parseInt(request.getParameter("uid"));
-			String username = request.getParameter("user");
-			int aid = Integer.parseInt(request.getParameter("aid"));
-			AppDocument appdoc = DocumentController.getInstance()
-					.getDocumentByUsernameAIDandUID(username, aid, uid);
-
-			DocumentController.getInstance().deleteAppDocument(appdoc);
-			// response.setContentType("text/url");
-			// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-			return;
-
-		}
-		// Funktion zum entfernen eines Dokuments (aehnlich wie beim Admin).
-		else if (path.equals("/js/deleteDocument")) {
-			int uid = -1;
+			int aid = -1;
 			try {
-				uid = Integer.parseInt(request.getParameter("uid"));
+				aid = Integer.parseInt(request.getParameter("aid"));
 			} catch (NumberFormatException e) {
-				log.write("ClerkServlet",
-						"NumberFormatException while parsing URL!");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehlerhafte uid!");
+				response.getWriter().write("Fehler beim parsen von AID!");
 				return;
 			}
-			Document doc = doccon.getDocumentByUID(uid);
-			clerk.delDoc(doc);
-			response.setContentType("text/url");
-			response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+			if (!validate(user) || aid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
+			response.setContentType("application/json");
+			response.getWriter().write(clerk.getApplicantInfo(aid, user));
+		} else if (path.equals("/js/deleteAppDocument")) {
+			int uid = -1;
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+				uid = Integer.parseInt(request.getParameter("uid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von AID oder UID!");
+				return;
+			}
+			String username = request.getParameter("user");
+			if (!validate(username) || aid == -1 || uid == -1) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
+			if (!clerk.deleteAppDoc(username, aid, uid)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim löschen von AppDoc in der Datenbank!");
+				return;
+			}
 			return;
 		}
 		// Delete own account:
 		else if (path.equals("/js/deleteAccount")) {
 			String name = request.getParameter("name");
-
+			if (!validate(name)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
 			if (clerk.deleteOwnAccount()) {
 				log.write("ApplicantServlet", name
 						+ " has deleted his account.");
@@ -478,13 +395,20 @@ public class ClerkServlet extends HttpServlet {
 			String pw = request.getParameter("pw");
 			String rep = request.getParameter("rep");
 			// System.out.println("clerk pw: " + pw);
-			if (pw.equals(""))
-				pw = null; // falls leeres pw-> null damit die editOwnAccount
-							// funktion das pw nicht auf "" setzt!
+			if (pw.equals("")) {
+				// falls leeres pw-> null damit die editOwnAccount
+				// funktion das pw nicht auf "" setzt!
+				pw = null;
+			}
 			if (rep == null)
 				rep = "";
-			// System.out.println("clerk edit own account: " + name + "-" +
-			// email+ "-" + pw + "-" + rep);
+			// pw wird mit absicht nicht geprüft!
+			if (!validate(name) || !validate(email) || !validate(rep)) {
+				response.setContentType("text/error");
+				response.getWriter().write(
+						"Fehler beim parsen von den Parametern!");
+				return;
+			}
 			if (clerk.editOwnAccount(name, email, pw, rep)) {
 				log.write("ClerkServlet", clerk.getUserData().getUsername()
 						+ " has modified his account.");
@@ -497,31 +421,22 @@ public class ClerkServlet extends HttpServlet {
 		}
 		// Do loadAccount:
 		else if (path.equals("/js/loadAccount")) {
-			String realName = clerk.getUserData().getName();
-			String email = clerk.getUserData().getEmail();
-			String rep = clerk.getUserData().getRepresentant();
-			String JsonString = Helper.jsonAtor(new String[] { "realName",
-					"email", "rep" }, new String[] { realName, email, rep });
 			response.setContentType("application/json");
-			response.getWriter().write(JsonString);
+			response.getWriter().write(clerk.getJSONAccountInfo());
 		}
 		// loads potential representatives for this account
 		else if (path.equals("/js/loadRepresentatives")) {
-			String username = clerk.getUserData().getUsername();
-			Vector<String> representatives = AccountController.getInstance()
-					.getPotentialRepresentatives(username);
-
+			Vector<String> representatives = clerk.loadRepresentatives();
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(representatives, representatives.getClass()));
-		}
-		else if (path.equals("/js/doApplicationCompletion")) {
+		} else if (path.equals("/js/doApplicationCompletion")) {
 			System.out.println("Test");
 			int aid = 0;
 			String username;
-			
+
 			String clerkname = clerk.getUserData().getUsername();
-			
+
 			try {
 				aid = Integer.parseInt(request.getParameter("AID"));
 			} catch (NumberFormatException e) {
@@ -533,8 +448,9 @@ public class ClerkServlet extends HttpServlet {
 				return;
 			}
 			username = request.getParameter("username");
-			
-			Application appli = ApplicationController.getInstance().getApplicationByOfferAndUser(aid, username);
+
+			Application appli = ApplicationController.getInstance()
+					.getApplicationByOfferAndUser(aid, username);
 			System.out.println(aid);
 			System.out.println(username);
 			System.out.println(clerkname);
@@ -546,7 +462,8 @@ public class ClerkServlet extends HttpServlet {
 				ApplicationController.getInstance().updateApplication(appli);
 			} else {
 				response.setContentType("error/url");
-				response.getWriter().write("Unvollstaendige Dokumente. Abschluss nicht moeglich");
+				response.getWriter().write(
+						"Unvollstaendige Dokumente. Abschluss nicht moeglich");
 			}
 			return;
 		}
@@ -598,32 +515,32 @@ public class ClerkServlet extends HttpServlet {
 
 		// TODO!
 		// Ich bekomme noch keine Daten vom Server (username,AID). --> Unchecked
-//		else if (path.equals("/js/doApplicationCompletion")) {
-//			int AID = 0;
-//			String username;
-//			try {
-//				AID = Integer.parseInt(request.getParameter("aid"));
-//			} catch (NumberFormatException e) {
-//				log.write("ClerkServlet",
-//						"NumberFormatException while parsing URL!");
-//			}
-//			username = request.getParameter("username");
-			// Prueft ob alle Dokumente abgegeben wurden.
-			// Die einzige Bedingung die wir and den Vertragsabschluss-Button
-			// gestellt haben
-			// war das er nur dann erfolgreich ist wen alles vorhanden ist und
-			// nicht das er
-			// die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
-//			if (clerk.checkAllDocFromApplicant(username, AID)) {
-//				response.setContentType("test/url");
-//				// Soll jetzt ab hier den Bewerber als "angenommen" markiert
-//				// werden oder wird das dan endgueltig vom
-//				// Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
-//			} else {
-//				response.setContentType("error/url");
-//				response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
-//			}
-//		} 
+		// else if (path.equals("/js/doApplicationCompletion")) {
+		// int AID = 0;
+		// String username;
+		// try {
+		// AID = Integer.parseInt(request.getParameter("aid"));
+		// } catch (NumberFormatException e) {
+		// log.write("ClerkServlet",
+		// "NumberFormatException while parsing URL!");
+		// }
+		// username = request.getParameter("username");
+		// Prueft ob alle Dokumente abgegeben wurden.
+		// Die einzige Bedingung die wir and den Vertragsabschluss-Button
+		// gestellt haben
+		// war das er nur dann erfolgreich ist wen alles vorhanden ist und
+		// nicht das er
+		// die fehlenden Dokumente mitschickt(Name des Dokuments) oder doch?
+		// if (clerk.checkAllDocFromApplicant(username, AID)) {
+		// response.setContentType("test/url");
+		// // Soll jetzt ab hier den Bewerber als "angenommen" markiert
+		// // werden oder wird das dan endgueltig vom
+		// // Anbieter bestimmt? (Tabelle: Bewerbungen Zeile: ausgewahlt)
+		// } else {
+		// response.setContentType("error/url");
+		// response.getWriter().write(Helper.D_CLERK_EDITAPPLICATION);
+		// }
+		// }
 		else if (path.equals("/js/loadInfo")) {
 			Vector<Offer> off = new Vector<Offer>();
 			Vector<Integer> institutes = instcon

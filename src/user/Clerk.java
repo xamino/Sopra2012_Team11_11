@@ -6,7 +6,6 @@ package user;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 import mail.Mailer;
+import servlet.Helper;
 import database.HilfsDatenClerk;
 import database.account.Account;
 import database.document.AppDocument;
@@ -142,13 +142,6 @@ public class Clerk extends User {
 	}
 
 	/**
-	 * Methode zum entfernen von Dokumenten.
-	 */
-	public void delDoc(Document doc) {
-		doccon.deleteDocument(doc);
-	}
-
-	/**
 	 * Export fuer die Excel-File
 	 * 
 	 * @return Fileobjekt des ExcelFiles
@@ -164,10 +157,11 @@ public class Clerk extends User {
 
 	/**
 	 * Prueft ob ein Bewerber alle Dokumente abgegeben hat.
+	 * 
 	 * @param username
-	 *          benutzername des Bewerbers
-	 *@param offerID
-	 *			ID des Angebotes der Bewerbung          
+	 *            benutzername des Bewerbers
+	 * @param offerID
+	 *            ID des Angebotes der Bewerbung
 	 * @return True falls alles abgegeben wurde, sonst False.
 	 */
 	public boolean checkAllDocFromApplicant(String username, int offerID) {
@@ -175,11 +169,11 @@ public class Clerk extends User {
 		Offer off = offcon.getOfferById(offerID);
 
 		Vector<AppDocument> vec = doccon.getDocumentsByUserAndOffer(acc, off);
-		System.out.println("dokumente: "+vec.size());
+		System.out.println("dokumente: " + vec.size());
 
-		if(vec != null){
-			for(int i = 0; i < vec.size(); i++){
-				if(!(vec.elementAt(i).getPresent() )){
+		if (vec != null) {
+			for (int i = 0; i < vec.size(); i++) {
+				if (!(vec.elementAt(i).getPresent())) {
 					return false;
 				}
 			}
@@ -255,10 +249,119 @@ public class Clerk extends User {
 	 * HilfsDatenClerk zurueck.
 	 * 
 	 * @param clerkAccount
-	 * @return
+	 *            Der Account des Clerks.
+	 * @return Die Hilfsdaten.
 	 */
 	public Vector<HilfsDatenClerk> getVoodoo(Account clerkAccount) {
 		return appcon.getChosenApplicationDataByInstitute(clerkAccount
 				.getInstitute());
+	}
+
+	/**
+	 * Liefert einen Vector<Object> zurueck, welcher abwechselnd (oO) Document
+	 * und AppDocument enthaelt passend zu einem Benutzer und Angebot.
+	 * 
+	 * @param aid
+	 *            AID des Angebots.
+	 * @param user
+	 *            Username des Benutzers.
+	 * @return Sehr gruseliger abwechselnder Vector.
+	 */
+	public Vector<Object> doVoodoo2nd(int aid, String user) {
+		Account acc = acccon.getAccountByUsername(user);
+		Offer off = offcon.getOfferById(aid);
+		Vector<AppDocument> docs = doccon.getDocumentsByUserAndOffer(acc, off);
+		Vector<Document> docs2 = new Vector<Document>(docs.size());
+		// dieser Vector enth�lt bei geraden Indizes ein Element vom Typ
+		// Document, bei dem
+		// jeweiligen darauffolgenden, ungeraden Index das Pendant zu
+		// diesem, in Form eines AppDocument
+		Vector<Object> customDocs = new Vector<Object>(docs.size() * 2);
+		for (int i = 0; i < docs.size(); i++) {
+			docs2.add(doccon.getDocumentByUID(docs.elementAt(i).getdID()));
+			customDocs.add(docs2.elementAt(i));
+			customDocs.add(docs.elementAt(i));
+		}
+		return customDocs;
+	}
+
+	/**
+	 * Aktualisiert ein AppDoc in der DB.
+	 * 
+	 * @param username
+	 *            Der Benutzername des Bewerbers des AppDocs.
+	 * @param offerid
+	 *            Die AngebotsID (aka AID).
+	 * @param docid
+	 *            Die ID des Dokuments.
+	 * @return Flag fuer fehler.
+	 */
+	public boolean updateAppDoc(String username, int offerid, int docid) {
+		AppDocument appdoc = doccon.getDocumentByUsernameAIDandUID(username,
+				offerid, docid);
+		if (appdoc.getPresent()) {
+			appdoc.setPresent(false);
+		} else {
+			appdoc.setPresent(true);
+		}
+		return doccon.updateAppDocument(appdoc);
+	}
+
+	/**
+	 * Liest die Informationen eines Bewerbers zu einen Angebot aus der
+	 * Datenbank.
+	 * 
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @param user
+	 *            Der Bewerber.
+	 * @return JSON-Objekt der Informationen.
+	 */
+	public String getApplicantInfo(int aid, String user) {
+		String realName = acccon.getAccountByUsername(user).getName();
+		String offerName = offcon.getOfferById(aid).getName();
+		return Helper.jsonAtor(new String[] { "realName", "offerName" },
+				new Object[] { realName, offerName });
+	}
+
+	/**
+	 * Loescht ein AppDoc aus der Datenbank.
+	 * 
+	 * @param username
+	 *            Der Benutzername des zum Dokument gehoerenden Bewerbers.
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @param uid
+	 *            Die UID des Dokuments.
+	 * @return Flag fuer Fehler.
+	 */
+	public boolean deleteAppDoc(String username, int aid, int uid) {
+		AppDocument appdoc = doccon.getDocumentByUsernameAIDandUID(username,
+				aid, uid);
+		return doccon.deleteAppDocument(appdoc);
+	}
+
+	/**
+	 * Gibt einige Informationen ueber den eigenen Account als JSON-Objekt
+	 * zurueck.
+	 * 
+	 * @return JSON-Objekt der Informationen.
+	 */
+	public String getJSONAccountInfo() {
+		String realName = getUserData().getName();
+		String email = getUserData().getEmail();
+		String rep = getUserData().getRepresentant();
+		return Helper.jsonAtor(new String[] { "realName", "email", "rep" },
+				new String[] { realName, email, rep });
+	}
+
+	/**
+	 * Gibt die Stellvertreter eines Sachbearbeiters zurueck.
+	 * 
+	 * @return Vektor mit Benutzernamen der Stellvertreter.
+	 */
+	public Vector<String> loadRepresentatives() {
+		String username = getUserData().getUsername();
+		return acccon.getPotentialRepresentatives(username);
 	}
 }
