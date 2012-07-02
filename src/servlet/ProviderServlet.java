@@ -250,7 +250,13 @@ public class ProviderServlet extends HttpServlet {
 				return;
 			}
 			Offer offtoup = provider.getOffer(aid);
-			response.setContentType("offer/json");
+			// Happens if provider may not edit this offer (not his):
+			if (offtoup == null) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
+				return;
+			}
+			response.setContentType("application/json");
 			response.getWriter().write(gson.toJson(offtoup, Offer.class));
 			return;
 		}

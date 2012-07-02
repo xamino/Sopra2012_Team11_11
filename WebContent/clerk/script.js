@@ -201,22 +201,25 @@ function angebotspeichern() {
 		toggleWarning("error_startDate", true, "Bitte ausfüllen!");
 		error = true;
 	} else if (!checkDate(startDate)) {
-		toggleWarning("error_startDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
+		toggleWarning("error_startDate", true,
+				"Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
-	}  else{
+	} else {
 		toggleWarning("error_startDate", false, "");
-		startDate=unifyDate(startDate);
-	}	
+		startDate = unifyDate(startDate);
+	}
 	if (endDate == null || endDate == "") {
-		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
+		toggleWarning("error_endDate", true,
+				"Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
 	} else if (!checkDate(endDate)) {
-		toggleWarning("error_endDate", true, "Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
+		toggleWarning("error_endDate", true,
+				"Ungültiges Datumsformat: DDMMYYYY mit Trennzeichen - . oder / ist erlaubt.");
 		error = true;
-	} else{
+	} else {
 		toggleWarning("error_endDate", false, "");
-		endDate=unifyDate(endDate);
-	}	
+		endDate = unifyDate(endDate);
+	}
 	if (wage == null || wage == "") {
 		toggleWarning("gage_error", true, "Bitte ausfüllen!");
 		error = true;
@@ -238,19 +241,20 @@ function angebotspeichern() {
 /**
  * Weiterleitung an offermanagement.
  */
-function gotoOfferManagement(mime,data) {
+function gotoOfferManagement(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
 		return;
 	} else if (mime == "text/error") {
-		if (data == "invalid startDate"){
+		if (data == "invalid startDate") {
 			toggleWarning("error_startDate", true, "Ungültiges Datum!");
-		}else if(data== "invalid endDate"){
+		} else if (data == "invalid endDate") {
 			toggleWarning("error_endDate", true, "Ungültiges Datum!");
-		}else if(data == "order"){
-			toggleWarning("error_startDate",true, "Enddatum liegt vor dem Startdatum!");
+		} else if (data == "order") {
+			toggleWarning("error_startDate", true,
+					"Enddatum liegt vor dem Startdatum!");
 		}
-		
+
 		return;
 	}
 }
@@ -617,6 +621,8 @@ function showApplication() {
 function handleShowApplicationResponse(mime, data) {
 	if (mime == "text/url") {
 		window.location = data;
+	} else if (mime == "text/error") {
+		alert(data);
 	} else if (mime == "showapplication/json") {
 		// Erstelle Array aus JSON array:
 		var JSONarray = eval("(" + data + ")");
@@ -678,17 +684,21 @@ function handleApplicationDocumentsResponse(mime, data) {
 			} else {
 				checked = "";
 			}
-			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
-					+ "\"  onclick=\"markDocumentSelected(\'" + JSONarray[i].uid
-					+ "\');\"> <td> <input type=\"checkbox\" onclick=\"setDocCheck('"+JSONarray[i+1].username+"',"+JSONarray[i+1].docID+","+ JSONarray[i+1].offerID+")\" " 
-					+ checked + "> </td><td>"
-					+ JSONarray[i].name + "</td></tr>";
-			
-/*			table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid
-			+ "\" onclick=\"setDocCheck('" + JSONarray[i + 1].username
-			+ "'," + JSONarray[i + 1].docID + ","
-			+ JSONarray[i + 1].offerID + ")\" " + checked + "><td>"
-			+ JSONarray[i].name + "</td></tr>"; */
+			table2.innerHTML += "<tr class=\"\" id=\""
+					+ JSONarray[i].uid
+					+ "\"  onclick=\"markDocumentSelected(\'"
+					+ JSONarray[i].uid
+					+ "\');\"> <td> <input type=\"checkbox\" onclick=\"setDocCheck('"
+					+ JSONarray[i + 1].username + "'," + JSONarray[i + 1].docID
+					+ "," + JSONarray[i + 1].offerID + ")\" " + checked
+					+ "> </td><td>" + JSONarray[i].name + "</td></tr>";
+
+			/*
+			 * table2.innerHTML += "<tr class=\"\" id=\"" + JSONarray[i].uid +
+			 * "\" onclick=\"setDocCheck('" + JSONarray[i + 1].username + "'," +
+			 * JSONarray[i + 1].docID + "," + JSONarray[i + 1].offerID + ")\" " +
+			 * checked + "><td>" + JSONarray[i].name + "</td></tr>";
+			 */
 		}
 		showApplicationTable2();
 	}
@@ -737,7 +747,8 @@ function setDocCheck(username, docid, offerid) {
 		selectedDocument = null;
 		// alert("man oh man");
 		document.getElementById("dokumentloeschenbutton").disabled = "disabled";
-		//document.getElementById("dokumentHinzufuegenButton").disabled = "disabled";
+		// document.getElementById("dokumentHinzufuegenButton").disabled =
+		// "disabled";
 		return;
 	}
 	// Else save & mark new one:
@@ -803,9 +814,9 @@ function handleShowApplicationTable2Response(mime, data) {
 function doApplicationCompletion(field) {
 	Aid = getURLParameter("AID");
 	User = getURLParameter("User");
-	//alert(Aid+" "+User);
-	connect("/hiwi/Clerk/js/doApplicationCompletion", "aid=" + Aid
-			+ "&User=" + User, handleApplicationCompletion);
+	// alert(Aid+" "+User);
+	connect("/hiwi/Clerk/js/doApplicationCompletion", "aid=" + Aid + "&User="
+			+ User, handleApplicationCompletion);
 }
 
 /**
@@ -816,7 +827,7 @@ function doApplicationCompletion(field) {
  */
 function handleApplicationCompletion(mime, data) {
 	if (mime == "text/url") {
-		//alert("Gut");
+		// alert("Gut");
 		window.location = data;
 	} else if (mime == "error/url") {
 		alert(data);

@@ -92,7 +92,14 @@ public class Clerk extends User {
 	 * @return Das Angebot.
 	 */
 	public Offer getOfferByAID(int AID) {
-		return offcon.getOfferById(AID);
+		Offer offer = offcon.getOfferById(AID);
+		// Sichergehen, dass der Sachbearbeiter dieses auch einsehen darf:
+		if ((offer.getInstitute() == 0)
+				|| (offer.getInstitute() == acccon.getAccountByUsername(
+						getUserData().getUsername()).getInstitute()))
+			return offer;
+		else
+			return null;
 	}
 
 	/**

@@ -250,15 +250,16 @@ function loadSelectedOfferEdit() {
  *            The data.
  */
 function handleLoadEditOfferResponse(mime, data) {
-	// alert("handleLoadEditOfferResponse");
-	if (mime == "text/error")
+	// alert(mime + "::" + data);
+	if (mime == "text/url") {
+		window.location = data;
+	} else if (mime == "text/error") {
 		alert(data);
-	else if (mime == "offer/json") {
+	} else if (mime == "application/json") {
 		var offer = eval("(" + data + ")");
 		// Set the values we have:
 		document.getElementById("titelFeld").value = offer.name;
 		document.getElementById("beschreibungsFeld").value = offer.description;
-
 	}
 }
 

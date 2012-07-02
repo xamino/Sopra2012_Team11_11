@@ -273,7 +273,12 @@ public class Provider extends User {
 	 * @return Das Angebot.
 	 */
 	public Offer getOffer(int aid) {
-		return offcon.getOfferById(aid);
+		Offer off = offcon.getOfferById(aid);
+		// Sichergehen dass das Angebot von diesem Provider stammt:
+		if (off.getAuthor().equals(getUserData().getUsername()))
+			return off;
+		else
+			return null;
 	}
 
 	/**
@@ -302,8 +307,11 @@ public class Provider extends User {
 
 	/**
 	 * Akzeptiert die Bewerbung eines Bewerbers auf ein Angebot.
-	 * @param aid Die AID des Angebots.
-	 * @param username Der Benutzername des Bewerbers.
+	 * 
+	 * @param aid
+	 *            Die AID des Angebots.
+	 * @param username
+	 *            Der Benutzername des Bewerbers.
 	 * @return Flag fuer Fehler.
 	 */
 	public boolean selectApplicant(int aid, String username) {

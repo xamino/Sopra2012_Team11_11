@@ -104,6 +104,12 @@ public class ClerkServlet extends HttpServlet {
 			}
 			// AID should be != -1 here, so continue:
 			Offer offertoedit = clerk.getOfferByAID(aid);
+			// Ist das Angebot vom gleichen Institut?
+			if (offertoedit == null) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_CLERK_OFFERMANAGEMENT);
+				return;
+			}
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(offertoedit, offertoedit.getClass()));
@@ -259,7 +265,6 @@ public class ClerkServlet extends HttpServlet {
 		} else if (path.equals("/js/showApplication")) {
 			Account clerkAccount = clerk.getAccount();
 			Vector<HilfsDatenClerk> daten = clerk.getVoodoo(clerkAccount);
-
 			if (daten == null || daten.isEmpty()) {
 				response.setContentType("text/error");
 				response.getWriter().write("Keine Einträge in der DB!");

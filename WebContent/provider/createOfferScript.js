@@ -145,9 +145,9 @@ function handleCreateOfferResponse(mime, data) {
 		}else if(data== "invalid endDate"){
 			toggleWarning("error_endDate", true, "Ungültiges Datum!");
 		}else if (data == "Angebot ist bereits vorhanden (NAME)!"){
-			toggleWarning("error_titel",true,"Titel schon vorhanden!")
+			toggleWarning("error_titel",true,"Titel schon vorhanden!");
 		}else if(data == "order"){
-			toggleWarning("error_startDate",true, "Enddatum liegt vor dem Startdatum!")
+			toggleWarning("error_startDate",true, "Enddatum liegt vor dem Startdatum!");
 
 		}
 		
