@@ -25,9 +25,9 @@ import database.offer.Offer;
 import database.offer.OfferController;
 
 /**
- * Dieses Servlet ist für alle öffentlich zugängliche Daten zuständig.
- * Insbesondere betrifft dies den Abruf aller verfügbaren Angebote aus der
- * Datenbank für den Index.
+ * Dieses Servlet ist fuer alle oeffentlich zugaengliche Daten zustaendig.
+ * Insbesondere betrifft dies den Abruf aller verfuegbaren Angebote aus der
+ * Datenbank fuer den Index.
  */
 
 @WebServlet("/Servlet/*")

@@ -47,12 +47,12 @@ public class ClerkServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Variable zum speicher der Log Instanz.
+	 * Variable zum speichern der Log Instanz.
 	 */
 	private Log log;
-	/**
-	 * Variable zum speichern einer Instanz vom Mailer
-	 */
+//	/**
+//	 * Variable zum speichern einer Instanz vom Mailer
+//	 */
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -60,7 +60,9 @@ public class ClerkServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor.
+	 * Konstruktor. Hier werden die wichtigen Referenzen
+	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
+	 * um die Initialisierung ersichtlich zu machen.
 	 */
 	public ClerkServlet() {
 		super();
