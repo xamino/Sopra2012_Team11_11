@@ -584,16 +584,14 @@ public class OfferController {
 	}
 
 	/**
-	 * Liest alle Angebote von einem Institut aus.
-<<<<<<< HEAD
-	 * @param iid 
-	 * 			Die ID des Institutes.
-=======
+	 * Liest alle Angebote von einem Institut aus. <<<<<<< HEAD
 	 * 
 	 * @param iid
->>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
-	 * @return
-	 * 			Alle Angebote die zu einem Institut gehoeren.
+	 *            Die ID des Institutes. =======
+	 * 
+	 * @param iid
+	 *            >>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
+	 * @return Alle Angebote die zu einem Institut gehoeren.
 	 */
 	public Vector<Offer> getOffersByInstitute(int iid) {
 		Vector<Offer> offers = new Vector<Offer>();
@@ -634,5 +632,28 @@ public class OfferController {
 				rs.getDate("Beginn"), rs.getDate("Ende"),
 				rs.getDouble("Stundenlohn"), rs.getInt("Institut"),
 				rs.getDate("aenderungsdatum"), rs.getBoolean("abgeschlossen"));
+	}
+	/**
+	 * Gibt alle Angebote zurueck auf die sich ein Benutzer noch bewerben koennte.
+	 * @param username Benutzername
+	 * @return Vektor mir Angeboten
+	 */
+	public Vector<Offer> getPossibleOffers(String username) {
+		Vector<Offer> offers = new Vector<Offer>();
+		ResultSet rs = db.select(new String[]{"*"}, new String[]{"angebote"}, "abgeschlossen = false and geprueft = true and AID not in (Select a.aid from bewerbungen as b,angebote as a where b.aid = a.aid and b.benutzername = '"+username+"')");
+		if (rs == null) {
+			log.write("OfferController", "No connection: couldn't get offers");
+			return offers;
+		}
+		try {
+			while (rs.next()) {
+				offers.add(convertToOffer(rs));
+			}
+			return offers;
+		} catch (SQLException e) {
+			log.write("OfferController",
+					"Error reading ResultSet in getPossibleOffers()!");
+			return null;
+		}
 	}
 }
