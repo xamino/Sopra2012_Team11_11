@@ -55,20 +55,24 @@ function checkVal() {
 	if (startDate == null || startDate == "") {
 		toggleWarning("error_startDate", true, "Bitte ausfüllen!");
 		error = true;
-	} else if (!checkText(startDate)) {
-		toggleWarning("error_startDate", true, "Bitte keine Sonderzeichen!");
+	} else if (!checkDate(startDate)) {
+		toggleWarning("error_startDate", true, "Inkorrektes  Datum!");
 		error = true;
-	} else
+	} else {
 		toggleWarning("error_startDate", false, "");
+		startDate = unifyDate(startDate);
+	}
 	var endDate = form.endDate.value;
 	if (endDate == null || endDate == "") {
 		toggleWarning("error_endDate", true, "Bitte ausfüllen!");
 		error = true;
-	} else if (!checkText(endDate)) {
-		toggleWarning("error_endDate", true, "Bitte keine Sonderzeichen!");
+	} else if (!checkDate(endDate)) {
+		toggleWarning("error_endDate", true, "Inkorrektes  Datum!");
 		error = true;
-	} else
+	} else {
 		toggleWarning("error_endDate", false, "");
+		endDate = unifyDate(endDate);
+	}
 	var wage = form.wage.value;
 	if (wage == null || wage == "") {
 		toggleWarning("error_wage", true, "Bitte ausfüllen!");
