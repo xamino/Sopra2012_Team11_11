@@ -212,6 +212,7 @@ public class ProviderServlet extends HttpServlet {
 						"Fehler beim erstellen des Angebots in der Datenbank!");
 				return;
 			}
+			log.write("ProviderServlet", "Angebot <" + name + "> erstellt.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
@@ -232,6 +233,7 @@ public class ProviderServlet extends HttpServlet {
 						"Fehler beim löschen des Angebots in der Datenbank!");
 				return;
 			}
+			log.write("ProviderServlet", "Angebot <" + aid + "> gelöscht.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
@@ -275,6 +277,7 @@ public class ProviderServlet extends HttpServlet {
 						.write("Fehler beim aktualisieren des Angebots in der Datenbank!");
 				return;
 			}
+			log.write("ProviderServlet", "Angebot <" + aid + "> aktualisiert.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
@@ -304,6 +307,8 @@ public class ProviderServlet extends HttpServlet {
 								+ "bereits aufgenommen oder keine Stellen mehr frei!");
 				return;
 			}
+			log.write("ProviderServlet", "Bewerber <" + username + "> für <"
+					+ aid + "> angenommen.");
 			response.setContentType("text/url");
 			response.getWriter().write(Helper.D_PROVIDER_USERINDEX);
 			return;
