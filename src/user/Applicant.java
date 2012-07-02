@@ -8,7 +8,6 @@
  */
 package user;
 
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -138,7 +137,11 @@ public class Applicant extends User {
 	public Offer getOffer(int id) {
 		return offcon.getOfferById(id);
 	}
-
+	/**
+	 * Gibt Dokumentdaten zurueck
+	 * @param aid Angebots ID
+	 * @return Daten der Dokumente zu diesem Angebot.
+	 */
 	public Vector<String> getDocuments(int aid) {
 		// Create JSON version of custom data:
 		Vector<String> docDataObject = new Vector<String>();
@@ -158,5 +161,23 @@ public class Applicant extends User {
 		}
 		return docDataObject;
 	}
-
+	
+	/**
+	 * Holt die Emailaddresse eines Benutzers aus der Datenbank.
+	 * 
+	 * @param user
+	 *            Der Benutzer dessen Email gefragt ist.
+	 * @return Die Emailaddresse.
+	 */
+	public String getEmail(String user) {
+		try {
+			return acccon.getAccountByUsername(user).getEmail();
+		} catch (NullPointerException e) {
+			log.write("Applicant", "Error getting e-mail adress of user <"
+					+ user + ">");
+			return null;
+		}
+	}
+	
+	
 }

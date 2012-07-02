@@ -19,14 +19,9 @@ import user.Applicant;
 
 import com.google.gson.Gson;
 
-import database.account.AccountController;
 import database.application.Application;
-import database.application.ApplicationController;
-import database.document.AppDocument;
-import database.document.Document;
-import database.document.DocumentController;
 import database.offer.Offer;
-import database.offer.OfferController;
+
 
 /**
  * Das <code>Applicant</code> Servlet behandelt alle Aktionen von angemeldeten
@@ -98,13 +93,14 @@ public class ApplicantServlet extends HttpServlet {
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-
+			log.write("ApplicationServlet", "deleting application in progress...");
 			Application appToDelete = applicant.getApplication(aid);
 			if(!applicant.deleteApplication(appToDelete)){
 				log.write("ApplicantServlet",
 						"Error deleting application!");
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim löschen der Bewerbung");
+				response.getWriter()
+						.write("Fuer diesen Benutzernamen existiert keine Bewerbung mit der gegebenen AID!");
 				return;
 			}
 
@@ -131,7 +127,6 @@ public class ApplicantServlet extends HttpServlet {
 		else if (path.equals("/js/selectApplication")) {
 			int aid = Integer.parseInt(request.getParameter("id"));
 
-			String username = applicant.getUserData().getUsername();
 			Application appli = applicant.getApplication(aid);
 			String status = "fehler";
 			if (appli.isChosen()) {
@@ -223,19 +218,12 @@ public class ApplicantServlet extends HttpServlet {
 				response.getWriter().write("Invalid user parameter!");
 				return;
 			}
-			String email = null;
-			try {
-				email = accon
-						.getAccountByUsername(user).getEmail();
-			} catch (NullPointerException e) {
-				log.write("ClerkServlet",
-						"Error getting e-mail adress of user in: " + path);
-				return;
-			}
+			String email = applicant.getEmail(user);
 			response.setContentType("text/email");
 			response.getWriter().write(email);
 		} else {
 			log.write("ApplicantServlet", "Unknown path <" + path + ">");
 		}
 	}
+
 }
