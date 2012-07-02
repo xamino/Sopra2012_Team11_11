@@ -635,14 +635,22 @@ public class OfferController {
 				rs.getDouble("Stundenlohn"), rs.getInt("Institut"),
 				rs.getDate("aenderungsdatum"), rs.getBoolean("abgeschlossen"));
 	}
+
 	/**
-	 * Gibt alle Angebote zurueck auf die sich ein Benutzer noch bewerben koennte.
-	 * @param username Benutzername
+	 * Gibt alle Angebote zurueck auf die sich ein Benutzer noch bewerben
+	 * koennte.
+	 * 
+	 * @param username
+	 *            Benutzername
 	 * @return Vektor mir Angeboten
 	 */
 	public Vector<Offer> getPossibleOffers(String username) {
 		Vector<Offer> offers = new Vector<Offer>();
-		ResultSet rs = db.select(new String[]{"*"}, new String[]{"angebote"}, "abgeschlossen = false and geprueft = true and AID not in (Select a.aid from bewerbungen as b,angebote as a where b.aid = a.aid and b.benutzername = '"+username+"')");
+		ResultSet rs = db
+				.select(new String[] { "*" },
+						new String[] { "Angebote" },
+						"abgeschlossen = false and geprueft = true and AID not in (Select a.aid from Bewerbungen as b,Angebote as a where b.aid = a.aid and b.benutzername = '"
+								+ username + "')");
 		if (rs == null) {
 			log.write("OfferController", "No connection: couldn't get offers");
 			return offers;
