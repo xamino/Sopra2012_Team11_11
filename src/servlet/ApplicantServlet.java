@@ -45,6 +45,14 @@ public class ApplicantServlet extends HttpServlet {
 	 */
 	private Gson gson;
 
+
+
+	/**
+	 * Variable zum speichern der Instanz des OfferControllers.
+	 **/
+	private OfferController offcon;
+
+
 	/**
 	 * Konstruktor.
 	 **/

@@ -396,7 +396,7 @@ public class ApplicationController {
 	}
 
 	/**
-	 * Gibt Bewerbername und Angebotsname aller angenommenen Bewerbungen des
+	 * Gibt Bewerbername und Angebotsname aller angenommenen, noch nicht beendeten Bewerbungen des
 	 * uebergebenen Instituts in Form eines Vectors des Datentyps
 	 * HilfsDatenClerk zurueck.
 	 * 
@@ -406,7 +406,7 @@ public class ApplicationController {
 	 * @return Vector mit Bewerbername und Angebotsname aller angenommenen
 	 *         Bewerbungen des uebergebenen Instituts
 	 */
-	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
+	public Vector<HilfsDatenClerk> getChosenAndNotFinishedApplicationDataByInstitute(
 			int institute) {
 		ResultSet rs;
 		try {
@@ -414,7 +414,7 @@ public class ApplicationController {
 					new String[] { "Accounts.name", "Angebote.Name",
 							"Accounts.benutzername", "Angebote.AID" },
 					new String[] { "Bewerbungen JOIN Angebote ON Bewerbungen.AID = Angebote.AID"
-							+ " AND ausgewaehlt = 1 AND Angebote.Institut = "
+							+ " AND ausgewaehlt = 1 AND status = 0 AND Angebote.Institut = "
 							+ institute
 							+ " JOIN Accounts ON Accounts.benutzername = Bewerbungen.benutzername" },
 					null);

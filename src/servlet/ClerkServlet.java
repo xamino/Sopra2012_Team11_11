@@ -261,6 +261,7 @@ public class ClerkServlet extends HttpServlet {
 		} else if (path.equals("/js/showApplication")) {
 			Account clerkAccount = clerk.getAccount();
 			Vector<HilfsDatenClerk> daten = clerk.getVoodoo(clerkAccount);
+			
 			if (daten == null || daten.isEmpty()) {
 				response.setContentType("text/error");
 				response.getWriter().write("Keine Einträge in der DB!");
