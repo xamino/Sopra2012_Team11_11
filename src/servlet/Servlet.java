@@ -101,8 +101,9 @@ public class Servlet extends HttpServlet {
 		} else if (path.equals("/js/forgotPassword")) {
 			String email = request.getParameter("email");
 			// Check validity:
-			if (!validate(email))
+			if (!validate(email)) {
 				return;
+			}
 			// Go for getting the account to this email:
 			Account acc = AccountController.getInstance().getAccountByEmail(
 					email);

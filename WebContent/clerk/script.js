@@ -148,7 +148,7 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "<td>"
 				+ offer.slots
 				+ "</td></tr>"
-				+ "<tr><td>Stunden die Woche:</td>"
+				+ "<tr><td>Stunden pro Monat:</td>"
 				+ "<td><input id=\"inputhoursperweek\" type=\"text\" value=\""
 				+ offer.hoursperweek
 				+ "\" /> std. <div id=\"hours_error\"class=\"hiddenerror\"></div></td></tr>"
@@ -163,7 +163,7 @@ function handleEditOneOfferResponse(mime, data) {
 				+ "<tr><td>Lohn:</td>"
 				+ "<td><input id=\"inputwage\" type=\"text\" value=\""
 				+ offer.wage
-				+ "\" /> € <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
+				+ "\" /> €/std. <div id=\"gage_error\"class=\"hiddenerror\"></div></td></tr>"
 				+ "<tr><td>Anbieternotiz:</td>"
 				+ "<td style=\"background-color: lightgray;\">"
 				+ anbieternotiz

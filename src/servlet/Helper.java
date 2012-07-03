@@ -168,7 +168,7 @@ public final class Helper {
 	 * @param session
 	 *            Die session zum ueberpruefen.
 	 * @param c
-	 * 			user-class
+	 *            user-class
 	 * @return Das User Object wenn korrekt, sonst null.
 	 */
 	@SuppressWarnings("unchecked")
@@ -182,8 +182,8 @@ public final class Helper {
 	}
 
 	/**
-	 * Diese Methode erstellt JSON Objekte. Dazu werden die Bezeichner und die Objekte
-	 * eingelesen und zu einem JSON Objekt zusammengebaut.
+	 * Diese Methode erstellt JSON Objekte. Dazu werden die Bezeichner und die
+	 * Objekte eingelesen und zu einem JSON Objekt zusammengebaut.
 	 * 
 	 * @param varNames
 	 *            Die Bezeichner der Variabeln.
@@ -211,8 +211,8 @@ public final class Helper {
 
 	/**
 	 * Hilfsmethode um Serverseitig einen String nach String via Base64 und MD5
-	 * zu hashen. ACHTUNG: hier wird javascript Server-seitig aufgerufen!
-	 * Dies ist noetig da die hashing Methode sowohl Client- als auch Server-seitig
+	 * zu hashen. ACHTUNG: hier wird javascript Server-seitig aufgerufen! Dies
+	 * ist noetig da die hashing Methode sowohl Client- als auch Server-seitig
 	 * identisch sein muss!
 	 * 
 	 * @param text
@@ -253,7 +253,9 @@ public final class Helper {
 	public static Boolean validate(String string) {
 		if (string == null || string.trim().isEmpty())
 			return false;
-		// TODO: Check for sql-injection and valid chars here!
+		if (!string
+				.matches("^((\\s)*[a-zA-Z0-9_\\+\\/\\*;\\^\\\\#$§%=˚´€¥\\<\\>\\-.,@\\(\\)\\[\\]ÜÄÖüöä!\\?]+(\\s)*)*$"))
+			return false;
 		return true;
 	}
 }
