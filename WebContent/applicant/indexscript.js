@@ -38,7 +38,7 @@ function handleLoadOffersResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("offerTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
+		table.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Std./Woche</th><th>Anbieter</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			var obj = JSONarray[i];
 			table.innerHTML += "<tr class=\"\" id=\""
@@ -47,6 +47,10 @@ function handleLoadOffersResponse(mime, data) {
 					+ obj.startdate
 					+ "</td><td>"
 					+ obj.enddate
+					+ "</td><td>"
+					+ obj.hoursperweek
+					+ "</td><td>"
+					+ obj.author
 					+ "</td><td>"
 					+ obj.name
 					+ "</td><td><div class=\"float2\">"
@@ -107,7 +111,7 @@ function handleLoadMyOffersResponse(mime, data) {
 		// Get the table:
 		var table2 = document.getElementById("myofferTable");
 		// Write table – probably replaces old data!
-		table2.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
+		table2.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Std./Woche</th><th>Anbieter</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			table2.innerHTML += "<tr class=\"\" id=\""
 					+ JSONarray[i].aid
@@ -115,6 +119,10 @@ function handleLoadMyOffersResponse(mime, data) {
 					+ JSONarray[i].startdate
 					+ "</td><td>"
 					+ JSONarray[i].enddate
+					+ "</td><td>"
+					+ JSONarray[i].hoursperweek
+					+ "</td><td>"
+					+ JSONarray[i].author
 					+ "</td><td>"
 					+ JSONarray[i].name
 					+ "</td><td><div class=\"float2\">"

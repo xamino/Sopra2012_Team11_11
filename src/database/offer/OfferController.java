@@ -353,35 +353,53 @@ public class OfferController {
 	 */
 	public Vector<Offer> getOffersByApplicant(String username) {
 
-		Vector<Application> applications = ApplicationController.getInstance()
-				.getApplicationsByApplicant(username);
-		Vector<Offer> offervec = new Vector<Offer>(50, 10);
-		String[] select = { "*" };
-		String[] from = { tableName };
-		String where;
-
-		for (int i = 0; i < applications.size(); i++) {
-			// Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet
-			// und es geht.
-			where = "abgeschlossen = FALSE and AID = "
-					+ applications.elementAt(i).getAid();
-			ResultSet rs = db.select(select, from, where);
-			if (rs == null) {
-				log.write("OfferController",
-						"No connection: couldn't get offers");
-				return offervec;
-			}
-			try {
-				while (rs.next()) {
-					Offer currentoff = convertToOffer(rs);
-					if (currentoff.isChecked())
-						offervec.add(currentoff);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//		Vector<Application> applications = ApplicationController.getInstance()
+//				.getApplicationsByApplicant(username);
+		Vector<Offer> offervec = new Vector<Offer>(5,2);
+		String[] select = { "Angebote.*" };
+		String[] from = { tableName, "Bewerbungen" };
+		String where = "Angebote.AID = Bewerbungen.AID AND Bewerbungen.benutzername = '"+username+"' AND Bewerbungen.status = FALSE";
+		
+		ResultSet rs = db.select(select, from, where);
+		if (rs == null) {
+			log.write("OfferController",
+					"No connection: couldn't get offers");
+			return offervec;
 		}
+		try {
+			while (rs.next()) {
+				Offer currentoff = convertToOffer(rs);
+				if (currentoff.isChecked())
+					offervec.add(currentoff);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+//		for (int i = 0; i < applications.size(); i++) {
+//			// Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet
+//			// und es geht.
+//			where = "Bewerbungen.status = 0 AND Angebote.AID = "
+//					+ applications.elementAt(i).getAid();
+//			ResultSet rs = db.select(select, from, where);
+//			if (rs == null) {
+//				log.write("OfferController",
+//						"No connection: couldn't get offers");
+//				return offervec;
+//			}
+//			try {
+//				while (rs.next()) {
+//					Offer currentoff = convertToOffer(rs);
+//					if (currentoff.isChecked())
+//						offervec.add(currentoff);
+//				}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 
 		return offervec;
 	}
