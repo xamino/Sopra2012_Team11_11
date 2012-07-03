@@ -104,7 +104,8 @@ function handleSaveResponse(mime, data) {
 	if (mime == "text/url")
 		window.location = data;
 	else if (mime == "text/error")
-		alert(data);
+		if(data!="order")alert(data);
+		else toggleWarning("error_startDate", true, "Enddatum liegt vor dem Startdatum!");
 	else if (mime == "text/plain") {
 		if (data == "true")
 			window.location = "/hiwi/admin/userindex.jsp";

@@ -5,6 +5,8 @@
 package servlet;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -166,7 +168,7 @@ public final class Helper {
 	 * @param session
 	 *            Die session zum ueberpruefen.
 	 * @param c
-	 * 			user-class
+	 *            user-class
 	 * @return Das User Object wenn korrekt, sonst null.
 	 */
 	@SuppressWarnings("unchecked")
@@ -180,8 +182,8 @@ public final class Helper {
 	}
 
 	/**
-	 * Diese Methode erstellt JSON Objekte. Dazu werden die Bezeichner und die Objekte
-	 * eingelesen und zu einem JSON Objekt zusammengebaut.
+	 * Diese Methode erstellt JSON Objekte. Dazu werden die Bezeichner und die
+	 * Objekte eingelesen und zu einem JSON Objekt zusammengebaut.
 	 * 
 	 * @param varNames
 	 *            Die Bezeichner der Variabeln.
@@ -198,7 +200,9 @@ public final class Helper {
 				json += ",";
 			if (variables[i] instanceof String)
 				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
-			else
+			else if(variables[i] instanceof Date)
+				json +="\"" + varNames[i] + "\":\"" + new SimpleDateFormat("dd.MM.yyyy").format((Date)variables[i])+"\"";
+ 			else
 				json += "\"" + varNames[i] + "\":" + variables[i];
 		}
 		json += "}";
@@ -207,8 +211,8 @@ public final class Helper {
 
 	/**
 	 * Hilfsmethode um Serverseitig einen String nach String via Base64 und MD5
-	 * zu hashen. ACHTUNG: hier wird javascript Server-seitig aufgerufen!
-	 * Dies ist noetig da die hashing Methode sowohl Client- als auch Server-seitig
+	 * zu hashen. ACHTUNG: hier wird javascript Server-seitig aufgerufen! Dies
+	 * ist noetig da die hashing Methode sowohl Client- als auch Server-seitig
 	 * identisch sein muss!
 	 * 
 	 * @param text
@@ -249,7 +253,9 @@ public final class Helper {
 	public static Boolean validate(String string) {
 		if (string == null || string.trim().isEmpty())
 			return false;
-		// TODO: Check for sql-injection and valid chars here!
+		if (!string
+				.matches("^((\\s)*[a-zA-Z0-9_\\+\\/\\*;\\^\\\\#$§%=˚´€¥\\<\\>\\-.,@\\(\\)\\[\\]ÜÄÖüöä!\\?]+(\\s)*)*$"))
+			return false;
 		return true;
 	}
 }

@@ -62,7 +62,7 @@
 								<tr>
 									<td>Standard Anzahl der Stunden<br>pro Monat:
 									</td>
-									<td><input type="text" name="hoursMonth" size="4" />
+									<td><input type="text" name="hoursMonth" size="4" />std.
 										<div id="error_hoursMonth" class="invisibleWarning"></div></td>
 								</tr>
 								<tr>
@@ -77,7 +77,7 @@
 								</tr>
 								<tr>
 									<td>Standard Lohn:</td>
-									<td><input type="text" name="wage" />€
+									<td><input type="text" name="wage" />€/std.
 										<div id="error_wage" class="invisibleWarning"></div></td>
 								</tr>
 							</table>
