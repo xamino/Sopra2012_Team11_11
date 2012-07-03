@@ -5,6 +5,8 @@
 package servlet;
 
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -198,7 +200,9 @@ public final class Helper {
 				json += ",";
 			if (variables[i] instanceof String)
 				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
-			else
+			else if(variables[i] instanceof Date)
+				json +="\"" + varNames[i] + "\":\"" + new SimpleDateFormat("dd.MM.yyyy").format((Date)variables[i])+"\"";
+ 			else
 				json += "\"" + varNames[i] + "\":" + variables[i];
 		}
 		json += "}";

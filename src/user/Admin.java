@@ -5,6 +5,7 @@ package user;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -300,8 +301,8 @@ public class Admin extends User {
 								"endDate" },
 						new Object[] { rs.getInt("StdProMonat"),
 								rs.getFloat("Lohn"),
-								rs.getString("StartDatum"),
-								rs.getString("EndDatum") });
+								rs.getDate("StartDatum"),
+								rs.getDate("EndDatum") });
 			}
 		} catch (SQLException e) {
 			// e.printStackTrace();
@@ -326,8 +327,8 @@ public class Admin extends User {
 	 *            Das neue end Datum.
 	 * @return Flag zur kontrolle ob alles geklappt hat.
 	 */
-	public boolean writeDefValues(int hoursMonth, float wage, String startDate,
-			String endDate) {
+	public boolean writeDefValues(int hoursMonth, float wage, Date startDate,
+			Date endDate) {
 		if (!DatabaseController.getInstance()
 				.update("Standardangebot",
 						new String[] { "StdProMonat", "StartDatum", "EndDatum",
@@ -342,4 +343,5 @@ public class Admin extends User {
 			return true;
 		}
 	}
+
 }

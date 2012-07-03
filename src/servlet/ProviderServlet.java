@@ -224,6 +224,14 @@ public class ProviderServlet extends HttpServlet {
 				response.getWriter().write("invalid endDate");
 				return;
 			}
+			if (startDate.after(endDate)
+					&& !endDate.equals(
+							startDate)) {
+				log.write("ClerkServlet", "StartDate after Enddate!");
+				response.setContentType("text/error");
+				response.getWriter().write("order");
+				return;
+			}
 			if (!provider.createOffer(name, notiz, stellen, stunden,
 					beschreibung, startDate, endDate)) {
 				response.setContentType("text/error");

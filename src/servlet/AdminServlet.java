@@ -8,6 +8,8 @@ package servlet;
 import static servlet.Helper.validate;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -409,9 +411,38 @@ public class AdminServlet extends HttpServlet {
 				response.getWriter().write("Fehlerhafte Eingaben!");
 				return;
 			}
-			String startDate = request.getParameter("startDate");
-			String endDate = request.getParameter("endDate");
-			if (!validate(startDate) || !validate(endDate) || hoursMonth == -1
+			String startDateS = request.getParameter("startDate");
+			String endDateS = request.getParameter("endDate");
+			Date startDate;
+			try {
+				startDate = new SimpleDateFormat("dd-MM-yyyy")
+						.parse(startDateS);
+			} catch (Exception e) {
+				log.write("ProviderServlet",
+						"There was an error while PARSING StartDate");
+				response.setContentType("text/error");
+				response.getWriter().write("invalid startDate");
+				return;
+			}
+			Date endDate;
+			try {
+				endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateS);
+			} catch (Exception e) {
+				log.write("ProviderServlet",
+						"There was an error while PARSING EndDate");
+				response.setContentType("text/error");
+				response.getWriter().write("invalid endDate");
+				return;
+			}
+			if (startDate.after(endDate)
+					&& !endDate.equals(
+							startDate)) {
+				log.write("ClerkServlet", "StartDate after Enddate!");
+				response.setContentType("text/error");
+				response.getWriter().write("order");
+				return;
+			}
+			if (hoursMonth == -1
 					|| wage == -1) {
 				response.setContentType("text/error");
 				response.getWriter().write("Invalid parameters!");
