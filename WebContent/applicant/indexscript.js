@@ -40,21 +40,43 @@ function handleLoadOffersResponse(mime, data) {
 		// Write table – probably replaces old data!
 		table.innerHTML = "<tr><th>Start Datum</th><th>End Datum</th><th>Bezeichnung</th><th>Beschreibung</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
+			var obj = JSONarray[i];
 			table.innerHTML += "<tr class=\"\" id=\""
-					+ JSONarray[i].aid
+					+ obj.aid
 					+ "\"><td>"
-					+ JSONarray[i].startdate
+					+ obj.startdate
 					+ "</td><td>"
-					+ JSONarray[i].enddate
+					+ obj.enddate
 					+ "</td><td>"
-					+ JSONarray[i].name
+					+ obj.name
 					+ "</td><td><div class=\"float2\">"
-					+ JSONarray[i].description
+					+ obj.description
 					+ "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"prepareApply('"
-					+ JSONarray[i].aid
-					+ "')\" /> </div><div class=\"clear\"></div></td></tr>";
+					+ obj.aid
+					+ "')\" /> <input id=\"mailTo"
+					+ obj.author
+					+ "\" type=\"button\" value=\"Anbieter kontaktieren\" onclick=\"\" />"
+					+ "</div><div class=\"clear\"></div></td></tr>";
+			// Voodoo um email button hinzubekommen:
+			// Dieser mist ist von Tamino, unter lebensgefahr ändern!
+			connect(
+					"/hiwi/Applicant/js/getEmail",
+					"user=" + obj.author,
+					function(mime, data) {
+						if (mime == "text/url") {
+							window.location = data;
+						} else if (mime == "text/email") {
+							document
+									.getElementById("mailTo" + obj.author)
+									.setAttribute(
+											"onclick",
+											"clickMail('"
+													+ data
+													+ "','[Hiwi-Börse:Angebot] "
+													+ obj.name + "')");
+						}
+					});
 		}
-		// loadMyOffers();
 	}
 }
 
