@@ -363,7 +363,7 @@ public class OfferController {
 		for (int i = 0; i < applications.size(); i++) {
 			// Ich weis nicht wieso das bei dem Test schief ging ? Habs getestet
 			// und es geht.
-			where = "abgeschlossen = 0 and AID = "
+			where = "abgeschlossen = FALSE and AID = "
 					+ applications.elementAt(i).getAid();
 			ResultSet rs = db.select(select, from, where);
 			if (rs == null) {
