@@ -49,8 +49,10 @@ function checkVal() {
 	} else if (!checkInt(hoursMonth)) {
 		toggleWarning("error_hoursMonth", true, "Bitte nur ganze Zahlen!");
 		error = true;
-	} else
+	} else{
 		toggleWarning("error_hoursMonth", false, "");
+		hoursMonth=hoursMonth.replace(",",".");
+	}
 	var startDate = form.startDate.value;
 	if (startDate == null || startDate == "") {
 		toggleWarning("error_startDate", true, "Bitte ausfüllen!");
@@ -80,8 +82,10 @@ function checkVal() {
 	} else if (!checkFloat(wage)) {
 		toggleWarning("error_wage", true, "Bitte keine Sonderzeichen!");
 		error = true;
-	} else
+	} else{
 		toggleWarning("error_wage", false, "");
+		wage=wage.replace(",",".");
+	}
 	if (error)
 		return;
 	// alert("All okay!");
