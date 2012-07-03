@@ -20,7 +20,7 @@ public class Institute {
 	}
 
 	/**
-	 * Gibt die IID zurück.
+	 * Gibt die IID zurueck.
 	 * 
 	 * @return die IID
 	 */
@@ -39,7 +39,7 @@ public class Institute {
 	}
 
 	/**
-	 * Gibt den Name zurück.
+	 * Gibt den Name zurueck.
 	 * 
 	 * @return der name
 	 */

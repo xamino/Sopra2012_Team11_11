@@ -212,6 +212,11 @@ public class ApplicantServlet extends HttpServlet {
 				return;
 			}
 			String email = applicant.getEmail(user);
+			if (email == null) {
+				response.setContentType("text/url");
+				response.getWriter().write("No email read from database!");
+				return;
+			}
 			response.setContentType("text/email");
 			response.getWriter().write(email);
 		} else {
