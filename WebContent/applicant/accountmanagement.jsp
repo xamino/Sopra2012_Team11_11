@@ -52,9 +52,11 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Accountverwaltung</h2>
-					<div class="text">Hier können Sie Ihre persönlichen Daten
-						bearbeiten.<br>Wenn die zu ändernden Daten hier nicht aufgeführt
-						werden, wenden Sie sich bitte an den Administrator.</div>
+					<div class="text">
+						Hier können Sie Ihre persönlichen Daten bearbeiten.<br>Wenn
+						die zu ändernden Daten hier nicht aufgeführt werden, wenden Sie
+						sich bitte an den Administrator.
+					</div>
 				</div>
 				<hr>
 				<div class="textblock">
@@ -69,22 +71,22 @@
 											maxlength="100" />
 										<div id="error_realName"></div>
 									</div>
-									<span> <label for="newemail">E-Mail</label>
+									<span> <label for="newemail">E-Mail:</label>
 									</span>
 									<div class="regform">
 										<input id="newemail" type="text" name="newemail" size="20"
 											maxlength="100" />
 										<div id="error_email"></div>
 									</div>
-									<br> <br> <span> <label for="newpasswort">neues
-											Passwort</label>
+									<br> <br> <span> <label for="newpasswort">Neues
+											Passwort:</label>
 									</span>
 									<div class="regform">
 										<input id="newpasswort" type="password" name="newpasswort"
 											size="20" maxlength="100" />
 									</div>
-									<br> <span> <label for="newpasswortwdh">neuesPasswort
-											wiederholen</label>
+									<br> <span> <label for="newpasswortwdh">Neues
+											Passwort wiederholen:</label>
 									</span>
 									<div class="regform">
 										<input id="newpasswortwdh" type="password"

@@ -71,9 +71,9 @@ function handleLoadOffersResponse(mime, data) {
 					+ obj.aid
 					+ "OfferApplicants\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
 					+ obj.aid
-					+ "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot aendern\" onclick=\"prepareButtonUpdateOffer(\'"
+					+ "\');\"/></td><td><br><input type=\"submit\" value=\"Angebot ändern\" onclick=\"prepareButtonUpdateOffer(\'"
 					+ obj.aid
-					+ "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurueckziehen\" onclick=\"prepareButtonDeleteOffer(\'"
+					+ "\');\"/></td><td><br><input type=\"button\" value=\"Angebot zurückziehen\" onclick=\"prepareButtonDeleteOffer(\'"
 					+ obj.aid + "\');\" /> </td><td>"
 					+ ((obj.checked) ? "Ja" : "Nein") + "</td></tr>";
 			// Logic to disable button if not checked:
