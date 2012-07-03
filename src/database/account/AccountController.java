@@ -485,7 +485,7 @@ public class AccountController {
 				new String[] { tableName }, "email LIKE '" + email + "'");
 		if (rs == null) {
 			log.write("AccountController",
-					"No connection: couldn't get account");
+					"No connection: couldn't get email!");
 			return null;
 		}
 		try {

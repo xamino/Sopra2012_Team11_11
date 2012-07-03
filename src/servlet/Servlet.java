@@ -4,6 +4,8 @@
 
 package servlet;
 
+import static servlet.Helper.validate;
+
 import java.io.IOException;
 import java.util.Vector;
 
@@ -99,24 +101,27 @@ public class Servlet extends HttpServlet {
 		} else if (path.equals("/js/forgotPassword")) {
 			String email = request.getParameter("email");
 			// Check validity:
-			if (email == null || email.isEmpty())
+			if (!validate(email))
 				return;
 			// Go for getting the account to this email:
 			Account acc = AccountController.getInstance().getAccountByEmail(
 					email);
 			if (acc == null) {
-				System.out.println("DEBUG: No account found for <" + email
-						+ ">");
+				log.write("Servlet", "No account found for <" + email + ">");
 				return;
 			} else if (acc.getUsername().isEmpty()) {
 				// In this case, send an explanatory email:
-				Mailer.getInstance()
+				if (!Mailer
+						.getInstance()
 						.sendMail(
 								email,
 								Helper.EMAILHEADER + "Password neu setzen",
 								"Für diese Emailaddresse wurde ein neues Password angefordert."
 										+ " Da es jedoch mehrere Accounts mit dieser Emailaddresse gibt, "
-										+ "wenden sie sich bitte an den Administrator, um ein neues Password anzufordern.");
+										+ "wenden sie sich bitte an den Administrator, um ein neues Password anzufordern.")) {
+					log.write("Servlet",
+							"Error sending mail to multiple accounts.");
+				}
 				return;
 			} else {
 				// Send new password:
@@ -134,6 +139,20 @@ public class Servlet extends HttpServlet {
 							"ERROR hashing new password, ABORTED! Has md5.js been placed at the correct location?");
 					return;
 				}
+				// Send mail:
+				if (!Mailer
+						.getInstance()
+						.sendMail(
+								email,
+								Helper.EMAILHEADER + "Neues Passwort",
+								"Für diese Emailaddresse wurde ein neues Passwort angefordert."
+										+ "\n\nNeues Passwort: "
+										+ newPassword
+										+ "\n\nBitte vergeben sie möglichst bald ein neues Passwort!")) {
+					log.write("Servlet",
+							"Error sending mail. Aborting password reset.");
+					return;
+				}
 				// Write new password hash to DB:
 				if (!DatabaseController.getInstance().update("Accounts",
 						new String[] { "passworthash" },
@@ -143,15 +162,6 @@ public class Servlet extends HttpServlet {
 							"Error updating password in DB! Aborting!");
 					return;
 				}
-				// Send mail:
-				Mailer.getInstance()
-						.sendMail(
-								email,
-								Helper.EMAILHEADER + "Neues Passwort",
-								"Für diese Emailaddresse wurde ein neues Passwort angefordert."
-										+ "\n\nNeues Passwort: "
-										+ newPassword
-										+ "\n\nBitte vergeben sie möglichst bald ein neues Passwort!");
 				return;
 			}
 		} else {
