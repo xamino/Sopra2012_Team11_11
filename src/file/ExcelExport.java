@@ -65,17 +65,29 @@ public abstract class ExcelExport {
 		Label uName = new Label(0,0,"Username");
 		Label Name = new Label(1,0,"Realer Name");
 		Label id = new Label(2,0,"Angebot");
+		Label aDatum = new Label(3,0,"Beginn");
+		Label eDatum = new Label(4,0,"Ende");
+		Label stdMon = new Label(5,0,"Std/Wo");
 		sh.addCell(Name);
 		sh.addCell(id);
 		sh.addCell(uName);
+		sh.addCell(aDatum);
+		sh.addCell(eDatum);
+		sh.addCell(stdMon);
 
 		for (int i = 1; i <= appvec.size(); i++) {
 			Label aID = new Label(2,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getName());
 			Label aName= new Label(1,i,""+acccon.getAccountByUsername(appvec.get(i-1).getUsername()).getName());
 			Label auName = new Label(0,i,""+appvec.get(i-1).getUsername());
+			Label aaDatum = new Label(3,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getStartdate());
+			Label aeDatum = new Label(4,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getEnddate());
+			Label astdMon = new Label(5,i,""+offcon.getOfferById(appvec.get(i-1).getAid()).getHoursperweek());
 			sh.addCell(aID);
 			sh.addCell(auName);
 			sh.addCell(aName);
+			sh.addCell(aaDatum);
+			sh.addCell(aeDatum);
+			sh.addCell(astdMon);
 			
 		}
 		ww.write();
