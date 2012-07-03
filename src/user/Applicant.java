@@ -12,6 +12,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import servlet.Helper;
+
 import database.account.Account;
 import database.application.Application;
 import database.document.AppDocument;
@@ -112,6 +114,24 @@ public class Applicant extends User {
 	}
 
 	/**
+	 * Liefert alle Informationen zu einer Bewerbung als JSON-Objekt zurueck.
+	 * 
+	 * @param aid
+	 *            ID der Bewerbung
+	 * @return JSON-Objekt mit den Informationen.
+	 */
+	public String getApplicationInfo(int aid) {
+		Application app = appcon.getApplicationByOfferAndUser(aid,
+				getUserData().getUsername());
+		if (app == null)
+			return null;
+		Offer off = getOffer(aid);
+		return Helper.jsonAtor(new String[] { "offerName", "author", "status",
+				"descr" }, new Object[] { off.getName(), off.getAuthor(),
+				app.isChosen(), off.getDescription() });
+	}
+
+	/**
 	 * Gibt Angebote zurueck auf die der Benutzer sich beworben hat.
 	 * 
 	 * @return Vektor mit Angeboten
@@ -139,10 +159,12 @@ public class Applicant extends User {
 	public Offer getOffer(int id) {
 		return offcon.getOfferById(id);
 	}
+
 	/**
 	 * Gibt Dokumentdaten zurueck
-	 * @param aid 
-	 * 			Angebots ID
+	 * 
+	 * @param aid
+	 *            Angebots ID
 	 * @return Daten der Dokumente zu diesem Angebot.
 	 */
 	public Vector<String> getDocuments(int aid) {
@@ -164,7 +186,7 @@ public class Applicant extends User {
 		}
 		return docDataObject;
 	}
-	
+
 	/**
 	 * Holt die Emailaddresse eines Benutzers aus der Datenbank.
 	 * 
@@ -181,6 +203,5 @@ public class Applicant extends User {
 			return null;
 		}
 	}
-	
-	
+
 }

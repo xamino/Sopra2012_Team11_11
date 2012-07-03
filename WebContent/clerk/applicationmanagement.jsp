@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../style.css" />
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="/hiwi/clerk/script.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
 <title>Bewerbungen Verwalten | Hiwi Job Börse</title>
 </head>

@@ -50,9 +50,9 @@ public class ClerkServlet extends HttpServlet {
 	 * Variable zum speichern der Log Instanz.
 	 */
 	private Log log;
-//	/**
-//	 * Variable zum speichern einer Instanz vom Mailer
-//	 */
+	// /**
+	// * Variable zum speichern einer Instanz vom Mailer
+	// */
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -60,9 +60,9 @@ public class ClerkServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor. Hier werden die wichtigen Referenzen
-	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
-	 * um die Initialisierung ersichtlich zu machen.
+	 * Konstruktor. Hier werden die wichtigen Referenzen gesetzt und wenn noetig
+	 * erstellt. Auch wird ein log Eintrag geschrieben um die Initialisierung
+	 * ersichtlich zu machen.
 	 */
 	public ClerkServlet() {
 		super();
@@ -263,8 +263,9 @@ public class ClerkServlet extends HttpServlet {
 			Account clerkAccount = clerk.getAccount();
 			Vector<HilfsDatenClerk> daten = clerk.getVoodoo(clerkAccount);
 			if (daten == null || daten.isEmpty()) {
-				response.setContentType("text/error");
-				response.getWriter().write("Keine Einträge in der DB!");
+				response.setContentType("text/plain");
+				response.getWriter().write(
+						"Aktuell gibt es keine zu bearbeitende Bewerbungen!");
 				return;
 			}
 			response.setContentType("showapplication/json");
@@ -447,7 +448,8 @@ public class ClerkServlet extends HttpServlet {
 			}
 			if (clerk.checkAllDocFromApplicant(username, aid)) {
 				response.setContentType("text/url");
-				response.getWriter().write(Helper.D_CLERK_APPLICATIONMANAGEMENT);
+				response.getWriter()
+						.write(Helper.D_CLERK_APPLICATIONMANAGEMENT);
 			} else {
 				response.setContentType("error/url");
 				response.getWriter().write(

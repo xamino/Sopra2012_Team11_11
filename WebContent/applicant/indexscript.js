@@ -128,7 +128,7 @@ function selectApplication() {
 	var id = getURLParameter("AID");
 	// reset selectedID (account could have been deleted in meantime)
 	// selectedOffer = null;
-	connect("/hiwi/Applicant/js/selectApplication", "id=" + id,
+	connect("/hiwi/Applicant/js/selectApplication", "AID=" + id,
 			handleLoadMyApplicationResponse);
 }
 
@@ -154,8 +154,15 @@ function handleLoadMyApplicationResponse(mime, data) {
 		stupidThing = obj.author;
 		var table = document.getElementById("applications");
 		// Write table – probably replaces old data!
-		table.innerHTML = "Bewerbung für " + obj.offerName + obj.status;
-		selectDocuments();
+		table.innerHTML = "Bewerbung für " + obj.offerName
+				+ (obj.status ? " – akzeptiert" : "") + ".";
+		if (obj.status) {
+			selectDocuments();
+		} else {
+			var table2 = document.getElementById("applicationsTable");
+			// Write table – probably replaces old data!
+			table2.innerHTML = "<th>Bewerbung wurde noch nicht akzeptiert.</th>";
+		}
 	}
 }
 

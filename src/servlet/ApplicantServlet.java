@@ -38,7 +38,7 @@ public class ApplicantServlet extends HttpServlet {
 	/**
 	 * Variable zum speichern der Log Instanz.
 	 */
-	private Log log; 
+	private Log log;
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -46,9 +46,9 @@ public class ApplicantServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor. Hier werden die wichtigen Referenzen
-	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
-	 * um die Initialisierung ersichtlich zu machen.
+	 * Konstruktor. Hier werden die wichtigen Referenzen gesetzt und wenn noetig
+	 * erstellt. Auch wird ein log Eintrag geschrieben um die Initialisierung
+	 * ersichtlich zu machen.
 	 **/
 	public ApplicantServlet() {
 		super();
@@ -87,17 +87,13 @@ public class ApplicantServlet extends HttpServlet {
 			int aid;
 			try {
 				aid = Integer.parseInt(request.getParameter("AID"));
-
 			} catch (NumberFormatException e) {
-				log.write("ApplicantServlet",
-						"There was an error while PARSING int-value(AID) in: "
-								+ path.toString());
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
 			}
-			log.write("ApplicationServlet",
-					"deleting application in progress...");
+			log.write("ApplicationServlet", "Deleting application <" + aid
+					+ ">");
 			Application appToDelete = applicant.getApplication(aid);
 			if (!applicant.deleteApplication(appToDelete)) {
 				log.write("ApplicantServlet", "Error deleting application!");
@@ -128,24 +124,23 @@ public class ApplicantServlet extends HttpServlet {
 
 		// Load my information about one application:
 		else if (path.equals("/js/selectApplication")) {
-			int aid = Integer.parseInt(request.getParameter("id"));
-			Application appli = applicant.getApplication(aid);
-			String status = "fehler";
-			if (appli.isChosen()) {
-				status = " - angenommen";
-			} else {
-				status = " - nicht angenommen";
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("AID"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim Parsen der AID!");
+				return;
 			}
-
-			Offer off = applicant.getOffer(aid);
+			String json = applicant.getApplicationInfo(aid);
+			if (json == null) {
+				response.setContentType("text/url");
+				response.getWriter().write(Helper.D_APPLICANT_USERINDEX);
+				return;
+			}
 			response.setContentType("application/json");
-			response.getWriter().write(
-					Helper.jsonAtor(new String[] { "offerName", "author",
-							"status" },
-							new Object[] { off.getName(), off.getAuthor(),
-									status }));
+			response.getWriter().write(json);
 			return;
-
 		}
 		// Load my information about one application(documents):
 		else if (path.equals("/js/selectDocuments")) {
@@ -153,8 +148,6 @@ public class ApplicantServlet extends HttpServlet {
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
 			} catch (NumberFormatException e) {
-				log.write("ApplicantServlet",
-						"NumberFormatException parsing parameter!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler beim Parsen der AID!");
 				return;
