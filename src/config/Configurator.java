@@ -1,3 +1,7 @@
+/**
+ * 
+ * @author Manuel Guentzel
+ **/
 package config;
 
 import java.io.BufferedReader;
@@ -6,11 +10,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-
-/**
- * 
- * @author Manuel Guentzel
- **/
 /**
  * Klasse zum lesen von Konfigurationsdateien
  */
@@ -214,23 +213,28 @@ public class Configurator {
 	}
 	/**
 	 * Funktion zum auslesen einer int Variablen.
-	 * @param key Bezeichnung der Variablen
-	 * @return zum key zugehoeriger Wert oder <code>Integer.MIN_VALUE</code> falls nicht vorhanden (oder kein int!)
+	 * @param key 
+	 * 			Bezeichnung der Variablen
+	 * @return 
+	 * 			zum key zugehoeriger Wert oder <code>Integer.MIN_VALUE</code> falls nicht vorhanden (oder kein int!)
 	 * @throws IllegalTypeException falls gewuenschter Wert kein int ist 
-	 * @throws UnknownOptionException falls der die gewünschte Variablen nicht vorhanden ist
+	 * @throws UnknownOptionException falls die gewuenschten Variablen nicht vorhanden sind
 	 */
 	public int getInt(String key) throws IllegalTypeException, UnknownOptionException{
 		if(Types.containsKey(key)){
-			if (Types.get(key).equalsIgnoreCase("int"))return (int)(Integer)Values.get(key);
+			if (Types.get(key).equalsIgnoreCase("int"))
+				return (int)(Integer)Values.get(key);
 			else throw new IllegalTypeException("desired value "+key+" is not an int!");
 		}else throw new UnknownOptionException(key +" is unknown");
 	}
 	/**
 	 * Funktion zum auslesen einer boolean Variablen.
-	 * @param key Bezeichnung der Variablen
-	 * @return zum key zugehoeriger Wert oder <code>false</code> falls nicht vorhanden oder kein boolean
+	 * @param key 
+	 * 			Bezeichnung der Variablen
+	 * @return 
+	 * 			zum key zugehoeriger Wert oder <code>false</code> falls nicht vorhanden oder kein boolean
 	 * @throws IllegalTypeException falls gewuenschter Wert kein boolean ist 
-	 * @throws UnknownOptionException falls der die gewünschte Variablen nicht vorhanden ist
+	 * @throws UnknownOptionException falls die gewuenschten Variablen nicht vorhanden sind
 	 */
 	public boolean getBoolean(String key) throws IllegalTypeException, UnknownOptionException{
 		if(Types.containsKey(key)){
@@ -243,10 +247,12 @@ public class Configurator {
 	}
 	/**
 	 * Funktion zum auslesen einer String Variablen.
-	 * @param key Bezeichnung der Variablen
-	 * @return zum key zugehoeriger Wert oder <code>null</code> falls nicht vorhanden, leer oder kein String
+	 * @param key 
+	 * 			Bezeichnung der Variablen
+	 * @return 
+	 * 			zum key zugehoeriger Wert oder <code>null</code> falls nicht vorhanden, leer oder kein String
 	 * @throws IllegalTypeException falls gewuenschter Wert kein String ist 
-	 * @throws UnknownOptionException falls der die gewünschte Variablen nicht vorhanden ist
+	 * @throws UnknownOptionException falls die gewuenschten Variablen nicht vorhanden sind
 	 */
 	public String getString(String key) throws IllegalTypeException, UnknownOptionException{
 		if(Types.containsKey(key)){
@@ -260,10 +266,12 @@ public class Configurator {
 	}
 	/**
 	 * Funktion zum auslesen einer String Variablen die einen Pfad darstellt.
-	 * @param key Bezeichnung der Variablen
-	 * @return zum key zugehoeriger Wert oder <code>null</code> falls nicht vorhanden, leer oder kein Pfad
+	 * @param key 
+	 * 			Bezeichnung der Variablen
+	 * @return 
+	 * 		zum key zugehoeriger Wert oder <code>null</code> falls nicht vorhanden, leer oder kein Pfad
 	 * @throws IllegalTypeException falls gewuenschter Wert kein pfad ist 
-	 * @throws UnknownOptionException falls der die gewünschte Variablen nicht vorhanden ist
+	 * @throws UnknownOptionException falls die gewuenschten Variablen nicht vorhanden sind
 	 */
 	public String getPath(String key) throws IllegalTypeException, UnknownOptionException{
 		if(Types.containsKey(key)){
@@ -280,7 +288,8 @@ public class Configurator {
 	 * Funktion zum feststellen ob ein Charakter ein Whitespace ist.
 	 * Credits to:ZZ Coder
 	 * http://stackoverflow.com/questions/1437933/how-to-properly-trim-whitespaces-from-a-string-in-java
-	 * @param ch Char der ueberprueft werden soll
+	 * @param ch 
+	 * 			Char der ueberprueft werden soll
 	 * @return Wahrheitswert ob Whitespace
 	 */
 	private boolean isWhitespace (int ch)
@@ -298,8 +307,9 @@ public class Configurator {
 	  }
 	
 	/**
-	 * Selbe Funktionalität wie trim(). Entfernt jedoch mehr whitespace aehnliche zeichen
-	 * @param s zu trimmender String
+	 * Selbe Funktionalitaet wie trim(). Entfernt jedoch mehr whitespace aehnliche Zeichen
+	 * @param s 
+	 * 			zu trimmender String
 	 * @return getrimmter String
 	 */
 	private String properTrim(String s){

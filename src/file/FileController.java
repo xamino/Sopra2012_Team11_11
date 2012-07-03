@@ -17,8 +17,9 @@ import config.Configurator;
 public abstract class FileController {
 
 /**
- * Diese Methode loescht die Export Datei des Angegebenen Users.
- * @param username Username des Users dessen Datei geloescht werden soll
+ * Diese Methode loescht die Export Datei des angegebenen Users.
+ * @param username 
+ * 				Username des Users dessen Datei geloescht werden soll
  * @return Wahrheitswert ob der Vorgang erfolgreich war
  */
 	public static boolean deleteFile(String username){
@@ -40,7 +41,8 @@ public abstract class FileController {
 
 /**
  * Erstellt eine neue beschreibbare Excel Datei.
- * @param username Benutzername des Dateibesitzers
+ * @param username 
+ * 			Benutzername des Dateibesitzers
  * @return Datei zum weiterverarbeiten fuer den ExcelExport
  */
 	public static File createFile(String username) {

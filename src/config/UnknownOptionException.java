@@ -6,7 +6,7 @@ package config;
  */
 /**
  * 
- * Exception Klasse fuer Zugriff auf nicht vorhandene Optionen
+ * Exception Klasse fuer den Zugriff auf nicht vorhandene Optionen
  *
  */
 @SuppressWarnings("serial")
@@ -20,7 +20,8 @@ public class UnknownOptionException extends Exception {
 	}
 	/**
 	 * Konstruktor mit Moeglichkeit der Stringuebergabe
-	 * @param s String mit zusaetzlichen Informationen
+	 * @param s 
+	 * 		String mit zusaetzlichen Informationen
 	 */
 	public UnknownOptionException(String s){
 		super(s);

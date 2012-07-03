@@ -1,3 +1,6 @@
+/**
+ * @author Tamino Hartmann
+ */
 package userManagement;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -21,9 +24,9 @@ public class SessionHandler implements HttpSessionListener {
 	}
 
 	/**
-	 * Kuemmert sich um die User mit abgelaufenen Sessions um diese dan
-	 * abzumelden. Wenn eine Session zerstoert wird (abgelaufen oder ungueltig
-	 * gemacht), wird der User aus der Liste der eingeloggten User entfernt.
+	 * Kuemmert sich um die User mit abgelaufenen Sessions um diese dann
+	 * abzumelden. Wenn eine Session zerstoert wird (abgelaufen oder ungueltig),
+	 * wird der User aus der Liste der eingeloggten User entfernt.
 	 * 
 	 */
 	@Override

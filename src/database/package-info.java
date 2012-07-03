@@ -1,4 +1,4 @@
 /**
-*Package fuer die Datebnank
+*Package fuer die Datebank
 **/
 package database;

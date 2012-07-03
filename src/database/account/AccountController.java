@@ -2,13 +2,11 @@
  * @author Tamino Hartmann
  * @author Patryk Boczon 
  * @author Oemer Sahin
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
+ * @author Laura Irlinger
  **/
 package database.account;
 
-/**
- * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten.
- */
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -23,6 +21,7 @@ import database.offer.Offer;
 import database.offer.OfferController;
 
 /**
+ * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten.
  * Der Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
  * 
  */
@@ -41,6 +40,9 @@ public class AccountController {
 	 */
 	private Log log;
 
+	/**
+	 * Tabellenname
+	 */
 	final static String tableName = "Accounts";// tabellenname
 
 	/**
@@ -73,8 +75,8 @@ public class AccountController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt einen neuen Account mit uebergebener Account
-	 * Instanz als Parameter.
+	 * Diese Methode erstellt einen neuen Account mit uebergebener 
+	 * Account-Instanz als Parameter.
 	 * 
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
@@ -90,11 +92,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum loeschen eines ApplicantAccounts.
+	 * Methode zum Loeschen eines ApplicantAccounts.
 	 * 
 	 * @param applicant
 	 *            Applicant-Objekt
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteApplicantAccount(Applicant applicant) {
 		String username = applicant.getUserData().getUsername();
@@ -112,11 +114,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum loeschen eines ApplicantAccounts.
+	 * Methode zum Loeschen eines ApplicantAccounts.
 	 * 
 	 * @param applicant
 	 *            Account-Objekt
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteApplicantAccount(Account applicant) {
 		String username = applicant.getUsername();
@@ -134,11 +136,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum loeschen eines ClerkAccounts
+	 * Methode zum Loeschen eines ClerkAccounts
 	 * 
 	 * @param clerk
 	 *            Clerk-Objekt
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 
 	public boolean deleteClerkAccount(Clerk clerk) {
@@ -172,11 +174,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum loeschen eines ClerkAccounts
+	 * Methode zum Loeschen eines ClerkAccounts
 	 * 
 	 * @param clerk
 	 *            Account-Objekt
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteClerkAccount(Account clerk) {
 		String username = clerk.getUsername();
@@ -209,11 +211,11 @@ public class AccountController {
 	}
 
 	/**
-	 * Methode zum loeschen eines ProviderAccounts
+	 * Methode zum Loeschen eines ProviderAccounts
 	 * 
 	 * @param provider
 	 *            Provider-Objekt
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteProviderAccount(Account provider) {
 		String username = provider.getUsername();
@@ -243,13 +245,13 @@ public class AccountController {
 	}
 
 	/**
-	 * Diese Methode loescht den gewuenschten Account mit uebergebenem
+	 * Diese Methode Loescht den gewuenschten Account mit uebergebenem
 	 * Account-Objekt.
 	 * 
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
@@ -263,7 +265,7 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
+	 * @return  Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
@@ -419,11 +421,11 @@ public class AccountController {
 	}
 	
 	/**
-	 * Gibt die potentiellen Stellvertreter eines benutzers zurueck
+	 * Gibt die potentiellen Stellvertreter eines Benutzers zurueck.
 	 * 
 	 * @param username
-	 *            Nutzer mit username wird nicht im Resultat enthalten sein
-	 * @return Vector, der alle usernames beinhaltet, ausser den Uebergebenen
+	 *            Nutzer mit username wird nicht im Resultat enthalten sein.
+	 * @return Vector, der alle usernames beinhaltet, ausser dem uebergebenen.
 	 */
 	public Vector<String> getPotentialRepresentatives(String username) {
 		int accounttype = 3;

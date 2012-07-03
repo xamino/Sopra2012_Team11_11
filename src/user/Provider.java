@@ -1,3 +1,6 @@
+/**
+ * @author Tamino Hartmann
+ */
 package user;
 
 import java.sql.ResultSet;
@@ -12,6 +15,7 @@ import servlet.Helper;
 import com.google.gson.Gson;
 
 import database.DatabaseController;
+import database.HilfsDatenProvider;
 import database.account.Account;
 import database.account.AccountController;
 import database.application.Application;
@@ -48,6 +52,7 @@ public class Provider extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account
+	 * @return Gibt an, ob die Operation erfolgreich war.         
 	 */
 	public boolean editAccount(Account acc) {
 		if (!acccon.updateAccount(acc)) {
@@ -91,11 +96,11 @@ public class Provider extends User {
 	// }
 
 	/**
-	 * Methode zum Löschen seines Accounts
+	 * Methode zum Loeschen seines Accounts
 	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
-	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
-	 *         zurückgegeben.
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurueckgegeben. Falls
+	 *         irgendwo ein Fehler aufgetreten ist wird ein FALSE
+	 *         zurueckgegeben.
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
@@ -156,7 +161,7 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Laedt alle Angebote eines Anbieters aus der Datenbank.
+	 * Laedt alle Angebote des Anbieters aus der Datenbank.
 	 * 
 	 * @return Ein Vektor mit den Angeboten.
 	 */
@@ -197,15 +202,33 @@ public class Provider extends User {
 	 */
 	public String getApplicants(int aid) {
 		Vector<Application> apps = appcon.getApplicationsByOffer(aid);
-		Vector<Account> acc = new Vector<Account>();
-		for (Application app : apps) {
-			acc.add(acccon.getAccountByUsername(app.getUsername()));
+		Vector<HilfsDatenProvider> vec = new Vector<HilfsDatenProvider>(apps.size());
+		String name, username, email, angenommen;
+		for (int i = 0; i < apps.size(); i++) {
+			username = apps.elementAt(i).getUsername();
+			name = acccon.getAccountByUsername(username).getName();
+			email = acccon.getAccountByUsername(username).getEmail();
+			if(apps.elementAt(i).isChosen()){
+				angenommen = "angenommen";
+			} else {
+				angenommen = "nicht angenommen";
+			}
+			HilfsDatenProvider temp = new HilfsDatenProvider(name,username,email,angenommen);	
+			vec.add(temp);
 		}
-		return new Gson().toJson(acc, acc.getClass());
+
+		return new Gson().toJson(vec, vec.getClass());
 	}
 
+	public String getFreeSlotsOufOfTotal(int aid){
+		int free = offcon.getOfferById(aid).getSlots();
+		int total = offcon.getTotalSlotsOfOffer(aid);
+		
+		return free+"/"+total+" freie Stellen";
+	}
+	
 	/**
-	 * Erstellt ein neues zu pruefende Angebot.
+	 * Erstellt ein neues zu pruefendes Angebot.
 	 * 
 	 * @param name
 	 *            Der Name des Angebots.
@@ -218,10 +241,10 @@ public class Provider extends User {
 	 * @param beschreibung
 	 *            Die Beschreibung des Angebots.
 	 * @param startDate
-	 *            Das anfangs Datum des Angebots.
+	 *            Das Anfangsdatum des Angebots.
 	 * @param endDate
 	 *            Das Enddatum des Angebots.
-	 * @return Ein flag fuer Fehler.
+	 * @return Ein Flag fuer Fehler.
 	 */
 	public boolean createOffer(String name, String notiz, int stellen,
 			double stunden, String beschreibung, Date startDate, Date endDate) {
@@ -326,7 +349,7 @@ public class Provider extends User {
 		log.write("ProviderServlet",
 				" Setting free slots for offer in progress...");
 		// No free slots
-		if (offcon.getFreeSlotsOfOffer(aid) < 1) {
+		if (freeSlots < 1) {
 			return false;
 		}
 		// reduce freeSlots and update it

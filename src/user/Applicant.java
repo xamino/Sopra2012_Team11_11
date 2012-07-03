@@ -44,10 +44,11 @@ public class Applicant extends User {
 
 	/**
 	 * Editiert den eigenen Account. Der Benutzername ist dabei nicht aenderbar
-	 * und identifiziert den zu aendernden Account in der Datenbank
+	 * und identifiziert den zu aendernden Account in der Datenbank.
 	 * 
 	 * @param acc
 	 *            geaenderter Account
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean editAccount(Account acc) {
 
@@ -61,11 +62,11 @@ public class Applicant extends User {
 	}
 
 	/**
-	 * Methode zum Löschen seines Accounts
+	 * Methode zum Loeschen seines Accounts
 	 * 
-	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurückgegeben. Falls
-	 *         irgendwo ein Fehler aufgetretten ist wird ein FALSE
-	 *         zurückgegeben.
+	 * @return Beim erfolgreichen Entfernen wird ein TRUE zurueckgegeben. Falls
+	 *         irgendwo ein Fehler aufgetreten ist wird ein FALSE
+	 *         zurueckgegeben.
 	 */
 	public boolean deleteOwnAccount() {
 		invalidate();
@@ -91,6 +92,7 @@ public class Applicant extends User {
 	 * 
 	 * @param appToDelete
 	 *            zu loeschende Bewerbung
+	 * @return Wahrheitswert ob erfolgreich.
 	 */
 	public boolean deleteApplication(Application appToDelete) {
 		return appcon.deleteApplication(appToDelete);
@@ -139,7 +141,8 @@ public class Applicant extends User {
 	}
 	/**
 	 * Gibt Dokumentdaten zurueck
-	 * @param aid Angebots ID
+	 * @param aid 
+	 * 			Angebots ID
 	 * @return Daten der Dokumente zu diesem Angebot.
 	 */
 	public Vector<String> getDocuments(int aid) {

@@ -1,15 +1,13 @@
 /**
  * @author Patryk Boczon
  * @author Oemer Sahin
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  * @author Tamino Hartmann
+ * @author Laura Irlinger
  */
 
 package database.offer;
 
-/**
- * Verwaltet alle Datenbankzugriffe auf Angebots-bezogene Daten.
- */
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
@@ -22,6 +20,9 @@ import database.account.Account;
 import database.application.Application;
 import database.application.ApplicationController;
 
+/**
+ * Verwaltet alle Datenbankzugriffe auf Angebotsbezogene Daten.
+ */
 public class OfferController {
 
 	/**
@@ -62,13 +63,18 @@ public class OfferController {
 	private static OfferController offcontr;
 
 	/**
-	 * Attribut dbc ist eine DatabaseController Instanz und wird fuer den
+	 * Attribut db ist eine DatabaseController Instanz und wird fuer den
 	 * Datenbankzugang benoetigt.
 	 */
 	private DatabaseController db;
-
+	/**
+	 * Instanz der Mailer-Klasse.
+	 */
 	private Mailer mail;
 
+	/**
+	 * Name der Tabelle
+	 */
 	final static String tableName = "Angebote";// tabellenname
 
 	/**
@@ -78,7 +84,7 @@ public class OfferController {
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
 	 *            Attributen.
-	 * @return
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean createOffer(Offer offer) {
 
@@ -107,7 +113,7 @@ public class OfferController {
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen noetigen
 	 *            Attributen. Uebergebene Instanz wird komplett vom System
 	 *            entfernt.
-	 * @return
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteOffer(Offer offer) {
 
@@ -152,6 +158,7 @@ public class OfferController {
 	 * @param offer
 	 *            Parameter "offer" ist ein Offer-Objekt mit allen
 	 *            dazugehoerigen Attributen.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateOffer(Offer offer) {
 		// Hier ist die Mail benachrichtigung:
@@ -275,11 +282,6 @@ public class OfferController {
 	 * Diese Methode sammelt alle ueberprueften Jobangebote aus der Datenbank
 	 * und speichert diese in einem Vector.
 	 * 
-	 * @param offer
-	 *            Parameter "offer" ist ein Offer-Objekt mit allen
-	 *            dazugehoerigen Attributen. (enthaelt boolean "checked"
-	 *            Variable, die angibt, ob ein Jobangebot schon ueberprueft
-	 *            wurde)
 	 * @return Alle Jobangebote in der Datenbank, die dem Wert von "checked"
 	 *         entsprechen werden in Form eines Vectors zurueckgegeben.
 	 */
@@ -341,12 +343,11 @@ public class OfferController {
 
 	/**
 	 * Diese Methode sammelt alle nicht abgeschlossenen Jobangebote, fuer die
-	 * Sich ein Bewerber beworben hat, aus der Datenbank und speichert diese in
+	 * sich ein Bewerber beworben hat, aus der Datenbank und speichert diese in
 	 * einem Vector.
 	 * 
-	 * @param applications
-	 *            Parameter "applications" ist ein Vector aus
-	 *            Application-Objekten (Bewerbungen) von einem Bewerber
+	 * @param username
+	 *            Bewerber von die Bewerbungen gesucht werden
 	 * @return Es wird ein Vector mit allen nicht abgeschlossenen Jobangeboten
 	 *         zurueckgegeben, auf die sich ein Bewerber beworben hat.
 	 */
@@ -416,13 +417,13 @@ public class OfferController {
 	}
 
 	/**
-	 * Liest alle zugehoerigen Angebote eines Clerk accounts aus der DB. Ist der
-	 * Clerk dem Institut 0 Default zugeordnet, werden ALLE ungeprueften
+	 * Liest alle zugehoerigen Angebote eines Clerk-Accounts aus der DB. Ist der
+	 * Clerk dem Institut 0 (default) zugeordnet, werden ALLE ungeprueften
 	 * Angebote unabhaengig des Instituts ausgelesen.
 	 * 
 	 * @param account
 	 *            Der account wessen angebote gelesen werden sollen. Ist
-	 *            accounttyp != 3 (Clerk) wird null zurueckgeben!
+	 *            accounttyp != 3 (also kein Clerk) wird null zurueckgeben!
 	 * @return Alle ungeprueften Angebote des entsprechenden Instituts.
 	 */
 	// DONE: Institut = 0 universal already implemented!
@@ -478,7 +479,7 @@ public class OfferController {
 	 * Liest alle zugehoerigen Angebote eines Institutes aus der DB.
 	 * 
 	 * @param institut
-	 *            nummer des Instituts
+	 *            Nummer des Instituts
 	 * @return Alle ungeprueften Angebote des entsprechenden Instituts.
 	 */
 	public Vector<Offer> getUncheckedOffersByInstitute(int institute) {
@@ -506,8 +507,10 @@ public class OfferController {
 	}
 
 	/**
-	 * Generate a new ID.
+	 * Eine neue Id wird generiert
 	 * 
+	 * @param tablename
+	 *            Name der Tabelle
 	 * @return generated ID
 	 */
 	public int getNewOffID(String tablename) {
@@ -541,17 +544,17 @@ public class OfferController {
 	}
 
 	/**
-	 * Return the free slots of an offer
+	 * Gibt die Gesamtzahl der Stellen eines Angebots zur�ck.
 	 * 
 	 * @param aid
-	 *            aid of the offer
-	 * @return free slots of the offer
+	 *            Aid des Angebots
+	 * @return Gesamtzahl der Stellen des Angebots
 	 */
-	public int getFreeSlotsOfOffer(int aid) {
+	public int getTotalSlotsOfOffer(int aid) {
 
-		int number = 0;
+		int total = 0;
 		Offer off = getOfferById(aid);
-		int total = off.getSlots();
+		int free = off.getSlots();
 		int taken = 0;
 		Vector<Application> apps = ApplicationController.getInstance()
 				.getApplicationsByOffer(aid);
@@ -561,19 +564,19 @@ public class OfferController {
 			}
 		}
 
-		number = total - taken;
+		total = free + taken;
 
-		return number;
+		return total;
 	}
 
 	/**
-	 * Generate a random number.
+	 * Genrierung einer Zufallszahl.
 	 * 
 	 * @param aStart
-	 *            Start of the number.
+	 *            Start der Zahl.
 	 * @param aEnd
-	 *            End of the number.
-	 * @return generated number.
+	 *            Ende der Zahl.
+	 * @return generierte Zahl.
 	 */
 	private int generateRandomNr(int aStart, int aEnd) {
 		Random random = new Random();
@@ -586,13 +589,11 @@ public class OfferController {
 	}
 
 	/**
-	 * Liest alle Angebote von einem Institut aus. <<<<<<< HEAD
+	 * Liest alle Angebote von einem Institut aus.
 	 * 
 	 * @param iid
-	 *            Die ID des Institutes. =======
+	 *            Die ID des Institutes.
 	 * 
-	 * @param iid
-	 *            >>>>>>> 4b52ec60eab4aa7e7dfd2c4b67ec5a748c4833e5
 	 * @return Alle Angebote die zu einem Institut gehoeren.
 	 */
 	public Vector<Offer> getOffersByInstitute(int iid) {

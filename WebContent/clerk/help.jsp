@@ -20,9 +20,17 @@
 		</h1>
 	</div>
 	<div class="right">
-		<div class="angemeldet">
-			Sie sind als Sachbearbeiter angemeldet. <br>
-			<input type="submit" value="Logout" onclick="doLogout();"/>
+		<div class="commentform">
+				<h3>Abmeldung</h3>
+				<form name="abmeldung">
+					<p>
+						<label for="logout">Sie sind als Sachbearbeiter angemeldet.</label>
+					</p>
+					<br>
+					<p>
+			<input type="submit" value="Abmelden" onclick="doLogout();"/>
+			</p>
+			</form>
 		</div>
 		<div class="nav">
 			<h3>Navigation</h3>

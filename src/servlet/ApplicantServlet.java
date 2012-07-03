@@ -2,6 +2,7 @@
  * @author Laura Irlinger
  * @author Tamino Hartmann
  * @author Oemer Sahin
+ * @author Patryk Boczon
  */
 package servlet;
 
@@ -35,9 +36,9 @@ public class ApplicantServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
-	 * log
+	 * Variable zum speichern der Log Instanz.
 	 */
-	private Log log = Helper.log;
+	private Log log; 
 
 	/**
 	 * Variable zum speichern der GSON Instanz.
@@ -45,10 +46,13 @@ public class ApplicantServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor.
+	 * Konstruktor. Hier werden die wichtigen Referenzen
+	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
+	 * um die Initialisierung ersichtlich zu machen.
 	 **/
 	public ApplicantServlet() {
 		super();
+		log = Helper.log;
 		gson = new Gson();
 		// offcon = OfferController.getInstance();
 	}

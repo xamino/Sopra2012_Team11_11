@@ -1,5 +1,5 @@
 /**
-*	Package für den ConfigurationsManager
+*	Package fuer den ConfigurationsManager
 **/
 
 package config;

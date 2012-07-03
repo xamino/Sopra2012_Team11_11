@@ -1,5 +1,6 @@
 /**
  * @author Tamino Hartmann
+ * @author Laura Irlinger
  */
 package servlet;
 
@@ -164,6 +165,8 @@ public final class Helper {
 	 * 
 	 * @param session
 	 *            Die session zum ueberpruefen.
+	 * @param c
+	 * 			user-class
 	 * @return Das User Object wenn korrekt, sonst null.
 	 */
 	@SuppressWarnings("unchecked")

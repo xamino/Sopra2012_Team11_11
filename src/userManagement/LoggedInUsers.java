@@ -1,3 +1,6 @@
+/**
+ * @author Manuel Guentzel
+ */
 package userManagement;
 
 import java.util.HashMap;
@@ -11,17 +14,17 @@ import user.User;
 import file.FileController;
 
 /**
- * Verwaltet alle eingelogten User.
+ * Verwaltet alle eingeloggten User.
  */
 public abstract class LoggedInUsers {
 
 	/**
-	 * Statische Variable für den Logger
+	 * Statische Variable fuer den Logger
 	 */
 	private static Log log = Log.getInstance();
 
 	/**
-	 * Hashmap mit der eingeloggten session IDs mit zugehörigem User Objekt
+	 * Hashmap mit der eingeloggten session IDs mit zugehoerigem User Objekt
 	 */
 	private static HashMap<String, User> userMap = new HashMap<String, User>();
 	
@@ -45,8 +48,6 @@ public abstract class LoggedInUsers {
 	 * 
 	 * @param u
 	 *            hinzuzufuegender User
-	 * 
-	 * 
 	 */
 	static public void addUser(User u) {
 		User tempuserbyname = getUserByUsername(u.getUserData().getUsername());
@@ -86,7 +87,7 @@ public abstract class LoggedInUsers {
 	}
 
 	/**
-	 * Gibt ein User-Objekt mit dem übergebenen Namen zurueck.
+	 * Gibt ein User-Objekt mit dem Uebergebenen Namen zurueck.
 	 * 
 	 * @param username
 	 *            zu suchender Benutzername
@@ -104,7 +105,7 @@ public abstract class LoggedInUsers {
 	}
 
 	/**
-	 * Gibt ein User-Objekt mit der übergebenen Session zurueck
+	 * Gibt ein User-Objekt mit der Uebergebenen Session zurueck.
 	 * 
 	 * @param session
 	 *            zu suchende Session

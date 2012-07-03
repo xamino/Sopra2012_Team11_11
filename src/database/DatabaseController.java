@@ -1,6 +1,7 @@
 /**
- * @author Manuel Güntzel
+ * @author Manuel Guentzel
  * @author Tamino Hartmann
+ * @author Patryk Boczon
  */
 
 // TODO: Is sql.date format handled correctly throughout?
@@ -164,10 +165,9 @@ public class DatabaseController {
 	 * Methode welche ein SQL "delete" Statement ausfuehrt.
 	 * 
 	 * @param table
-	 * 
-	 *            Tabelle von der geloescht werden soll.
+	 *            Tabelle aus der ein Eintrag bzw. mehrere Eintraege geloescht werden soll.
 	 * @param where
-	 *            Where Bedingung.
+	 *            'WHERE' Bedingung.
 	 * @return boolean Bei TRUE erfolgreich ausgefuehrt. Sonst FALSE.
 	 */
 	synchronized public boolean delete(String table, String where) {
@@ -221,9 +221,9 @@ public class DatabaseController {
 	 * erfuellen
 	 * 
 	 * @param from
-	 *            Tabellen die in die Suche miteinbezogen werden sollen
+	 *            Tabellen, die in die Suche miteinbezogen werden sollen
 	 * @param where
-	 *            zu erfuellende Bedinung
+	 *            Zu erfuellende Bedingung
 	 * @return Anzahl der Zeilen
 	 */
 	synchronized public int count(String[] from, String where) {
@@ -254,7 +254,7 @@ public class DatabaseController {
 	 * @param from
 	 *            Namen der Tabellen.
 	 * @param where
-	 *            Zusaetzliche Bedingung. Wird keine benoetigt wird kann
+	 *            Zusaetzliche Bedingung. Wird keine benoetigt, kann
 	 *            <code>null</code> gesetzt werden.
 	 * @return Gibt ein <code>ResultSet</code> mit den Antworddaten zurueck.
 	 */
@@ -387,12 +387,18 @@ public class DatabaseController {
 		return ret;
 	}
 
+	
 	/**
-	 * Funktion die falls noetig eine Standardkonfiguration erstellt. Hierbei
-	 * wird falls noetig der .sopra Ordner fuer die Konfigurationsdateien und
-	 * die confconf und config dateien erstellt.
+	 *
+	 *Funktion liefert Daten von Bewerbungen, die vom Anbieter ausgewaehlt,
+	 *aber noch nicht abgeschlossen sind.
+	 *
+	 *@param institute
+	 *			Institut des Clerks
+	 *@return
+	 *			ein Vector vom Typ HilfsDatenClerk, der die fuer den Clerk noetigen Informationen
+	 *			einer Bewerbung enthaelt
 	 */
-
 	public Vector<HilfsDatenClerk> getChosenApplicationDataByInstitute(
 			int institute) {
 		// Sicherheitsüberprüfung:
@@ -540,7 +546,7 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Funktion die falls kein Admin Account vorhanden ist einen erstellt.
+	 * Funktion, die falls kein Admin Account vorhanden, ist einen erstellt.
 	 */
 	public void generateAdminAccount() {
 		ResultSet rs = select(new String[] { "count(accounttyp)" },
@@ -567,7 +573,7 @@ public class DatabaseController {
 	}
 
 	/**
-	 * Funktion die falls nicht vorhanden das default Institut erstellt.
+	 * Funktion die, falls nicht vorhanden, das default Institut erstellt.
 	 */
 	public void generateDefaultInstitute() {
 		ResultSet rs = select(new String[] { "iid" },

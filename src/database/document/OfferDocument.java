@@ -1,9 +1,13 @@
+/**
+ * 
+ * @author Guentzel
+ * 
+ */
 package database.document;
 
 /**
  * Klasse fuer Standarddokumente fuer Angebote.
  * 
- * @author Guentzel
  * 
  */
 public class OfferDocument {
@@ -18,8 +22,10 @@ public class OfferDocument {
 	private int documentID;
 	/**
 	 * StandardKonstruktor
-	 * @param offerID AngebotsID
-	 * @param documentID UnterlagenID
+	 * @param offerID 
+	 * 			AngebotsID
+	 * @param documentID 
+	 * 			UnterlagenID
 	 */
 	public OfferDocument(int offerID, int documentID) {
 		super();
@@ -35,7 +41,8 @@ public class OfferDocument {
 	}
 	/**
 	 * Setzt die AngebotsID
-	 * @param offerID AngebotsID
+	 * @param offerID 
+	 * 			AngebotsID
 	 */
 	public void setOfferID(int offerID) {
 		this.offerID = offerID;
@@ -49,11 +56,10 @@ public class OfferDocument {
 	}
 	/**
 	 *  Setzt die UnterlagenID
-	 * @param documentID UnterlagenID
+	 * @param documentID 
+	 * 			UnterlagenID
 	 */
 	public void setDocumentid(int documentID) {
 		this.documentID = documentID;
 	}
-
-	
 }

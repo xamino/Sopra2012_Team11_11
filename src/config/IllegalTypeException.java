@@ -6,7 +6,7 @@ package config;
  */
 /**
  * 
- * Exception Klasse fuer Fehlerhaften zugriff auf eine Optrion
+ * Exception Klasse fuer fehlerhaften Zugriff auf eine Option
  *
  */
 @SuppressWarnings("serial")
@@ -20,7 +20,8 @@ public class IllegalTypeException extends Exception {
 	}
 	/**
 	 * Konstruktor mit Moeglichkeit der Stringuebergabe
-	 * @param s String mit zusaetzlichen Informationen
+	 * @param s 
+	 * 			String mit zusaetzlichen Informationen
 	 */
 	public IllegalTypeException(String s){
 		super(s);

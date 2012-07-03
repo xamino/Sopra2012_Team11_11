@@ -2,6 +2,7 @@
  * @author Tamino Hartmann
  * @author Laura Irlinger
  * @author Oemer Sahin
+ * @author Patryk Boczon
  */
 package servlet;
 
@@ -33,9 +34,9 @@ import database.offer.Offer;
 @WebServlet("/Provider/*")
 public class ProviderServlet extends HttpServlet {
 	/**
-	 * Log instanz für Serverausgaben
+	 * Variable zum speichern der Log Instanz.
 	 */
-	private Log log = Helper.log;
+	private Log log; 
 	/**
 	 * Standard serialVersionUID.
 	 */
@@ -47,10 +48,13 @@ public class ProviderServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor.
+	 * Konstruktor. Hier werden die wichtigen Referenzen
+	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
+	 * um die Initialisierung ersichtlich zu machen.
 	 */
 	public ProviderServlet() {
 		super();
+		log = Helper.log;
 		gson = new Gson();
 	}
 
@@ -152,6 +156,21 @@ public class ProviderServlet extends HttpServlet {
 			response.setContentType("showtheapplicants/json");
 			response.getWriter().write(provider.getApplicants(aid));
 
+		}
+		// Gets the free and total slots of an offer (as String)
+		else if(path.equals("/js/getTotalSlots")){
+			int aid = -1;
+			try {
+				aid = Integer.parseInt(request.getParameter("aid"));
+			} catch (NumberFormatException e) {
+				response.setContentType("text/error");
+				response.getWriter().write("Fehler beim parsen der AID!");
+				return;
+			}
+			response.setContentType("showfreeandtotalslots/json");
+			String slots = provider.getFreeSlotsOufOfTotal(aid);
+			System.out.println(slots);
+			response.getWriter().write(slots);
 		}
 		// Creating a new Offer
 		else if (path.equals("/js/addOffer")) {
