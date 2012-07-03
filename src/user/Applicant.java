@@ -203,5 +203,4 @@ public class Applicant extends User {
 			return null;
 		}
 	}
-
 }

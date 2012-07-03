@@ -53,31 +53,28 @@ function handleLoadOffersResponse(mime, data) {
 					+ obj.description
 					+ "</div><div class=\"float\"><input type=\"button\" value=\"Bewerben\"	onclick=\"prepareApply('"
 					+ obj.aid
-					+ "')\" /> <input id=\"mailTo"
-					+ obj.author
-					+ "\" type=\"button\" value=\"Anbieter kontaktieren\" onclick=\"\" />"
+					+ "')\" /> <input type=\"button\" value=\"Anbieter kontaktieren\" onclick=\"mailTo('"
+					+ obj.author + "','" + obj.name + "')\" />"
 					+ "</div><div class=\"clear\"></div></td></tr>";
-			// Voodoo um email button hinzubekommen:
-			// Dieser mist ist von Tamino, unter lebensgefahr ändern!
-			connect(
-					"/hiwi/Applicant/js/getEmail",
-					"user=" + obj.author,
-					function(mime, data) {
-						if (mime == "text/url") {
-							window.location = data;
-						} else if (mime == "text/email") {
-							document
-									.getElementById("mailTo" + obj.author)
-									.setAttribute(
-											"onclick",
-											"clickMail('"
-													+ data
-													+ "','[Hiwi-Börse:Angebot] "
-													+ obj.name + "')");
-						}
-					});
 		}
 	}
+}
+
+/**
+ * Erlaubt es, email an anbieter zu schreiben.
+ * 
+ * @param username
+ */
+function mailTo(username, offername) {
+	connect("/hiwi/Applicant/js/getEmail", "user=" + username, function(mime,
+			data) {
+		if (mime == "text/url")
+			window.location = data;
+		else if (mime == "text/error")
+			alert(data);
+		else if (mime == "text/email")
+			clickMail(data, "[Hiwi-Börse:Angebot] " + offername);
+	});
 }
 
 /**
