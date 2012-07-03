@@ -152,7 +152,7 @@ CREATE TABLE `Standardangebot` (
 --  Records of `Standardangebot`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Standardangebot` VALUES ('40', 'todo', 'todo', '370.54');
+INSERT INTO `Standardangebot` VALUES ('40', '2012-10-22', '2013-4-23', '7.60');
 COMMIT;
 
 -- ----------------------------
