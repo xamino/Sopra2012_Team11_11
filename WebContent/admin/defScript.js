@@ -84,7 +84,7 @@ function checkVal() {
 		error = true;
 	} else{
 		toggleWarning("error_wage", false, "");
-		wage=wage.replace(",",".");
+		wage = wage.replace(",",".");
 	}
 	if (error)
 		return;
