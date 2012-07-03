@@ -62,7 +62,7 @@ public class Clerk extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account
-	 * @return Wahrheitswert ob erfolgreich.            
+	 * @return Wahrheitswert ob erfolgreich.
 	 */
 	public boolean editAccount(Account acc) {
 		if (!acccon.updateAccount(acc)) {
@@ -289,8 +289,10 @@ public class Clerk extends User {
 		Vector<Object> customDocs = new Vector<Object>(docs.size() * 2);
 		for (int i = 0; i < docs.size(); i++) {
 			docs2.add(doccon.getDocumentByUID(docs.elementAt(i).getdID()));
-			System.out.println(docs.elementAt(i).getUsername());
-			System.out.println(docs2.elementAt(i).getName());
+			// Verflixt und zugenäht aber auch, hört auf sys.outs unkommentiert
+			// in den commits zu pushen!!!
+			// System.out.println(docs.elementAt(i).getUsername());
+			// System.out.println(docs2.elementAt(i).getName());
 			customDocs.add(docs2.elementAt(i));
 			customDocs.add(docs.elementAt(i));
 		}

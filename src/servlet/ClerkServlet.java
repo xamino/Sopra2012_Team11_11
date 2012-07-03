@@ -281,7 +281,7 @@ public class ClerkServlet extends HttpServlet {
 			}
 			String user = request.getParameter("User");
 			if (!validate(user) || aid == -1) {
-				System.out.println("Fehler in den Parametern!");
+				// System.out.println("Fehler in den Parametern!");
 				response.setContentType("text/error");
 				response.getWriter().write("Fehler in den Parametern!");
 				return;
