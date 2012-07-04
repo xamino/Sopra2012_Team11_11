@@ -108,6 +108,11 @@
 					  Falls kein Stellvertreter angegeben ist, muss ein Admin manuell einen Verwalter in das entsprechende Institut eintragen.
 					  </div><br>
 					  <br>
+					  <strong>Normwerte der Angebote</strong>
+					  Hier kann man für die Anzahl der Stunden, das Start- und das Enddatum und den Lohn Standardwerte eintragen. 
+					  Gespeichert werden Änderungen durch einen Klick auf den Werte speichern - Button.
+					  Die eingetragenen Werte werden dann dem Anbieter als Standard angezeigt.<br>
+					  <br>
 					</div>
 				</div>
 			</div>
