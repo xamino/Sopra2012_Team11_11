@@ -89,12 +89,6 @@ a.hintlink {
 	/* unbedingt stehen lassen, erm�glicht automatische h�he =) */
 }
 
-/* Animated logo thingy. No touch! Tamino.*/
-.logo2nd {
-	width: 100%;
-	height: 100%;
-}
-
 .header {
 	background-color: rgb(137, 162, 179);
 	clear: left;

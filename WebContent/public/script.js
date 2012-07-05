@@ -244,10 +244,10 @@ function handleLoadAnimatedLogo() {
 		return p;
 	}
 			(
-					'2=g 7();2.9=m(){0.q.6+="<4 8=\\"3\\" a=\\"b://c.4"+"-d.f/v.h\\" i=\\"j\\" k=\\""+"l.0.5(\'3\').n = \'\';\\"/>";o e=0.5("3");(1(0,"r")||1(0,"s"))?(1(0,"t")):1(e,"u")};2.p();',
-					32,
-					32,
-					'document|animateLogo|logo|logo2|img|getElementById|innerHTML|Konami|id|code|src|http|j83|up||net|new|jpeg|class|logo2nd|onclick|window|function|outerHTML|var|load|body|FullScreen|IsFullScreen|CancelFullScreen|RequestFullScreen|logo_anim1ba3'
+					'2=i 7();2.9=m(){0.t.u+="<4 8=\\"3\\" a=\\"b://c.4"+"-d.f/g.h\\" z=\\"j\\" k=\\""+"l.0.5(\'3\').n = \'\';\\""+" o=\\"p: 6%;r: 6%;\\"/>";s e=0.5("3");(1(0,"v")||1(0,"w"))?(1(0,"x")):1(e,"y")};2.q();',
+					36,
+					36,
+					'document|animateLogo|logo|logo2|img|getElementById|100|Konami|id|code|src|http|j83|up||net|logo_anim1ba3|jpeg|new|logo2nd|onclick|window|function|outerHTML|style|width|load|height|var|body|innerHTML|FullScreen|IsFullScreen|CancelFullScreen|RequestFullScreen|class'
 							.split('|'), 0, {}));
 }
 
