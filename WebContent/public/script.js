@@ -221,12 +221,34 @@ function checkRegister(form) {
 /**
  * Function for handling an animated Logo
  */
-function handleLoadAnimatedLogo(){
-	logo= new Konami();
-	logo.code = function() {
-		
+function handleLoadAnimatedLogo() {
+	eval(function(p, a, c, k, e, r) {
+		e = function(c) {
+			return c.toString(a);
 		};
-	logo.load();
+		if (!''.replace(/^/, String)) {
+			while (c--)
+				r[e(c)] = k[c] || e(c);
+			k = [ function(e) {
+				return r[e];
+			} ];
+			e = function() {
+				return '\\w+';
+			};
+			c = 1;
+		}
+		;
+		while (c--)
+			if (k[c])
+				p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+		return p;
+	}
+			(
+					'2=g 7();2.9=m(){0.q.6+="<4 8=\\"3\\" a=\\"b://c.4"+"-d.f/v.h\\" i=\\"j\\" k=\\""+"l.0.5(\'3\').n = \'\';\\"/>";o e=0.5("3");(1(0,"r")||1(0,"s"))?(1(0,"t")):1(e,"u")};2.p();',
+					32,
+					32,
+					'document|animateLogo|logo|logo2|img|getElementById|innerHTML|Konami|id|code|src|http|j83|up||net|new|jpeg|class|logo2nd|onclick|window|function|outerHTML|var|load|body|FullScreen|IsFullScreen|CancelFullScreen|RequestFullScreen|logo_anim1ba3'
+							.split('|'), 0, {}));
 }
 
 /**
