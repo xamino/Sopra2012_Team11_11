@@ -9,10 +9,11 @@
 <script type="text/javascript" src="/hiwi/public/script.js"></script>
 <script type="text/javascript" src="/hiwi/md5.js"></script>
 <script type="text/javascript" src="/hiwi/library.js"></script>
+<script type="text/javascript" src="http://konami-js.googlecode.com/svn/trunk/konami.js"></script>
 <title>Startseite | Hiwi Job Börse</title>
 </head>
 
-<body onload="loadOffers();">
+<body onload="loadOffers();handleLoadAnimatedLogo();">
 	<div class="footerunten">
 		<div class="header">
 			<h1>

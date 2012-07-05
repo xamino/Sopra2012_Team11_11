@@ -218,6 +218,16 @@ function checkRegister(form) {
 					+ userName + "&userPassword=" + password_1,
 			handleRegisterResponse);
 }
+/**
+ * Function for handling an animated Logo
+ */
+function handleLoadAnimatedLogo(){
+	logo= new Konami();
+	logo.code = function() {
+		
+		};
+	logo.load();
+}
 
 /**
  * Function for handling the server response.
