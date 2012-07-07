@@ -156,7 +156,7 @@ public class ProviderServlet extends HttpServlet {
 			}
 			response.setContentType("showtheapplicants/json");
 			response.getWriter().write(provider.getApplicants(aid));
-
+			return;
 		}
 		// Gets the free and total slots of an offer (as String)
 		else if (path.equals("/js/getTotalSlots")) {
@@ -169,9 +169,8 @@ public class ProviderServlet extends HttpServlet {
 				return;
 			}
 			response.setContentType("showfreeandtotalslots/json");
-			String slots = provider.getFreeSlotsOufOfTotal(aid);
-			System.out.println(slots);
-			response.getWriter().write(slots);
+			response.getWriter().write(provider.getFreeSlotsOufOfTotal(aid));
+			return;
 		}
 		// Creating a new Offer
 		else if (path.equals("/js/addOffer")) {

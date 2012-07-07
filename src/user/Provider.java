@@ -52,7 +52,7 @@ public class Provider extends User {
 	 * 
 	 * @param acc
 	 *            geaenderter Account
-	 * @return Gibt an, ob die Operation erfolgreich war.         
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean editAccount(Account acc) {
 		if (!acccon.updateAccount(acc)) {
@@ -63,37 +63,6 @@ public class Provider extends User {
 				+ "> modified account of <" + acc.getUsername() + ">.");
 		return true;
 	}
-
-	// /**
-	// * Methode zum annehmen eines Bewerbers.
-	// *
-	// * @param AID
-	// * ID der Bewerbung
-	// * @throws SQLException
-	// */
-	// public void acceptApplication(int AID) throws SQLException {
-	// Application app = appcon.getApplicationById(AID);
-	// app.setChosen(true);
-	// appcon.updateApplication(app);
-	// }
-
-	// /**
-	// * Loescht ein Angebot aus dem System.
-	// */
-	// public void deleteOffer(Offer offer) {
-	// offcon.deleteOffer(offer);
-	//
-	// }
-
-	// /**
-	// * Erstellt ein neues, noch zu pruefendes Angebot im System.
-	// */
-	// public void createOffer(int pId, String pAuthor, String pName,
-	// String pNote, boolean pChecked, int pSlots, double pHours,
-	// String pDescription, Date pStartDate, Date pEndDate, double pWage,
-	// int pInstitute, Date pModificationdate) {
-	//
-	// }
 
 	/**
 	 * Methode zum Loeschen seines Accounts
@@ -161,12 +130,20 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Laedt alle Angebote des Anbieters aus der Datenbank.
+	 * Laedt alle Angebote des Anbieters aus der Datenbank. Ist ein
+	 * Stellvertreter angegeben, so werden dessen Angebote auch ausgelesen.
 	 * 
 	 * @return Ein Vektor mit den Angeboten.
 	 */
 	public Vector<Offer> getOwnOffers() {
-		return offcon.getOffersByProvider(getUserData().getUsername());
+		Vector<Offer> offers = offcon.getOffersByProvider(getUserData()
+				.getUsername());
+		Account rep = acccon.getRepresentativeAccount(getUserData()
+				.getUsername());
+		if (rep != null) {
+			offers.addAll(offcon.getOffersByProvider(rep.getUsername()));
+		}
+		return offers;
 	}
 
 	/**
@@ -202,31 +179,33 @@ public class Provider extends User {
 	 */
 	public String getApplicants(int aid) {
 		Vector<Application> apps = appcon.getApplicationsByOffer(aid);
-		Vector<HilfsDatenProvider> vec = new Vector<HilfsDatenProvider>(apps.size());
+		Vector<HilfsDatenProvider> vec = new Vector<HilfsDatenProvider>(
+				apps.size());
 		String name, username, email, angenommen;
 		for (int i = 0; i < apps.size(); i++) {
 			username = apps.elementAt(i).getUsername();
 			name = acccon.getAccountByUsername(username).getName();
 			email = acccon.getAccountByUsername(username).getEmail();
-			if(apps.elementAt(i).isChosen()){
+			if (apps.elementAt(i).isChosen()) {
 				angenommen = "angenommen";
 			} else {
 				angenommen = "nicht angenommen";
 			}
-			HilfsDatenProvider temp = new HilfsDatenProvider(name,username,email,angenommen);	
+			HilfsDatenProvider temp = new HilfsDatenProvider(name, username,
+					email, angenommen);
 			vec.add(temp);
 		}
 
 		return new Gson().toJson(vec, vec.getClass());
 	}
 
-	public String getFreeSlotsOufOfTotal(int aid){
+	public String getFreeSlotsOufOfTotal(int aid) {
 		int free = offcon.getOfferById(aid).getSlots();
 		int total = offcon.getTotalSlotsOfOffer(aid);
-		
-		return free+"/"+total+" freie Stellen";
+
+		return free + "/" + total + " freie Stellen";
 	}
-	
+
 	/**
 	 * Erstellt ein neues zu pruefendes Angebot.
 	 * 
@@ -297,8 +276,13 @@ public class Provider extends User {
 	 */
 	public Offer getOffer(int aid) {
 		Offer off = offcon.getOfferById(aid);
-		// Sichergehen dass das Angebot von diesem Provider stammt:
-		if (off.getAuthor().equals(getUserData().getUsername()))
+		// Sichergehen dass das Angebot von diesem Provider (oder dessen
+		// Stellvertreter) stammt:
+		String offAuthor = off.getAuthor();
+		String userName = getUserData().getUsername();
+		Account rep = acccon.getRepresentativeAccount(userName);
+		if (offAuthor.equals(userName)
+				|| (rep != null && offAuthor.equals(rep.getUsername())))
 			return off;
 		else
 			return null;
