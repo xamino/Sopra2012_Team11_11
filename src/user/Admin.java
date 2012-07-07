@@ -173,7 +173,7 @@ public class Admin extends User {
 	 * Editiert einen Account. Der Benutzername ist dabei nicht aenderbar und
 	 * identifiziert den zu aendernden Account in der Datenbank.
 	 * 
-	 * @param acc
+	 * @param account
 	 *            geaenderter Account.
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */

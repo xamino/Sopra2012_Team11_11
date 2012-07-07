@@ -103,9 +103,9 @@ public class Offer {
 	 *            Die Anzahl der Stunden pro Woche des Angebots.
 	 * @param description
 	 * 		Die Beschreibung zum Angebot.
-	 * @param startdate
+	 * @param startDate
 	 * 		Der Beginn des Angebots.
-	 * @param enddate
+	 * @param endDate
 	 * 		Das Ende des Angebots.
 	 * @param wage
 	 *            Der Gehalt pro Stunde des Angebots.

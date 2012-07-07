@@ -496,7 +496,7 @@ public class OfferController {
 	/**
 	 * Liest alle zugehoerigen Angebote eines Institutes aus der DB.
 	 * 
-	 * @param institut
+	 * @param institute
 	 *            Nummer des Instituts
 	 * @return Alle ungeprueften Angebote des entsprechenden Instituts.
 	 */

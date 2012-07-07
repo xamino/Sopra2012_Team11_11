@@ -31,7 +31,7 @@ public class Institute {
 	/**
 	 * Setzt die IID.
 	 * 
-	 * @param IID
+	 * @param iID
 	 *            die zu setzende IID
 	 */
 	public void setIID(int iID) {
