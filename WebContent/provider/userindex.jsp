@@ -51,9 +51,10 @@
 				<div class="textblock">
 					<h2>Startseite</h2>
 					<div class="text">
-						Hier finden Sie Ihre angebotenen Stellen und Informationen hierzu.<br>
-						Des Weiteren können Sie ein neues Angebot erstellen. <br>
-						Hilfe finden Sie <a href="<%=Helper.D_PROVIDER_HELP%>"
+						Hier finden Sie Ihre angebotenen Stellen und Informationen hierzu.
+						Wenn sie Stellvertreter für jemanden sind werden auch dessen
+						Angebote hier aufgelistet. Hier können sie auch ein neues Angebot
+						erstellen. Hilfe finden Sie <a href="<%=Helper.D_PROVIDER_HELP%>"
 							title="Hilfe"> hier</a>.
 					</div>
 				</div>

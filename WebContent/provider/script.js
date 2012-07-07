@@ -60,13 +60,15 @@ function handleLoadOffersResponse(mime, data) {
 		// Get the table:
 		var table = document.getElementById("providerTable");
 		// Write table – probably replaces old data!
-		table.innerHTML = "<tr><th>Meine Stellenangebote:</th><th>Bewerber</th><th>Ändern</th><th>Widerrufen</th><th>Bestätigt?</th></tr>";
+		table.innerHTML = "<tr><th>Stellenangebote:</th><th>Autor:</th><th>Bewerber</th><th>Ändern</th><th>Widerrufen</th><th>Bestätigt?</th></tr>";
 		for ( var i = 0; i < JSONarray.length; i++) {
 			var obj = JSONarray[i];
 			table.innerHTML += "<tr class=\"\" id=\""
 					+ obj.aid
 					+ "\"><td>"
 					+ obj.name
+					+ "</td><td>"
+					+ obj.author
 					+ "</td><td><br><input id=\""
 					+ obj.aid
 					+ "OfferApplicants\" type=\"button\" value=\"Bewerberauswahl\"  onclick=\"prepareButton(\'"
@@ -171,20 +173,21 @@ function handleApplicantChoiceResponse(mime, data) {
 					+ "\" onclick=\"markOfferSelected(\'"
 					+ JSONarray[i].username + "\');\">" + "<td>"
 					+ JSONarray[i].username + "</td><td>" + JSONarray[i].name
-					+ "</td><td>" + JSONarray[i].email + "</td><td>"+JSONarray[i].angenommen+"</td></tr>";
+					+ "</td><td>" + JSONarray[i].email + "</td><td>"
+					+ JSONarray[i].angenommen + "</td></tr>";
 		}
-		
+
 		var aid = getURLParameter("AID");
-		
+
 		connect("/hiwi/Provider/js/getTotalSlots", "aid=" + aid,
 				handleTotalSlotsResponse);
 	}
 }
 
-function handleTotalSlotsResponse(mime, data){
-	if(mime == "showfreeandtotalslots/json"){
+function handleTotalSlotsResponse(mime, data) {
+	if (mime == "showfreeandtotalslots/json") {
 		var headline = document.getElementById("freeslots");
-		headline.innerHTML += " - "+data;
+		headline.innerHTML += " - " + data;
 	}
 }
 
