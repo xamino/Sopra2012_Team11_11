@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import static servlet.Helper.validate;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -44,12 +45,12 @@ public class Secure extends HttpServlet {
 	 */
 	public Secure() {
 		super();
-		this.log = Log.getInstance();
+		this.log = Helper.log;
 	}
 
 	/**
-	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Diese werden normalerweise von
-	 * Javascript ausgeloest.
+	 * Diese Methode handhabt die Abarbeitung von Aufrufen. Diese werden
+	 * normalerweise von Javascript ausgeloest.
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -62,20 +63,27 @@ public class Secure extends HttpServlet {
 		if (path.equals("/js/doLogin")) {
 			String userName = request.getParameter("userName");
 			String userPassword = request.getParameter("userPassword");
-			log.write("Secure", "Checking login: <" + userName + ">:<"
-					+ userPassword + ">");
+			if (!validate(userName) || !validate(userPassword)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Error parsing parameters!");
+				return;
+			}
+			// log.write("Secure", "Checking login: <" + userName + ">:<"+
+			// userPassword + ">");
 			Account acc = AccountController.getInstance().getAccountByUsername(
 					userName);
 			if (acc == null) {
 				response.setContentType("text/plain");
 				response.getWriter().write("false");
-				log.write("Secure", "Login failed: Wrong username or password");
+				// log.write("Secure",
+				// "Login failed: Wrong username or password");
 			} else if (!(userPassword.equals(acc.getPasswordhash()))) {
 				response.setContentType("text/plain");
 				response.getWriter().write("false");
-				log.write("Secure", "Login failed: Wrong username or password");
+				// log.write("Secure",
+				// "Login failed: Wrong username or password");
 			} else {
-				log.write("Secure", "Login successful");
+				// log.write("Secure", "Login successful");
 				HttpSession session = request.getSession();
 				session.setAttribute("userName", new String(userName));
 				session.setMaxInactiveInterval(15 * 60);
@@ -102,16 +110,14 @@ public class Secure extends HttpServlet {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("userPassword");
 			// Check for null or empty (against hacks& errors)
-			if (realName.isEmpty() || email.isEmpty() || userName.isEmpty()
-					|| password.isEmpty()) {
-				System.out.println("Secure: data for register invalid!");
-				response.setContentType("text/plain");
-				response.getWriter().write("false");
+			if (!validate(realName) || !validate(email) || !validate(userName)
+					|| !validate(password)) {
+				response.setContentType("text/error");
+				response.getWriter().write("Error parsing parameters!");
 				return;
 			}
-			log.write("Secure", "Register: " + realName + ", " + email + " as "
-					+ userName + " with " + password + " as password.");
-
+			log.write("Secure", "Registering <" + realName + "> as <"
+					+ userName + ">.");
 			Account acc = AccountController.getInstance().getAccountByUsername(
 					userName);
 			if (acc == null) {
@@ -119,7 +125,8 @@ public class Secure extends HttpServlet {
 						null);
 				if (!AccountController.getInstance().createAccount(acc)) {
 					response.setContentType("text/error");
-					response.getWriter().write("DB error on server on creation of account!");;
+					response.getWriter().write(
+							"DB error on server on creation of account!");
 					return;
 				}
 				log.write("Secure", "Registration successful.");
@@ -133,8 +140,7 @@ public class Secure extends HttpServlet {
 			} else {
 				response.setContentType("text/plain");
 				response.getWriter().write("used");
-				log.write("Secure",
-						"Registration failed! Username already used!");
+				// log.write("Secure","Registration failed! Username already used!");
 			}
 			return;
 		}

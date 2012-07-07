@@ -8,7 +8,7 @@
  */
 function loadAccount() {
 	connect("/hiwi/Provider/js/loadAccount", "", handleLoadAccountResponse);
-	
+
 }
 
 /**
@@ -33,50 +33,49 @@ function handleLoadAccountResponse(mime, data) {
 		var JSONdata = eval("(" + data + ")");
 		// Filling email and username inputs with old data
 		document.getElementById("newemail").value = JSONdata.email;
-		document.getElementById("realName").value =JSONdata.realName;
-		
+		document.getElementById("realName").value = JSONdata.realName;
+
 		currentrepresentative = JSONdata.rep;
 
 		// Clearing both password inputs
 		document.getElementById("newpasswort").value = "";
 		document.getElementById("newpasswortwdh").value = "";
-		
-		connect("/hiwi/Provider/js/loadRepresentatives", "", handleLoadRepresentativesResponse);
+
+		connect("/hiwi/Provider/js/loadRepresentatives", "",
+				handleLoadRepresentativesResponse);
 	}
 }
 
-
 /**
- * This function displays the account's potential representatives in the drow down menu.
+ * This function displays the account's potential representatives in the drow
+ * down menu.
  * 
  * @param mime
  *            The MIME type of the data.
  * @param data
  *            The data.
  */
-function handleLoadRepresentativesResponse(mime, data){
-	
+function handleLoadRepresentativesResponse(mime, data) {
+
 	var repr = eval("(" + data + ")");
 
 	if (mime == "text/url") {
 		window.location = data;
-	} 
-	else if (mime == "application/json") {
+	} else if (mime == "application/json") {
 		var select = document.getElementById("selectStellvertreter");
 		select.innerHTML = "<option value=\"keinen\"> keinen </option>";
 		for ( var i = 0; i < repr.length; i++) {
-			if(currentrepresentative == repr[i]){
-				select.innerHTML += "<option value=\"" + repr[i] + "\" selected = \"selected\">"
-				+ repr[i] + "</option>";
-			}else{
+			if (currentrepresentative == repr[i]) {
+				select.innerHTML += "<option value=\"" + repr[i]
+						+ "\" selected = \"selected\">" + repr[i] + "</option>";
+			} else {
 				select.innerHTML += "<option value=\"" + repr[i] + "\">"
-				+ repr[i] + "</option>";
+						+ repr[i] + "</option>";
 			}
-			
+
 		}
 	}
 }
-
 
 /**
  * Sends request to delete own account.
@@ -106,9 +105,11 @@ function check() {
 	// Hier die Werte auslesen:
 	var pw = document.getElementById("newpasswort").value;
 	var pww = document.getElementById("newpasswortwdh").value;
-	
-	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
-		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+
+	if ((pw == "" || pw == null && pww == "" || pww == null)
+			&& (!document.getElementById("dataconfirm").checked)) {
+		// alert("Die Passwortfelder sind leer. Ihr altes Passwort wird
+		// beibehalten!");
 	}
 	if ((pw != null && pw != "") || (pww != null && pww != "")) {
 		// Passwort soll geändert werden, also schauen ob sie gleich sind:
@@ -130,29 +131,29 @@ function check() {
 	if (document.getElementById("dataconfirm").checked) {
 		togglePopup("data_acc_del", true);
 
-	}else if(pw==pww){
+	} else if (pw == pww) {
 		changeAccount();
 	}
 
 }
 
-function changeAccount(){
+function changeAccount() {
 	var form = datenAendern;
 	var error = false;
 	var realName = form.realName.value;
 	if (realName == null || realName == "") {
 		toggleWarning("error_realName", true, "Bitte ausfüllen!");
 		error = true;
-	} else if(!checkText(realName)){
+	} else if (!checkText(realName)) {
 		toggleWarning("error_realName", true, "Unerlaubtes Sonderzeichen!");
 		error = true;
-	}else
+	} else
 		toggleWarning("error_realName", false, "");
 	var email = form.newemail.value;
 	if (email == null || email == "") {
 		toggleWarning("error_email", true, "Bitte ausfüllen!");
 		error = true;
-	}else if(!checkEmail(email)){
+	} else if (!checkEmail(email)) {
 		toggleWarning("error_email", true, "Ungültige Email!");
 		error = true;
 	} else
@@ -165,11 +166,13 @@ function changeAccount(){
 	var rep = document.getElementById("selectStellvertreter").value;
 	if (rep == "keinen")
 		rep = "";
-	if(rep !=null && rep !="")if (!checkUsername(rep)){
-		toggleWarning("error_stellvertreter",true,"Kein gültiger Username!");
-		error=true;
-	}else
-		toggleWarning("error_stellvertreter",false,"");
+	if (rep != null && rep != "")
+		if (!checkUsername(rep)) {
+			toggleWarning("error_stellvertreter", true,
+					"Kein gültiger Username!");
+			error = true;
+		} else
+			toggleWarning("error_stellvertreter", false, "");
 	if (error)
 		return;
 	// As of here, send:
@@ -178,7 +181,9 @@ function changeAccount(){
 			handleChangeAccountResponse);
 }
 
-function handleChangeAccountResponse(mime, data){
-	if(mime=="text/error")alert(data);
-	if(mime=="text/url")window.location=data;
+function handleChangeAccountResponse(mime, data) {
+	if (mime == "text/error")
+		alert(data);
+	if (mime == "text/url")
+		window.location = data;
 }

@@ -36,7 +36,7 @@ public class ProviderServlet extends HttpServlet {
 	/**
 	 * Variable zum speichern der Log Instanz.
 	 */
-	private Log log; 
+	private Log log;
 	/**
 	 * Standard serialVersionUID.
 	 */
@@ -48,9 +48,9 @@ public class ProviderServlet extends HttpServlet {
 	private Gson gson;
 
 	/**
-	 * Konstruktor. Hier werden die wichtigen Referenzen
-	 * gesetzt und wenn noetig erstellt. Auch wird ein log Eintrag geschrieben
-	 * um die Initialisierung ersichtlich zu machen.
+	 * Konstruktor. Hier werden die wichtigen Referenzen gesetzt und wenn noetig
+	 * erstellt. Auch wird ein log Eintrag geschrieben um die Initialisierung
+	 * ersichtlich zu machen.
 	 */
 	public ProviderServlet() {
 		super();
@@ -108,15 +108,16 @@ public class ProviderServlet extends HttpServlet {
 			String email = request.getParameter("mail");
 			String pw = request.getParameter("pw");
 			String rep = request.getParameter("rep");
+			// falls leeres pw-> null damit die editOwnAccount
+			// funktion das pw nicht auf "" setzt!
 			if (pw.equals(""))
-				pw = null; // falls leeres pw-> null damit die editOwnAccount
-							// funktion das pw nicht auf "" setzt!
-			if (rep == null)
+				pw = null;
+			if (!validate(rep))
 				rep = "";
 			// pw wird mit absicht nicht überprüft!
-			if (!validate(name) || !validate(email) || !validate(rep)) {
+			if (!validate(name) || !validate(email)) {
 				response.setContentType("text/error");
-				response.getWriter().write("Fehler beim parsen der parameter");
+				response.getWriter().write("Fehler beim parsen der parameter!");
 				return;
 			}
 			if (provider.editOwnAccount(name, email, pw, rep)) {
@@ -158,7 +159,7 @@ public class ProviderServlet extends HttpServlet {
 
 		}
 		// Gets the free and total slots of an offer (as String)
-		else if(path.equals("/js/getTotalSlots")){
+		else if (path.equals("/js/getTotalSlots")) {
 			int aid = -1;
 			try {
 				aid = Integer.parseInt(request.getParameter("aid"));
@@ -224,9 +225,7 @@ public class ProviderServlet extends HttpServlet {
 				response.getWriter().write("invalid endDate");
 				return;
 			}
-			if (startDate.after(endDate)
-					&& !endDate.equals(
-							startDate)) {
+			if (startDate.after(endDate) && !endDate.equals(startDate)) {
 				log.write("ClerkServlet", "StartDate after Enddate!");
 				response.setContentType("text/error");
 				response.getWriter().write("order");

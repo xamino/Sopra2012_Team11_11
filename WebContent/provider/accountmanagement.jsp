@@ -53,9 +53,11 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Accountverwaltung</h2>
-					<div class="text">Hier können Sie Ihre persönlichen Daten
-						bearbeiten. <br> Wenn die zu ändernden Daten hier nicht aufgeführt
-						werden, wenden Sie sich bitte an den Administrator.</div>
+					<div class="text">
+						Hier können Sie Ihre persönlichen Daten bearbeiten. <br> Wenn
+						die zu ändernden Daten hier nicht aufgeführt werden, wenden Sie
+						sich bitte an den Administrator.
+					</div>
 				</div>
 				<hr>
 				<div class="textblock">
@@ -77,14 +79,14 @@
 											maxlength="100" />
 										<div id="error_email"></div>
 									</div>
-									<br> <br> <span> <label for="newpasswort">neues
+									<br> <br> <span> <label for="newpasswort">Neues
 											Passwort: </label>
 									</span>
 									<div class="regform">
 										<input id="newpasswort" type="password" name="newpasswort"
 											size="20" maxlength="100" />
 									</div>
-									<br> <span> <label for="newpasswortwdh">neues
+									<br> <span> <label for="newpasswortwdh">Neues
 											Passwort wiederholen: </label>
 									</span>
 									<div class="regform">
@@ -94,13 +96,14 @@
 										<div id="error_unequalPasswords" class="hiddenerror"></div>
 									</div>
 									<br> <span> <label for="stellvertreter">Stellvertreter:
-										</label>
-										</span>
-										<div class="regform">
-											<select id="selectStellvertreter" size="1">	</select>
-											<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
-											<div id="error_stellvertreter" class="hiddenerror"></div>
-										</div>
+									</label>
+									</span>
+									<div class="regform">
+										<select id="selectStellvertreter" size="1">
+										</select>
+										<!-- Hier die Beispiel Fehlerdiv – hier wird der Fehler dann angezeigt sollte er aufteten. Die Position ist hier etwas doof, aber so tuts mal... :D -->
+										<div id="error_stellvertreter" class="hiddenerror"></div>
+									</div>
 									<br>
 								</div>
 								<div class="clear"></div>

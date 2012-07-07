@@ -200,9 +200,13 @@ public final class Helper {
 				json += ",";
 			if (variables[i] instanceof String)
 				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
-			else if(variables[i] instanceof Date)
-				json +="\"" + varNames[i] + "\":\"" + new SimpleDateFormat("dd.MM.yyyy").format((Date)variables[i])+"\"";
- 			else
+			else if (variables[i] instanceof Date)
+				json += "\""
+						+ varNames[i]
+						+ "\":\""
+						+ new SimpleDateFormat("dd.MM.yyyy")
+								.format((Date) variables[i]) + "\"";
+			else
 				json += "\"" + varNames[i] + "\":" + variables[i];
 		}
 		json += "}";
@@ -253,9 +257,12 @@ public final class Helper {
 	public static Boolean validate(String string) {
 		if (string == null || string.trim().isEmpty())
 			return false;
+		// System.out.println("1");
 		if (!string
-				.matches("^((\\s)*[a-zA-Z0-9_\\+\\/\\*;\\^\\\\#$§%=˚´€¥\\<\\>\\-.,@\\(\\)\\[\\]ÜÄÖüöä!\\?]+(\\s)*)*$"))
+				.matches("^((\\s)*[a-zA-Z0-9_\\+\\/\\*;\\^\\\\#$§%=˚´€¥\\<\\>\\-.,@\\(\\)\\[\\]ÜÄÖüöä!\\?]+(\\s)*)*$")) {
+			// System.out.println("2");
 			return false;
+		}
 		return true;
 	}
 }
