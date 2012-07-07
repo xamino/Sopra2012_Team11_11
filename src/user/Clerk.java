@@ -193,36 +193,24 @@ public class Clerk extends User {
 
 	/**
 	 * Diese Methode holt alle ungeprueften Angebote aus der Datenbank und gibt
-	 * sie als Vector<Offer> zurueck. Dabei werden nur die aus dem
-	 * entsprechenden Institut geholt und eventuell die des Stellvertreters
-	 * auch, wenn einer eingetragen ist.
+	 * sie als Vector<Offer> zurueck. Dabei werden auch die Angebote jener
+	 * Benutzer gegeben, welche dieser Benutzer vertritt.
 	 * 
 	 * @return Denn Vector<Offer> mit den entsprechenden Angeboten.
 	 */
 	public Vector<Offer> getAllUncheckedOffers() {
 		Vector<Offer> offers = new Vector<Offer>();
-		Account rep = acccon.getRepresentativeAccount(this.getUserData()
-				.getUsername());
+		String userName = getUserData().getUsername();
+		Vector<Account> reps = acccon.getRepresentativeAccounts(userName);
 		// Check if field is used:
-		if (rep != null) {
-			// Cancel if rep is null (error somewhere), wrong accounttype, or is
-			// own name.
-			if (rep == null || rep.getAccounttype() != Account.VERWALTER
-					|| rep.getUsername() == getUserData().getUsername()) {
-				log.write("Clerk",
-						"ERROR getting representative, is the value valid?");
-			} else {
-				log.write("Clerk", "<" + this.getUserData().getUsername()
-						+ "> is representative for <" + rep.getUsername()
-						+ ">, allowing cross-editing of offers.");
-				offers = offcon.getUncheckedOffersByClerk(rep);
-			}
+		if (reps != null) {
+			for (Account acc : reps)
+				offers.addAll(offcon.getUncheckedOffersByClerk(acc));
 		}
 		// Load own offers:
-		log.write("Clerk", "Getting unchecked offers applyable to <"
-				+ this.getUserData().getUsername() + ">.");
-		Account ownAccount = acccon.getAccountByUsername(this.getUserData()
-				.getUsername());
+		log.write("Clerk", "Getting unchecked offers applyable to <" + userName
+				+ ">.");
+		Account ownAccount = acccon.getAccountByUsername(userName);
 		offers.addAll(offcon.getUncheckedOffersByClerk(ownAccount));
 		return offers;
 	}

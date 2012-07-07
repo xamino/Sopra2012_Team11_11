@@ -68,7 +68,7 @@ function check() {
 	var pww = document.getElementById("newpasswortwdh").value;
 	
 	if ((pw==""|| pw==null && pww=="" || pww==null) && (!document.getElementById("dataconfirm").checked) ){
-		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+		// alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
 	}
 	
 	else if ((pw != null && pw != "") || (pww != null && pww != "")) {

@@ -130,18 +130,19 @@ public class Provider extends User {
 	}
 
 	/**
-	 * Laedt alle Angebote des Anbieters aus der Datenbank. Ist ein
-	 * Stellvertreter angegeben, so werden dessen Angebote auch ausgelesen.
+	 * Laedt alle Angebote des Anbieters aus der Datenbank. Ist dieser Benutzer
+	 * Stellvertreter fuer andere, so werden dessen Angebote auch ausgelesen.
 	 * 
 	 * @return Ein Vektor mit den Angeboten.
 	 */
 	public Vector<Offer> getOwnOffers() {
 		Vector<Offer> offers = offcon.getOffersByProvider(getUserData()
 				.getUsername());
-		Account rep = acccon.getRepresentativeAccount(getUserData()
-				.getUsername());
-		if (rep != null) {
-			offers.addAll(offcon.getOffersByProvider(rep.getUsername()));
+		String userName = getUserData().getUsername();
+		Vector<Account> reps = acccon.getRepresentativeAccounts(userName);
+		if (reps != null) {
+			for (Account acc : reps)
+				offers.addAll(offcon.getOffersByProvider(acc.getUsername()));
 		}
 		return offers;
 	}
@@ -280,12 +281,19 @@ public class Provider extends User {
 		// Stellvertreter) stammt:
 		String offAuthor = off.getAuthor();
 		String userName = getUserData().getUsername();
-		Account rep = acccon.getRepresentativeAccount(userName);
-		if (offAuthor.equals(userName)
-				|| (rep != null && offAuthor.equals(rep.getUsername())))
+		// Check if own offer:
+		if (offAuthor.equals(userName))
 			return off;
-		else
+		else {
+			// Check if the offer belongs to a rep:
+			Vector<Account> reps = acccon.getRepresentativeAccounts(userName);
+			for (Account acc : reps) {
+				if (acc.getUsername().equals(offAuthor))
+					return off;
+			}
+			// else return null:
 			return null;
+		}
 	}
 
 	/**

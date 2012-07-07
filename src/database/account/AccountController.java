@@ -21,8 +21,8 @@ import database.offer.Offer;
 import database.offer.OfferController;
 
 /**
- * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten.
- * Der Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
+ * Verwaltet alle Datenbankzugriffe auf Account-bezogene Daten. Der
+ * Accountcontroller behandelt die Verwaltungsmethoden von allen Accounts.
  * 
  */
 
@@ -75,7 +75,7 @@ public class AccountController {
 	public DatabaseController dbc;
 
 	/**
-	 * Diese Methode erstellt einen neuen Account mit uebergebener 
+	 * Diese Methode erstellt einen neuen Account mit uebergebener
 	 * Account-Instanz als Parameter.
 	 * 
 	 * @param account
@@ -96,7 +96,7 @@ public class AccountController {
 	 * 
 	 * @param applicant
 	 *            Applicant-Objekt
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteApplicantAccount(Applicant applicant) {
 		String username = applicant.getUserData().getUsername();
@@ -118,7 +118,7 @@ public class AccountController {
 	 * 
 	 * @param applicant
 	 *            Account-Objekt
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteApplicantAccount(Account applicant) {
 		String username = applicant.getUsername();
@@ -140,7 +140,7 @@ public class AccountController {
 	 * 
 	 * @param clerk
 	 *            Clerk-Objekt
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 
 	public boolean deleteClerkAccount(Clerk clerk) {
@@ -178,7 +178,7 @@ public class AccountController {
 	 * 
 	 * @param clerk
 	 *            Account-Objekt
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteClerkAccount(Account clerk) {
 		String username = clerk.getUsername();
@@ -215,7 +215,7 @@ public class AccountController {
 	 * 
 	 * @param provider
 	 *            Provider-Objekt
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteProviderAccount(Account provider) {
 		String username = provider.getUsername();
@@ -251,7 +251,7 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean deleteAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
@@ -265,7 +265,7 @@ public class AccountController {
 	 * @param account
 	 *            Parameter "account" ist ein Account-Objekt, welches alle
 	 *            noetigen Attribute enthaelt.
-	 * @return  Gibt an, ob die Operation erfolgreich war.
+	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
@@ -358,7 +358,7 @@ public class AccountController {
 	 */
 	public Vector<Account> getAccountsByInstitute(int id) { // checked
 		Vector<Account> accountvec = new Vector<Account>(30, 10);
-		
+
 		String[] select = { "*" };
 		String[] from = { tableName };
 		String where = "institut = " + id;
@@ -384,17 +384,17 @@ public class AccountController {
 		}
 		return accountvec;
 	}
-	
+
 	/**
-	 * Gibt den Account des Stellvertreters zurueck. Gegeben wird der EINGENE
+	 * Gibt die Accounts der Stellvertretenden zurueck. Gegeben wird der EIGENE
 	 * Bentuzername!
 	 * 
 	 * @param userName
 	 *            Der Benutzername des Accounts, fuer den wir delegierte
-	 *            Angebote suchen.
-	 * @return Den Account des Stellvertreters.
+	 *            Stellvertreter suchen.
+	 * @return Alle accounts fuer welche die Person Stellvertreter ist.
 	 */
-	public Account getRepresentativeAccount(String userName) {
+	public Vector<Account> getRepresentativeAccounts(String userName) {
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { "Accounts" }, "stellvertreter= '" + userName
 						+ "'");
@@ -403,23 +403,24 @@ public class AccountController {
 					"No connection: couldn't get account");
 			return null;
 		}
+		Vector<Account> accounts = new Vector<Account>();
 		try {
-			if (rs.next()) {
-				return new Account(rs.getString("benutzername"),
-						rs.getString("passworthash"), rs.getInt("accounttyp"),
-						rs.getString("email"), rs.getString("name"),
-						rs.getInt("institut"), rs.getString("stellvertreter"));
-			} else
-				return null;
+			while (rs.next()) {
+				accounts.add(new Account(rs.getString("benutzername"), rs
+						.getString("passworthash"), rs.getInt("accounttyp"), rs
+						.getString("email"), rs.getString("name"), rs
+						.getInt("institut"), rs.getString("stellvertreter")));
+			}
+			return accounts;
 		} catch (SQLException e) {
 			logger.Log.getInstance().write(
 					"AccountController",
-					"Error while reading Account from Database for <"
+					"Error while reading sccounts from Database for <"
 							+ userName + ">.");
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Gibt die potentiellen Stellvertreter eines Benutzers zurueck.
 	 * 
@@ -484,8 +485,7 @@ public class AccountController {
 		ResultSet rs = dbc.select(new String[] { "*" },
 				new String[] { tableName }, "email LIKE '" + email + "'");
 		if (rs == null) {
-			log.write("AccountController",
-					"No connection: couldn't get email!");
+			log.write("AccountController", "No connection: couldn't get email!");
 			return null;
 		}
 		try {

@@ -118,7 +118,7 @@ function check() {
 
 	if ((pw == "" || pw == null && pww == "" || pww == null)
 			&& (!document.getElementById("dataconfirm").checked)) {
-		alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
+		// alert("Die Passwortfelder sind leer. Ihr altes Passwort wird beibehalten!");
 	}
 	// ACHTUNG: Wenn eines der Passwörter NICHT leer ist, dann sollen sie
 	// geändert

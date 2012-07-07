@@ -276,14 +276,16 @@ function saveChanges(form) {
 	} else
 		toggleWarning("error_email", false, "");
 	var password = form.password.value;
-	if (password != null && password != "") password = b64_md5(password);
-	else password ="";
+	if (password != null && password != "")
+		password = b64_md5(password);
+	else
+		password = "";
 	var institute = form.institute.value;
 	if (institute == null || institute == "") {
 		toggleWarning("error_institute", true, "Bitte ausfüllen!");
 		error = true;
 	} else
-		toggleWarning("error_institute", false, ""); 
+		toggleWarning("error_institute", false, "");
 	if (error)
 		return;
 	// As of here, send:
@@ -291,8 +293,7 @@ function saveChanges(form) {
 	var userName = document.getElementById("userName").innerHTML;
 	connect("/hiwi/Admin/js/editAccount", "realName=" + realName + "&email="
 			+ email + "&userName=" + userName + "&userPassword=" + password
-			+ "&institute=" + institute,
-			handleEditAccountResponse);
+			+ "&institute=" + institute, handleEditAccountResponse);
 }
 
 function handleEditAccountResponse(mime, data) {
