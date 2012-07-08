@@ -10,6 +10,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import mail.Mailer;
+
 import servlet.Helper;
 
 import com.google.gson.Gson;
@@ -199,7 +201,11 @@ public class Provider extends User {
 
 		return new Gson().toJson(vec, vec.getClass());
 	}
-
+	/**
+	 * Gibt eine String-Repraesentation der Anzahl der freien Stellen zurueck.
+	 * @param aid Aid des Angebots
+	 * @return String mit freien slots
+	 */
 	public String getFreeSlotsOufOfTotal(int aid) {
 		int free = offcon.getOfferById(aid).getSlots();
 		int total = offcon.getTotalSlotsOfOffer(aid);
@@ -350,6 +356,12 @@ public class Provider extends User {
 			offcon.updateOffer(offertoSetSlots);
 		}
 		log.write("ProviderServlet", "'Bewerber <" + username + "> angenommen!");
-		return appcon.updateApplication(application);
+		Boolean ret = appcon.updateApplication(application);
+		if(ret){
+			Account mailto = acccon.getAccountByUsername(username);
+			Offer angebot = offcon.getOfferById(application.getAid());
+			Mailer.getInstance().sendMail(mailto.getEmail(), "Bewerbung akzeptiert", "Ihre Bewerbung auf das Angebot \""+angebot.getName()+"\" wurde vom Anbieter ausgewählt. Bitte liefern sie die Benötigten Dokumente schnellstmöglich bei den Verwaltern des Instituts ab. Sie können den genauen Status ihrer Bewerbung auf ihrer Hauptseite verfolgen.");
+		}
+		return ret;
 	}
 }
