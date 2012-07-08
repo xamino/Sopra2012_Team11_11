@@ -95,8 +95,8 @@ public class Provider extends User {
 								new String[] { "hoursMonth", "startDate",
 										"endDate", "wage" },
 								new Object[] { rs.getInt("StdProMonat"),
-										rs.getString("StartDatum"),
-										rs.getString("EndDatum"),
+										rs.getDate("StartDatum"),
+										rs.getDate("EndDatum"),
 										rs.getFloat("Lohn") });
 			}
 		} catch (SQLException e) {

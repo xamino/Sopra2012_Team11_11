@@ -11,7 +11,7 @@
  Target Server Version : 50519
  File Encoding         : utf-8
 
- Date: 07/01/2012 18:07:09 PM
+ Date: 07/08/2012 16:19:14 PM
 */
 
 SET NAMES utf8;
@@ -143,8 +143,8 @@ COMMIT;
 DROP TABLE IF EXISTS `Standardangebot`;
 CREATE TABLE `Standardangebot` (
   `StdProMonat` int(11) DEFAULT NULL,
-  `StartDatum` text,
-  `EndDatum` text,
+  `StartDatum` date DEFAULT NULL,
+  `EndDatum` date DEFAULT NULL,
   `Lohn` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -152,7 +152,7 @@ CREATE TABLE `Standardangebot` (
 --  Records of `Standardangebot`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Standardangebot` VALUES ('40', '2012-10-22', '2013-4-23', '7.60');
+INSERT INTO `Standardangebot` VALUES ('40', '2012-10-22', '2013-04-23', '7.6');
 COMMIT;
 
 -- ----------------------------

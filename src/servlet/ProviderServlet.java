@@ -23,6 +23,7 @@ import logger.Log;
 import user.Provider;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import database.offer.Offer;
 
@@ -55,7 +56,7 @@ public class ProviderServlet extends HttpServlet {
 	public ProviderServlet() {
 		super();
 		log = Helper.log;
-		gson = new Gson();
+		gson = new GsonBuilder().setDateFormat("dd.MM.yyyy").create();
 	}
 
 	/**
