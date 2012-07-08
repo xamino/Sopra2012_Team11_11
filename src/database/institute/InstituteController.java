@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import logger.Log;
+import mail.Mailer;
 import servlet.Helper;
 import database.DatabaseController;
 import database.account.Account;
@@ -118,6 +119,8 @@ public class InstituteController {
 		for(Account a : accs){
 			a.setInstitute(0);
 			acccon.updateAccount(a);
+			Mailer.getInstance().sendMail(a.getEmail(), "Löschung des Instituts", "Da ihr Institut gelöscht wurde, wurden sie dem Standard Institut zugeordnet. Bei weiteren Fragen, wenden sie sich bitte an den Admin.");
+			
 		}
 		// Update all offers:
 		Vector<Offer>offers = OfferController.getInstance().getOffersByInstitute(institute.getIID());

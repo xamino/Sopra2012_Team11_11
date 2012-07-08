@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import logger.Log;
+import mail.Mailer;
 import user.Applicant;
 import user.Clerk;
 import database.DatabaseController;
@@ -255,7 +256,9 @@ public class AccountController {
 	 */
 	public boolean deleteAccount(Account account) { // checked
 		String where = "benutzername = '" + account.getUsername() + "'";
-		return dbc.delete("Accounts", where);
+		boolean ret = dbc.delete("Accounts", where);
+		if(ret)Mailer.getInstance().sendMail(account.getEmail(), "Löschung ihres Accounts", "Hiermit teilen wir Ihnen mit, dass ihr Account gelöscht wurde.");
+		return ret;
 	}
 
 	/**
