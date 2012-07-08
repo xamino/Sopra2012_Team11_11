@@ -54,11 +54,18 @@ function handleLoadInstitutes(mime, data) {
 		var institutes = eval(data);
 		var table = document.getElementById("institutesList");
 		table.innerHTML = "<tr><th>IID</th><th>Name</th></tr>";
-		for ( var i = 0; i < institutes.length; i++)
+		for ( var i = 0; i < institutes.length; i++) {
+			// make default institute unchangeable:
+			if (institutes[i].IID == 0) {
+				table.innerHTML += "<tr class=\"unselectable\"><td>" + institutes[i].IID + "</td><td>"
+						+ institutes[i].name + "</td></tr>";
+				continue;
+			}
 			table.innerHTML += "<tr class=\"\" id=\"" + institutes[i].IID
 					+ "\" onclick=\"markInstituteSelected(" + institutes[i].IID
 					+ ")\"><td>" + institutes[i].IID + "</td><td>"
 					+ institutes[i].name + "</td></tr>";
+		}
 	}
 }
 
@@ -74,18 +81,18 @@ function addInstitute() {
 	if (IID == null || IID == "") {
 		toggleWarning("error_addInstitute_IID", true, "Bitte ausfüllen!");
 		error = true;
-	}else if (!checkInt(IID)){
-		toggleWarning("error_addInstitute_IID",true,"Bitte nur ganze Zahlen!");
+	} else if (!checkInt(IID)) {
+		toggleWarning("error_addInstitute_IID", true, "Bitte nur ganze Zahlen!");
 		error = true;
-	}	else
+	} else
 		toggleWarning("error_addInstitute_IID", false, "");
 	var name = form.name.value;
 	if (name == null || name == "") {
 		toggleWarning("error_addInstitute_name", true, "Bitte ausfüllen!");
 		error = true;
-	} 
-	else if (!checkText(name)){
-		toggleWarning("error_addInstitute_name",true,"Unerlaubtes Sonderzeichen!");
+	} else if (!checkText(name)) {
+		toggleWarning("error_addInstitute_name", true,
+				"Unerlaubtes Sonderzeichen!");
 		error = true;
 	} else
 		toggleWarning("error_addInstitute_name", false, "");

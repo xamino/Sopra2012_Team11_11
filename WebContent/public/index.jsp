@@ -18,7 +18,7 @@
 	<div class="footerunten">
 		<div class="header">
 			<h1>
-				<a class="banner" href="../public/index.jsp">Hiwi-Börse</a>
+				<a class="banner" href="/hiwi/public/index.jsp">Hiwi-Börse</a>
 			</h1>
 		</div>
 		<div class="right">
@@ -49,7 +49,7 @@
 							onclick="checkLogin(login); return false;" />
 					</p>
 				</form>
-				<a class="hintlink" href="register.jsp"
+				<a class="hintlink" href="/hiwi/public/register.jsp"
 					title="Hier geht es zum Registrieren">Noch nicht registriert?</a> <a
 					class="hintlink" href="javascript:void(0)"
 					onclick="prepareForgetful();" href="">Passwort vergessen?</a>

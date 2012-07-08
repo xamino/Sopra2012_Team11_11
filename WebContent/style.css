@@ -63,6 +63,10 @@ tr.selected {
 	background-color: rgb(200, 200, 200);
 }
 
+tr.unselectable {
+	background-color: rgb(245, 245, 245);
+}
+
 /*fuer Fehlermeldungen*/
 div.hiddenerror,div.visibleerror {
 	font-size: small;

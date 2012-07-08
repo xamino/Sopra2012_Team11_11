@@ -51,11 +51,10 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Institute Verwalten</h2>
-					<div class="text">
-						Hier können sie die Institute im System verwalten.<br>Die IID
-						muss eindeutig sein.<br>
-						Das default - Institut kann nicht gelöscht werden!
-					</div>
+					<div class="text">Hier können sie die Institute im System
+						verwalten. Wenn sie ein neues Institut erstellen muss die IID muss
+						eindeutig sein.Bitte beachten sie dass das default - Institut
+						nicht gelöscht werden kann!</div>
 				</div>
 				<hr>
 				<div class="textblock">
@@ -66,8 +65,7 @@
 							value="Markiertes Institute löschen" onclick="prepareDelete();" />
 						<div style="float: right;" class="hiddenerror"
 							id="error_selection"></div>
-						<br>
-						<br>
+						<br> <br>
 						<!--<div class="clear"></div>-->
 						<hr>
 						<table id="institutesList">
@@ -95,8 +93,8 @@
 			</div>
 			<hr>
 			<div class="textblock">
-				<input type="button" value="Speichern" onclick="addInstitute()" /> <input
-					type="button" value="Abbrechen"
+				<input type="button" value="Speichern" onclick="addInstitute()" />
+				<input type="button" value="Abbrechen"
 					onclick="clearAddInstitutePopup(); togglePopup('institute_add', false);" />
 			</div>
 		</form>
