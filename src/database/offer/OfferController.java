@@ -161,6 +161,39 @@ public class OfferController {
 	 * @return Gibt an, ob die Operation erfolgreich war.
 	 */
 	public boolean updateOffer(Offer offer) {
+
+		String[] columns = { "Ersteller", "Name", "Notiz", "Geprueft",
+				"Plaetze", "Stundenprowoche", "Beschreibung", "Beginn", "Ende",
+				"Stundenlohn", "Institut", "aenderungsdatum", "abgeschlossen" };
+
+		java.util.Date aenderungsdatum_1 = new java.util.Date();
+		java.sql.Date aenderungsdatum = new java.sql.Date(
+				aenderungsdatum_1.getTime());
+		offer.setModificationdate(aenderungsdatum);
+
+		Object[] values = { offer.getAuthor(), offer.getName(),
+				offer.getNote(), offer.isChecked(), offer.getSlots(),
+				offer.getHoursperweek(), offer.getDescription(),
+				offer.getStartdate(), offer.getEnddate(), offer.getWage(),
+				offer.getInstitute(), offer.getModificationdate(),
+				offer.isFinished() };
+
+		String where = "AID = " + offer.getAid();
+
+		return (db.update(tableName, columns, values, where));
+
+	}
+	
+	/**
+	 * Diese Methode aendert die Attribute eines Jobangebots beziehungsweise
+	 * aktualisiert diese in der Datenbank und benachrichtigt die Bewerber darueber.
+	 * 
+	 * @param offer
+	 *            Parameter "offer" ist ein Offer-Objekt mit allen
+	 *            dazugehoerigen Attributen.
+	 * @return Gibt an, ob die Operation erfolgreich war.
+	 */
+	public boolean updateOfferWithNotification(Offer offer) {
 		// Hier ist die Mail benachrichtigung:
 		ResultSet rs = db.select(new String[] { "acc.email" }, new String[] {
 				"Accounts as acc", "Bewerbungen as b", "Angebote as a" },
@@ -209,6 +242,7 @@ public class OfferController {
 		return (db.update(tableName, columns, values, where));
 
 	}
+
 
 	/**
 	 * Diese Methode sammelt alle Jobangebote aus der Datenbank und speichert

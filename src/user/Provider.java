@@ -317,7 +317,7 @@ public class Provider extends User {
 		offUp.setDescription(description);
 		// sets modificationdate and updates it
 		offUp.setModificationdate(aenderungsdatum_toUp);
-		return offcon.updateOffer(offUp);
+		return offcon.updateOfferWithNotification(offUp);
 	}
 
 	/**
