@@ -198,9 +198,12 @@ public final class Helper {
 		for (int i = 0; i < varNames.length; i++) {
 			if (i != 0)
 				json += ",";
-			if (variables[i] instanceof String)
-				json += "\"" + varNames[i] + "\":\"" + variables[i] + "\"";
-			else if (variables[i] instanceof Date)
+			if (variables[i] instanceof String) {
+				// Vodoo gegen " in strings (macht fehler in JSON):
+				String str = (String) variables[i];
+				str = str.replace('"', '\'');
+				json += "\"" + varNames[i] + "\":\"" + str + "\"";
+			} else if (variables[i] instanceof Date)
 				json += "\""
 						+ varNames[i]
 						+ "\":\""
