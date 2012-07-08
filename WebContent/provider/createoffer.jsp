@@ -101,16 +101,13 @@
 										<td></td>
 									</tr>
 								</table>
-								<!-- Oemer -->
+								<strong>Beschreibung:</strong>
 								<div id="error_beschreibung" class="invisibleWarning"></div>
-								<!-- Oemer -->
 								<textarea id="beschreibung" name="beschreibung" cols="50"
-									rows="10">Beschreibung</textarea>
-								<br> <br>
-								<!-- Oemer -->
+									rows="10"></textarea>
+								<br> <br> <strong>Notiz für Sachbearbeiter:</strong>
 								<div id="error_notiz" class="invisibleWarning"></div>
-								<!-- Oemer -->
-								<textarea id="notiz" name="notiz" cols="50" rows="10">Anbieternotiz</textarea>
+								<textarea id="notiz" name="notiz" cols="50" rows="10"></textarea>
 								<br> <br>
 								<p>
 									<input type="reset" value="Zurücksetzen" /> <input
