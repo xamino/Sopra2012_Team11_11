@@ -78,7 +78,7 @@ public class Application {
 	}
 
 	/**
-	 * Gibt die id der Bewerbung zurueck.
+	 * Gibt die id des Angebots der Bewerbung zurueck.
 	 * 
 	 * @return id der Bewerbung.
 	 */

@@ -107,6 +107,13 @@ public class AccountController {
 				.getApplicationsByApplicant(username);
 		if (apps != null) {
 			for (int i = 0; i < apps.size(); i++) {
+				Application a = apps.get(i);
+				if(a.isChosen()){
+					Offer toincrement = OfferController.getInstance().getOfferById(a.getAid());
+					toincrement.setSlots(toincrement.getSlots()+1);
+					if(!OfferController.getInstance().updateOffer(toincrement))
+						log.write("AccountController", "Could't reincrement slots of offer <"+toincrement.getName()+">");
+				}
 				ApplicationController.getInstance().deleteApplication(
 						apps.elementAt(i));
 			}
