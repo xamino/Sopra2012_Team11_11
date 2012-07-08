@@ -403,7 +403,7 @@ public class OfferController {
 		try {
 			while (rs.next()) {
 				Offer currentoff = convertToOffer(rs);
-				if (currentoff.isChecked())
+				if (currentoff.isChecked()&&!currentoff.isFinished())
 					offervec.add(currentoff);
 			}
 		} catch (SQLException e) {

@@ -188,7 +188,25 @@ public class Clerk extends User {
 				username);
 		appli.setFinished(true);
 		appli.setClerk(clerkname);
-		return appcon.updateApplication(appli);
+		boolean ret = appcon.updateApplication(appli);
+		if(ret){
+			boolean last = true;
+			Vector<Application> apps = appcon.getApplicationsByOffer(offerID);
+			for(Application a: apps){
+				if(!a.isFinished()&&a.isChosen()){
+					last=false;
+					break;
+				}
+			}
+			boolean full = false;
+			Offer toclose = offcon.getOfferById(offerID);
+			if(last&&toclose.getSlots()==0){
+				
+				toclose.setFinished(true);
+				ret &= offcon.updateOffer(toclose);
+			}
+		}
+		return ret;
 	}
 
 	/**

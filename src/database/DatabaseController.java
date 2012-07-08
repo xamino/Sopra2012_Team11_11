@@ -608,7 +608,7 @@ public class DatabaseController {
 		}
 		try {
 			if (!rs.next()) {
-				insert("Standardangebot", new Object[] { 30	,new Date() ,new Date() ,7.6});
+				insert("Standardangebot", new Object[] { 30	,new Date() ,new Date() ,7});
 				log.write("DatabaseController", "default defaults created.");
 			}
 
