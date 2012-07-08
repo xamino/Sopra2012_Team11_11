@@ -201,7 +201,9 @@ public final class Helper {
 			if (variables[i] instanceof String) {
 				// Vodoo gegen " in strings (macht fehler in JSON):
 				String str = (String) variables[i];
-				str = str.replace('"', '\'');
+				str = str.replace('"', '\"');
+				str = str.replace("\n", "<br>");
+				// System.out.println(str);
 				json += "\"" + varNames[i] + "\":\"" + str + "\"";
 			} else if (variables[i] instanceof Date)
 				json += "\""

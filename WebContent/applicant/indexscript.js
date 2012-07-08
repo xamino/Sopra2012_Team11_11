@@ -183,6 +183,8 @@ function handleLoadMyApplicationResponse(mime, data) {
 		// Write table – probably replaces old data!
 		table.innerHTML = "Bewerbung für " + obj.offerName
 				+ (obj.status ? " – akzeptiert" : "") + ".";
+		document.getElementById("descr").innerHTML = "<strong>Beschreibung:</strong><br>"
+				+ obj.descr;
 		if (obj.status) {
 			selectDocuments();
 		} else {
@@ -205,10 +207,8 @@ function selectDocuments() {
 	// alert("die id ist"+id);
 	// reset selectedID (account could have been deleted in meantime)
 	// selectedOffer = null;
-	// alert("ohne alert funzt es ned =( ");
 	connect("/hiwi/Applicant/js/selectDocuments", "aid=" + id,
 			handleselectDocumentsResponse);
-	// alert("ohne alert funzt es ned =( 2");
 }
 
 /**
@@ -225,22 +225,27 @@ function handleselectDocumentsResponse(mime, data) {
 		window.location = data;
 	} else if (mime == "application/json") {
 		// alert(data);
-		// Erstelle Array aus JSON array:
-		var JSONarray = eval("(" + data + ")");
-		// alert("data= "+JSONarray);
-		// Get the table:
-		var table2 = document.getElementById("applicationsTable");
-		// Write table – probably replaces old data!
-		table2.innerHTML = "<th>Status</th><th>Unterlage</th>";
-		for ( var i = 0; i < JSONarray.length; i++) {
-			var obj = eval("(" + JSONarray[i] + ")");
-			var isChecked;
-			if (obj.isChecked == 0)
-				isChecked = "Fehlt";
-			else
-				isChecked = "Vorhanden";
-			table2.innerHTML += "<tr><td>" + isChecked + "</td><td>" + obj.name
-					+ "</td>";
+		// data=="null" heißt, es gibt keine Dokumente:
+		if (data == "null") {
+			var table2 = document.getElementById("applicationsTable");
+			table2.innerHTML = "<th>Für diese Bewerbung werden (noch) keine Dokumente benötigt.</th>";
+		} else {
+			// Erstelle Array aus JSON array:
+			var JSONarray = eval("(" + data + ")");
+			// Get the table:
+			var table2 = document.getElementById("applicationsTable");
+			// Write table – probably replaces old data!
+			table2.innerHTML = "<th>Status</th><th>Unterlage</th>";
+			for ( var i = 0; i < JSONarray.length; i++) {
+				var obj = eval("(" + JSONarray[i] + ")");
+				var isChecked;
+				if (obj.isChecked == 0)
+					isChecked = "Fehlt";
+				else
+					isChecked = "Vorhanden";
+				table2.innerHTML += "<tr><td>" + isChecked + "</td><td>"
+						+ obj.name + "</td>";
+			}
 		}
 		// Prepare mailTo button:
 		connect("/hiwi/Applicant/js/getEmail", "user=" + stupidThing, function(

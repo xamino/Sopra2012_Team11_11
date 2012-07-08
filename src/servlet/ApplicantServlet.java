@@ -154,6 +154,11 @@ public class ApplicantServlet extends HttpServlet {
 			}
 			// Create JSON version of custom data:
 			Vector<String> docDataObject = applicant.getDocuments(aid);
+			if (docDataObject == null || docDataObject.isEmpty()) {
+				response.setContentType("application/json");
+				response.getWriter().write("null");
+				return;
+			}
 			response.setContentType("application/json");
 			response.getWriter().write(
 					gson.toJson(docDataObject, docDataObject.getClass()));

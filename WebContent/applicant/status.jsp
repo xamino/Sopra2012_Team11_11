@@ -55,11 +55,9 @@
 			<div class="rightborder">
 				<div class="textblock">
 					<h2>Bewerbungen</h2>
-					<div class="text">
-						Hier finden Sie den Bearbeitungsstatus Ihrer Bewerbungen.<br>
-						Des Weiteren können Sie hier Ihre Bewerbung wiederrufen und
-						Anbieter bzw. Verwalten kontaktieren.
-					</div>
+					<div class="text">Hier finden Sie den Bearbeitungsstatus
+						Ihrer Bewerbungen. Des Weiteren können Sie hier Ihre Bewerbung
+						wiederrufen und Anbieter bzw. Verwalten kontaktieren.</div>
 				</div>
 				<hr>
 				<div class="textblock">
@@ -74,6 +72,11 @@
 								<!-- Here come the documents -->
 							</table>
 						</form>
+						<br>
+						<div
+							style="float: left; background-color: lightgray; padding: 0.25em;"
+							id="descr"></div>
+						<div style="clear: both;"></div>
 						<hr>
 						<div class="float">
 							<input type="button" value="Anbieter kontaktieren"
